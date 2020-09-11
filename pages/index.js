@@ -1,0 +1,47 @@
+import Head from "next/head"
+import React from 'react';
+import Layout from '../components/layout';
+import TwitterSna from './tools/TwitterSna';
+
+
+
+const Index = props => {
+
+  return (
+      <Layout>
+        <Head>
+          <title>Weverify Twitter SNA</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+
+        <main>
+            <TwitterSna />
+        </main>
+        <footer>
+        Powered by{' '}
+        </footer>
+        <style jsx>{`
+          main {
+            padding: 5rem 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+          footer {
+            width: 100%;
+            height: 100px;
+            border-top: 1px solid #eaeaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+  
+        `}</style>
+     </Layout>
+    );
+};
+
+
+export default Index;
