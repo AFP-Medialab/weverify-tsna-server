@@ -8,14 +8,16 @@ import {useSelector, useDispatch} from "react-redux";
 import useLoadLanguage from "../hooks/useLoadLanguage";
 import {changeLanguage} from "../../../redux/action"
 
-const Languages = () => {
 
+const localtsv = "/localDictionary/components/languages.tsv";
+
+
+const Languages = () => {
+    const keyword = useLoadLanguage(localtsv);
     const dictionary = useSelector(state => state.dictionary);
-    const onlineTsv = process.env.REACT_APP_TRANSLATION_GITHUB + "components/NavItems/languages.tsv";
-    const keyword = useLoadLanguage("components/NavItems/languages.tsv", "/localDictionnary/components/languages.tsv");
 
     const keywordByLang = (language) => {
-        return (dictionary && dictionary[onlineTsv] && dictionary[onlineTsv][language])? dictionary[onlineTsv][language]["lang_label"]: "";
+        return (dictionary && dictionary[localtsv] && dictionary[localtsv][language])? dictionary[localtsv][language]["lang_label"]: "";
     };
 
     const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const Languages = () => {
         setAnchorEl(null);
     };
 
-    const language_list = (dictionary && dictionary[onlineTsv])? Object.keys(dictionary[onlineTsv]) : [];
+    const language_list = (dictionary && dictionary[localtsv])? Object.keys(dictionary[localtsv]) : [];
 
     return (
         <div>

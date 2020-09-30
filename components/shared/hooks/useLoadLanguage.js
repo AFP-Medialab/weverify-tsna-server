@@ -45,35 +45,23 @@ function translate_csv(text) {
     return array_to_json(lang_array_csv);
 }
 
-const useLoadLanguage = (onlineTsv, localTsv) => {
-    const gitHubFullUrl = process.env.REACT_APP_TRANSLATION_GITHUB + onlineTsv;
+const useLoadLanguage = (localTsv) => {
+    
     const lang = useSelector(state => state.language);
-    const dictionary = useSelector(state => state.dictionary[gitHubFullUrl]);
+    const dictionary = useSelector(state => state.dictionary[localTsv]);
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (dictionary)
             return;
 
-        const backUpLocal = () => {
-            axios.get(localTsv)
+        axios.get(localTsv)
                 .then(result => {
-                    dispatch(addDictionary(gitHubFullUrl, translate_csv(result.data)));
+                    dispatch(addDictionary(localTsv, translate_csv(result.data)));
                 })
                 .catch(error => console.error(error))
-        };
 
-        axios.get(gitHubFullUrl)
-            .then(result => {
-                if (result.data === "")
-                    backUpLocal();
-                else
-                    dispatch(addDictionary(gitHubFullUrl, translate_csv(result.data)));
-            })
-            .catch(() => {
-                backUpLocal();
-            })
-    }, [gitHubFullUrl, localTsv, dictionary, dispatch]);
+    }, [localTsv, dictionary, dispatch]);
 
     return (key) => {
         return (dictionary && dictionary[lang] && dictionary[lang][key]) ? dictionary[lang][key] : "";

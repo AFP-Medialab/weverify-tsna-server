@@ -5,11 +5,9 @@ import useMyStyles from '../../components/shared/styles/useMyStyles';
 import useLoadLanguage from "../../components/shared/hooks/useLoadLanguage";
 import { useEffect, useState } from "react";
 
-
-
 const TwitterSna = () => {
     const classes = useMyStyles();
-    const keyword = useLoadLanguage("components/NavItems/tools/TwitterSna.tsv", "/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
    
     return (
         <div>
