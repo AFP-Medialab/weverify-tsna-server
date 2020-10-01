@@ -6,7 +6,7 @@ import '../styles/global.css';
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { MuiThemeProvider } from "@material-ui/core";
 import { useStore } from "react-redux";
-
+import "react-datetime/css/react-datetime.css";
 
 
 const theme = createMuiTheme({

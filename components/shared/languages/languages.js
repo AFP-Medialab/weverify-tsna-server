@@ -6,7 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import TranslateIcon from '@material-ui/icons/Language';
 import {useSelector, useDispatch} from "react-redux";
 import useLoadLanguage from "../hooks/useLoadLanguage";
-import {changeLanguage} from "../../../redux/action"
+import {changeLanguage} from "../../../redux/actions"
 
 
 const localtsv = "/localDictionary/components/languages.tsv";
