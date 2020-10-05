@@ -24,23 +24,70 @@ import SearchIcon from '@material-ui/icons/Search';
 import Typography from "@material-ui/core/Typography";
 import useTwitterSnaRequest from "../../components/shared/TwitterSna/Hooks/useTwitterSnaRequest";
 import TwitterSnaResult from "../../components/shared/TwitterSna/Results/TwitterSnaResult"
+import _ from "lodash";
+import { replaceAll, stringToList } from "../../components/shared/lib/StringUtil";
+import dateFormat from "dateformat";
 
 const TwitterSna = () => {
+    
     const classes = useMyStyles();
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
-   
     const request = useSelector(state => state.twitterSna.request);
-    const [keyWordsError, setKeyWordsError] = useState(false);
+    
     const isLoading = useSelector(state => state.twitterSna.loading);
+    const loadingMessage = useSelector(state => state.twitterSna.loadingMessage);
+    const reduxResult = useSelector(state => state.twitterSna.result);
+
     const userAuthenticated = useSelector(state => state.userSession && state.userSession.userAuthenticated);
+
     const [sinceError, setSinceError] = useState(false);
     const [untilError, setUntilError] = useState(false);
     const [localTime, setLocalTime] = useState("true");
     const [openLangInput, setLangInputOpen] = React.useState(false);
-    const loadingMessage = useSelector(state => state.twitterSna.loadingMessage);
-
-    const reduxResult = useSelector(state => state.twitterSna.result);
+    const [keyWordsError, setKeyWordsError] = useState(false);
+  
+    //PARAMS
     
+    const makeRequestParams = (keywordsP, bannedWordsP, usersInputP, sinceP, untilP, localTimeP, langInputP, filtersP, verifiedUsersP) => {
+      //Creating Request Object.
+      const removeQuotes = (list) => {
+        let res = [];
+        !_.isNil(list) &&
+          list.forEach(string => {
+            res.push(replaceAll(string, "\"", ""));
+          });
+        return res;
+      };
+  
+      let trimedKeywords = !_.isNil(keywordsP) ? removeQuotes(keywordsP.trim().match(/("[^"]+"|[^"\s]+)/g)) : [];
+  
+      let trimedBannedWords = null;
+      if (!_.isNil(bannedWordsP) && bannedWordsP.trim() !== "")
+        trimedBannedWords = removeQuotes(bannedWordsP.trim().match(/("[^"]+"|[^"\s]+)/g));
+  
+      const newFrom = (localTimeP === "false") ? convertToGMT(sinceP) : sinceP;
+      const newUntil = (localTimeP === "false") ? convertToGMT(untilP) : untilP;
+  
+      return {
+        "keywordList": trimedKeywords,
+        "bannedWords": trimedBannedWords,
+        "lang": (langInputP === "lang_all") ? null : langInputP.replace("lang_", ""),
+        "userList": stringToList(usersInputP),
+        "from": dateFormat(newFrom, "yyyy-mm-dd HH:MM:ss"),
+        "until": dateFormat(newUntil, "yyyy-mm-dd HH:MM:ss"),
+        "verified": String(verifiedUsersP) === "true",
+        "media": (filtersP === "none") ? null : filtersP,
+        "retweetsHandling": null
+      };
+    };
+
+    const makeRequest = () => {
+      return makeRequestParams(keyWords, bannedWords, usersInput, since, until, localTime, langInput, filters, verifiedUsers);
+    };
+
+    
+
+    //HANDLE INPUT
 
     const [usersInput, setUsersInput] = useState(
         userAuthenticated ?
@@ -60,16 +107,36 @@ const TwitterSna = () => {
               ""
           ) :
           "\"fake news\""
-      );
+    );
 
-      const handleUntilDateChange = (date) => {
+
+    const [verifiedUsers, setVerifiedUsers] = useState(
+        request && request.verified ?
+          request.verified :
+          "false"
+    );
+
+    const handleVerifiedUsersChange = event => {
+        setVerifiedUsers(event.target.value);
+    };
+
+    const [filters, setFilers] = useState(
+        request && request.media ?
+          request.media :
+          "none"
+    );
+
+
+   //HANDLE DATE
+
+    const handleUntilDateChange = (date) => {
         setUntilError(date === null);
         if (since && date < since)
           setUntilError(true);
         setUntil(date);
-      };
+    };
 
-      const [until, setUntil] = useState(
+    const [until, setUntil] = useState(
         userAuthenticated ?
           (
             request ?
@@ -77,30 +144,25 @@ const TwitterSna = () => {
               null
           ) :
           new Date("2020-01-01T00:00:00")
-      );
+    );
 
-      const untilDateIsValid = (momentDate) => {
+    const untilDateIsValid = (momentDate) => {
         const itemDate = momentDate.toDate();
         const currentDate = new Date();
         if (since)
           return itemDate <= currentDate && since < itemDate;
         return itemDate <= currentDate;
-      };
+    };
 
-      const handleSinceDateChange = (date) => {
+    const handleSinceDateChange = (date) => {
         setSinceError(date === null);
         if (until && date >= until)
           setSinceError(true);
         setSince(date);
-      };
+    };
 
-      const [verifiedUsers, setVerifiedUsers] = useState(
-        request && request.verified ?
-          request.verified :
-          "false"
-      );
 
-      const [since, setSince] = useState(
+    const [since, setSince] = useState(
         userAuthenticated ?
           (
             request ?
@@ -108,23 +170,31 @@ const TwitterSna = () => {
               null
           ) :
           new Date("2016-12-10T00:00:00")
-      );
+    );
 
-      const handleVerifiedUsersChange = event => {
-        setVerifiedUsers(event.target.value);
-      };
+    const sinceDateIsValid = (momentDate) => {
+        const itemDate = momentDate.toDate();
+        const currentDate = new Date();
+        if (until)
+          return itemDate <= currentDate && itemDate < until;
+        return itemDate <= currentDate;
+    };
 
-      const [filters, setFilers] = useState(
-        request && request.media ?
-          request.media :
-          "none"
-      );
+    const searchFormDisabled = isLoading || !userAuthenticated || urlObj.isUrlSearch;
+    
+    const [bannedWords, setBannedWords] = useState(
+        request && request.bannedWords ?
+          request.bannedWords.join(" ") :
+          ""
+    );
 
-      const handleFiltersChange = event => {
+    //HANDLE LANGUAGE
+
+    const handleFiltersChange = event => {
         setFilers(event.target.value);
-      };
+    };
 
-      const [langInput, setLangInput] = useState(
+    const [langInput, setLangInput] = useState(
         userAuthenticated ?
           (
             request && request.lang ?
@@ -132,9 +202,12 @@ const TwitterSna = () => {
               "lang_all"
           ) :
           "lang_en"
-      );
+    );
 
-      const onSubmit = () => {
+
+    //HANDLE SUBMISSION
+
+    const onSubmit = () => {
         //Mandatory Fields errors
         if (keyWords.trim() === "") {
           handleErrors(keyword("twitterStatsErrorMessage"));
@@ -170,22 +243,18 @@ const TwitterSna = () => {
           submissionEvent(JSON.stringify(newRequest));
           setSubmittedRequest(newRequest);
         }
-      };
+    };
 
-      const sinceDateIsValid = (momentDate) => {
-        const itemDate = momentDate.toDate();
-        const currentDate = new Date();
-        if (until)
-          return itemDate <= currentDate && itemDate < until;
-        return itemDate <= currentDate;
-      };
-    const searchFormDisabled = isLoading || !userAuthenticated || urlObj.isUrlSearch;
-    
-    const [bannedWords, setBannedWords] = useState(
-        request && request.bannedWords ?
-          request.bannedWords.join(" ") :
-          ""
-      );
+
+
+      // const [submittedRequest, setSubmittedRequest] = useState(null);
+    const [submittedRequest, setSubmittedRequest] = useState(
+      userAuthenticated ?
+       null :
+        makeRequest()
+    );
+  
+  useTwitterSnaRequest(submittedRequest);
 
     return (
         <div>

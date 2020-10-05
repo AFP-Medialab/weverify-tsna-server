@@ -11,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import TwitterIcon from '@material-ui/icons/Twitter';
+import useLoadLanguage from "../../hooks/useLoadLanguage"
 
 import CustomTable from "../../CustomTable/CustomTable";
 import CustomTableURL from "../../CustomTable/CustomTableURL";
@@ -18,29 +20,26 @@ import CustomTableURL from "../../CustomTable/CustomTableURL";
 import OnClickInfo from '../../OnClickInfo/OnClickInfo';
 import Grid from "@material-ui/core/Grid";
 
-import Plotly from 'plotly.js-dist';
+import dynamic from "next/dynamic"
+
+import createPlotlyComponent from 'react-plotly.js/factory';
+const Plotly = dynamic(() => import('plotly.js-dist'), {ssr: false} );
+
+
 
 export default function TwitterSnaResult(props) {
 
-   // const keyword = useLoadLanguage("components/NavItems/tools/TwitterSna.tsv", tsv);
-
     const dispatch = useDispatch();
     const classes = useMyStyles();
+    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const Plot = createPlotlyComponent(Plotly);
+    
     const [result, setResult] = useState(null);
     const [histoVisible, setHistoVisible] = useState(true);
-    const Plot = createPlotlyComponent(Plotly);
     const [histoTweets, setHistoTweets] = useState(null);
 
-
-    function downloadClick(csvArr, name, histo, type = "Tweets_") {
-        let encodedUri = encodeURIComponent(csvArr);
-        let link = document.createElement("a");
-        link.setAttribute("href", 'data:text/plain;charset=utf-8,' + encodedUri);
-        link.setAttribute("download", type + name + "_" + props.request.keywordList.join('&') + '_' + ((!histo) ? (props.request.from + "_" + props.request.until) : "") + ".csv");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
+    
+    //HISTOGRAM
 
     const onHistogramClick = (data) => {
         if (result.tweets !== undefined) {
@@ -68,6 +67,23 @@ export default function TwitterSnaResult(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.request), props.request])
 
+    //Set result 
+    useEffect(() => {
+
+        setResult(props.result);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(props.result), props.result, props.result.userGraph]);
+
+    function downloadClick(csvArr, name, histo, type = "Tweets_") {
+        let encodedUri = encodeURIComponent(csvArr);
+        let link = document.createElement("a");
+        link.setAttribute("href", 'data:text/plain;charset=utf-8,' + encodedUri);
+        link.setAttribute("download", type + name + "_" + props.request.keywordList.join('&') + '_' + ((!histo) ? (props.request.from + "_" + props.request.until) : "") + ".csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
     return (
         <Paper className={classes.root}>
