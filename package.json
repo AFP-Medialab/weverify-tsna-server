@@ -34,6 +34,7 @@
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "valid-url": "^1.0.9"
   }
 }

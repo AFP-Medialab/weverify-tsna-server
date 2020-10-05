@@ -59,6 +59,13 @@ export default function TwitterSnaResult(props) {
             window.open(rowData.link, '_blank');
         }
     }]
+    //Set result 
+    useEffect(() => {
+
+        setResult(props.result);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(props.result), props.result]);
 
     //Initialize tweets arrays
     useEffect(() => {
@@ -67,14 +74,7 @@ export default function TwitterSnaResult(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.request), props.request])
 
-    //Set result 
-    useEffect(() => {
-
-        setResult(props.result);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(props.result), props.result, props.result.userGraph]);
-
+    
     function downloadClick(csvArr, name, histo, type = "Tweets_") {
         let encodedUri = encodeURIComponent(csvArr);
         let link = document.createElement("a");
@@ -84,12 +84,14 @@ export default function TwitterSnaResult(props) {
         link.click();
         document.body.removeChild(link);
     };
-
+    if (result === null)
+        return <div />;
+    
     return (
         <Paper className={classes.root}>
             <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
             {
-                //result.histogram &&
+                result.histogram &&
                 <Accordion expanded={histoVisible} onChange={() => setHistoVisible(!histoVisible)}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
