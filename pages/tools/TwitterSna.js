@@ -453,7 +453,7 @@ const TwitterSna = () => {
                                 <LinearProgress hidden={!isLoading} />
             </Paper>
             {
-        //reduxResult &&
+        reduxResult &&
         <TwitterSnaResult result={reduxResult} 
                             request={request}
                             />

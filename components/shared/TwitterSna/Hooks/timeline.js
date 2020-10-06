@@ -1,8 +1,7 @@
 
 
-export const createTimeLineChart = (request, json) => {
+export const createTimeLineChart = (request, json, keyword) => {
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     let layout = {
         title: keyword("user_time_chart_title") + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"],
         automargin: true,
@@ -56,6 +55,7 @@ export const createTimeLineChart = (request, json) => {
         tweetsView: null,
     };
 };
+
 export const getJsonDataForTimeLineChart = (dataResponse) => {
     let dates = dataResponse;
 

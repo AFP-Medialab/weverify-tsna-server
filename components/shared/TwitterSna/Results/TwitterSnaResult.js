@@ -61,7 +61,7 @@ export default function TwitterSnaResult(props) {
     }]
     //Set result 
     useEffect(() => {
-
+        console.log(props.result);
         setResult(props.result);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,6 +84,7 @@ export default function TwitterSnaResult(props) {
         link.click();
         document.body.removeChild(link);
     };
+   
     if (result === null)
         return <div />;
     
