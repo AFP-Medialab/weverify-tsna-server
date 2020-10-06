@@ -1,8 +1,8 @@
-import fetch from "../../components/shared/lib/fetch";
+import fetcher from "../../components/shared/lib/fetch";
 import useSWR from 'swr';
 
 const TestSWR = () => {
-    const { data } = useSWR('/api/data', fetch);
+    const { data } = useSWR('/api/data', fetcher);
     if (!data) return <h1>loading...</h1>
     return (
         <div>
