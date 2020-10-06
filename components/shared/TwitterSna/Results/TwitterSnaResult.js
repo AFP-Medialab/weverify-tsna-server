@@ -22,9 +22,8 @@ import Grid from "@material-ui/core/Grid";
 
 import dynamic from "next/dynamic"
 
-import createPlotlyComponent from 'react-plotly.js/factory';
-const Plotly = dynamic(() => import('plotly.js-dist'), {ssr: false} );
 
+const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
 
 
 export default function TwitterSnaResult(props) {
@@ -32,25 +31,11 @@ export default function TwitterSnaResult(props) {
     const dispatch = useDispatch();
     const classes = useMyStyles();
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
-    const Plot = createPlotlyComponent(Plotly);
     
     const [result, setResult] = useState(null);
     const [histoVisible, setHistoVisible] = useState(true);
     const [histoTweets, setHistoTweets] = useState(null);
 
-    
-    //HISTOGRAM
-
-    const onHistogramClick = (data) => {
-        if (result.tweets !== undefined) {
-            let selectedPoints = data.points;
-            let filteredTweets = result.tweets.filter(function(tweet) {
-                let tweetDate = new Date(tweet._source.datetimestamp * 1000);
-                return filterTweetsForTimeLine(tweetDate, selectedPoints);
-            });
-            setHistoTweets(displayTweets(filteredTweets));
-        }
-    }
 
     let goToTweetAction = [{
         icon: TwitterIcon,
@@ -107,17 +92,7 @@ export default function TwitterSnaResult(props) {
                             {(result.histogram.json && (result.histogram.json.length === 0) &&
                                 <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>)}
                             {(result.histogram.json && result.histogram.json.length !== 0) &&
-                                <Plot useResizeHandler
-                                    style={{ width: '100%', height: "450px" }}
-                                    data={result.histogram.json}
-                                    layout={result.histogram.layout}
-                                    config={result.histogram.config}
-                                    onClick={(e) => onHistogramClick(e)}
-                                    onPurge={(a, b) => {
-                                        console.log(a);
-                                        console.log(b);
-                                    }}
-                                />
+                                <PlotTimeLine result={result} />
                             }
                             <Box m={1} />
                             <OnClickInfo keyword={"twittersna_timeline_tip"}/>
