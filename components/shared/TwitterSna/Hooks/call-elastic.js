@@ -1,5 +1,6 @@
-let elasticSearch_url = process.env.REACT_APP_ELK_URL;
+let elasticSearch_url = "/api/getTweets";
 
+//let elasticSearch_url = process.env.REACT_APP_ELK_URL;
 
 // Aggregation data for pie charts, timelime chart,...
 export function getAggregationData(param) {
