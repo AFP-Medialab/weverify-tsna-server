@@ -43,3 +43,11 @@ export const setGexfExport = (data) => {
         payload : data
     }
 };
+
+export const setHistogram = (data) => {
+    console.log("action red");
+    return {
+        type : "SET_HISTOGRAM_RESULT",
+        payload :  data
+    }
+};

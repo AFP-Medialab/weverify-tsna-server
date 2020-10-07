@@ -4,6 +4,7 @@ const defaultState = {
     loadingMessage: "",
     request: "",
     result: null,
+    histoview: null,
 };
 
 const twitterSnaReducer = (state = defaultState, action) => {
@@ -26,6 +27,9 @@ const twitterSnaReducer = (state = defaultState, action) => {
             return state;
         case "SET_TWITTER_SNA_GEXF_EXPORT":
             state.gexfExport = action.payload;
+            return state;
+        case "SET_HISTOGRAM_RESULT":
+            state.histoview = action.payload;
             return state;
         default:
             return state;

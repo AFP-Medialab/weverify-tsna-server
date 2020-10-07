@@ -1,32 +1,28 @@
-
-import useLoadLanguage from "../../languages/languages";
+import useLoadLanguage from "../../hooks/useLoadLanguage";
 import React, {useEffect, useState} from 'react';
+import { useDispatch } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import CustomTable from "../../CustomTable/CustomTable";
+import TwitterIcon from '@material-ui/icons/Twitter';
+import {setHistogram} from "../../../../redux/actions/tools/twitterSnaActions";
 
 export default function HistoTweetsTable (props) {
 
-
+    const dispatch = useDispatch();
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
 
     const [histoTweets, setHistoTweets] = useState(null);
 
-    const [state, setState] = useState(
-        {
-            histoTweets: props.histoTweets,        
-        }
-    );
-    useEffect(() => {
-        setState({
-            ...state,
-            histoTweets: props.histoTweets,
-        })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.histoTweets]);
 
-    
+    let goToTweetAction = [{
+        icon: TwitterIcon,
+        tooltip: keyword("twittersna_result_go_to_tweet"),
+        onClick: (event, rowData) => {
+            window.open(rowData.link, '_blank');
+        }
+    }]
 
 return (
 <div>
@@ -36,7 +32,7 @@ return (
                 <Button
                     variant={"contained"}
                     color={"secondary"}
-                    onClick={() => setHistoTweets(null)}
+                    onClick={() => dispatch(setHistogram(null))}
                 >
                     {
                         keyword('twittersna_result_hide')
