@@ -14,6 +14,10 @@ import {
     createTimeLineChart,
     getJsonDataForTimeLineChart
 } from "./timeline";
+import {
+    createPieCharts,
+    getJsonDataForPieCharts
+} from "./pieCharts"
 
 
 
@@ -74,6 +78,14 @@ const useTwitterSnaRequest = (request) => {
             let responseAggs = responseArrayOf9[0]['aggregations']
             const result = {};
             result.histogram = createTimeLineChart(request, getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']), keyword);
+            result.tweetCount = {};
+            result.tweetCount.count = responseAggs['tweet_count']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
+            result.tweetCount.retweet = responseAggs['retweets']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
+            result.tweetCount.like = responseAggs['likes']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
+            result.pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
+
+            result.tweets = responseArrayOf9[1].tweets;
+
             dispatch(setTwitterSnaResult(request, result, false, true));
         };
 
