@@ -25,7 +25,7 @@ import dynamic from "next/dynamic"
 
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
-
+const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false});
 
 export default function TwitterSnaResult(props) {
 
@@ -36,31 +36,7 @@ export default function TwitterSnaResult(props) {
     const [result, setResult] = useState(null);
 
 
-    const [pieCharts0, setPieCharts0] = useState(null);
-    const [pieCharts1, setPieCharts1] = useState(null);
-    const [pieCharts2, setPieCharts2] = useState(null);
-    const [pieCharts3, setPieCharts3] = useState(null);
 
-    const hideTweetsView = (index) => {
-        switch (index) {
-            case 0:
-                setPieCharts0(null);
-                break;
-            case 1:
-                setPieCharts1(null);
-                break;
-            case 2:
-                setPieCharts2(null);
-                break;
-            case 3:
-                setPieCharts3(null);
-                break;
-            default:
-                break;
-        }
-    };
-
-    const pieCharts = [pieCharts0, pieCharts1, pieCharts2, pieCharts3];
 
     //Set result 
     useEffect(() => {
@@ -70,27 +46,7 @@ export default function TwitterSnaResult(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.result), props.result]);
 
-    //Initialize tweets arrays
-    useEffect(() => {
-       // setHistoTweets(null);
-        setPieCharts0(null);
-        setPieCharts1(null);
-        setPieCharts2(null);
-        setPieCharts3(null);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(props.request), props.request])
-
-    
-    function downloadClick(csvArr, name, histo, type = "Tweets_") {
-        let encodedUri = encodeURIComponent(csvArr);
-        let link = document.createElement("a");
-        link.setAttribute("href", 'data:text/plain;charset=utf-8,' + encodedUri);
-        link.setAttribute("download", type + name + "_" + props.request.keywordList.join('&') + '_' + ((!histo) ? (props.request.from + "_" + props.request.until) : "") + ".csv");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
    
     if (result === null)
         return <div />;
@@ -139,120 +95,8 @@ export default function TwitterSnaResult(props) {
             
             {/*
                 result.pieCharts &&
-                result.pieCharts.map((obj, index) => {
-                    if ((props.request.userList.length === 0 || index === 3))
-                        return (
-                            <Accordion key={index}>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls={"panel" + index + "a-content"}
-                                    id={"panel" + index + "a-header"}
-                                >
-                                    <Typography className={classes.heading}>{keyword(obj.title)}</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Box alignItems="center" justifyContent="center" width={"100%"}>
-                                        {
-                                            (obj.json === null || (obj.json[0].values.length === 1 && obj.json[0].values[0] === "")) &&
-                                                <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>
-                                        }
-                                        {
-                                            obj.json !== null && !(obj.json[0].values.length === 1 && obj.json[0].values[0] === "") &&
-                                            <Grid container justify="space-between" spacing={2}
-                                                alignContent={"center"}>
-                                                <Grid item>
-                                                    <Button
-                                                        variant={"contained"}
-                                                        color={"primary"}
-                                                        onClick={() => downloadAsPNG(obj.title)}>
-                                                        {
-                                                            keyword('twittersna_result_download_png')
-                                                        }
-                                                    </Button>
-
-                                                </Grid>
-                                                <Grid item>
-                                                    <Button
-                                                        variant={"contained"}
-                                                        color={"primary"}
-                                                        onClick={() => downloadClick(createCSVFromPieChart(obj), 
-                                                                                    keyword(obj.title), 
-                                                                                    false, 
-                                                                                    "")}>
-                                                        
-                                                        CSV
-                                                    </Button>
-                                                </Grid>
-                                                <Grid item>
-                                                    <Button
-                                                        variant={"contained"}
-                                                        color={"primary"}
-                                                        onClick={() => downloadAsSVG(obj.title)}>
-                                                        {
-                                                            keyword('twittersna_result_download_svg')
-                                                        }
-                                                    </Button>
-                                                </Grid>
-                                            </Grid>
-                                        }
-                                        {
-                                            (obj.json !== null) && !(obj.json[0].values.length === 1 && obj.json[0].values[0] === "") &&
-                                            <div>
-                                                <Plot
-                                                    data={obj.json}
-                                                    layout={obj.layout}
-                                                    config={obj.config}
-                                                    onClick={e => {
-                                                        onDonutsClick(e, index)
-                                                    }}
-                                                    divId={obj.title}
-                                                />
-                                                <Box m={1} />
-                                                <OnClickInfo keyword={obj.tip}/>
-                                            </div>
-                                        }
-                                        {
-                                            pieCharts[index] &&
-                                            <div>
-                                                <Grid container justify="space-between" spacing={2}
-                                                    alignContent={"center"}>
-                                                    <Grid item>
-                                                        <Button
-                                                            variant={"contained"}
-                                                            color={"secondary"}
-                                                            onClick={() => hideTweetsView(index)}>
-                                                            {
-                                                                keyword('twittersna_result_hide')
-                                                            }
-                                                        </Button>
-                                                    </Grid>
-                                                    <Grid item>
-                                                        <Button
-                                                            variant={"contained"}
-                                                            color={"primary"}
-                                                            onClick={() => downloadClick(pieCharts[index].csvArr, (index === 3) ? "mentioned_" + pieCharts[index].selected : pieCharts[index].selected)}>
-                                                            {
-                                                                keyword('twittersna_result_download')
-                                                            }
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                                <Box m={2} />
-                                                <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                                    colums={pieCharts[index].columns}
-                                                    data={pieCharts[index].data}
-                                                    actions={goToTweetAction}
-                                                />
-                                            </div>
-                                        }
-                                    </Box>
-                                </AccordionDetails>
-                            </Accordion>
-                        )
-                    else
-                        return null;
-                })*/
-            }
+                <PlotPieChart result={result} />
+            */}
         </Paper>
     );
 };

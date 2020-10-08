@@ -9,6 +9,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
 
 
+
 export default function HistoTweetsTable (props) {
 
     const dispatch = useDispatch();
