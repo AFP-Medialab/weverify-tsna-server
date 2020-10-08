@@ -1,20 +1,29 @@
 import useLoadLanguage from "../../hooks/useLoadLanguage";
 import React, {useEffect, useState} from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import CustomTable from "../../CustomTable/CustomTable";
 import TwitterIcon from '@material-ui/icons/Twitter';
-import {setHistogram} from "../../../../redux/actions/tools/twitterSnaActions";
+import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
+
 
 export default function HistoTweetsTable (props) {
 
     const dispatch = useDispatch();
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const request = useSelector(state => state.twitterSna.request);
 
-    const [histoTweets, setHistoTweets] = useState(null);
-
+    function downloadClick(csvArr, name, histo, type = "Tweets_") {
+        let encodedUri = encodeURIComponent(csvArr);
+        let link = document.createElement("a");
+        link.setAttribute("href", 'data:text/plain;charset=utf-8,' + encodedUri);
+        link.setAttribute("download", type + name + "_" + request.keywordList.join('&') + '_' + ((!histo) ? (request.from + "_" + request.until) : "") + ".csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
     let goToTweetAction = [{
         icon: TwitterIcon,
@@ -32,7 +41,7 @@ return (
                 <Button
                     variant={"contained"}
                     color={"secondary"}
-                    onClick={() => dispatch(setHistogram(null))}
+                    onClick={() => dispatch(setTweetsDetailPanel(props.from, null))}
                 >
                     {
                         keyword('twittersna_result_hide')
@@ -43,7 +52,7 @@ return (
                 <Button
                     variant={"contained"}
                     color={"primary"}
-                    onClick={() => downloadClick(props.histoTweets.csvArr, props.histoTweets.data[0].date.split(' ')[0], true)}>
+                    onClick={() => downloadClick(props.data.csvArr, props.data.data[0].date.split(' ')[0], true)}>
                     {
                         keyword('twittersna_result_download')
                     }
@@ -53,8 +62,8 @@ return (
         <Box m={2} />
         <CustomTable
             title={keyword("twittersna_result_slected_tweets")}
-            colums={props.histoTweets.columns}
-            data={props.histoTweets.data}
+            colums={props.data.columns}
+            data={props.data.data}
             actions={goToTweetAction}
         />
     </div>

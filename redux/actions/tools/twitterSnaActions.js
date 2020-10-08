@@ -44,10 +44,14 @@ export const setGexfExport = (data) => {
     }
 };
 
-export const setHistogram = (data) => {
-    console.log("action red");
-    return {
-        type : "SET_HISTOGRAM_RESULT",
-        payload :  data
+export const setTweetsDetailPanel = (from, data) => {
+    console.log("from " + from);
+    switch(from){
+        case "PLOT_LINE":
+            return {
+                type : "SET_HISTOGRAM_RESULT",
+                payload :  data
+            }
     }
+    
 };

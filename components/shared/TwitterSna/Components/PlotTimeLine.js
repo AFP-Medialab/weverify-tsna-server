@@ -13,10 +13,10 @@ import HistoTweetsTable from "../Components/HistoTweetsTable";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import {setHistogram} from "../../../../redux/actions/tools/twitterSnaActions";
+import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
 
 const Plot = createPlotComponent(plotly);
-
+let from = "PLOT_LINE"
 export default function PlotTimeLine(props){
     const dispatch = useDispatch();
     //HISTOGRAM
@@ -74,7 +74,7 @@ export default function PlotTimeLine(props){
                 let tweetDate = new Date(tweet._source.datetimestamp * 1000);
                 return filterTweetsForTimeLine(tweetDate, selectedPoints);
             });
-            dispatch(setHistogram(displayTweets(filteredTweets, keyword)));
+            dispatch(setTweetsDetailPanel(from, displayTweets(filteredTweets, keyword)));
         }
     }
 
@@ -112,7 +112,10 @@ export default function PlotTimeLine(props){
                     <Box m={2} />
                     {
                         histoTweets &&
-                        <HistoTweetsTable histoTweets={histoTweets} />
+                        <HistoTweetsTable 
+                            data={histoTweets} 
+                            from={from} 
+                        />
                     }
                 </div>
             </AccordionDetails>
