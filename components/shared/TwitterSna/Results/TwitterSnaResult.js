@@ -10,8 +10,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import TwitterIcon from '@material-ui/icons/Twitter';
 import useLoadLanguage from "../../hooks/useLoadLanguage"
 
 import CustomTable from "../../CustomTable/CustomTable";
@@ -35,12 +33,8 @@ export default function TwitterSnaResult(props) {
     
     const [result, setResult] = useState(null);
 
-
-
-
     //Set result 
     useEffect(() => {
-        console.log(props.result);
         setResult(props.result);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,10 +87,10 @@ export default function TwitterSnaResult(props) {
                 </Accordion>
             }
             
-            {/*
+            {
                 result.pieCharts &&
                 <PlotPieChart result={result} />
-            */}
+            }
         </Paper>
     );
 };

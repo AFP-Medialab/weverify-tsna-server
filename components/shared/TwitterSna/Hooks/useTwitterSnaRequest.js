@@ -40,9 +40,7 @@ const useTwitterSnaRequest = (request) => {
             dispatch(setTwitterSnaLoadingMessage(keyword('twittersna_building_graphs')));
           
             generateGraph(request, true).then(() => {
-                console.log("stop loading");
               dispatch(setTwitterSnaLoading(false));
-              console.log("dispatche loading");
             });
           
         };
@@ -83,7 +81,7 @@ const useTwitterSnaRequest = (request) => {
             result.tweetCount.retweet = responseAggs['retweets']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             result.tweetCount.like = responseAggs['likes']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             result.pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
-
+            
             result.tweets = responseArrayOf9[1].tweets;
 
             dispatch(setTwitterSnaResult(request, result, false, true));

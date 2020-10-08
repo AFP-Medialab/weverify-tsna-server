@@ -16,7 +16,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
 
 const Plot = createPlotComponent(plotly);
-let from = "PLOT_LINE"
+let from = "PLOT_LINE";
 export default function PlotTimeLine(props){
     const dispatch = useDispatch();
     //HISTOGRAM

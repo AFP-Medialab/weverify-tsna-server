@@ -11,7 +11,6 @@ const getTweetWithClickableLink = (cellData) => {
 };
 
 export function displayTweets (filteredTweets, keyword, sortedColumn) {
-
     let columns = [];
     if (sortedColumn === "nbLikes") {
         columns = [

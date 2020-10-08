@@ -1,6 +1,3 @@
-
-
-
 export const createPieCharts = (request, jsonPieCharts, keyword) => {
     let layout = {
       title: {
@@ -44,11 +41,11 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
 
     for (let cpt = 0; cpt < keywordTitles.length; cpt++) {
       let specificLayout = JSON.parse(JSON.stringify(layout));
-      let specificTitle = keyword("mention_cloud_chart_title") + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"];
+      let specificTitle = keyword(keywordTitles[cpt]) + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"];
       specificLayout.title.text = specificTitle;
       pieCharts.push(
         {
-          title: "mention_cloud_chart_title",
+          title: keywordTitles[cpt],
           json: jsonPieCharts[cpt],
           layout: specificLayout,
           config: config,
@@ -56,7 +53,6 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
         }
       );
     }
-    console.log("pie : "+ pieCharts)
     return pieCharts;
   };
 
@@ -91,10 +87,9 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
         outsidetextfont: {size: 20, color: "#377eb8"},
     }];
 
-    console.log("getjsonfrompie = " + obj);
     return obj;
   }
-
+  
   export const getJsonDataForPieCharts = (esResponse, paramKeywordList) => {
 
     function topByCount(key, values, labels, parents, mainKey) {
@@ -117,7 +112,10 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
     if (esResponse["top_user_retweet"]) {
       jsonPieCharts.push(getJsonDataForPieChart(esResponse["top_user_retweet"]["buckets"], paramKeywordList, topBySum));
     }
-    if (esResponse["top_u, queryTweetsFromES, continueQueryTweetsFromESWhenMore10k, er"]) {
+    if (esResponse["top_user_favorite"]) {
+      jsonPieCharts.push(getJsonDataForPieChart(esResponse["top_user_favorite"]["buckets"], paramKeywordList, topBySum));
+    }
+    if (esResponse["top_user"]) {
       jsonPieCharts.push(getJsonDataForPieChart(esResponse["top_user"]["buckets"], paramKeywordList, topByCount));
     }
     if (esResponse["top_user_mentions"]) {
@@ -126,50 +124,6 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
 
     return jsonPieCharts;
   }
-
-  export const onDonutsClick = (data, index) => {
-
-    //For mention donuts
-    if (index === 3) {
-        if (result.tweets !== undefined) {
-            let selectedUser = data.points[0].label;
-            let filteredTweets = result.tweets.filter(tweet => tweet._source.user_mentions !== undefined && tweet._source.user_mentions.length > 0)
-                .filter(function (tweet) {
-                    let lcMentionArr = tweet._source.user_mentions.map(v => v.screen_name.toLowerCase());
-                    return lcMentionArr.includes(selectedUser.toLowerCase());
-                });
-            let dataToDisplay = displayTweets(filteredTweets);
-            dataToDisplay["selected"] = selectedUser;
-            setPieCharts3(dataToDisplay);
-        }
-    }
-    // For retweets, likes, top_user donut
-    else {
-        if (result.tweets !== undefined) {
-            let selectedUser = data.points[0].label;
-            let filteredTweets = result.tweets.filter(function (tweetObj) {
-                return tweetObj._source.screen_name.toLowerCase() === selectedUser.toLowerCase();
-            });
-            let dataToDisplay = index === 0 ? displayTweets(filteredTweets, "retweetNb") : (index === 1 ? displayTweets(filteredTweets, "nbLikes") : displayTweets(filteredTweets));
-
-            dataToDisplay["selected"] = selectedUser;
-            switch (index) {
-                case 0:
-                    setPieCharts0(dataToDisplay);
-                    break;
-                case 1:
-                    setPieCharts1(dataToDisplay);
-                    break;
-                case 2:
-                    setPieCharts2(dataToDisplay);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-};
 
 //Download as SVG
 export function downloadAsSVG(elementId) {

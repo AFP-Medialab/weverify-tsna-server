@@ -1,5 +1,3 @@
-
-
 export const createTimeLineChart = (request, json, keyword) => {
 
     let layout = {

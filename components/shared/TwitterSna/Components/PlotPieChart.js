@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import plotly from 'plotly.js-dist';
 import createPlotComponent from 'react-plotly.js/factory';
 import useLoadLanguage from "../../hooks/useLoadLanguage";
-import {displayTweets} from "../lib/displayTweets";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
@@ -14,10 +13,13 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
-import {downloadAsPNG, createCSVFromPieChart, downloadAsSVG, onDonutsClick} from "../Hooks/pieCharts"
+import {downloadAsPNG, createCSVFromPieChart, downloadAsSVG} from "../Hooks/pieCharts"
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import {displayTweets} from "../lib/displayTweets";
 
-
-let from = "PLOT_PIECHART";
+const Plot = createPlotComponent(plotly);
+let from = "PLOT_PIE_CHART";
 
 export default function PlotPieChart (props) { 
 
@@ -25,51 +27,85 @@ export default function PlotPieChart (props) {
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const request = useSelector(state => state.twitterSna.request);
 
+    const pieChart_0 =  useSelector(state => state.twitterSna.pieCharts);
+    const pieChart_1 =  useSelector(state => state.twitterSna.pieCharts);
+    const pieChart_2 =  useSelector(state => state.twitterSna.pieCharts);
+    const pieChart_3 =  useSelector(state => state.twitterSna.pieCharts);
+    //const pieChartsTab = useSelector(state => state.twitterSna.pieCharts);
+    
+    const pieCharts = [pieChart_0,pieChart_1,pieChart_2,pieChart_3];
+
     const classes = useMyStyles();
 
-    const [pieCharts0, setPieCharts0] = useState(null);
-    const [pieCharts1, setPieCharts1] = useState(null);
-    const [pieCharts2, setPieCharts2] = useState(null);
-    const [pieCharts3, setPieCharts3] = useState(null);
-
-    const hideTweetsView = (index) => {
-        switch (index) {
-            case 0:
-                setPieCharts0(null);
-                break;
-            case 1:
-                setPieCharts1(null);
-                break;
-            case 2:
-                setPieCharts2(null);
-                break;
-            case 3:
-                setPieCharts3(null);
-                break;
-            default:
-                break;
+    const [state, setState] = useState(
+        {
+            result: props.result        
         }
+    );
+    useEffect(() => {
+        setState({
+            ...state,
+            result: props.result,
+        })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.result]);
+
+    /*useEffect(()=>{
+        setPieCharts(pieChartsTab);
+    }, [pieChartsTab]);
+*/
+
+
+    console.log("pieCharts : "+ JSON.stringify(pieCharts))
+
+    const onDonutsClick = (data, index, tweets) => {
+        //For mention donuts
+        if (index === 3) {
+            if (tweets != null) {
+                let selectedUser = data.points[0].label;
+                let filteredTweets = tweets.filter(tweet => tweet._source.user_mentions !== undefined && tweet._source.user_mentions.length > 0)
+                    .filter(function (tweet) {
+                        let lcMentionArr = tweet._source.user_mentions.map(v => v.screen_name.toLowerCase());
+                        return lcMentionArr.includes(selectedUser.toLowerCase());
+                    });
+                let dataToDisplay = displayTweets(filteredTweets, keyword);
+                dataToDisplay["selected"] = selectedUser;
+                dispatch(setTweetsDetailPanel(from+"_"+index), dataToDisplay);
+            }
+        }
+        // For retweets, likes, top_user donut
+        else {
+            if (tweets != null) {
+                let selectedUser = data.points[0].label;
+                let filteredTweets = tweets.filter(function (tweetObj) {
+                    return tweetObj._source.screen_name.toLowerCase() === selectedUser.toLowerCase();
+                });
+                let dataToDisplay = index === 0 ? displayTweets(filteredTweets, keyword, "retweetNb") : (index === 1 ? displayTweets(filteredTweets, keyword, "nbLikes") : displayTweets(filteredTweets, keyword));
+    
+                dataToDisplay["selected"] = selectedUser;
+                switch (index) {
+                    case 0:
+                        setPieCharts0(dataToDisplay);
+                        break;
+                    case 1:
+                        setPieCharts1(dataToDisplay);
+                        break;
+                    case 2:
+                        setPieCharts2(dataToDisplay);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    
     };
 
-    const pieCharts = [pieCharts0, pieCharts1, pieCharts2, pieCharts3];
-
-        //Initialize tweets arrays
-        useEffect(() => {
-            // setHistoTweets(null);
-             setPieCharts0(null);
-             setPieCharts1(null);
-             setPieCharts2(null);
-             setPieCharts3(null);
-     
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-         }, [request])
-
-
-
 return (
-    props.result.pieCharts.map((obj, index) => {
-        console.log("notre json : " + obj.json)
+    state.result.pieCharts.map((obj, index) => {
         if ((request.userList.length === 0 || index === 3))
+        {
+            console.log("pie_2 : "+ JSON.stringify(pieCharts))
             return (
                 <Accordion key={index}>
                     <AccordionSummary
@@ -132,7 +168,7 @@ return (
                                         layout={obj.layout}
                                         config={obj.config}
                                         onClick={e => {
-                                            onDonutsClick(e, index)
+                                            onDonutsClick(e, index, state.result.tweets)
                                         }}
                                         divId={obj.title}
                                     />
@@ -144,7 +180,7 @@ return (
                                 pieCharts[index] && 
                                 <HistoTweetsTable 
                                     data={pieCharts[index]} 
-                                    from={from} 
+                                    from={from+"_"+index} 
                                 />
                                 /*
                                 <div>
@@ -183,6 +219,7 @@ return (
                     </AccordionDetails>
                 </Accordion>
             )
+                        }
         else
             return null;
     })

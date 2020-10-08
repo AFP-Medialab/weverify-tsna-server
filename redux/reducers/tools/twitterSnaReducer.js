@@ -5,6 +5,8 @@ const defaultState = {
     request: "",
     result: null,
     histoview: null,
+    toto : 1,
+    pieCharts: [null,null,null,null], 
 };
 
 const twitterSnaReducer = (state = defaultState, action) => {
@@ -30,6 +32,19 @@ const twitterSnaReducer = (state = defaultState, action) => {
             return state;
         case "SET_HISTOGRAM_RESULT":
             state.histoview = action.payload;
+            return state;
+        case "SET_PIE_CHART_RESULT_0":
+            state.pieCharts[0] = action.payload;
+            return state;
+        case "SET_PIE_CHART_RESULT_1":
+            state.pieCharts[1] = action.payload;
+            return state;
+        case "SET_PIE_CHART_RESULT_2":
+            state.pieCharts[2] = action.payload;
+            return state;
+        case "SET_PIE_CHART_RESULT_3":
+            console.log("ici " + action.payload);
+            state.pieCharts[3] = action.payload;
             return state;
         default:
             return state;

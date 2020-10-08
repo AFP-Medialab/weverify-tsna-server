@@ -52,6 +52,26 @@ export const setTweetsDetailPanel = (from, data) => {
                 type : "SET_HISTOGRAM_RESULT",
                 payload :  data
             }
+        case "PLOT_PIE_CHART_0":
+            return {
+                type : "SET_PIE_CHART_RESULT_0",
+                payload :  data
+            }
+        case "PLOT_PIE_CHART_1":
+            return {
+                type : "SET_PIE_CHART_RESULT_1",
+                payload :  data
+            }
+        case "PLOT_PIE_CHART_2":
+            return {
+                type : "SET_PIE_CHART_RESULT_2",
+                payload :  data
+            }
+        case "PLOT_PIE_CHART_3":
+            return {
+                type : "SET_PIE_CHART_RESULT_3",
+                payload :  data
+            }
     }
     
 };
