@@ -4,6 +4,10 @@ import {green} from "@material-ui/core/colors";
 const drawerWidth = 200;
 
 const useMyStyles = makeStyles(theme => ({
+    all: {
+        minWidth: "1280px",
+        maxWidth: "1280px",
+    },
     root: {
         padding: theme.spacing(3, 2),
         marginTop: 5,
