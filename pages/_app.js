@@ -44,8 +44,9 @@ const theme = createMuiTheme({
   });
 
 
-function MyApp ({ Component, pageProps }) {
-    const store = useStore((state) => state);
+const MyApp = ({ Component, pageProps }) => {
+  
+    const store = useStore(pageProps.initialReduxState);
         return (
             <Provider store={store}>
                 <MuiThemeProvider theme={theme}>

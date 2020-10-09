@@ -44,8 +44,8 @@ export const setGexfExport = (data) => {
     }
 };
 
-export const setTweetsDetailPanel = (from, data) => {
-    console.log("from " + from);
+export const setTweetsDetailPanel = (from, data) => {    
+    console.log("from " + from)
     switch(from){
         case "PLOT_LINE":
             return {
@@ -54,23 +54,25 @@ export const setTweetsDetailPanel = (from, data) => {
             }
         case "PLOT_PIE_CHART_0":
             return {
-                type : "SET_PIE_CHART_RESULT_0",
-                payload :  data
+                /*type : "SET_PIE_CHART_RESULT_0",
+                payload :  data*/
+                type : "SET_PIE_CHART_RESULT",
+                payload :  data != null ? null : 0
             }
         case "PLOT_PIE_CHART_1":
             return {
-                type : "SET_PIE_CHART_RESULT_1",
-                payload :  data
+                type : "SET_PIE_CHART_RESULT",
+                payload :  data != null ? null : 1
             }
         case "PLOT_PIE_CHART_2":
             return {
-                type : "SET_PIE_CHART_RESULT_2",
-                payload :  data
+                type : "SET_PIE_CHART_RESULT",
+                payload :  data != null ? null : 2
             }
         case "PLOT_PIE_CHART_3":
             return {
-                type : "SET_PIE_CHART_RESULT_3",
-                payload :  data
+                type : "SET_PIE_CHART_RESULT",
+                payload :  data != null ? null : 3
             }
     }
     

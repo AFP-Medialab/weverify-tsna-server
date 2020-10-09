@@ -40,7 +40,6 @@ export default function PlotTimeLine(props){
     }, [props.result]);
 
     
-    
 
     function isInRange(pointDate, objDate, periode) {
 

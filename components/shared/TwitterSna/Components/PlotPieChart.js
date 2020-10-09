@@ -21,20 +21,19 @@ import {displayTweets} from "../lib/displayTweets";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 
+
 export default function PlotPieChart (props) { 
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch();  
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const request = useSelector(state => state.twitterSna.request);
-
-    const pieChart_0 =  useSelector(state => state.twitterSna.pieCharts);
-    const pieChart_1 =  useSelector(state => state.twitterSna.pieCharts);
-    const pieChart_2 =  useSelector(state => state.twitterSna.pieCharts);
-    const pieChart_3 =  useSelector(state => state.twitterSna.pieCharts);
-    //const pieChartsTab = useSelector(state => state.twitterSna.pieCharts);
-    
-    const pieCharts = [pieChart_0,pieChart_1,pieChart_2,pieChart_3];
-
+    const [pieCharts0, setPieCharts0] = useState(null);
+    const [pieCharts1, setPieCharts1] = useState(null);
+    const [pieCharts2, setPieCharts2] = useState(null);
+    const [pieCharts3, setPieCharts3] = useState(null);
+    //const charts = useSelector(state => state.twitterSna.pieCharts);
+    const charts = [pieCharts0, pieCharts1, pieCharts2, pieCharts3];
+    const donutIndex = useSelector(state => state.twitterSna.donutIndex);
     const classes = useMyStyles();
 
     const [state, setState] = useState(
@@ -50,13 +49,24 @@ export default function PlotPieChart (props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.result]);
 
-    /*useEffect(()=>{
-        setPieCharts(pieChartsTab);
-    }, [pieChartsTab]);
-*/
-
-
-    console.log("pieCharts : "+ JSON.stringify(pieCharts))
+    useEffect(()=> {
+        switch (donutIndex) {
+            case 0:
+                setPieCharts0(null);
+                break;
+            case 1:
+                setPieCharts1(null);
+                break;
+            case 2:
+                setPieCharts2(null);
+                break;
+            case 3:
+                setPieCharts3(null);
+                break;
+            default:
+                break;
+        }
+    }, [donutIndex]);
 
     const onDonutsClick = (data, index, tweets) => {
         //For mention donuts
@@ -70,7 +80,8 @@ export default function PlotPieChart (props) {
                     });
                 let dataToDisplay = displayTweets(filteredTweets, keyword);
                 dataToDisplay["selected"] = selectedUser;
-                dispatch(setTweetsDetailPanel(from+"_"+index), dataToDisplay);
+                setPieCharts3(dataToDisplay);
+                dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
             }
         }
         // For retweets, likes, top_user donut
@@ -86,12 +97,15 @@ export default function PlotPieChart (props) {
                 switch (index) {
                     case 0:
                         setPieCharts0(dataToDisplay);
+                        dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
                         break;
                     case 1:
                         setPieCharts1(dataToDisplay);
+                        dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
                         break;
                     case 2:
                         setPieCharts2(dataToDisplay);
+                        dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
                         break;
                     default:
                         break;
@@ -100,12 +114,10 @@ export default function PlotPieChart (props) {
         }
     
     };
-
 return (
     state.result.pieCharts.map((obj, index) => {
         if ((request.userList.length === 0 || index === 3))
-        {
-            console.log("pie_2 : "+ JSON.stringify(pieCharts))
+        {           
             return (
                 <Accordion key={index}>
                     <AccordionSummary
@@ -177,9 +189,9 @@ return (
                                 </div>
                             }
                             {
-                                pieCharts[index] && 
+                                charts[index] && 
                                 <HistoTweetsTable 
-                                    data={pieCharts[index]} 
+                                    data={charts[index]} 
                                     from={from+"_"+index} 
                                 />
                                 /*

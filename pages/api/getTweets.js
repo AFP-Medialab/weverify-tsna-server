@@ -3,9 +3,9 @@ import fetch from 'isomorphic-unfetch'
 let elasticURL = process.env.REACT_APP_ELK_URL;
 
 export default (req, res) =>{
-    console.log("request");
+   /* console.log("request");
     console.log(elasticURL);
-    console.log(req.body);
+    console.log(req.body);*/
 
     
     fetch(elasticURL, {

@@ -6,7 +6,7 @@ import useLoadLanguage from "../../components/shared/hooks/useLoadLanguage";
 import { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import "../../redux/actions/tools/twitterSnaActions"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import DateTimePicker from "../../components/shared/DateTimePicker/DateTimePicker";
 import FormControl from "@material-ui/core/FormControl";
@@ -29,7 +29,7 @@ import { replaceAll, stringToList } from "../../components/shared/lib/StringUtil
 import dateFormat from "dateformat";
 
 const TwitterSna = () => {
-    
+
     const classes = useMyStyles();
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const request = useSelector(state => state.twitterSna.request);
@@ -45,6 +45,8 @@ const TwitterSna = () => {
     const [localTime, setLocalTime] = useState("true");
     const [openLangInput, setLangInputOpen] = React.useState(false);
     const [keyWordsError, setKeyWordsError] = useState(false);
+
+ 
   
     //PARAMS
     

@@ -1,23 +1,29 @@
+import {HYDRATE} from 'next-redux-wrapper';
 const defaultState = {
     notification: false,
     loading: false,
     loadingMessage: "",
     request: "",
     result: null,
-    histoview: null,
-    toto : 1,
     pieCharts: [null,null,null,null], 
+    donutIndex: null,
 };
 
-const twitterSnaReducer = (state = defaultState, action) => {
-    switch (action.type) {
+const twitterSnaReducer = (state = defaultState, {type, payload}) => {
+    switch (type) {
+        case HYDRATE:
+            return {...state, ...payload};
         case "SET_TWITTER_SNA_RESULT":
-            return action.payload;
+            state.notification = payload.notification;
+            state.loading = payload.loading;
+            state.request = payload.request;
+            state.result = payload.result;
+            return state;
         case "SET_TWITTER_SNA_LOADING":
-            state.loading = action.payload;
+            state.loading = payload;
             return state;
         case "SET_TWITTER_SNA_LOADING_MSG":
-            state.loadingMessage = action.payload;
+            state.loadingMessage = payload;
             return state;
         case "TWITTER_SNA_CLEAN_STATE":
             state.request = "";
@@ -25,26 +31,16 @@ const twitterSnaReducer = (state = defaultState, action) => {
             state.result = null;
             return state;
         case "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE":
-            state.topUserProfile = action.payload;
+            state.topUserProfile = payload;
             return state;
         case "SET_TWITTER_SNA_GEXF_EXPORT":
-            state.gexfExport = action.payload;
+            state.gexfExport = payload;
             return state;
         case "SET_HISTOGRAM_RESULT":
-            state.histoview = action.payload;
+            state.histoview = payload;
             return state;
-        case "SET_PIE_CHART_RESULT_0":
-            state.pieCharts[0] = action.payload;
-            return state;
-        case "SET_PIE_CHART_RESULT_1":
-            state.pieCharts[1] = action.payload;
-            return state;
-        case "SET_PIE_CHART_RESULT_2":
-            state.pieCharts[2] = action.payload;
-            return state;
-        case "SET_PIE_CHART_RESULT_3":
-            console.log("ici " + action.payload);
-            state.pieCharts[3] = action.payload;
+        case "SET_PIE_CHART_RESULT":            
+                state.donutIndex = payload;
             return state;
         default:
             return state;
