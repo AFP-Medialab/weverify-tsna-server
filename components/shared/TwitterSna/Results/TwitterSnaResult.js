@@ -25,6 +25,8 @@ import TweetCount from "../Components/TweetCount";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false});
+const BubbleChart = dynamic(import("../Components/BubbleChart"), {ssr: false});
+const HeatMap = dynamic(import("../Components/HeatMap"), {ssr: false});
 
 export default function TwitterSnaResult(props) {
 
@@ -63,6 +65,15 @@ export default function TwitterSnaResult(props) {
                 {
                     result.pieCharts &&
                     <PlotPieChart result={result} />
+                }
+                {
+                    //vérifier que correct, une fois l'authentification active
+                    props.request.userList.length === 0 && 
+                    result &&
+                    <BubbleChart result={result} />
+                }
+                {
+                    <HeatMap result={result} />
                 }
             </Paper>
         </div>

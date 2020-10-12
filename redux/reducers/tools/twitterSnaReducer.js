@@ -42,6 +42,12 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
         case "SET_PIE_CHART_RESULT":            
                 state.donutIndex = payload;
             return state;
+        case "SET_BUBBLE_CHART_RESULT":
+                state.bubbleChart = payload;
+            return state;
+        case "SET_HEAP_MAP_RESULT":
+                state.bubbleChart = payload;
+            return state;
         default:
             return state;
     }

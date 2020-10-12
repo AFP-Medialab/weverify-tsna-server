@@ -74,6 +74,16 @@ export const setTweetsDetailPanel = (from, data) => {
                 type : "SET_PIE_CHART_RESULT",
                 payload :  data != null ? null : 3
             }
+        case "PLOT_BUBBLE_CHART":
+            return {
+                type : "SET_BUBBLE_CHART_RESULT",
+                payload :  data
+        }
+        case "PLOT_HEAT_MAP":
+            return {
+                type : "SET_HEAT_MAP_RESULT",
+                payload :  data
+        }
     }
     
 };

@@ -18,7 +18,9 @@ import {
     createPieCharts,
     getJsonDataForPieCharts
 } from "./pieCharts"
-
+import {
+    createHeatMap
+} from "./heatMap"
 
 
 
@@ -81,8 +83,9 @@ const useTwitterSnaRequest = (request) => {
             result.tweetCount.retweet = responseAggs['retweets']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             result.tweetCount.like = responseAggs['likes']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             result.pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
-            
             result.tweets = responseArrayOf9[1].tweets;
+            result.heatMap = createHeatMap(request, result.tweets, keyword);
+
 
             dispatch(setTwitterSnaResult(request, result, false, true));
         };
