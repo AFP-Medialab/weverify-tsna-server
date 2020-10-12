@@ -85,6 +85,7 @@ const useTwitterSnaRequest = (request) => {
             result.pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
             result.tweets = responseArrayOf9[1].tweets;
             result.heatMap = createHeatMap(request, result.tweets, keyword);
+            
 
 
             dispatch(setTwitterSnaResult(request, result, false, true));

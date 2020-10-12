@@ -13,6 +13,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import createPlotComponent from 'react-plotly.js/factory';
+import {onHeatMapClick} from "../Hooks/heatMap"
+import TwitterIcon from '@material-ui/icons/Twitter';
+
 
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
@@ -47,7 +50,13 @@ export default function HeatMap (props) {
     }, [props.request])
 
 
-
+    let goToTweetAction = [{
+        icon: TwitterIcon,
+        tooltip: keyword("twittersna_result_go_to_tweet"),
+        onClick: (event, rowData) => {
+            window.open(rowData.link, '_blank');
+        }
+    }]
 
     return (
         <Accordion>
@@ -69,7 +78,7 @@ export default function HeatMap (props) {
                                     data={props.result.heatMap.plot}
                                     config={props.result.heatMap.config}
                                     layout={props.result.heatMap.layout}
-                                    onClick={(e) => onHeatMapClick(e)}
+                                    onClick={(e) => onHeatMapClick(e, props.result, setheatMapTweets, keyword)}
                                 />
                                 <Box m={1}/>
                                 <OnClickInfo keyword={"twittersna_heatmap_tip"}/>
