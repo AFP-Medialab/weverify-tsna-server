@@ -84,6 +84,11 @@ export const setTweetsDetailPanel = (from, data) => {
                 type : "SET_HEAT_MAP_RESULT",
                 payload :  data
         }
+        case "PLOT_HASHTAG_GRAPH":
+            return {
+                type : "SET_HASHTAG_GRAPH_RESULT",
+                payload :  data
+            }
     }
     
 };

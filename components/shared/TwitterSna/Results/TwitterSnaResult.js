@@ -22,11 +22,11 @@ import dynamic from "next/dynamic"
 import TweetCount from "../Components/TweetCount";
 
 
-
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false});
 const BubbleChart = dynamic(import("../Components/BubbleChart"), {ssr: false});
 const HeatMap = dynamic(import("../Components/HeatMap"), {ssr: false});
+const HashtagGraph = dynamic(import("../Components/HashtagGraph"), {ssr: false});
 
 export default function TwitterSnaResult(props) {
 
@@ -74,6 +74,9 @@ export default function TwitterSnaResult(props) {
                 }
                 {
                     <HeatMap result={result} />
+                }
+                {
+                    <HashtagGraph result={result} request={props.request}/>
                 }
             </Paper>
         </div>
