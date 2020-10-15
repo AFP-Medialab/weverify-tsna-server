@@ -24,7 +24,9 @@ import {
 import {
     createCoHashtagGraph
 } from "./hashtagGraph"
-
+import {
+    createSocioSemantic4ModeGraph
+} from "./socioSemGraph"
 
 
 const useTwitterSnaRequest = (request) => {
@@ -89,7 +91,7 @@ const useTwitterSnaRequest = (request) => {
             result.tweets = responseArrayOf9[1].tweets;
             result.heatMap = createHeatMap(request, result.tweets, keyword);
             result.coHashtagGraph = createCoHashtagGraph(result.tweets);
-
+            result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
 
             dispatch(setTwitterSnaResult(request, result, false, true));
         };

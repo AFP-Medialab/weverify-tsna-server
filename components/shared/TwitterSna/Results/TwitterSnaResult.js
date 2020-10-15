@@ -27,6 +27,7 @@ const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false})
 const BubbleChart = dynamic(import("../Components/BubbleChart"), {ssr: false});
 const HeatMap = dynamic(import("../Components/HeatMap"), {ssr: false});
 const HashtagGraph = dynamic(import("../Components/HashtagGraph"), {ssr: false});
+const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), {ssr: false});
 
 export default function TwitterSnaResult(props) {
 
@@ -70,7 +71,7 @@ export default function TwitterSnaResult(props) {
                     //vérifier que correct, une fois l'authentification active
                     props.request.userList.length === 0 && 
                     result &&
-                    <BubbleChart result={result} />
+                    <BubbleChart result={result} request={props.request}/>
                 }
                 {
                     <HeatMap result={result} />
@@ -78,6 +79,9 @@ export default function TwitterSnaResult(props) {
                 {
                     <HashtagGraph result={result} request={props.request}/>
                 }
+                {
+                    <SocioSemGraph result={result} request={props.request}/>
+                }                
             </Paper>
         </div>
     );
