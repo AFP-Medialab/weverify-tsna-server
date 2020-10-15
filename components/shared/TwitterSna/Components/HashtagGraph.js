@@ -12,6 +12,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
+import {displayTweets} from "../lib/displayTweets"
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
@@ -66,12 +68,12 @@ export default function HashtagGraph (props) {
         setCoHashtagGraphReset(initGraph);
 
         let selectedHashtag = data.data.node.id;
-        let filteredTweets = result.tweets.filter(tweet => tweet._source.hashtags !== undefined && tweet._source.hashtags.length > 0)
+        let filteredTweets = props.result.tweets.filter(tweet => tweet._source.hashtags !== undefined && tweet._source.hashtags.length > 0)
             .filter(function (tweet) {
                 let hashtagArr = tweet._source.hashtags.map((v) => { return v.toLowerCase();});
                 return hashtagArr.includes(selectedHashtag.toLowerCase());
             });
-        let dataToDisplay = displayTweets(filteredTweets);
+        let dataToDisplay = displayTweets(filteredTweets, keyword);
         dataToDisplay["selected"] = selectedHashtag;
         setCoHashtagGraphTweets(dataToDisplay);
     }
@@ -81,6 +83,52 @@ export default function HashtagGraph (props) {
         setCoHashtagGraphTweets(null);
     }
 
+    function createGraphWhenClickANode(e) {
+
+        let selectedNode = e.data.node;
+    
+        let neighborNodes = e.data.renderer.graph.adjacentNodes(selectedNode.id);
+        let neighborEdges = e.data.renderer.graph.adjacentEdges(selectedNode.id);
+    
+        let neighborNodeIds = neighborNodes.map((node) => { return node.id; });
+        neighborNodeIds.push(selectedNode.id);
+        let neighborEdgeIds = neighborEdges.map((edge) => { return edge.id; });
+    
+        let clonedNodes = JSON.parse(JSON.stringify(e.data.renderer.graph.nodes()));
+        let clonedEdges = JSON.parse(JSON.stringify(e.data.renderer.graph.edges()));
+    
+        let updatedNodes = clonedNodes.map((node) => {
+            if (!neighborNodeIds.includes(node.id)) {
+                node.color = "#C0C0C0";
+            }
+            return node;
+        })
+    
+        let updatedEdges = clonedEdges.map((edge) => {
+            if (neighborEdgeIds.includes(edge.id)) {
+                edge.color = "#000000";
+            } else {
+                edge.color = "#C0C0C0";
+            }
+            return edge;
+        })
+    
+        let newGraph = {
+            nodes: updatedNodes,
+            edges: updatedEdges
+        }
+    
+        console.log("newGraph", newGraph);
+        return newGraph;
+    }
+
+    let goToTweetAction = [{
+        icon: TwitterIcon,
+        tooltip: keyword("twittersna_result_go_to_tweet"),
+        onClick: (event, rowData) => {
+            window.open(rowData.link, '_blank');
+        }
+    }]
 
     return (
         <Accordion>
