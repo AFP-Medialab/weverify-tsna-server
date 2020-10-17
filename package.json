@@ -36,6 +36,7 @@
     "react-plotly.js": "^2.5.0",
     "react-redux": "^7.2.1",
     "react-sigma": "^1.2.35",
+    "react-wordcloud": "^1.2.7",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",

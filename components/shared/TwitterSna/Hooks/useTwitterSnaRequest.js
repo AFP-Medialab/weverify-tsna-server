@@ -17,16 +17,20 @@ import {
 import {
     createPieCharts,
     getJsonDataForPieCharts
-} from "./pieCharts"
+} from "./pieCharts";
 import {
     createHeatMap
-} from "./heatMap"
+} from "./heatMap";
 import {
     createCoHashtagGraph
-} from "./hashtagGraph"
+} from "./hashtagGraph";
 import {
     createSocioSemantic4ModeGraph
-} from "./socioSemGraph"
+} from "./socioSemGraph";
+import {
+    createWordCloud
+} from "./cloudChart";
+
 
 
 const useTwitterSnaRequest = (request) => {
@@ -79,6 +83,7 @@ const useTwitterSnaRequest = (request) => {
     
         };
 
+
         const makeResult = (request, responseArrayOf9) => {
             let responseAggs = responseArrayOf9[0]['aggregations']
             const result = {};
@@ -92,6 +97,8 @@ const useTwitterSnaRequest = (request) => {
             result.heatMap = createHeatMap(request, result.tweets, keyword);
             result.coHashtagGraph = createCoHashtagGraph(result.tweets);
             result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
+            result.cloudChart = { title: "top_words_cloud_chart_title" };
+            result.cloudChart = createWordCloud(result.tweets, request);
 
             dispatch(setTwitterSnaResult(request, result, false, true));
         };

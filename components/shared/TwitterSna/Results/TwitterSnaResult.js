@@ -28,6 +28,7 @@ const BubbleChart = dynamic(import("../Components/BubbleChart"), {ssr: false});
 const HeatMap = dynamic(import("../Components/HeatMap"), {ssr: false});
 const HashtagGraph = dynamic(import("../Components/HashtagGraph"), {ssr: false});
 const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), {ssr: false});
+const CloudChart = dynamic(import("../Components/CloudChart"), {ssr: false});
 
 export default function TwitterSnaResult(props) {
 
@@ -81,7 +82,10 @@ export default function TwitterSnaResult(props) {
                 }
                 {
                     <SocioSemGraph result={result} request={props.request}/>
-                }                
+                }        
+                {
+                    <CloudChart result={result} request={props.request} />
+                }        
             </Paper>
         </div>
     );
