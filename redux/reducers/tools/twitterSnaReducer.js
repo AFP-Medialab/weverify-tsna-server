@@ -30,8 +30,8 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
           //  state.loadingMessage = "";
             state.result = null;
             return state;
-        case "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE":
-            state.topUserProfile = payload;
+        case "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE":           
+            state.topUser = payload;
             return state;
         case "SET_TWITTER_SNA_GEXF_EXPORT":
             state.gexfExport = payload;

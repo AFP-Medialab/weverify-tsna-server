@@ -16,16 +16,17 @@ import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
 import plotly from 'plotly.js-dist';
-import {createBubbleChartOfMostActiveUsers, onBubbleChartClick} from "../Hooks/bubbleChart"
+import {createBubbleChartOfMostActiveUsers} from "../Hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 const Plot = createPlotComponent(plotly);
-let from = "PLOT_BUBBLE_CHART";
+let from = "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE";
 export default function BubbleChart(props) {
     
     const dispatch = useDispatch();
     const [bubbleTweets, setBubbleTweets] = useState(null);
-    const topUserProfile = useSelector(state => state.twitterSna.bubbleChart);
+    const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
@@ -48,6 +49,22 @@ export default function BubbleChart(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.request])
 
+    const onBubbleChartClick = (data, result) => {
+        let selectedUser = data.points[0].text.split("<br>")[0].replace("@","");
+        let filteredTweets = result.tweets.filter(function (tweetObj) {
+            return tweetObj._source.screen_name.toLowerCase() === selectedUser.toLowerCase();
+        });
+        setBubbleTweets(displayTweets(filteredTweets, keyword));
+    
+    }
+
+    let goToTweetAction = [{
+        icon: TwitterIcon,
+        tooltip: keyword("twittersna_result_go_to_tweet"),
+        onClick: (event, rowData) => {
+            window.open(rowData.link, '_blank');
+        }
+    }]
 
     
 
@@ -62,11 +79,12 @@ export default function BubbleChart(props) {
                 <Typography className={classes.heading}>{keyword("bubble_chart_title")}</Typography>
             </AccordionSummary>
             <AccordionDetails>
+                
                 {
                     topUserProfile && topUserProfile.length !== 0 &&
                     <div style={{ width: '100%', }}>
                         { 
-                            [createBubbleChartOfMostActiveUsers(topUserProfile, props.request)].map((bubbdleChart) => {
+                            [createBubbleChartOfMostActiveUsers(topUserProfile, props.request, props.result, keyword)].map((bubbdleChart) => {
                                 return (
                                     <div key={Math.random()}>
                                         <Plot useResizeHandler
@@ -74,7 +92,7 @@ export default function BubbleChart(props) {
                                             data={bubbdleChart.data}
                                             layout={bubbdleChart.layout}
                                             config={bubbdleChart.config}
-                                            onClick={(e) => onBubbleChartClick(e)}
+                                            onClick={(e) => onBubbleChartClick(e, props.result)}
                                         />
                                         <Box m={1} />
                                         <OnClickInfo keyword={"twittersna_bubble_chart_tip"} />

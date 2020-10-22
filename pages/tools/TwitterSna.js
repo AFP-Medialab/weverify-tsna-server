@@ -98,7 +98,7 @@ const TwitterSna = () => {
               request.userList.join(" ") :
               ""
           ) :
-          "@realDonaldTrump"
+          ""
       );
 
     const [keyWords, setKeywords] = useState(

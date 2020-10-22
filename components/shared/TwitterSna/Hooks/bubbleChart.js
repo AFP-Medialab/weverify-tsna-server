@@ -1,3 +1,5 @@
+
+
 function getColorOfMostActiveUserBubble(value) {
     switch (true) {
         case (value < 5):
@@ -10,16 +12,7 @@ function getColorOfMostActiveUserBubble(value) {
     }
 }
 
-export const onBubbleChartClick = (data) => {
-    let selectedUser = data.points[0].text.split("<br>")[0].replace("@","");
-    let filteredTweets = result.tweets.filter(function (tweetObj) {
-        return tweetObj._source.screen_name.toLowerCase() === selectedUser.toLowerCase();
-    });
-    setBubbleTweets(displayTweets(filteredTweets));
-
-}
-
-export function createBubbleChartOfMostActiveUsers(userProfile, request) {
+export function createBubbleChartOfMostActiveUsers(userProfile, request, result, keyword) {
     let tweetCountObj = _.countBy(result.tweets.map((tweet) => {return tweet._source.screen_name.toLowerCase(); }));
     let nbDays = Math.floor(( Date.parse(request['until']) - Date.parse(request['from']) ) / 86400000);
     nbDays = nbDays > 1 ? nbDays : 1;

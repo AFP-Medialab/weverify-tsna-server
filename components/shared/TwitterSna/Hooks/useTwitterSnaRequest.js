@@ -5,10 +5,13 @@ import useLoadLanguage from "../../hooks/useLoadLanguage";
 import {
     setTwitterSnaLoading, 
     setTwitterSnaResult, 
-    setTwitterSnaLoadingMessage} from "../../../../redux/actions/tools/twitterSnaActions";
+    setTwitterSnaLoadingMessage,
+    setUserProfileMostActive
+} from "../../../../redux/actions/tools/twitterSnaActions";
 import {
     getAggregationData,
-    getTweets
+    getTweets,
+    getUserAccounts
 } from "./call-elastic";
 import {
     createTimeLineChart,
@@ -83,6 +86,15 @@ const useTwitterSnaRequest = (request) => {
     
         };
 
+        function getTopActiveUsers(tweets, topN) {
+            let tweetCountObj = _.countBy(tweets.map((tweet) => {return tweet._source.screen_name.toLowerCase(); }));
+            let topUsers2DArr = _.sortBy(Object.entries(tweetCountObj), [function(o) { return o[1]; }])
+                                  .reverse()
+                                  .slice(0, topN);
+            return topUsers2DArr;
+          }
+          
+
 
         const makeResult = (request, responseArrayOf9) => {
             let responseAggs = responseArrayOf9[0]['aggregations']
@@ -99,6 +111,12 @@ const useTwitterSnaRequest = (request) => {
             result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
             result.cloudChart = { title: "top_words_cloud_chart_title" };
             result.cloudChart = createWordCloud(result.tweets, request);
+
+            let authors = getTopActiveUsers(result.tweets, 100).map((arr) => {return arr[0];});
+            if (authors.length > 0) {
+                getUserAccounts(authors).then((data) => dispatch(setUserProfileMostActive(data.hits.hits)))
+              }
+
 
             dispatch(setTwitterSnaResult(request, result, false, true));
         };
