@@ -88,7 +88,7 @@ export default function TwitterSnaResult(props) {
                 }   
                 {
                     result.urls &&
-                    <UrlList result={result} />
+                    <UrlList result={result} request={props.request}/>
                 }     
             </Paper>
         </div>

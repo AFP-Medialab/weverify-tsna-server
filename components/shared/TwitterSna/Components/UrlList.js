@@ -7,7 +7,7 @@ import useLoadLanguage from "../../hooks/useLoadLanguage"
 import Button from "@material-ui/core/Button";
 import CustomTableURL from "../../CustomTable/CustomTableURL";
 import OnClickInfo from '../../OnClickInfo/OnClickInfo';
-
+import {downloadClick} from "../lib/downloadClick";
 
 export default function cloudChart (props) {
 
@@ -16,6 +16,14 @@ export default function cloudChart (props) {
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
 
+    function createCSVFromURLTable(urls) {
+        let csvArr = "Url,Count\n";
+        urls.data.forEach(row => 
+            csvArr += row.url + "," + row.count + "\n"
+        );
+        return csvArr;
+    }
+
     return (
 
         <Paper>
@@ -23,7 +31,7 @@ export default function cloudChart (props) {
                         <Button
                             variant={"contained"}
                             color={"primary"}
-                            onClick={() => downloadClick(createCSVFromURLTable(result.urls), "Urls", false, "")}
+                            onClick={() => downloadClick(props.request,createCSVFromURLTable(props.result.urls), "Urls", false, "")}
                         >
                             CSV
                         </Button>
