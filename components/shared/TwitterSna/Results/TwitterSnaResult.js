@@ -20,7 +20,7 @@ import Grid from "@material-ui/core/Grid";
 
 import dynamic from "next/dynamic"
 import TweetCount from "../Components/TweetCount";
-
+import UrlList from "../Components/UrlList";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false});
@@ -85,7 +85,11 @@ export default function TwitterSnaResult(props) {
                 }        
                 {
                     <CloudChart result={result} request={props.request} />
-                }        
+                }   
+                {
+                    result.urls &&
+                    <UrlList result={result} />
+                }     
             </Paper>
         </div>
     );

@@ -33,6 +33,9 @@ import {
 import {
     createWordCloud
 } from "./cloudChart";
+import {
+    getJsonDataForURLTable
+} from "./urlList"
 
 
 
@@ -111,6 +114,8 @@ const useTwitterSnaRequest = (request) => {
             result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
             result.cloudChart = { title: "top_words_cloud_chart_title" };
             result.cloudChart = createWordCloud(result.tweets, request);
+
+            result.urls = getJsonDataForURLTable(responseAggs['top_url_keyword']['buckets'], keyword);
 
             let authors = getTopActiveUsers(result.tweets, 100).map((arr) => {return arr[0];});
             if (authors.length > 0) {
