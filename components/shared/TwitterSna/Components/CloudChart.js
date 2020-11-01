@@ -16,7 +16,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import ReactWordcloud from "react-wordcloud";
 import { select } from 'd3-selection';
 import {displayTweets} from "../lib/displayTweets";
-
+import { saveSvgAsPng } from 'save-svg-as-png';
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
 
@@ -148,6 +148,23 @@ export default function cloudChart (props) {
 
         console.log("newGraph", newGraph);
         return newGraph;
+    }
+
+    function downloadAsPNG(elementId) {
+        let element = document.getElementById(elementId);
+
+        if (elementId === "top_words_cloud_chart") {
+            let name = filesNames + '.png';
+            saveSvgAsPng(element.children[0].children[0], name, { backgroundColor: "white", scale: 2 });
+        } else {
+            let positionInfo = element.getBoundingClientRect();
+            let height = positionInfo.height;
+            let width = positionInfo.width;
+            let name = keyword(elementId) + filesNames.replace("WordCloud", "") + '.png';
+            Plotly.downloadImage(elementId,
+                { format: 'png', width: width * 1.2, height: height * 1.2, filename: name }
+            );
+        }
     }
 
     let call = getCallbacks();
