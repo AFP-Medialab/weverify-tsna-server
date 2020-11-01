@@ -29,18 +29,12 @@ function Layout({ children }) {
             <div className={classes.flex}>
                 <AppBar position="fixed" color="default" className={classes.appBar}>
                     <Toolbar className={classes.toolbar}>
-                    <Box display={{xs: 'none', md: 'block'}}>
-                    <img
-                            src="/images/logo-invid.png" alt="logo"
-                            className={classes.logoLeft}
-                            
-                        />
-                    </Box>
+                    
                     <div className={classes.grow}/>
                     <Languages/>
                     <Box display={{xs: 'none', md: 'block'}}>
                         <img
-                            src="/images/logo-we-verify.png"
+                            src="/images/logo-we-verifymini.png"
                             alt="logo"
                             className={classes.logoRight}
                         />
