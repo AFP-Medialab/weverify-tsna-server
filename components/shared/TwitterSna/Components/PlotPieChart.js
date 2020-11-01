@@ -13,10 +13,12 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
-import {downloadAsPNG, createCSVFromPieChart, downloadAsSVG} from "../Hooks/pieCharts"
+import {downloadAsPNG, createCSVFromPieChart, downloadAsSVG} from "../Hooks/pieCharts";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {displayTweets} from "../lib/displayTweets";
+
+import {downloadClick} from "../lib/downloadClick";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
@@ -68,7 +70,8 @@ export default function PlotPieChart (props) {
         }
     }, [donutIndex]);
 
-    const onDonutsClick = (data, index, tweets) => {
+
+    const toLowerCase = (data, index, tweets) => {
         //For mention donuts
         if (index === 3) {
             if (tweets != null) {
@@ -152,7 +155,8 @@ return (
                                         <Button
                                             variant={"contained"}
                                             color={"primary"}
-                                            onClick={() => downloadClick(createCSVFromPieChart(obj), 
+                                            onClick={() => downloadClick(request,
+                                                                        createCSVFromPieChart(obj), 
                                                                         keyword(obj.title), 
                                                                         false, 
                                                                         "")}>
@@ -164,7 +168,7 @@ return (
                                         <Button
                                             variant={"contained"}
                                             color={"primary"}
-                                            onClick={() => downloadAsSVG(obj.title)}>
+                                            onClick={() => downloadAsSVG(obj.title, keyword)}>
                                             {
                                                 keyword('twittersna_result_download_svg')
                                             }

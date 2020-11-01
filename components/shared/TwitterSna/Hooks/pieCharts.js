@@ -135,7 +135,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
   }
 
 //Download as SVG
-export function downloadAsSVG(elementId) {
+export function downloadAsSVG(elementId, keyword, filesNames) {
 
   if (elementId === "top_words_cloud_chart") {
       let name = filesNames + '.svg';
