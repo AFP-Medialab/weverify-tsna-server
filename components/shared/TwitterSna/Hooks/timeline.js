@@ -14,7 +14,7 @@ export const createTimeLineChart = (request, json, keyword) => {
         xanchor: 'right',
         y: -0.4,
         yanchor: 'top',
-        text: 'we-verify.eu',
+        text: 'weverify.eu',
         showarrow: false
         },
         {

@@ -7,6 +7,15 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
         },
         xanchor: 'center'
       },
+      annotations: [{
+        xref: 'paper',
+        yref: 'paper',
+        x: 1.15,
+        y:-0.2,
+        text: 'weverify.eu',
+        showarrow: false
+        },
+        ],
       automargin: true,
       width: 500,
       height: 500

@@ -98,6 +98,15 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
                 color: '#C0C0C0'
             },
         },
+        annotations: [{
+            xref: 'paper',
+            yref: 'paper',
+            x: 1,
+            y: -0.180,
+            text: 'weverify.eu',
+            showarrow: false
+            },
+        ],
         yaxis: {
             title: keyword("twittersna_nb_followers"),
             titlefont: {
@@ -108,6 +117,7 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
             range:[0, Math.max(...y) + 10],
             rangemode: 'tozero'
         }
+        
     }
 
     let config = {

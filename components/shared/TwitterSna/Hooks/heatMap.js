@@ -161,7 +161,16 @@ export function createHeatMap(request, hits, keyword) {
           size: 18
         },
         xanchor: 'center'
-      }
+      },
+      annotations: [{
+        xref: 'paper',
+        yref: 'paper',
+        x: 1,
+        y:-0.2,
+        text: 'weverify.eu',
+        showarrow: false
+        },
+        ],
     }
 
     return {
