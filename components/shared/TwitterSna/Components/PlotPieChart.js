@@ -13,12 +13,13 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
-import {downloadAsPNG, createCSVFromPieChart, downloadAsSVG} from "../Hooks/pieCharts";
+import {createCSVFromPieChart} from "../Hooks/pieCharts";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {displayTweets} from "../lib/displayTweets";
 
 import {downloadClick} from "../lib/downloadClick";
+import Plotly from 'plotly.js-dist';
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
@@ -37,6 +38,13 @@ export default function PlotPieChart (props) {
     const charts = [pieCharts0, pieCharts1, pieCharts2, pieCharts3];
     const donutIndex = useSelector(state => state.twitterSna.donutIndex);
     const classes = useMyStyles();
+
+    const [filesNames, setfilesNames] = useState(null);
+    //Set the file name for wordsCloud export
+    useEffect(() => {
+        setfilesNames('WordCloud_' + props.request.keywordList.join("&") + "_" + props.request.from + "_" + props.request.until);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(props.request), props.request]);
 
     const [state, setState] = useState(
         {
@@ -70,6 +78,50 @@ export default function PlotPieChart (props) {
         }
     }, [donutIndex]);
 
+       //Download as PNG
+ function downloadAsPNG(keyword, filesNames, elementId) {
+    let element = document.getElementById(elementId);
+
+    if (elementId === "top_words_cloud_chart") {
+        let name = filesNames + '.png';
+        saveSvgAsPng(element.children[0].children[0], name, { backgroundColor: "white", scale: 2 });
+    } else {
+        let positionInfo = element.getBoundingClientRect();
+        let height = positionInfo.height;
+        let width = positionInfo.width;
+        let name = keyword(elementId) + filesNames.replace("WordCloud", "") + '.png';
+        Plotly.downloadImage(elementId,
+            { format: 'png', width: width * 1.2, height: height * 1.2, filename: name }
+        );
+    }
+}
+
+ function downloadAsSVG(elementId, keyword, filesNames) {
+
+    if (elementId === "top_words_cloud_chart") {
+        let name = filesNames + '.svg';
+        var svgEl = document.getElementById("top_words_cloud_chart").children[0].children[0];
+        svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        var svgData = svgEl.outerHTML;
+        var preface = '<?xml version="1.0" standalone="no"?>\r\n';
+        var svgBlob = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
+        var svgUrl = URL.createObjectURL(svgBlob);
+        var downloadLink = document.createElement("a");
+        downloadLink.href = svgUrl;
+        downloadLink.download = name;
+        downloadLink.click();
+    } else {
+        let element = document.getElementById(elementId);
+        let positionInfo = element.getBoundingClientRect();
+        let height = positionInfo.height;
+        let width = positionInfo.width;
+        let name = keyword(elementId) + filesNames.replace("WordCloud", "");
+        Plotly.downloadImage(elementId,
+            { format: 'svg', width: width * 1.2, height: height * 1.2, filename: name }
+        );
+    }
+  
+  }
 
     const toLowerCase = (data, index, tweets) => {
         //For mention donuts
@@ -144,7 +196,7 @@ return (
                                         <Button
                                             variant={"contained"}
                                             color={"primary"}
-                                            onClick={() => downloadAsPNG(obj.title)}>
+                                            onClick={() => downloadAsPNG(keyword, filesNames, obj.title)}>
                                             {
                                                 keyword('twittersna_result_download_png')
                                             }
@@ -168,7 +220,7 @@ return (
                                         <Button
                                             variant={"contained"}
                                             color={"primary"}
-                                            onClick={() => downloadAsSVG(obj.title, keyword)}>
+                                            onClick={() => downloadAsSVG(obj.title, keyword, filesNames)}>
                                             {
                                                 keyword('twittersna_result_download_svg')
                                             }

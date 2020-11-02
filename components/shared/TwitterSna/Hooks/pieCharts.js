@@ -135,32 +135,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
   }
 
 //Download as SVG
-export function downloadAsSVG(elementId, keyword, filesNames) {
 
-  if (elementId === "top_words_cloud_chart") {
-      let name = filesNames + '.svg';
-      var svgEl = document.getElementById("top_words_cloud_chart").children[0].children[0];
-      svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-      var svgData = svgEl.outerHTML;
-      var preface = '<?xml version="1.0" standalone="no"?>\r\n';
-      var svgBlob = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
-      var svgUrl = URL.createObjectURL(svgBlob);
-      var downloadLink = document.createElement("a");
-      downloadLink.href = svgUrl;
-      downloadLink.download = name;
-      downloadLink.click();
-  } else {
-      let element = document.getElementById(elementId);
-      let positionInfo = element.getBoundingClientRect();
-      let height = positionInfo.height;
-      let width = positionInfo.width;
-      let name = keyword(elementId) + filesNames.replace("WordCloud", "");
-      Plotly.downloadImage(elementId,
-          { format: 'svg', width: width * 1.2, height: height * 1.2, filename: name }
-      );
-  }
-
-}
 
 export function createCSVFromPieChart(obj) {
   let csvArr = "Sector,Count\n";
@@ -168,22 +143,4 @@ export function createCSVFromPieChart(obj) {
       csvArr += obj.json[0].labels[i] + "," + obj.json[0].values[i] + "\n";
   }
   return csvArr;
-}
-
-   //Download as PNG
-export function downloadAsPNG(elementId) {
-    let element = document.getElementById(elementId);
-
-    if (elementId === "top_words_cloud_chart") {
-        let name = filesNames + '.png';
-        saveSvgAsPng(element.children[0].children[0], name, { backgroundColor: "white", scale: 2 });
-    } else {
-        let positionInfo = element.getBoundingClientRect();
-        let height = positionInfo.height;
-        let width = positionInfo.width;
-        let name = keyword(elementId) + filesNames.replace("WordCloud", "") + '.png';
-        Plotly.downloadImage(elementId,
-            { format: 'png', width: width * 1.2, height: height * 1.2, filename: name }
-        );
-    }
 }

@@ -66,7 +66,7 @@ export default function TwitterSnaResult(props) {
                 
                 {
                     result.pieCharts &&
-                    <PlotPieChart result={result} />
+                    <PlotPieChart result={result} request={props.request}/>
                 }
                 {
                     //vérifier que correct, une fois l'authentification active
