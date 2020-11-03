@@ -75,7 +75,7 @@ export default function TwitterSnaResult(props) {
                     <BubbleChart result={result} request={props.request}/>
                 }
                 {
-                    <HeatMap result={result} />
+                    <HeatMap result={result} request={props.request} />
                 }
                 {
                     <HashtagGraph result={result} request={props.request}/>

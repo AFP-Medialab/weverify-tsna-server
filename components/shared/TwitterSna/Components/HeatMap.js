@@ -15,7 +15,9 @@ import { useDispatch, useSelector } from "react-redux";
 import createPlotComponent from 'react-plotly.js/factory';
 import {onHeatMapClick} from "../Hooks/heatMap"
 import TwitterIcon from '@material-ui/icons/Twitter';
+import {downloadClick} from "../lib/downloadClick";
 
+import {getDayAsString} from "../Hooks/heatMap"
 
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
@@ -106,7 +108,7 @@ export default function HeatMap (props) {
                                             onClick={() => {
                                                 let date = new Date(heatMapTweets.data[0].date);
                                                 let dayHourStr = getDayAsString(date.getDay()) + date.getHours() + "h_";
-                                                downloadClick(heatMapTweets.csvArr, dayHourStr, false);
+                                                downloadClick(props.request, heatMapTweets.csvArr, dayHourStr, false);
                                             }}>
                                             {
                                                 keyword('twittersna_result_download')

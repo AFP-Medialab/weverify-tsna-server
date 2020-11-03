@@ -89,7 +89,7 @@ export const onHeatMapClick = (data, result, setheatMapTweets, keyword) => {
     setheatMapTweets(displayTweets(filteredTweets, keyword));
 }
 
-function getDayAsString(dayInt) {
+export function getDayAsString(dayInt) {
     return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dayInt];
 }
 
