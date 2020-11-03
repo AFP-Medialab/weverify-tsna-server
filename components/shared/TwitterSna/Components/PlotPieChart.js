@@ -139,9 +139,10 @@ export default function PlotPieChart (props) {
                 dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
             }
         }
-        // For retweets, likes, top_user donut
+        // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
         else {
-            if (tweets != null) {
+            if (tweets != null && typeof data.points[0].label != 'undefined') {
+
                 let selectedUser = data.points[0].label;
                 let filteredTweets = tweets.filter(function (tweetObj) {
                     return tweetObj._source.screen_name.toLowerCase() === selectedUser.toLowerCase();
