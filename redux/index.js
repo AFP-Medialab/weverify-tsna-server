@@ -41,7 +41,8 @@ function initCookie(){
 const persistConfig = {
   key: "primary",
   storage,
-  whitelist: ["language", "userSession"], // place to select which state you want to persist
+  whitelist: ["language", "userSession"],  // place to select which state you want to persist
+  timeout: 0
 }
 const persistedReducer = persistReducer(persistConfig, allReducers)
 
