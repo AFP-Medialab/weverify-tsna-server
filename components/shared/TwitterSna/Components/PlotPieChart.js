@@ -126,7 +126,7 @@ export default function PlotPieChart (props) {
     const onDonutsClick = (data, index, tweets) => {
         //For mention donuts
         if (index === 3) {
-            if (tweets != null) {
+            if (tweets != null && typeof data.points[0].label != 'undefined') {
                 let selectedUser = data.points[0].label;
                 let filteredTweets = tweets.filter(tweet => tweet._source.user_mentions !== undefined && tweet._source.user_mentions.length > 0)
                     .filter(function (tweet) {
