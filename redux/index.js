@@ -23,8 +23,24 @@ const loggerMiddleware = storeAPI => next => action => {
 
   const initState = {
     language: 'en',
-    cookies: null,
-    userSession: null
+    userSession: {
+      userRegistrationLoading: false,
+      userRegistrationSent: false,
+      accessCodeRequestLoading: false,
+      accessCodeRequestSent: false,
+      userLoginLoading: false,
+      userAuthenticated: false,
+      accessToken: null,
+      accessTokenExpiry: null,
+      // user: null
+      user: {
+        id: null,
+        firstName: null,
+        lastName: null,
+        email: null,
+        roles: []
+      }
+    }
 }; 
 
 function initCookie(){

@@ -27,6 +27,7 @@ import TwitterSnaResult from "../../components/shared/TwitterSna/Results/Twitter
 import _ from "lodash";
 import { replaceAll, stringToList } from "../../components/shared/lib/StringUtil";
 import dateFormat from "dateformat";
+import AuthenticationCard from "../../components/shared/AuthenticationCard/AuthenticationCard";
 
 const TwitterSna = () => {
 
@@ -262,6 +263,7 @@ const TwitterSna = () => {
         <div>
             <Paper className={classes.root} style={{marginTop: "0px", marginBottom: "0px", paddingTop: "0px"}}>
                 <CustomTitle text={keyword("twitter_sna_title")} />
+                <AuthenticationCard />
                 <TextField
                     disabled={searchFormDisabled}
                     error={keyWordsError}
