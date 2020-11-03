@@ -123,7 +123,7 @@ export default function PlotPieChart (props) {
   
   }
 
-    const toLowerCase = (data, index, tweets) => {
+    const onDonutsClick = (data, index, tweets) => {
         //For mention donuts
         if (index === 3) {
             if (tweets != null) {
