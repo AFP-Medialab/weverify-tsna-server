@@ -19,6 +19,7 @@ import plotly from 'plotly.js-dist';
 import {createBubbleChartOfMostActiveUsers} from "../Hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import {downloadClick} from "../lib/downloadClick";
 
 const Plot = createPlotComponent(plotly);
 let from = "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE";
@@ -120,7 +121,7 @@ export default function BubbleChart(props) {
                                         <Button
                                             variant={"contained"}
                                             color={"primary"}
-                                            onClick={() => downloadClick(bubbleTweets.csvArr, bubbleTweets.selected)}>
+                                            onClick={() => downloadClick(props.request, bubbleTweets.csvArr, bubbleTweets.selected)}>
                                             {
                                                 keyword('twittersna_result_download')
                                             }
