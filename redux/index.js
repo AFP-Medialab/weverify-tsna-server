@@ -22,7 +22,7 @@ const loggerMiddleware = storeAPI => next => action => {
   let store;
 
   const initState = {
-    language: null,
+    language: 'en',
     cookies: null,
     userSession: null
 }; 
