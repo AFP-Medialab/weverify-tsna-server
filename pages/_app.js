@@ -1,12 +1,12 @@
 import React from 'react';
-
-import { wrapper } from "../redux";
 import {Provider} from "react-redux"
 import '../styles/global.css';
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { MuiThemeProvider } from "@material-ui/core";
-import { useStore } from "react-redux";
+import { useStore } from "../redux";
+import { persistStore } from 'redux-persist'
 import "react-datetime/css/react-datetime.css";
+import { PersistGate } from 'redux-persist/integration/react'
 
 
 const theme = createMuiTheme({
@@ -46,15 +46,20 @@ const theme = createMuiTheme({
 
 const MyApp = ({ Component, pageProps }) => {
   
-    const store = useStore(pageProps.initialReduxState);
+    const store = useStore(pageProps.initialReduxState)
+    const persistor = persistStore(store, {}, function () {
+      persistor.persist()
+    })
         return (
             <Provider store={store}>
-                <MuiThemeProvider theme={theme}>
+              <MuiThemeProvider theme={theme}>
+                <PersistGate loading={<div>loading</div>} persistor={persistor}>
                     <Component {...pageProps} />
-                </MuiThemeProvider>
+                  </PersistGate>
+              </MuiThemeProvider>
             </Provider>
         );
 };
 
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;
