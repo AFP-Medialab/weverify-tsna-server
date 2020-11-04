@@ -260,7 +260,7 @@ const TwitterSna = () => {
   useTwitterSnaRequest(submittedRequest);
 
     return (
-        <div>
+        <div className={classes.all}>
             <Paper className={classes.root} style={{marginTop: "0px", marginBottom: "0px", paddingTop: "0px"}}>
                 <CustomTitle text={keyword("twitter_sna_title")} />
                 <AuthenticationCard />

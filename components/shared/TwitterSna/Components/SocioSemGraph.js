@@ -13,6 +13,7 @@ import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
 import TwitterIcon from '@material-ui/icons/Twitter';
+import {downloadClick} from "../lib/downloadClick";
 
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
@@ -314,7 +315,7 @@ export default function SocioSemGraph (props) {
                                     <Button
                                         variant={"contained"}
                                         color={"primary"}
-                                        onClick={() => downloadClick(socioSemantic4ModeGraphTweets.csvArr, socioSemantic4ModeGraphTweets.selected)}>
+                                        onClick={() => downloadClick(props.request, socioSemantic4ModeGraphTweets.csvArr, socioSemantic4ModeGraphTweets.selected)}>
                                         {
                                             keyword('twittersna_result_download')
                                         }

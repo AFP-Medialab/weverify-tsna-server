@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
 import {displayTweets} from "../lib/displayTweets"
 import TwitterIcon from '@material-ui/icons/Twitter';
+import {downloadClick} from "../lib/downloadClick";
 
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
@@ -261,7 +262,7 @@ export default function HashtagGraph (props) {
                                     <Button
                                         variant={"contained"}
                                         color={"primary"}
-                                        onClick={() => downloadClick(coHashtagGraphTweets.csvArr, "#" + coHashtagGraphTweets.selected)}>
+                                        onClick={() => downloadClick(props.request, coHashtagGraphTweets.csvArr, "#" + coHashtagGraphTweets.selected)}>
                                         {
                                             keyword('twittersna_result_download')
                                         }
