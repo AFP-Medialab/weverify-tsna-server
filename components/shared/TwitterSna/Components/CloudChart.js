@@ -19,6 +19,7 @@ import {displayTweets} from "../lib/displayTweets";
 import { saveSvgAsPng } from 'save-svg-as-png';
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
+import {downloadClick} from "../lib/downloadClick";
 
 export default function cloudChart (props) {
 
@@ -287,7 +288,7 @@ export default function cloudChart (props) {
                                                 <Button
                                                     variant={"contained"}
                                                     color={"primary"}
-                                                    onClick={() => downloadClick(cloudTweets.csvArr, "word_" + cloudTweets.selected)}>
+                                                    onClick={() => downloadClick(props.request, cloudTweets.csvArr, "word_" + cloudTweets.selected)}>
                                                     {
                                                         keyword('twittersna_result_download')
                                                     }
