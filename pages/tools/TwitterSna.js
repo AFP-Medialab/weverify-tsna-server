@@ -183,7 +183,7 @@ const TwitterSna = () => {
         return itemDate <= currentDate;
     };
 
-    const searchFormDisabled = isLoading || !userAuthenticated || urlObj.isUrlSearch;
+    const searchFormDisabled = isLoading || !userAuthenticated ;
     
     const [bannedWords, setBannedWords] = useState(
         request && request.bannedWords ?

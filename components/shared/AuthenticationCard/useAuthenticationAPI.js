@@ -41,14 +41,13 @@ export default function useAuthenticationAPI() {
   const defaultTimeout = 5000;
   const loginTimeout = 30000;
   const jsonContentType = "application/json";
-  const authSrvBaseURL = `${process.env.REACT_APP_AUTH_BASE_URL}/api/v1/auth`;
 
   // Services URL
-  const AUTH_SRV_REGISTER_USER_URL = "/registration";
-  const AUTH_SRV_REQUEST_ACCESS_CODE_URL = "/api/auth/accesscode";
-  const AUTH_SRV_LOGIN_URL = "/login";
+  const AUTH_SRV_REGISTER_USER_URL = "/api/v1/auth/registration";
+  const AUTH_SRV_REQUEST_ACCESS_CODE_URL = "/api/v1/auth/accesscode";
+  const AUTH_SRV_LOGIN_URL = "/api/v1/auth/login";
   //const AUTH_SRV_LOGOUT_URL = "/logout";
-  const AUTH_SRV_REFRESH_TOKEN_URL = "/refreshtoken";
+  const AUTH_SRV_REFRESH_TOKEN_URL = "/api/v1/auth/refreshtoken";
 
   const dispatch = useDispatch();
 
@@ -86,7 +85,6 @@ export default function useAuthenticationAPI() {
     // Make service call
     dispatch(userRegistrationLoadingAction());
     return axios.post(AUTH_SRV_REGISTER_USER_URL, srvRequest, {
-      baseURL: authSrvBaseURL,
       timeout: defaultTimeout
     }).then(response => {
       dispatch(userRegistrationSentAction());
@@ -201,7 +199,6 @@ export default function useAuthenticationAPI() {
     // Call service
     dispatch(userLoginLoadingAction());
     return axios.post(AUTH_SRV_LOGIN_URL, srvRequest, {
-      baseURL: authSrvBaseURL,
       headers: {
         ContentType: jsonContentType
       },
@@ -314,7 +311,6 @@ export default function useAuthenticationAPI() {
    */
   const refreshToken = (accessToken) => {
     return axios.post(AUTH_SRV_REFRESH_TOKEN_URL, "\""+accessToken+"\"", {
-      baseURL: authSrvBaseURL,
        headers: {
          "Content-Type": jsonContentType
        },

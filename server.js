@@ -1,5 +1,6 @@
 const express = require('express');
 const next = require('next');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -12,7 +13,11 @@ app
   .then(() => {
     const server = express();
 
-    server.use(cookieParser());
+    server.use('/api/v1/auth', 
+    createProxyMiddleware({
+      target: process.env.REACT_APP_AUTH_BASE_URL,
+      changeOrigin: true,
+  }),cookieParser());
 
     server.get('*', (req, res) => {
       return handle(req, res);

@@ -3,6 +3,7 @@
  */
 
 import _ from "lodash";
+import {HYDRATE} from 'next-redux-wrapper';
 
 import { AUTH_USER_REGISTRATION_LOADING, AUTH_USER_REGISTRATION_SENT, AUTH_ACCESS_CODE_REQUEST_LOADING, AUTH_ACCESS_CODE_REQUEST_SENT, AUTH_USER_LOGIN_LOADING, AUTH_USER_LOGIN, AUTH_USER_LOGOUT, AUTH_TOKEN_INVALID, AUTH_TOKEN_REFRESHED, AUTH_USER_SESSION_EXPIRED } from "../actions/authentificationActions";
 
@@ -34,6 +35,9 @@ const defaultState = {
  */
 function authenticationReducer(state = defaultState, action) {
   switch (action.type) {
+    case HYDRATE:
+       state = action.payload;
+       break;
 
     case AUTH_USER_REGISTRATION_LOADING:
       state.userRegistrationLoading = action.payload;
