@@ -8,16 +8,21 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const options = {
+  target: process.env.REACT_APP_AUTH_BASE_URL,
+  changeOrigin: true,
+  pathRewrite: {
+    "^/api/wrapper/auth" : "/api/v1/auth",
+    "^/api/wrapper/collect" : "/collect"
+  }
+}
+const proxy = createProxyMiddleware(options);
 app
   .prepare()
   .then(() => {
     const server = express();
 
-    server.use('/api/v1/auth', 
-    createProxyMiddleware({
-      target: process.env.REACT_APP_AUTH_BASE_URL,
-      changeOrigin: true,
-  }),cookieParser());
+    server.use('/api/wrapper', proxy, cookieParser());
 
     server.get('*', (req, res) => {
       return handle(req, res);
