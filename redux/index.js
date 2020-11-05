@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk'
 import { useMemo } from 'react'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
 const bindMiddleware = (middleware) => {
     if (process.env.NODE_ENV !== 'production') {
@@ -21,48 +22,17 @@ const loggerMiddleware = storeAPI => next => action => {
   }
   let store;
 
-  const initState = {
-    language: 'en',
-    userSession: {
-      userRegistrationLoading: false,
-      userRegistrationSent: false,
-      accessCodeRequestLoading: false,
-      accessCodeRequestSent: false,
-      userLoginLoading: false,
-      userAuthenticated: false,
-      accessToken: null,
-      accessTokenExpiry: null,
-      // user: null
-      user: {
-        id: null,
-        firstName: null,
-        lastName: null,
-        email: null,
-        roles: []
-      }
-    }
-}; 
-
-function initCookie(){
-  
-  if (typeof localStorage !== "undefined") {
-    const serializedState = localStorage.getItem("state");
-    if (serializedState) {
-      return JSON.parse(decodeURIComponent(serializedState));
-    }
-  } 
-  return initState;
-}
 
 const persistConfig = {
-  key: "primary",
+  key: 'primary',
   storage,
-  whitelist: ["language", "userSession"],  // place to select which state you want to persist
-  timeout: 0
+  whitelist: [ 'language', 'userSession'],  // place to select which state you want to persist
+  timeout: 0,
+  stateReconciler: autoMergeLevel2
 }
 const persistedReducer = persistReducer(persistConfig, allReducers)
 
-function makeStore(initialState = initState) {
+function makeStore(initialState) {
   return createStore(
     persistedReducer,
     initialState,
