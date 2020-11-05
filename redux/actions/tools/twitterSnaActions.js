@@ -43,6 +43,12 @@ export const setGexfExport = (data) => {
         payload : data
     }
 };
+export const redirectFromPlugin = (data) => {
+    return {
+        type : "SET_TWITTER_SNA_REDIRECT_REQUEST",
+        payload : data
+    }
+}
 
 export const setTweetsDetailPanel = (from, data) => {    
     console.log("from " + from)
