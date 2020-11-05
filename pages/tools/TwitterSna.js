@@ -28,6 +28,7 @@ import _ from "lodash";
 import { replaceAll, stringToList } from "../../components/shared/lib/StringUtil";
 import dateFormat from "dateformat";
 import AuthenticationCard from "../../components/shared/AuthenticationCard/AuthenticationCard";
+import { submissionEvent } from "../../components/shared/lib/googleAnalytics";
 
 const TwitterSna = () => {
 
@@ -243,7 +244,7 @@ const TwitterSna = () => {
             delete prevResult.socioSemantic4ModeGraph;
           }
           
-          submissionEvent(JSON.stringify(newRequest));
+          //submissionEvent(JSON.stringify(newRequest));
           setSubmittedRequest(newRequest);
         }
     };
