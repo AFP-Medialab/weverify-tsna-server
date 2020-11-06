@@ -40,13 +40,16 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             state.histoview = payload;
             return state;
         case "SET_PIE_CHART_RESULT":            
-                state.donutIndex = payload;
+            state.donutIndex = payload;
             return state;
         case "SET_BUBBLE_CHART_RESULT":
-                state.bubbleChart = payload;
+            state.bubbleChart = payload;
             return state;
         case "SET_HEAP_MAP_RESULT":
-                state.bubbleChart = payload;
+            state.bubbleChart = payload;
+            return state;
+        case "SET_TWITTER_SNA_REDIRECT_REQUEST":
+            state.request = payload;
             return state;
         default:
             return state;
