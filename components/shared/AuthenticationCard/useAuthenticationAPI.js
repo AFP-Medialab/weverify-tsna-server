@@ -4,7 +4,7 @@
 
 import axios from "axios";
 import _ from "lodash";
-import jwtDecode from "jwt-decode";
+
 
 import { ERR_AUTH_INVALID_PARAMS, 
   ERR_AUTH_BAD_REQUEST, 
@@ -28,6 +28,8 @@ import { userRegistrationSentAction,
   userAccessCodeRequestLoadingAction, 
   userLoginLoadingAction, 
   userLogoutAction } from '../../../redux/actions/authentificationActions';
+
+import { decodeJWTToken } from "./userAuthenticationUtils";
 
 
 /**
@@ -388,35 +390,4 @@ export default function useAuthenticationAPI() {
     logout,
     refreshToken
   };
-};
-
-/**
- * Decode a JWT token and return it's content data as an object.
- *
- * @param {string} token
- * @returns
- * @throws
- */
-function decodeJWTToken(token) {
-  let result = {};
-
-  // Token
-  result.accessToken = token;
-
-  // Decode JWT Token
-  const tokenContent = jwtDecode(token);
-  // console.log("tokenContent: ", tokenContent);
-
-  // Token Expiry
-  result.accessTokenExpiry = new Date(tokenContent.exp * 1000);
-
-  // User
-  result.user = {
-    id: tokenContent.sub,
-    email: tokenContent.email,
-    username: tokenContent.preferred_username,
-    roles: tokenContent.roles
-  };
-
-  return result;
 };
