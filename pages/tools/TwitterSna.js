@@ -28,10 +28,11 @@ import _ from "lodash";
 import { replaceAll, stringToList } from "../../components/shared/lib/StringUtil";
 import dateFormat from "dateformat";
 import AuthenticationCard from "../../components/shared/AuthenticationCard/AuthenticationCard";
-
+import { setError } from "../../redux/actions/errorActions";
 
 const TwitterSna = () => {
 
+  const dispatch = useDispatch();
     const classes = useMyStyles();
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const request = useSelector(state => state.twitterSna.request);
@@ -207,7 +208,9 @@ const TwitterSna = () => {
           ) :
           "lang_en"
     );
-
+    const handleErrors = (e) => {
+      dispatch(setError(e));
+    };
 
     //HANDLE SUBMISSION
 
