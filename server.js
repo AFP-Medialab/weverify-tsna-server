@@ -13,7 +13,8 @@ const options = {
   changeOrigin: true,
   pathRewrite: {
     "^/api/wrapper/auth" : "/api/v1/auth",
-    "^/api/wrapper/collect" : "/collect"
+    "^/api/wrapper/collect" : "/collect",
+    "^/api/wrapper/status" : "/status"
   }
 }
 const proxy = createProxyMiddleware(options);

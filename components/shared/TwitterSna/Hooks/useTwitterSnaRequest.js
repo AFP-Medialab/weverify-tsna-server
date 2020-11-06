@@ -1,5 +1,5 @@
 import {useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
 import {
@@ -37,11 +37,18 @@ import {
     getJsonDataForURLTable
 } from "./urlList"
 
+import useAuthenticatedRequest from '../../AuthenticationCard/useAuthenticatedRequest';
+import { setError } from "../../../../redux/actions/errorActions";
+
+let TwintWrapperUrl = "/api/getTwint";
 
 
 const useTwitterSnaRequest = (request) => {
     const dispatch = useDispatch();
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+
+    const authenticatedRequest = useAuthenticatedRequest();
+    const userAuthenticated = useSelector(state => state.userSession && state.userSession.userAuthenticated);
 
     useEffect(() => {
 
@@ -61,6 +68,40 @@ const useTwitterSnaRequest = (request) => {
             });
           
         };
+
+        const getResultUntilsDone = async (sessionId, isFirst, request) => {
+            const axiosConfig = {
+              method: 'get',
+
+              url: `/api/wrapper/status/${sessionId}`
+            };
+            await authenticatedRequest(axiosConfig)
+              // await axios.get(TwintWrapperUrl + /status/ + sessionId)
+              .then(async response => {
+                if (isFirst)
+                  await generateGraph(request, false);
+      
+                if (response.data.status === "Error")
+                  handleErrors("twitterSnaErrorMessage");
+                else if (response.data.status === "Done") {
+                  lastRenderCall(sessionId, request);
+                }
+                else if (response.data.status === "CountingWords") {
+                  dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_counting_words")));
+                  setTimeout(() => getResultUntilsDone(sessionId, false, request), 3000);
+                }
+                else {
+                  generateGraph(request, false).then(() => {
+                    setTimeout(() => getResultUntilsDone(sessionId, false, request), 5000);
+      
+                    dispatch(setTwitterSnaLoading(true));
+                    dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_fetching_tweets")));
+                  });
+                }
+              })
+              .catch(e => handleErrors(e));
+          };
+
         const makeEntries = (data) => {
             return {
                 from: request.from,
@@ -139,7 +180,27 @@ const useTwitterSnaRequest = (request) => {
         dispatch(setTwitterSnaLoading(true));
 
         //authentication test to set later
-        lastRenderCall(null, request);
+        if (userAuthenticated) {
+            const axiosConfig = {
+              method: 'post',
+              url: '/api/wrapper/collect',
+              data: request
+            };
+            // axios.post(TwintWrapperUrl + "/collect", request)
+            authenticatedRequest(axiosConfig)
+              .then(response => {
+                if (response.data.status === "Error")
+                  handleErrors("twitterSnaErrorMessage");
+                else if (response.data.status === "Done")
+                  lastRenderCall(response.data.session, request);
+                else
+                  getResultUntilsDone(response.data.session, true, request);
+              }).catch(error => {
+                handleErrors(error);
+              });
+          } else {
+            lastRenderCall(null, request);
+          }
        
 
     }, [JSON.stringify(request)]);
