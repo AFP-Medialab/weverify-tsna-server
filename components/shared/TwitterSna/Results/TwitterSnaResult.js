@@ -55,7 +55,7 @@ export default function TwitterSnaResult(props) {
             <Paper className={classes.root}>
                 <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
                 {
-                    result.histogram &&
+                    result.histogram && result.tweetCount.count > 0 &&
                     <PlotTimeLine result={result} />
                     
                 }
@@ -65,29 +65,33 @@ export default function TwitterSnaResult(props) {
                 }
                 
                 {
-                    result.pieCharts &&
+                    result.pieCharts && result.tweetCount.count > 0 &&
                     <PlotPieChart result={result} request={props.request}/>
                 }
                 {
                     //vérifier que correct, une fois l'authentification active
-                    props.request.userList.length === 0 && 
+                    props.request.userList.length === 0 && result.tweetCount.count > 0 &&
                     result &&
                     <BubbleChart result={result} request={props.request}/>
                 }
                 {
+                    result.tweetCount.count > 0 &&
                     <HeatMap result={result} request={props.request} />
                 }
                 {
+                    result.tweetCount.count > 0 &&
                     <HashtagGraph result={result} request={props.request}/>
                 }
                 {
+                    result.tweetCount.count > 0 &&
                     <SocioSemGraph result={result} request={props.request}/>
                 }        
                 {
+                    result.tweetCount.count > 0 &&
                     <CloudChart result={result} request={props.request} />
                 }   
                 {
-                    result.urls &&
+                    result.urls && result.tweetCount.count > 0 &&
                     <UrlList result={result} request={props.request}/>
                 }     
             </Paper>
