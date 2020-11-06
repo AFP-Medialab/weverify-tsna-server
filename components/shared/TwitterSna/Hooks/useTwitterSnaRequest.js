@@ -52,7 +52,7 @@ const useTwitterSnaRequest = (request) => {
 
     useEffect(() => {
 
-        const handleErrors = (e) => {
+        const handleErrors = (e) => {           
             if (keyword(e) !== "")
               dispatch(setError(keyword(e)));
             else
@@ -140,7 +140,7 @@ const useTwitterSnaRequest = (request) => {
           
 
 
-        const makeResult = (request, responseArrayOf9) => {
+        const makeResult = (request, responseArrayOf9, final) => {
             let responseAggs = responseArrayOf9[0]['aggregations']
             const result = {};
             result.histogram = createTimeLineChart(request, getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']), keyword);
@@ -149,20 +149,22 @@ const useTwitterSnaRequest = (request) => {
             result.tweetCount.retweet = responseAggs['retweets']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             result.tweetCount.like = responseAggs['likes']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             result.pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
-            result.tweets = responseArrayOf9[1].tweets;
-            result.heatMap = createHeatMap(request, result.tweets, keyword);
-            result.coHashtagGraph = createCoHashtagGraph(result.tweets);
-            result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
             result.cloudChart = { title: "top_words_cloud_chart_title" };
-            result.cloudChart = createWordCloud(result.tweets, request);
+            if (final) {
+                result.tweets = responseArrayOf9[1].tweets;
+                result.heatMap = createHeatMap(request, result.tweets, keyword);
+                result.coHashtagGraph = createCoHashtagGraph(result.tweets);
+                result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
+                result.cloudChart = { title: "top_words_cloud_chart_title" };
+                result.cloudChart = createWordCloud(result.tweets, request);
 
-            result.urls = getJsonDataForURLTable(responseAggs['top_url_keyword']['buckets'], keyword);
+                result.urls = getJsonDataForURLTable(responseAggs['top_url_keyword']['buckets'], keyword);
 
-            let authors = getTopActiveUsers(result.tweets, 100).map((arr) => {return arr[0];});
-            if (authors.length > 0) {
-                getUserAccounts(authors).then((data) => dispatch(setUserProfileMostActive(data.hits.hits)))
-              }
-
+                let authors = getTopActiveUsers(result.tweets, 100).map((arr) => {return arr[0];});
+                if (authors.length > 0) {
+                    getUserAccounts(authors).then((data) => dispatch(setUserProfileMostActive(data.hits.hits)))
+                }
+            }
 
             dispatch(setTwitterSnaResult(request, result, false, true));
         };

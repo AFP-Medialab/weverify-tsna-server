@@ -58,8 +58,8 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             state.bubbleChart = payload;
             return state;
         case "SET_TWITTER_SNA_REDIRECT_REQUEST":
-            console.log("red " + JSON.stringify(payload));
-            return {...state, request: payload};
+            state.request = payload;           
+            return state;
         case "SET_TWITTER_SNA_RESET":
             state = defaultState;
             return state;
