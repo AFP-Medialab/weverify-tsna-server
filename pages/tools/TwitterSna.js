@@ -86,6 +86,7 @@ const TwitterSna = () => {
     };
 
     const makeRequest = () => {
+      console.log("make request " + JSON.stringify(request));
       return makeRequestParams(keyWords, bannedWords, usersInput, since, until, localTime, langInput, filters, verifiedUsers);
     };
 
@@ -94,23 +95,14 @@ const TwitterSna = () => {
     //HANDLE INPUT
 
     const [usersInput, setUsersInput] = useState(
-        userAuthenticated ?
-          (
-            request && request.userList ?
-              request.userList.join(" ") :
-              ""
-          ) :
-          "@realDonaldTrump"
+      request && request.userList ?
+      request.userList.join(" ") : ""    
       );
 
-    const [keyWords, setKeywords] = useState(
-        userAuthenticated ?
-          (
-            request && request.keywordList ?
-              request.keywordList.join(" ") :
-              ""
-          ) :
-          "\"fake news\""
+    const [keyWords, setKeywords] = useState(        
+          request && request.keywordList ?
+          request.keywordList.join(" ") :
+          ""          
     );
 
 
@@ -141,13 +133,7 @@ const TwitterSna = () => {
     };
 
     const [until, setUntil] = useState(
-        userAuthenticated ?
-          (
-            request ?
-              request.until :
-              null
-          ) :
-          new Date("2020-01-01T00:00:00")
+      request ? request.until : null
     );
 
     const untilDateIsValid = (momentDate) => {
@@ -166,14 +152,8 @@ const TwitterSna = () => {
     };
 
 
-    const [since, setSince] = useState(
-        userAuthenticated ?
-          (
-            request ?
-              request.from :
-              null
-          ) :
-          new Date("2016-12-10T00:00:00")
+    const [since, setSince] = useState(        
+      request ? request.from : null          
     );
 
     const sinceDateIsValid = (momentDate) => {
@@ -199,13 +179,9 @@ const TwitterSna = () => {
     };
 
     const [langInput, setLangInput] = useState(
-        userAuthenticated ?
-          (
-            request && request.lang ?
+      request && request.lang ?
               "lang_" + request.lang :
               "lang_all"
-          ) :
-          "lang_en"
     );
 
 
@@ -256,7 +232,8 @@ const TwitterSna = () => {
        null :
         makeRequest()
     );
-  
+  console.log("request " + JSON.stringify(request));
+  console.log("submittedRequest " + JSON.stringify(submittedRequest));
   useTwitterSnaRequest(submittedRequest);
 
     return (

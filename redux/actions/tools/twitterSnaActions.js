@@ -50,6 +50,12 @@ export const redirectFromPlugin = (data) => {
     }
 }
 
+export const setTSNAReset = () => {
+    return {
+        type : "SET_TWITTER_SNA_RESET"
+    }
+}
+
 export const setTweetsDetailPanel = (from, data) => {    
     console.log("from " + from)
     switch(from){

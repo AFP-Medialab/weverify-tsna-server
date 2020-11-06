@@ -3,7 +3,16 @@ const defaultState = {
     notification: false,
     loading: false,
     loadingMessage: "",
-    request: "",
+    request: {
+        keywordList : ["'fake news'"],
+        userList : ["@realDonaldTrump"],
+        verified: false,
+        media : "none",
+        from : new Date("2016-12-10T00:00:00"),
+        until : new Date("2020-01-01T00:00:00"),
+        bannedWords : "",
+        lang : "en"
+    },
     result: null,
     pieCharts: [null,null,null,null], 
     donutIndex: null,
@@ -49,7 +58,10 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             state.bubbleChart = payload;
             return state;
         case "SET_TWITTER_SNA_REDIRECT_REQUEST":
-            state.request = payload;
+            console.log("red " + JSON.stringify(payload));
+            return {...state, request: payload};
+        case "SET_TWITTER_SNA_RESET":
+            state = defaultState;
             return state;
         default:
             return state;
