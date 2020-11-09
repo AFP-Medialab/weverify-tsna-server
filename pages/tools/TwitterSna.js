@@ -29,7 +29,7 @@ import { replaceAll, stringToList } from "../../components/shared/lib/StringUtil
 import dateFormat from "dateformat";
 import AuthenticationCard from "../../components/shared/AuthenticationCard/AuthenticationCard";
 import { setError } from "../../redux/actions/errorActions";
-import { setTSNAReset, cleanTwitterSnaState } from "../../redux/actions/tools/twitterSnaActions"
+import { setTSNAReset, cleanTwitterSnaState, setTwitterSnaNewRequest } from "../../redux/actions/tools/twitterSnaActions"
 
 const TwitterSna = () => {
 
@@ -102,15 +102,6 @@ const TwitterSna = () => {
   const makeRequest = () => {
     return makeRequestParams(keyWords, bannedWords, usersInput, since, until, localTime, langInput, filters, verifiedUsers);
   };
-
-  useEffect(() => {
-    console.log("dispatch user authenticated");
-
-    userAuthenticated ? dispatch(cleanTwitterSnaState()):
-     dispatch(setTSNAReset(defaultRequest));
-     userAuthenticated ? setSubmittedRequest(null): setSubmittedRequest(defaultRequest);
-  },[userAuthenticated]); 
-
 
   //HANDLE INPUT
 
@@ -244,6 +235,7 @@ const TwitterSna = () => {
       }
 
       setSubmittedRequest(newRequest);
+      dispatch(setTwitterSnaNewRequest(newRequest));
     }
   };
 
@@ -257,6 +249,13 @@ const TwitterSna = () => {
   console.log("submittedRequest " + JSON.stringify(submittedRequest));
   useTwitterSnaRequest(submittedRequest);
 // Reset form & result when user login
+useEffect(() => {
+  console.log("dispatch user authenticated");
+
+  userAuthenticated ? dispatch(cleanTwitterSnaState()):
+   dispatch(setTSNAReset(defaultRequest));
+   userAuthenticated ? setSubmittedRequest(null): setSubmittedRequest(defaultRequest);
+},[userAuthenticated]); 
 
 
     return (

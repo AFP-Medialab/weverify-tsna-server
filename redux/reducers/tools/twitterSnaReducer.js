@@ -7,12 +7,17 @@ const defaultState = {
     result: null,
     pieCharts: [null,null,null,null], 
     donutIndex: null,
+    topUser: null
 };
 
 const twitterSnaReducer = (state = defaultState, {type, payload}) => {
     switch (type) {
         case HYDRATE:
             return {...state, ...payload};
+        case "SET_TWITTER_SNA_NEW_REQUEST":
+            return {...state, "notification" : false, "loading" : false,
+                "request" : payload, "result" : false, "pieCharts" : [null,null,null,null], 
+                "donutIndex" : null, "topUser" : null}
         case "SET_TWITTER_SNA_RESULT":
             state.notification = payload.notification;
             state.loading = payload.loading;
@@ -26,7 +31,7 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             state.loadingMessage = payload;
             return state;
         case "TWITTER_SNA_CLEAN_STATE":
-            return {...state, "request" : null, "result": null, "loadingMessage" : null}
+            return state = defaultState;
         case "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE":           
             state.topUser = payload;
             return state;

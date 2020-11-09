@@ -174,7 +174,6 @@ const useTwitterSnaRequest = (request) => {
             // || (_.isNil(request.userList) || _.isEmpty(request.userList))
             || _.isNil(request.from)
             || _.isNil(request.until)) {
-            // console.log("Empty request, resetting result: ", request);
             dispatch(setTwitterSnaResult(request, null, false, false));
             return;
         }

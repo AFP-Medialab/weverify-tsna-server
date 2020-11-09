@@ -10,6 +10,15 @@ export const setTwitterSnaResult = (request, result, notification, loading) => {
     }
 };
 
+export const setTwitterSnaNewRequest = (request) => {
+    return {
+        type : "SET_TWITTER_SNA_NEW_REQUEST",
+        payload : {           
+            request : request
+        }
+    }
+};
+
 export const setTwitterSnaLoading = (loading) => {
     return {
         type : "SET_TWITTER_SNA_LOADING",
