@@ -29,14 +29,14 @@ import { replaceAll, stringToList } from "../../components/shared/lib/StringUtil
 import dateFormat from "dateformat";
 import AuthenticationCard from "../../components/shared/AuthenticationCard/AuthenticationCard";
 import { setError } from "../../redux/actions/errorActions";
-import { setTSNAReset } from "../../redux/actions/tools/twitterSnaActions"
+import { setTSNAReset, cleanTwitterSnaState } from "../../redux/actions/tools/twitterSnaActions"
 
 const TwitterSna = () => {
 
   const dispatch = useDispatch();
   const classes = useMyStyles();
   const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
-  const request = useSelector(state => state.twitterSna.request);
+  const requestStore = useSelector(state => state.twitterSna.request);
   
   const isLoading = useSelector(state => state.twitterSna.loading);
   const loadingMessage = useSelector(state => state.twitterSna.loadingMessage);
@@ -50,6 +50,18 @@ const TwitterSna = () => {
   const [openLangInput, setLangInputOpen] = React.useState(false);
   const [keyWordsError, setKeyWordsError] = useState(false);
 
+  const defaultRequest = {
+    "keywordList" : ["'fake news'"],
+    "userList" : ["@realDonaldTrump"],
+    "verified" : false,
+    "media" : "none",
+    "from" : new Date("2016-12-10T00:00:00"),
+    "until" : new Date("2020-01-01T00:00:00"),
+    "bannedWords" : [""],
+    "lang" : "en"
+  };
+
+  let request = userAuthenticated ? requestStore: defaultRequest; 
  
   
   //PARAMS
@@ -90,6 +102,15 @@ const TwitterSna = () => {
   const makeRequest = () => {
     return makeRequestParams(keyWords, bannedWords, usersInput, since, until, localTime, langInput, filters, verifiedUsers);
   };
+
+  useEffect(() => {
+    console.log("dispatch user authenticated");
+
+    userAuthenticated ? dispatch(cleanTwitterSnaState()):
+     dispatch(setTSNAReset(defaultRequest));
+     userAuthenticated ? setSubmittedRequest(null): setSubmittedRequest(defaultRequest);
+  },[userAuthenticated]); 
+
 
   //HANDLE INPUT
 
@@ -228,16 +249,15 @@ const TwitterSna = () => {
 
       // const [submittedRequest, setSubmittedRequest] = useState(null);
   const [submittedRequest, setSubmittedRequest] = useState(
-      makeRequest()
+    makeRequest()
   );
 
+  
   console.log("request " + JSON.stringify(request));
   console.log("submittedRequest " + JSON.stringify(submittedRequest));
   useTwitterSnaRequest(submittedRequest);
 // Reset form & result when user login
-  useEffect(() => {
-    dispatch(setTSNAReset());
-  },[userAuthenticated]); 
+
 
     return (
         <div className={classes.all}>

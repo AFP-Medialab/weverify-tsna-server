@@ -3,16 +3,7 @@ const defaultState = {
     notification: false,
     loading: false,
     loadingMessage: "",
-    request: {
-        keywordList : ["'fake news'"],
-        userList : ["@realDonaldTrump"],
-        verified: false,
-        media : "none",
-        from : new Date("2016-12-10T00:00:00"),
-        until : new Date("2020-01-01T00:00:00"),
-        bannedWords : "",
-        lang : "en"
-    },
+    request: null,
     result: null,
     pieCharts: [null,null,null,null], 
     donutIndex: null,
@@ -35,10 +26,7 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             state.loadingMessage = payload;
             return state;
         case "TWITTER_SNA_CLEAN_STATE":
-            state.request = "";
-          //  state.loadingMessage = "";
-            state.result = null;
-            return state;
+            return {...state, "request" : null, "result": null, "loadingMessage" : null}
         case "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE":           
             state.topUser = payload;
             return state;
@@ -60,9 +48,8 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
         case "SET_TWITTER_SNA_REDIRECT_REQUEST":
             state.request = payload;           
             return state;
-        case "SET_TWITTER_SNA_RESET":
-            state = defaultState;
-            return state;
+        case "SET_TWITTER_SNA_RESET":            
+            return {...state, "request" : payload, "result" : null, "loadingMessage" : null};
         default:
             return state;
     }

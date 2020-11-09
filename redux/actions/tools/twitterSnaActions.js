@@ -50,9 +50,10 @@ export const redirectFromPlugin = (data) => {
     }
 }
 
-export const setTSNAReset = () => {
+export const setTSNAReset = (data) => {
     return {
-        type : "SET_TWITTER_SNA_RESET"
+        type : "SET_TWITTER_SNA_RESET",
+        payload: data
     }
 }
 
