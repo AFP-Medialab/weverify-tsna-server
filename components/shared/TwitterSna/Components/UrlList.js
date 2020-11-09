@@ -27,6 +27,7 @@ export default function cloudChart (props) {
     return (
 
         <Paper>
+                    <br></br><br></br>
                     <Box pb={3}>
                         <Button
                             variant={"contained"}

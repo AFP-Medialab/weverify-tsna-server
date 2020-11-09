@@ -29,7 +29,8 @@ import { replaceAll, stringToList } from "../../components/shared/lib/StringUtil
 import dateFormat from "dateformat";
 import AuthenticationCard from "../../components/shared/AuthenticationCard/AuthenticationCard";
 import { setError } from "../../redux/actions/errorActions";
-import { setTSNAReset, cleanTwitterSnaState, setTwitterSnaNewRequest } from "../../redux/actions/tools/twitterSnaActions"
+import { setTSNAReset, cleanTwitterSnaState, setTwitterSnaNewRequest } from "../../redux/actions/tools/twitterSnaActions";
+import convertToGMT from "../../components/shared/DateTimePicker/convertToGMT";
 
 const TwitterSna = () => {
 

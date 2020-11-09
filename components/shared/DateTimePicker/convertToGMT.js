@@ -8,4 +8,4 @@ const convertToGMT = (date) => {
         result.getMinutes()
     ));
 };
-export default convertToGMT;
+export default convertToGMT
