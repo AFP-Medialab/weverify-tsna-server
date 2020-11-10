@@ -56,8 +56,8 @@ const TwitterSna = () => {
     "userList" : ["@realDonaldTrump"],
     "verified" : false,
     "media" : "none",
-    "from" : new Date("2016-12-10T00:00:00"),
-    "until" : new Date("2020-01-01T00:00:00"),
+    "from" : "2016-12-10 00:00:00",
+    "until" : "2020-01-01 00:00:00",
     "bannedWords" : [""],
     "lang" : "en"
   };
