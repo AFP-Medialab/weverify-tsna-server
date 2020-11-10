@@ -62,17 +62,6 @@ const TwitterSna = () => {
     "lang" : "en"
   };
 
-  const noRequest = {
-    "keywordList" : [""],
-    "userList" : [""],
-    "verified" : false,
-    "media" : "none",
-    "from" : null,
-    "until" : null,
-    "bannedWords" : [""],
-    "lang" : "lang_all" 
-  }
-
   let request = userAuthenticated ? requestStore: defaultRequest; 
  
   
