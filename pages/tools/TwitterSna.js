@@ -56,11 +56,22 @@ const TwitterSna = () => {
     "userList" : ["@realDonaldTrump"],
     "verified" : false,
     "media" : "none",
-    "from" : new Date("2016-12-10T00:00:00"),
-    "until" : new Date("2020-01-01T00:00:00"),
+    "from" : new Date("2016-12-10 00:00:00"),
+    "until" : new Date("2020-01-01 00:00:00"),
     "bannedWords" : [""],
     "lang" : "en"
   };
+
+  const noRequest = {
+    "keywordList" : [""],
+    "userList" : [""],
+    "verified" : false,
+    "media" : "none",
+    "from" : null,
+    "until" : null,
+    "bannedWords" : [""],
+    "lang" : "lang_all" 
+  }
 
   let request = userAuthenticated ? requestStore: defaultRequest; 
  
@@ -111,7 +122,7 @@ const TwitterSna = () => {
     request.userList.join(" ") : ""    
     );
 
-  const [keyWords, setKeywords] = useState(        
+  let [keyWords, setKeywords] = useState(        
         request && request.keywordList ?
         request.keywordList.join(" ") :
         ""          
@@ -249,12 +260,30 @@ const TwitterSna = () => {
   console.log("request " + JSON.stringify(request));
   console.log("submittedRequest " + JSON.stringify(submittedRequest));
   useTwitterSnaRequest(submittedRequest);
+
+  function menuSet (keywords, BannedWords, UsersInput, Since, Until, LocalTime, LangInput, Filers, VerifiedUsers) {
+    setKeywords(keywords);
+    setBannedWords(BannedWords);
+    setUsersInput(UsersInput);
+    setSince(Since);
+    setUntil(Until);
+    setLocalTime(LocalTime);
+    setLangInput(LangInput);
+    setFilers(Filers);
+    setVerifiedUsers(VerifiedUsers);
+  }
+
 // Reset form & result when user login
 useEffect(() => {
   console.log("dispatch user authenticated");
 
   userAuthenticated ? dispatch(cleanTwitterSnaState()):
    dispatch(setTSNAReset(defaultRequest));
+
+userAuthenticated ? menuSet("", "", "", null, null, "true", "lang_all", "none", "false") :
+ menuSet("\"fake news\"", "", "@realDonaldTrump", new Date("2016-12-10T00:00:00"), new Date("2020-10-01T00:00:00"), "true", "lang_en", "false");
+
+
    userAuthenticated ? setSubmittedRequest(null): setSubmittedRequest(defaultRequest);
 },[userAuthenticated]); 
 
