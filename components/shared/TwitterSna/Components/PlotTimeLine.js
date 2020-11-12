@@ -23,7 +23,7 @@ export default function PlotTimeLine(props){
     const [histoVisible, setHistoVisible] = useState(true);
     const histoTweets =  useSelector(state => state.twitterSna.histoview);
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
 
     const [state, setState] = useState(

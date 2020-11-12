@@ -13,7 +13,7 @@ export default function cloudChart (props) {
 
     const dispatch = useDispatch();
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
 
     function createCSVFromURLTable(urls) {

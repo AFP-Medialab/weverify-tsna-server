@@ -34,7 +34,7 @@ function Layout({ children }) {
                     <Languages/>
                     <Box display={{xs: 'none', md: 'block'}}>
                         <img
-                            src="/images/logo-we-verifymini.png"
+                            src="/tsna/images/logo-we-verifymini.png"
                             alt="logo"
                             className={classes.logoRight}
                         />

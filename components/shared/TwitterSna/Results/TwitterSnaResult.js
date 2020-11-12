@@ -34,7 +34,7 @@ export default function TwitterSnaResult(props) {
 
     const dispatch = useDispatch();
     const classes = useMyStyles();
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
     
     const [result, setResult] = useState(null);
 

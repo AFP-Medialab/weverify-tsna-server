@@ -28,7 +28,7 @@ let from = "PLOT_PIE_CHART";
 export default function PlotPieChart (props) { 
 
     const dispatch = useDispatch();  
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
     const request = useSelector(state => state.twitterSna.request);
     const [pieCharts0, setPieCharts0] = useState(null);
     const [pieCharts1, setPieCharts1] = useState(null);

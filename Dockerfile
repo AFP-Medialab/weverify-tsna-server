@@ -14,7 +14,7 @@ WORKDIR /home/node/app
 COPY --from=builder /home/node/app/build/package*.json ./
 COPY --from=builder /home/node/app/build/.next ./.next
 COPY --from=builder /home/node/app/build/public ./public
-COPY --from=builder /home/node/app/build/server.js ./
+COPY --from=builder /home/node/app/build/*.js ./
 COPY --from=builder /home/node/app/build/node_modules ./node_modules
 #RUN npm install next
 

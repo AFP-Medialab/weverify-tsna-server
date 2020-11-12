@@ -5,7 +5,7 @@ import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
 import useLoadLanguage from "../hooks/useLoadLanguage";
 import Linkify from 'react-linkify';
 
-const tsv = "/localDictionary/components/Shared/OnClickInfo.tsv";
+const tsv = "/tsna/localDictionary/components/Shared/OnClickInfo.tsv";
 
 const OnClickInfo = (props) => {
     const classes = useMyStyles();

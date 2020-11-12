@@ -29,7 +29,7 @@ export default function BubbleChart(props) {
     const [bubbleTweets, setBubbleTweets] = useState(null);
     const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
 
     const [state, setState] = useState(

@@ -12,9 +12,9 @@ const options = {
   target: process.env.REACT_APP_AUTH_BASE_URL,
   changeOrigin: true,
   pathRewrite: {
-    "^/api/wrapper/auth" : "/api/v1/auth",
-    "^/api/wrapper/collect" : "/collect",
-    "^/api/wrapper/status" : "/status"
+    "^/tsna/api/wrapper/auth" : "/api/v1/auth",
+    "^/tsna/api/wrapper/collect" : "/collect",
+    "^/tsna/api/wrapper/status" : "/status"
   }
 }
 const proxy = createProxyMiddleware(options);
@@ -23,7 +23,7 @@ app
   .then(() => {
     const server = express();
 
-    server.use('/api/wrapper', proxy, cookieParser());
+    server.use('/tsna/api/wrapper', proxy, cookieParser());
 
     server.get('*', (req, res) => {
       return handle(req, res);

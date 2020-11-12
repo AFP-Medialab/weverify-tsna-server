@@ -16,7 +16,7 @@ let from = "TWEETCOUNT"
 export default function TweetCount(props){
 
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
 
     const [state, setState] = useState(

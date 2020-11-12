@@ -9,7 +9,7 @@ import useLoadLanguage from "../hooks/useLoadLanguage";
 import {changeLanguage} from "../../../redux/actions"
 
 
-const localtsv = "/localDictionary/components/languages.tsv";
+const localtsv = "/tsna/localDictionary/components/languages.tsv";
 
 
 const Languages = () => {

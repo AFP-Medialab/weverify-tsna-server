@@ -1,7 +1,7 @@
 
 
-let elasticSearch_url = "/api/getTweets";
-let elasticSearchUser_url = "/api/getUsers";
+let elasticSearch_url = "/tsna/api/getTweets";
+let elasticSearchUser_url = "/tsna/api/getUsers";
 
 //let elasticSearch_url = process.env.REACT_APP_ELK_URL;
 

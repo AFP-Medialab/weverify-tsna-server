@@ -17,7 +17,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import useLoadLanguage from "../hooks/useLoadLanguage";
 
-const tsv = "/LocalDictionary/components/Shared/CustomTable.tsv";
+const tsv = "/tsna/localDictionary/components/Shared/CustomTable.tsv";
 
 const tableIcons = {
     Add: AddBox,
