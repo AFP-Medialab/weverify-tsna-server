@@ -53,13 +53,17 @@ const TwitterSna = () => {
 
   const defaultRequest = {
     "keywordList" : ["'fake news'"],
+    "keywordListStr" : "fake news",
     "userList" : ["@realDonaldTrump"],
+    "userListStr" : "@realDonaldTrump",
     "verified" : false,
     "media" : "none",
     "from" : "2016-12-10 00:00:00",
     "until" : "2020-01-01 00:00:00",
     "bannedWords" : [""],
-    "lang" : "en"
+    "bannedWordsStr" : "",
+    "lang" : "en",
+    "langStr" : "lang_en"
   };
 
   let request = userAuthenticated ? requestStore: defaultRequest; 
@@ -87,6 +91,7 @@ const TwitterSna = () => {
     const newFrom = (localTimeP === "false") ? convertToGMT(sinceP) : sinceP;
     const newUntil = (localTimeP === "false") ? convertToGMT(untilP) : untilP;
     console.log("make params");
+    console.log("ftgtd "+langInputP);
     return {
       "keywordList": trimedKeywords,
       "bannedWords": trimedBannedWords,
@@ -250,30 +255,47 @@ const TwitterSna = () => {
   console.log("submittedRequest " + JSON.stringify(submittedRequest));
   useTwitterSnaRequest(submittedRequest);
 
-  function menuSet (keywords, BannedWords, UsersInput, Since, Until, LocalTime, LangInput, Filers, VerifiedUsers) {
-    setKeywords(keywords);
-    setBannedWords(BannedWords);
-    setUsersInput(UsersInput);
-    setSince(Since);
-    setUntil(Until);
-    setLocalTime(LocalTime);
-    setLangInput(LangInput);
-    setFilers(Filers);
-    setVerifiedUsers(VerifiedUsers);
+  function menuSet (req) {
+    if (req == null) {
+      setKeywords("");
+      setBannedWords("");
+      setUsersInput("");
+      setSince(null);
+      setUntil(null);
+      setLocalTime("true");
+      setLangInput("lang_all");
+      setFilers("none");
+      setVerifiedUsers("false");
+    }
+    else { 
+    setKeywords(req.keywordListStr);
+    setBannedWords(req.bannedWordsStr);
+    setUsersInput(req.userListStr);
+    setSince(req.since);
+    setUntil(req.until);
+    setLocalTime(req.localTime);
+    setLangInput(req.langStr);
+    setFilers(req.filters);
+    setVerifiedUsers(req.verified);
+    }
   }
 
 // Reset form & result when user login
 useEffect(() => {
   console.log("dispatch user authenticated");
 
-  userAuthenticated ? dispatch(cleanTwitterSnaState()):
-   dispatch(setTSNAReset(defaultRequest));
 
-userAuthenticated ? menuSet("", "", "", null, null, "true", "lang_all", "none", "false") :
- menuSet("\"fake news\"", "", "@realDonaldTrump", new Date("2016-12-10T00:00:00"), new Date("2020-10-01T00:00:00"), "true", "lang_en", "false");
+if (userAuthenticated) {
+  dispatch(cleanTwitterSnaState());
+  menuSet(null);
+  setSubmittedRequest(null);
+}
+else {
+  dispatch(setTSNAReset(defaultRequest));
+  menuSet(defaultRequest);
+  setSubmittedRequest(defaultRequest)
+}
 
-
-   userAuthenticated ? setSubmittedRequest(null): setSubmittedRequest(defaultRequest);
 },[userAuthenticated]); 
 
 
