@@ -23,7 +23,7 @@ import {downloadClick} from "../lib/downloadClick";
 
 export default function cloudChart (props) {
 
-    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
 
     const [filesNames, setfilesNames] = useState(null);

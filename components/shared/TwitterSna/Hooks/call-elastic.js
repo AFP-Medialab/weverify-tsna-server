@@ -1,7 +1,11 @@
 
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
-let elasticSearch_url = "/tsna/api/getTweets";
-let elasticSearchUser_url = "/tsna/api/getUsers";
+//console.log(publicRuntimeConfig.baseFolder);
+
+let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/getTweets`;
+let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/getUsers`;
 
 //let elasticSearch_url = process.env.REACT_APP_ELK_URL;
 

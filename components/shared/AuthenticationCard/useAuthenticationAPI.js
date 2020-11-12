@@ -30,7 +30,8 @@ import { userRegistrationSentAction,
   userLogoutAction } from '../../../redux/actions/authentificationActions';
 
 import { decodeJWTToken } from "./userAuthenticationUtils";
-
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 /**
  * Authentication API hook.
@@ -45,11 +46,11 @@ export default function useAuthenticationAPI() {
   const jsonContentType = "application/json";
 
   // Services URL
-  const AUTH_SRV_REGISTER_USER_URL = "/tsna/api/wrapper/auth/registration";
-  const AUTH_SRV_REQUEST_ACCESS_CODE_URL = "/tsna/api/wrapper/auth/accesscode";
-  const AUTH_SRV_LOGIN_URL = "/tsna/api/wrapper/auth/login";
+  const AUTH_SRV_REGISTER_USER_URL = `${publicRuntimeConfig.baseFolder}/api/wrapper/auth/registration`;
+  const AUTH_SRV_REQUEST_ACCESS_CODE_URL = `${publicRuntimeConfig.baseFolder}/api/wrapper/auth/accesscode`;
+  const AUTH_SRV_LOGIN_URL = `${publicRuntimeConfig.baseFolder}/api/wrapper/auth/login`;
   //const AUTH_SRV_LOGOUT_URL = "/logout";
-  const AUTH_SRV_REFRESH_TOKEN_URL = "/tsna/api/wrapper/auth/refreshtoken";
+  const AUTH_SRV_REFRESH_TOKEN_URL = `${publicRuntimeConfig.baseFolder}/api/wrapper/auth/refreshtoken`;
 
   const dispatch = useDispatch();
 

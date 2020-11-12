@@ -7,14 +7,17 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+const basePath = process.env.REACT_APP_BASE_DOC ? process.env.REACT_APP_BASE_DOC : '';
+
+
 
 const options = {
   target: process.env.REACT_APP_AUTH_BASE_URL,
   changeOrigin: true,
   pathRewrite: {
-    "^/tsna/api/wrapper/auth" : "/api/v1/auth",
-    "^/tsna/api/wrapper/collect" : "/collect",
-    "^/tsna/api/wrapper/status" : "/status"
+    "[a-zA-Z0-9/]*/api/wrapper/auth" : "/api/v1/auth",
+    "[a-zA-Z0-9/]*/api/wrapper/collect" : "/collect",
+    "[a-zA-Z0-9/]*/api/wrapper/status" : "/status"
   }
 }
 const proxy = createProxyMiddleware(options);
@@ -23,7 +26,7 @@ app
   .then(() => {
     const server = express();
 
-    server.use('/tsna/api/wrapper', proxy, cookieParser());
+    server.use(basePath+'/api/wrapper', proxy, cookieParser());
 
     server.get('*', (req, res) => {
       return handle(req, res);

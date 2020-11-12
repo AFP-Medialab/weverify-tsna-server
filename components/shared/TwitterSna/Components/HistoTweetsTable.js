@@ -11,7 +11,7 @@ import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaAc
 export default function HistoTweetsTable (props) {
 
     const dispatch = useDispatch();
-    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const request = useSelector(state => state.twitterSna.request);
 
     function downloadClick(csvArr, name, histo, type = "Tweets_") {

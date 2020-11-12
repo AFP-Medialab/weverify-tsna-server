@@ -28,7 +28,7 @@ let from = "PLOT_HEAT_MAP";
 export default function HeatMap (props) { 
     const dispatch = useDispatch();
 
-    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
 
     const [heatMapTweets, setheatMapTweets] = useState(null);

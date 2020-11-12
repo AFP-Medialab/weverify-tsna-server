@@ -20,7 +20,7 @@ import { Paper } from "@material-ui/core";
 
 import Link from "@material-ui/core/Link";
 
-const tsv = "/tsna/localDictionary/components/Shared/CustomTable.tsv";
+const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 
 const tableIcons = {
     Add: AddBox,

@@ -7,15 +7,16 @@ import TranslateIcon from '@material-ui/icons/Language';
 import {useSelector, useDispatch} from "react-redux";
 import useLoadLanguage from "../hooks/useLoadLanguage";
 import {changeLanguage} from "../../../redux/actions"
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
-
-const localtsv = "/tsna/localDictionary/components/languages.tsv";
+const tsv = "/localDictionary/components/languages.tsv";
 
 
 const Languages = () => {
-    const keyword = useLoadLanguage(localtsv);
+    const keyword = useLoadLanguage(tsv);
     const dictionary = useSelector(state => state.dictionary);
-
+    const localtsv = `${publicRuntimeConfig.baseFolder}`+tsv;
     const keywordByLang = (language) => {
         return (dictionary && dictionary[localtsv] && dictionary[localtsv][language])? dictionary[localtsv][language]["lang_label"]: "";
     };

@@ -5,6 +5,8 @@ import Languages from './shared/languages/languages';
 import Toolbar from '@material-ui/core/Toolbar';
 import styles from './layout.module.css';
 import useMyStyles from './shared/styles/useMyStyles';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 export const siteTitle = 'Weverify'
 
@@ -34,7 +36,7 @@ function Layout({ children }) {
                     <Languages/>
                     <Box display={{xs: 'none', md: 'block'}}>
                         <img
-                            src="/tsna/images/logo-we-verifymini.png"
+                            src={`${publicRuntimeConfig.baseFolder}/images/logo-we-verifymini.png`}
                             alt="logo"
                             className={classes.logoRight}
                         />

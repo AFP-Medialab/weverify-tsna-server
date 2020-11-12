@@ -89,7 +89,7 @@ const AuthenticationCard = (props) => {
   const userLoginLoading = useSelector(state => state.userSession && state.userSession.userLoginLoading);
 
   // i18n
-  const messageI18NResolver = useLoadLanguage("/tsna/localDictionary/components/Shared/Authentication.tsv");
+  const messageI18NResolver = useLoadLanguage("/localDictionary/components/Shared/Authentication.tsv");
 
   // Authentication API
   const authenticationAPI = useAuthenticationAPI();

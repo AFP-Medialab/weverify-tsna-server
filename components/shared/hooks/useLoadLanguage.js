@@ -2,7 +2,8 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {addDictionary} from "../../../redux/actions";
-
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 /**
  * @func transform array in json representation of translation (access this way: json[global_language][id_translate])
  * @array the array representation of the csv
@@ -45,8 +46,8 @@ function translate_csv(text) {
     return array_to_json(lang_array_csv);
 }
 
-const useLoadLanguage = (localTsv) => {
-    
+const useLoadLanguage = (tsv) => {
+    const localTsv = `${publicRuntimeConfig.baseFolder}`+tsv
     const lang = useSelector(state => state.language);
     const dictionary = useSelector(state => state.dictionary[localTsv]);
     const dispatch = useDispatch();

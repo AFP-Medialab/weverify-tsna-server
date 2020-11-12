@@ -36,7 +36,7 @@ const TwitterSna = () => {
 
   const dispatch = useDispatch();
   const classes = useMyStyles();
-  const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
+  const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
   const requestStore = useSelector(state => state.twitterSna.request);
   
   const isLoading = useSelector(state => state.twitterSna.loading);

@@ -39,13 +39,14 @@ import {
 
 import useAuthenticatedRequest from '../../AuthenticationCard/useAuthenticatedRequest';
 import { setError } from "../../../../redux/actions/errorActions";
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
-let TwintWrapperUrl = "/api/getTwint";
 
 
 const useTwitterSnaRequest = (request) => {
     const dispatch = useDispatch();
-    const keyword = useLoadLanguage("/tsna/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
 
     const authenticatedRequest = useAuthenticatedRequest();
     const userAuthenticated = useSelector(state => state.userSession && state.userSession.userAuthenticated);
@@ -73,7 +74,7 @@ const useTwitterSnaRequest = (request) => {
             const axiosConfig = {
               method: 'get',
 
-              url: `/tsna/api/wrapper/status/${sessionId}`
+              url: `${publicRuntimeConfig.baseFolder}/api/wrapper/status/${sessionId}`
             };
             await authenticatedRequest(axiosConfig)
               // await axios.get(TwintWrapperUrl + /status/ + sessionId)
@@ -184,7 +185,7 @@ const useTwitterSnaRequest = (request) => {
         if (userAuthenticated) {
             const axiosConfig = {
               method: 'post',
-              url: '/tsna/api/wrapper/collect',
+              url: `${publicRuntimeConfig.baseFolder}/api/wrapper/collect`,
               data: request
             };
             // axios.post(TwintWrapperUrl + "/collect", request)
