@@ -37,7 +37,7 @@ const TwitterSna = () => {
   const dispatch = useDispatch();
   const classes = useMyStyles();
   const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
-  const requestStore = useSelector(state => state.twitterSna.request);
+  const request = useSelector(state => state.twitterSna.request);
   
   const isLoading = useSelector(state => state.twitterSna.loading);
   const loadingMessage = useSelector(state => state.twitterSna.loadingMessage);
@@ -53,7 +53,7 @@ const TwitterSna = () => {
 
   const defaultRequest = {
     "keywordList" : ["'fake news'"],
-    "keywordListStr" : "fake news",
+    "keywordListStr" : "'fake news'",
     "userList" : ["@realDonaldTrump"],
     "userListStr" : "@realDonaldTrump",
     "verified" : false,
@@ -66,7 +66,7 @@ const TwitterSna = () => {
     "langStr" : "lang_en"
   };
 
-  let request = userAuthenticated ? requestStore: defaultRequest; 
+  //let request = userAuthenticated ? requestStore: defaultRequest; 
  
   
   //PARAMS
