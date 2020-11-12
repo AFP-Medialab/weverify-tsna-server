@@ -91,7 +91,6 @@ const TwitterSna = () => {
     const newFrom = (localTimeP === "false") ? convertToGMT(sinceP) : sinceP;
     const newUntil = (localTimeP === "false") ? convertToGMT(untilP) : untilP;
     console.log("make params");
-    console.log("ftgtd "+langInputP);
     return {
       "keywordList": trimedKeywords,
       "bannedWords": trimedBannedWords,
@@ -256,7 +255,7 @@ const TwitterSna = () => {
   useTwitterSnaRequest(submittedRequest);
 
   function menuSet (req) {
-    if (req == null) {
+    if (_.isNull(req)) {
       setKeywords("");
       setBannedWords("");
       setUsersInput("");
