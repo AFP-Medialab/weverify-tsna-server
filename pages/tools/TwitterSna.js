@@ -309,10 +309,13 @@ useEffect(() => {
 
 if (userAuthenticated) {
   dispatch(cleanTwitterSnaState());
-  menuSet(null);
+
   setSubmittedRequest(null);
   if (request && !request.default){
-  menuSet(request);
+    menuSet(request);
+  }
+  else{
+    menuSet(null);
   }
   
 }
