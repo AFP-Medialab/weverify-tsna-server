@@ -31,6 +31,7 @@ import AuthenticationCard from "../../components/shared/AuthenticationCard/Authe
 import { setError } from "../../redux/actions/errorActions";
 import { setTSNAReset, cleanTwitterSnaState, setTwitterSnaNewRequest } from "../../redux/actions/tools/twitterSnaActions";
 import convertToGMT from "../../components/shared/DateTimePicker/convertToGMT";
+import MyErrorbar from "../../components/shared/ErrorBar/ErrorBar";
 
 const TwitterSna = () => {
 
@@ -38,7 +39,8 @@ const TwitterSna = () => {
   const classes = useMyStyles();
   const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
   const request = useSelector(state => state.twitterSna.request);
-  
+  const error = useSelector(state => state.error);
+
   const isLoading = useSelector(state => state.twitterSna.loading);
   const loadingMessage = useSelector(state => state.twitterSna.loadingMessage);
   const reduxResult = useSelector(state => state.twitterSna.result);
@@ -255,7 +257,7 @@ const TwitterSna = () => {
   useTwitterSnaRequest(submittedRequest);
 
   function menuSet (req) {
-    if (_.isNull(req)) {
+    if (req == null) {
       setKeywords("");
       setBannedWords("");
       setUsersInput("");
@@ -490,6 +492,11 @@ else {
                                 >
                                 {keyword("button_submit")}
                                 </Button>
+
+                                    {
+                                    (error !== null) &&
+                                    <MyErrorbar variant="error" message={error} onClick={() => dispatch(cleanError())}/>
+                                    }
 
                                 <Box m={2} />
                                 <Typography>{loadingMessage}</Typography>
