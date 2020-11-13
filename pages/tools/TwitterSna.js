@@ -32,6 +32,7 @@ import { setError } from "../../redux/actions/errorActions";
 import { setTSNAReset, cleanTwitterSnaState, setTwitterSnaNewRequest } from "../../redux/actions/tools/twitterSnaActions";
 import convertToGMT from "../../components/shared/DateTimePicker/convertToGMT";
 import MyErrorbar from "../../components/shared/ErrorBar/ErrorBar";
+import {cleanError} from "../../redux/actions/errorActions"
 
 const TwitterSna = () => {
 
