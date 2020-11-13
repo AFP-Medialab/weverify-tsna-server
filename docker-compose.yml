@@ -1,11 +1,12 @@
 version: "3.8"
 services:
   tsna-server:
-    image: tsna-server:0.2
+    image: tsna-server:0.3
     container_name: tsna-server
     ports: 
-      - 3001:3000
+      - 8090:3000
     environment:
       REACT_APP_ELK_URL: ${REACT_APP_ELK_URL}
       REACT_APP_ES_USER_URL: ${REACT_APP_ES_USER_URL}
       REACT_APP_AUTH_BASE_URL: ${REACT_APP_AUTH_BASE_URL}
+      REACT_APP_BASE_DOC: ${REACT_APP_BASE_DOC}

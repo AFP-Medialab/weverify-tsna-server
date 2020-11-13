@@ -90,7 +90,6 @@ export const createWordCloud = (plotlyJson, request) => {
       };
 
       return {
-        title: "top_words_cloud_chart_title",
         json: mostUsedWords,
         options: options,
       };

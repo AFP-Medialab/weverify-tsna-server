@@ -40,7 +40,7 @@ export default function cloudChart (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.cloudChart]);
 
     useEffect(() => {
         setCloudTweets(null);
@@ -212,7 +212,7 @@ export default function cloudChart (props) {
                         aria-controls={"panel0a-content"}
                         id={"panel0a-header"}
                     >
-                        <Typography className={classes.heading}>{keyword(props.result.cloudChart.title)}</Typography>
+                        <Typography className={classes.heading}>{keyword("top_words_cloud_chart_title")}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         {

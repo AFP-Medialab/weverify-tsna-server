@@ -1,4 +1,4 @@
-import {useEffect } from "react";
+import {useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
@@ -6,7 +6,16 @@ import {
     setTwitterSnaLoading, 
     setTwitterSnaResult, 
     setTwitterSnaLoadingMessage,
-    setUserProfileMostActive
+    setUserProfileMostActive,
+    setCloudWordsResult,
+    setSocioGraphResult,
+    setHeatMapResult,
+    setHistogramResult, 
+    setCountResult,
+    setTweetResult,
+    setPieChartsResult,
+    setUrlsResult,
+    setCoHashtagResult
 } from "../../../../redux/actions/tools/twitterSnaActions";
 import {
     getAggregationData,
@@ -139,35 +148,89 @@ const useTwitterSnaRequest = (request) => {
             return topUsers2DArr;
           }
           
+        const wordCount = async (tweets, request) => {
+            const wordCountResponse = createWordCloud(tweets, request);
+            dispatch(setCloudWordsResult(wordCountResponse));
+        }
+        const buildSocioGraph = async (tweets) => {
+            const socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(tweets);
+            dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+        };
+        const buildHistogram = async (request, responseAggs)=>{
+            const histogram = createTimeLineChart(request, getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']), keyword);
+            dispatch(setHistogramResult(histogram));
+        };
+        const buildTweetCount = async (responseAggs) => {
+            const tweetCount = {};
+            tweetCount.count = responseAggs['tweet_count']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
+            tweetCount.retweet = responseAggs['retweets']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
+            tweetCount.like = responseAggs['likes']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
+            dispatch(setCountResult(tweetCount));
+        };
 
+        const buildPieCharts = async (request, responseAggs) => {
+            const pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
+            dispatch(setPieChartsResult(pieCharts));
+        };
+
+        const buildHeatMap = async (request, tweets) => {
+            const heatMap = createHeatMap(request, tweets, keyword);
+            dispatch(setHeatMapResult(heatMap));
+        };
+
+        const buildCoHashTag = async (tweets) => {
+            const coHashtagGraph = createCoHashtagGraph(tweets);
+            dispatch(setCoHashtagResult(coHashtagGraph));
+        };
+
+        const buildUrls = async (responseAggs) => {
+            const urls = getJsonDataForURLTable(responseAggs['top_url_keyword']['buckets'], keyword);
+            dispatch(setUrlsResult(urls));
+        }
+
+        const buidTopUsers = async (tweets) =>{
+            let authors = getTopActiveUsers(tweets, 100).map((arr) => {return arr[0];});
+            if (authors.length > 0) {
+                getUserAccounts(authors).then((data) => dispatch(setUserProfileMostActive(data.hits.hits)))
+            }
+        }
 
         const makeResult = (request, responseArrayOf9, final) => {
             let responseAggs = responseArrayOf9[0]['aggregations']
             const result = {};
-            result.histogram = createTimeLineChart(request, getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']), keyword);
-            result.tweetCount = {};
+            //result.histogram = createTimeLineChart(request, getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']), keyword);
+            buildHistogram(request, responseAggs);
+            buildTweetCount(responseAggs);
+            /*result.tweetCount = {};
             result.tweetCount.count = responseAggs['tweet_count']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             result.tweetCount.retweet = responseAggs['retweets']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
-            result.tweetCount.like = responseAggs['likes']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
-            result.pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
-            result.cloudChart = { title: "top_words_cloud_chart_title" };
+            result.tweetCount.like = responseAggs['likes']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");*/
+            //result.pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
+            buildPieCharts(request, responseAggs);
+            //result.cloudChart = { title: "top_words_cloud_chart_title" };
             if (final) {
-                result.tweets = responseArrayOf9[1].tweets;
-                result.heatMap = createHeatMap(request, result.tweets, keyword);
-                result.coHashtagGraph = createCoHashtagGraph(result.tweets);
-                result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
-                result.cloudChart = { title: "top_words_cloud_chart_title" };
-                result.cloudChart = createWordCloud(result.tweets, request);
-
-                result.urls = getJsonDataForURLTable(responseAggs['top_url_keyword']['buckets'], keyword);
-
-                let authors = getTopActiveUsers(result.tweets, 100).map((arr) => {return arr[0];});
+                const tweets = responseArrayOf9[1].tweets;
+                dispatch(setTweetResult(tweets));
+                buildHeatMap(request, tweets);
+                //result.heatMap = createHeatMap(request, tweets, keyword);
+                //result.coHashtagGraph = createCoHashtagGraph(tweets);
+                buildCoHashTag(tweets);
+               
+                //result.cloudChart = { title: "top_words_cloud_chart_title" };
+                //result.cloudChart = createWordCloud(result.tweets, request);
+                buildSocioGraph(tweets);
+                wordCount(tweets, request);
+                //result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
+                //result.urls = getJsonDataForURLTable(responseAggs['top_url_keyword']['buckets'], keyword);
+                buildUrls(responseAggs);
+                buidTopUsers(tweets);
+                /*let authors = getTopActiveUsers(tweets, 100).map((arr) => {return arr[0];});
                 if (authors.length > 0) {
                     getUserAccounts(authors).then((data) => dispatch(setUserProfileMostActive(data.hits.hits)))
-                }
+                }*/
             }
 
-            dispatch(setTwitterSnaResult(request, result, false, true));
+            //dispatch(setTwitterSnaResult(request, result, false, true));
         };
 
         if (_.isNil(request)

@@ -66,6 +66,63 @@ export const setTSNAReset = (data) => {
     }
 }
 
+export const setCloudWordsResult = (cloudWords) => {
+    return {
+        type : "SET_TWITTER_SNA_CLOUD_WORDS_RESULTS",
+        payload :  cloudWords
+    }
+};
+
+export const setSocioGraphResult = (sociodata) => {
+    return {
+        type : "SET_TWITTER_SNA_SOCIO_GRAPH_RESULTS",
+        payload :  sociodata
+    }
+};
+export const setHeatMapResult = (heatMapData) => {
+    return {
+        type : "SET_TWITTER_SNA_HEATMAP_RESULTS",
+        payload :  heatMapData
+    }
+};
+export const setHistogramResult = (data) => {
+    return {
+        type : "SET_TWITTER_SNA_HISTOGRAM_RESULTS",
+        payload :  data
+    }
+};
+export const setCountResult = (data) => {
+    return {
+        type : "SET_TWITTER_SNA_COUNT_RESULTS",
+        payload :  data
+    }
+};
+export const setTweetResult = (data) => {
+    return {
+        type : "SET_TWITTER_TWEETS_RESULTS",
+        payload :  data
+    }
+};
+export const setPieChartsResult = (data) => {
+    return {
+        type : "SET_TWITTER_PIE_CHARTS_RESULTS",
+        payload :  data
+    }
+};
+export const setCoHashtagResult = (data) => {
+    return {
+        type : "SET_TWITTER_COHASHTAG_RESULTS",
+        payload :  data
+    }
+};
+export const setUrlsResult = (data) => {
+    return {
+        type : "SET_TWITTER_URLS_RESULTS",
+        payload :  data
+    }
+};
+
+
 export const setTweetsDetailPanel = (from, data) => {    
     console.log("from " + from)
     switch(from){

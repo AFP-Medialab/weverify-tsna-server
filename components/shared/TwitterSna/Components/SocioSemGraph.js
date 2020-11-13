@@ -34,6 +34,7 @@ export default function SocioSemGraph (props) {
     const [socioSemantic4ModeGraphTweets, setSocioSemantic4ModeGraphTweets] = useState(null);
     const [socioSemantic4ModeGraphReset, setSocioSemantic4ModeGraphReset] = useState(null);
     const [socioSemantic4ModeGraphClickNode, setSocioSemantic4ModeGraphClickNode] = useState(null);
+    const request = useSelector(state => state.twitterSna.request);
 
     const [state, setState] = useState(
         {
@@ -46,14 +47,14 @@ export default function SocioSemGraph (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.socioSemantic4ModeGraph]);
 
     useEffect(() => {
         setSocioSemantic4ModeGraphTweets(null);
         setSocioSemantic4ModeGraphReset(null);
         setSocioSemantic4ModeGraphClickNode(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.request])
+    }, [request])
 
     function createGraphWhenClickANode(e) {
 
@@ -188,7 +189,7 @@ export default function SocioSemGraph (props) {
     }]
 
     return (
-    //props.request.userList.length === 0 && result &&
+    //request.userList.length === 0 && result &&
     <Accordion>
         <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -205,7 +206,7 @@ export default function SocioSemGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.socioSemantic4ModeGraph.data.nodes}
-                                    filename={"Nodes_" + keyword("sosem_4mode_graph_title") + '_' + props.request.keywordList.join('&') + '_' + props.request.from + "_" + props.request.until + ".csv"} 
+                                    filename={"Nodes_" + keyword("sosem_4mode_graph_title") + '_' + request.keywordList.join('&') + '_' + request.from + "_" + request.until + ".csv"} 
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Nodes"
@@ -215,7 +216,7 @@ export default function SocioSemGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.socioSemantic4ModeGraph.data.edges}
-                                    filename={"Edges_" + keyword("sosem_4mode_graph_title") + '_' + props.request.keywordList.join('&') + '_' + props.request.from + "_" + props.request.until + ".csv"} 
+                                    filename={"Edges_" + keyword("sosem_4mode_graph_title") + '_' + request.keywordList.join('&') + '_' + request.from + "_" + request.until + ".csv"} 
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Edges"
@@ -315,7 +316,7 @@ export default function SocioSemGraph (props) {
                                     <Button
                                         variant={"contained"}
                                         color={"primary"}
-                                        onClick={() => downloadClick(props.request, socioSemantic4ModeGraphTweets.csvArr, socioSemantic4ModeGraphTweets.selected)}>
+                                        onClick={() => downloadClick(request, socioSemantic4ModeGraphTweets.csvArr, socioSemantic4ModeGraphTweets.selected)}>
                                         {
                                             keyword('twittersna_result_download')
                                         }
