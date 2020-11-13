@@ -262,8 +262,8 @@ const TwitterSna = () => {
       var index = 0;
       var mystring = "";
       while (list[index]) {
-      mystring = mystring + " " + list[index];
-      index++;
+        mystring = mystring + " " + list[index];
+        index++;
       }
       return mystring;
   }
@@ -281,24 +281,24 @@ const TwitterSna = () => {
       setVerifiedUsers("false");
     }
     else { 
-    setKeywords(req.keywordListStr);
-    setBannedWords(req.bannedWordsStr);
-    if (_.isUndefined(req.userListStr))
-    {setUsersInput(listToString(req.userList));}
-    else
-    {setUsersInput(req.userListStr);}
-    setSince(req.since);
-    setUntil(req.until);
-    setLocalTime(req.localTime);
-    if (_.isUndefined(req.langStr))
-    {
-      setLangInput("lang_" + req.lang);
-    }
-    else{
-    setLangInput(req.langStr);
-    }
-    setFilers(req.filters);
-    setVerifiedUsers(req.verified);
+      setKeywords(req.keywordListStr);
+      setBannedWords(req.bannedWordsStr);
+        if (_.isUndefined(req.userListStr))
+          {setUsersInput(listToString(req.userList));}
+        else
+          {setUsersInput(req.userListStr);}
+      setSince(req.from);
+      setUntil(req.until);
+      setLocalTime(req.localTime);
+        if (_.isUndefined(req.langStr))
+        {
+          setLangInput("lang_" + req.lang);
+        }
+        else{
+          setLangInput(req.langStr);
+        }
+      setFilers(req.filters);
+      setVerifiedUsers(req.verified);
     }
   }
 
