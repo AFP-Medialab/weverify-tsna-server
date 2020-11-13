@@ -66,7 +66,8 @@ const TwitterSna = () => {
     "bannedWords" : [""],
     "bannedWordsStr" : "",
     "lang" : "en",
-    "langStr" : "lang_en"
+    "langStr" : "lang_en",
+    "default" : true
   };
 
   //let request = userAuthenticated ? requestStore: defaultRequest; 
@@ -257,6 +258,16 @@ const TwitterSna = () => {
   console.log("submittedRequest " + JSON.stringify(submittedRequest));
   useTwitterSnaRequest(submittedRequest);
 
+  function listToString (list){
+      var index = 0;
+      var mystring = "";
+      while (list[index]) {
+      mystring = mystring + " " + list[index];
+      index++;
+      }
+      return mystring;
+  }
+
   function menuSet (req) {
     if (req == null) {
       setKeywords("");
@@ -272,11 +283,20 @@ const TwitterSna = () => {
     else { 
     setKeywords(req.keywordListStr);
     setBannedWords(req.bannedWordsStr);
-    setUsersInput(req.userListStr);
+    if (_.isUndefined(req.userListStr))
+    {setUsersInput(listToString(req.userList));}
+    else
+    {setUsersInput(req.userListStr);}
     setSince(req.since);
     setUntil(req.until);
     setLocalTime(req.localTime);
+    if (_.isUndefined(req.langStr))
+    {
+      setLangInput("lang_" + req.lang);
+    }
+    else{
     setLangInput(req.langStr);
+    }
     setFilers(req.filters);
     setVerifiedUsers(req.verified);
     }
@@ -291,6 +311,10 @@ if (userAuthenticated) {
   dispatch(cleanTwitterSnaState());
   menuSet(null);
   setSubmittedRequest(null);
+  if (request && !request.default){
+  menuSet(request);
+  }
+  
 }
 else {
   dispatch(setTSNAReset(defaultRequest));
