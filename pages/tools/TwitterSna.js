@@ -67,7 +67,8 @@ const TwitterSna = () => {
     "bannedWordsStr" : "",
     "lang" : "en",
     "langStr" : "lang_en",
-    "default" : true
+    "default" : true,
+    "localTime": "true",
   };
 
   //let request = userAuthenticated ? requestStore: defaultRequest; 
@@ -91,7 +92,6 @@ const TwitterSna = () => {
     let trimedBannedWords = null;
     if (!_.isNil(bannedWordsP) && bannedWordsP.trim() !== "")
       trimedBannedWords = removeQuotes(bannedWordsP.trim().match(/("[^"]+"|[^"\s]+)/g));
-
     const newFrom = (localTimeP === "false") ? convertToGMT(sinceP) : sinceP;
     const newUntil = (localTimeP === "false") ? convertToGMT(untilP) : untilP;
     console.log("make params");
@@ -104,7 +104,8 @@ const TwitterSna = () => {
       "until": dateFormat(newUntil, "yyyy-mm-dd HH:MM:ss"),
       "verified": String(verifiedUsersP) === "true",
       "media": (filtersP === "none") ? null : filtersP,
-      "retweetsHandling": null
+      "retweetsHandling": null,
+      
     };
   };
 
@@ -128,7 +129,7 @@ const TwitterSna = () => {
 
   const [verifiedUsers, setVerifiedUsers] = useState(
       request && request.verified ?
-        request.verified :
+      listToString(request.verified) :
         "false"
   );
 
@@ -292,13 +293,22 @@ const TwitterSna = () => {
       setLocalTime(req.localTime);
         if (_.isUndefined(req.langStr))
         {
-          setLangInput("lang_" + req.lang);
+          if (_.isNull(req.lang))
+            {setLangInput("lang_all");}
+            else {
+          setLangInput("lang_" + req.lang);}
         }
         else{
           setLangInput(req.langStr);
         }
-      setFilers(req.filters);
-      setVerifiedUsers(req.verified);
+      if (_.isNull(req.media))
+      {
+        setFilers("none");
+      }
+      else {
+      setFilers(req.media);}
+      req.verified ? setVerifiedUsers("true") : setVerifiedUsers("false");
+      
     }
   }
 
@@ -312,10 +322,10 @@ if (userAuthenticated) {
 
   setSubmittedRequest(null);
   if (request && !request.default){
-    menuSet(request);
+  menuSet(request);
   }
   else{
-    menuSet(null);
+        menuSet(null);
   }
   
 }
