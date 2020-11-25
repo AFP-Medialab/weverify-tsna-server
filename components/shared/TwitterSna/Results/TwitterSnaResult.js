@@ -75,7 +75,7 @@ export default function TwitterSnaResult(props) {
                 {
                     //vérifier que correct, une fois l'authentification active
                     request && request.userList && request.userList.length === 0 &&
-                    result && 
+                    result && result.tweetCount &&
                     <BubbleChart result={result} request={request}/>
                 }
                 {
