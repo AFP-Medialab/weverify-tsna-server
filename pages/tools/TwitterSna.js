@@ -317,23 +317,23 @@ useEffect(() => {
   console.log("dispatch user authenticated");
 
 
-if (userAuthenticated) {
-  dispatch(cleanTwitterSnaState());
+  if (userAuthenticated) {
 
-  setSubmittedRequest(null);
-  if (request && !request.default){
-  menuSet(request);
+    
+    if (request && !request.default){
+      menuSet(request);
+    }
+    else{
+          dispatch(cleanTwitterSnaState());
+    setSubmittedRequest(null);
+      menuSet(null);
+    }  
   }
-  else{
-        menuSet(null);
+  else {
+    dispatch(setTSNAReset(defaultRequest));
+    menuSet(defaultRequest);
+    setSubmittedRequest(defaultRequest)
   }
-  
-}
-else {
-  dispatch(setTSNAReset(defaultRequest));
-  menuSet(defaultRequest);
-  setSubmittedRequest(defaultRequest)
-}
 
 },[userAuthenticated]); 
 
