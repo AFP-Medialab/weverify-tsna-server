@@ -94,6 +94,7 @@ export default function BubbleChart(props) {
                                             layout={bubbdleChart.layout}
                                             config={bubbdleChart.config}
                                             onClick={(e) => onBubbleChartClick(e, props.result)}
+                                            
                                         />
                                         <Box m={1} />
                                         <OnClickInfo keyword={"twittersna_bubble_chart_tip"} />
