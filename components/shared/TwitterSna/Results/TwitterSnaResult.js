@@ -69,13 +69,13 @@ export default function TwitterSnaResult(props) {
                 }
                 
                 {
-                    result.pieCharts &&
+                    request && result.pieCharts &&
                     <PlotPieChart result={result} request={request}/>
                 }
                 {
                     //vérifier que correct, une fois l'authentification active
-                    request.userList && request.userList.length === 0 &&
-                    result &&
+                    request && request.userList && request.userList.length === 0 &&
+                    result && 
                     <BubbleChart result={result} request={request}/>
                 }
                 {
@@ -83,15 +83,15 @@ export default function TwitterSnaResult(props) {
                     <HeatMap result={result} request={request} />
                 }
                 {
-                    
+                    request &&
                     <HashtagGraph result={result} request={request}/>
                 }
                 {
-                    
+                    request &&
                     <SocioSemGraph result={result} request={request}/>
                 }        
                 {
-                   result.cloudChart &&
+                   request && result.cloudChart &&
                     <CloudChart result={result} request={request} />
                 }   
                 {
