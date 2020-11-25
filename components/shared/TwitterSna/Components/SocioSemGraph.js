@@ -18,9 +18,10 @@ import {downloadClick} from "../lib/downloadClick";
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
 
-import {displayTweets} from "../lib/displayTweets"
-//possible error, same as plot
+import {displayTweets} from "../lib/displayTweets";
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
+import {createGraphWhenClickANode} from "../../lib/sigmaGraph";
+import {getDomain} from "../Hooks/socioSemGraph"
 
 
 export default function SocioSemGraph (props) {
@@ -55,46 +56,6 @@ export default function SocioSemGraph (props) {
         setSocioSemantic4ModeGraphClickNode(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [request])
-
-    function createGraphWhenClickANode(e) {
-
-        let selectedNode = e.data.node;
-    
-        let neighborNodes = e.data.renderer.graph.adjacentNodes(selectedNode.id);
-        let neighborEdges = e.data.renderer.graph.adjacentEdges(selectedNode.id);
-    
-        let neighborNodeIds = neighborNodes.map((node) => { return node.id; });
-        neighborNodeIds.push(selectedNode.id);
-        let neighborEdgeIds = neighborEdges.map((edge) => { return edge.id; });
-    
-        let clonedNodes = JSON.parse(JSON.stringify(e.data.renderer.graph.nodes()));
-        let clonedEdges = JSON.parse(JSON.stringify(e.data.renderer.graph.edges()));
-    
-        let updatedNodes = clonedNodes.map((node) => {
-            if (!neighborNodeIds.includes(node.id)) {
-                node.color = "#C0C0C0";
-            }
-            return node;
-        })
-    
-        let updatedEdges = clonedEdges.map((edge) => {
-            if (neighborEdgeIds.includes(edge.id)) {
-                edge.color = "#000000";
-            } else {
-                edge.color = "#C0C0C0";
-            }
-            return edge;
-        })
-    
-        let newGraph = {
-            nodes: updatedNodes,
-            edges: updatedEdges
-        }
-    
-        console.log("newGraph", newGraph);
-        return newGraph;
-    }
-
 
     const onClickNodeSocioSemantic4ModeGraph = (data) => {
 
@@ -158,26 +119,6 @@ export default function SocioSemGraph (props) {
             dataToDisplay["selected"] = data.data.node.id;
             setSocioSemantic4ModeGraphTweets(dataToDisplay);
         }
-    }
-
-    function getDomain(url) {
-        var domain;
-
-        if (url.indexOf("://") > -1) {
-            domain = url.split('/')[2];
-        }
-        else {
-            domain = url.split('/')[0];
-        }
-
-        if (domain.indexOf("www.") > -1) {
-            domain = domain.split('www.')[1];
-        }
-
-        domain = domain.split(':')[0];
-        domain = domain.split('?')[0];
-
-        return domain;
     }
 
     let goToTweetAction = [{

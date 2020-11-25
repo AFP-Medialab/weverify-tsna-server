@@ -54,7 +54,7 @@ function getTweetAttrObjArr(tweets) {
     return tweetAttrObjArr;
   }
 
-  function getDomain(url) {
+  export function getDomain(url) {
     var domain;
   
     if (url.indexOf("://") > -1) {
@@ -281,106 +281,3 @@ export const createSocioSemantic4ModeGraph = (tweets) => {
         data: topNodeGraph
       };
 }
-
-function createGraphWhenClickANode(e) {
-
-    let selectedNode = e.data.node;
-
-    let neighborNodes = e.data.renderer.graph.adjacentNodes(selectedNode.id);
-    let neighborEdges = e.data.renderer.graph.adjacentEdges(selectedNode.id);
-
-    let neighborNodeIds = neighborNodes.map((node) => { return node.id; });
-    neighborNodeIds.push(selectedNode.id);
-    let neighborEdgeIds = neighborEdges.map((edge) => { return edge.id; });
-
-    let clonedNodes = JSON.parse(JSON.stringify(e.data.renderer.graph.nodes()));
-    let clonedEdges = JSON.parse(JSON.stringify(e.data.renderer.graph.edges()));
-
-    let updatedNodes = clonedNodes.map((node) => {
-        if (!neighborNodeIds.includes(node.id)) {
-            node.color = "#C0C0C0";
-        }
-        return node;
-    })
-
-    let updatedEdges = clonedEdges.map((edge) => {
-        if (neighborEdgeIds.includes(edge.id)) {
-            edge.color = "#000000";
-        } else {
-            edge.color = "#C0C0C0";
-        }
-        return edge;
-    })
-
-    let newGraph = {
-        nodes: updatedNodes,
-        edges: updatedEdges
-    }
-
-    console.log("newGraph", newGraph);
-    return newGraph;
-}
-
-const onClickNodeSocioSemantic4ModeGraph = (data) => {
-
-        let initGraph = {
-            nodes: data.data.renderer.graph.nodes(),
-            edges: data.data.renderer.graph.edges()
-        }
-
-        setSocioSemantic4ModeGraphClickNode(createGraphWhenClickANode(data));
-
-        setSocioSemantic4ModeGraphReset(initGraph);
-
-        if (data.data.node.type === "Hashtag") {
-            let selectedHashtag = data.data.node.id.replace("#", "");
-            let filteredTweets = result.tweets.filter(tweet => tweet._source.hashtags !== undefined && tweet._source.hashtags.length > 0)
-                .filter(function (tweet) {
-                    let hashtagArr = tweet._source.hashtags.map((v) => { return v.toLowerCase(); });
-                    return hashtagArr.includes(selectedHashtag.toLowerCase());
-                });
-            let dataToDisplay = displayTweets(filteredTweets);
-            dataToDisplay["selected"] = data.data.node.id;
-            setSocioSemantic4ModeGraphTweets(dataToDisplay);
-        } else if (data.data.node.type === "Mention") {
-            let selectedUser = data.data.node.id.replace("isMTed:@", "");
-            let filteredTweets = result.tweets.filter(tweet => tweet._source.user_mentions !== undefined && tweet._source.user_mentions.length > 0)
-                .filter(function (tweet) {
-                    let lcMentionArr = tweet._source.user_mentions.map(v => v.screen_name.toLowerCase());
-                    return lcMentionArr.includes(selectedUser.toLowerCase());
-                });
-            let dataToDisplay = displayTweets(filteredTweets);
-            dataToDisplay["selected"] = data.data.node.id;
-            setSocioSemantic4ModeGraphTweets(dataToDisplay);
-        } else if (data.data.node.type === "RetweetWC") {
-            let selectedUser = data.data.node.id.replace("RT:@", "");
-            let filteredTweets = result.tweets.filter(tweet => 
-                tweet._source.quoted_status_id_str !== undefined 
-                && tweet._source.quoted_status_id_str !== null
-                && tweet._source.screen_name.toLowerCase() === selectedUser);
-            let dataToDisplay = displayTweets(filteredTweets);
-            dataToDisplay["selected"] = data.data.node.id;
-            setSocioSemantic4ModeGraphTweets(dataToDisplay);
-        } else if (data.data.node.type === "Reply") {
-            let selectedUser = data.data.node.id.replace("Rpl:@", "");
-            let filteredTweets = result.tweets.filter(tweet => 
-                tweet._source.in_reply_to_screen_name !== undefined 
-                && tweet._source.in_reply_to_screen_name !== null
-                && tweet._source.screen_name.toLowerCase() === selectedUser);
-            let dataToDisplay = displayTweets(filteredTweets);
-            dataToDisplay["selected"] = data.data.node.id;
-            setSocioSemantic4ModeGraphTweets(dataToDisplay);
-        } else if (data.data.node.type === "URL") {
-            let selectedURL = data.data.node.id.replace("URL:", "");
-            let filteredTweets = result.tweets.filter(tweet => tweet._source.urls !== undefined && tweet._source.urls.length > 0)
-                .filter(function (tweet) {
-                    let urlArr = tweet._source.urls.map((url) => {
-                        return getDomain(url).toLowerCase();
-                    });
-                    return urlArr.includes(selectedURL.toLowerCase());
-                });
-            let dataToDisplay = displayTweets(filteredTweets);
-            dataToDisplay["selected"] = data.data.node.id;
-            setSocioSemantic4ModeGraphTweets(dataToDisplay);
-        }
-    }
