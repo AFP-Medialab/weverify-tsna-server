@@ -33,6 +33,7 @@ import { setTSNAReset, cleanTwitterSnaState, setTwitterSnaNewRequest } from "../
 import convertToGMT from "../../components/shared/DateTimePicker/convertToGMT";
 import MyErrorbar from "../../components/shared/ErrorBar/ErrorBar";
 import {cleanError} from "../../redux/actions/errorActions"
+import OnClickInfo from '../../components/shared/OnClickInfo/OnClickInfo';
 
 const TwitterSna = () => {
 
@@ -539,7 +540,9 @@ useEffect(() => {
                                 <Box m={2} />
                                 <Typography>{loadingMessage}</Typography>
                                 <LinearProgress hidden={!isLoading} />
+                                <OnClickInfo keyword={"twittersna_bubble_chart_tip"} />
             </Paper>
+
             {
         reduxResult &&
         <TwitterSnaResult result={reduxResult} 
