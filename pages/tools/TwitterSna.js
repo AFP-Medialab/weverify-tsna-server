@@ -540,7 +540,7 @@ useEffect(() => {
                                 <Box m={2} />
                                 <Typography>{loadingMessage}</Typography>
                                 <LinearProgress hidden={!isLoading} />
-                                <OnClickInfo keyword={"twittersna_bubble_chart_tip"} />
+                                <OnClickInfo keyword={"twittersna_explication"} />
             </Paper>
 
             {
