@@ -44,7 +44,7 @@ export default function HeatMap (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.heatMap]);
 
     useEffect(() => {
         setheatMapTweets(null);

@@ -85,40 +85,40 @@ export const setHeatMapResult = (heatMapData) => {
         payload :  heatMapData
     }
 };
-export const setHistogramResult = (data) => {
+export const setHistogramResult = (histogramData) => {
     return {
         type : "SET_TWITTER_SNA_HISTOGRAM_RESULTS",
-        payload :  data
+        payload :  histogramData
     }
 };
-export const setCountResult = (data) => {
+export const setCountResult = (countData) => {
     return {
         type : "SET_TWITTER_SNA_COUNT_RESULTS",
-        payload :  data
+        payload :  countData
     }
 };
-export const setTweetResult = (data) => {
+export const setTweetResult = (tweetData) => {
     return {
         type : "SET_TWITTER_TWEETS_RESULTS",
-        payload :  data
+        payload :  tweetData
     }
 };
-export const setPieChartsResult = (data) => {
+export const setPieChartsResult = (pieChartData) => {
     return {
         type : "SET_TWITTER_PIE_CHARTS_RESULTS",
-        payload :  data
+        payload :  pieChartData
     }
 };
-export const setCoHashtagResult = (data) => {
+export const setCoHashtagResult = (coHashtagData) => {
     return {
         type : "SET_TWITTER_COHASHTAG_RESULTS",
-        payload :  data
+        payload :  coHashtagData
     }
 };
-export const setUrlsResult = (data) => {
+export const setUrlsResult = (urlData) => {
     return {
         type : "SET_TWITTER_URLS_RESULTS",
-        payload :  data
+        payload :  urlData
     }
 };
 

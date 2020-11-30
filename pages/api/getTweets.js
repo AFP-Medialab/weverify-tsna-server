@@ -18,7 +18,7 @@ export default (req, res) =>{
         body: JSON.stringify(req.body)
     }).then(res => res.json())
     .then(data => {
-       // console.log("rpoioo " + process(data));
+       // console.log("process(data) : " + process(data));
         setTimeout(() => {
 
             //const words = createWordCloud(data["hits"], request);

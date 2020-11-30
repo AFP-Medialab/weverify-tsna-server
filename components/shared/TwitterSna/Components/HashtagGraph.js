@@ -48,7 +48,7 @@ export default function HashtagGraph (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.coHashtagGraph]);
 
     useEffect(() => {
         setCoHashtagGraphTweets(null);

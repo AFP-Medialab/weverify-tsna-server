@@ -84,6 +84,8 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             return {...state, result: {...state.result, coHashtagGraph: payload}}
         case "SET_TWITTER_URLS_RESULTS":
             return {...state, result: {...state.result, urls: payload}}
+        case "SET_TWITTER_SNA_BUBBLE_CHART_RESULTS":
+            return {...state, result: {...state.result, topUser: payload}}
         default:
             return state;
     }

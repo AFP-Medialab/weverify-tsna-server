@@ -26,6 +26,7 @@ let from = "PLOT_PIE_CHART";
 
 export default function PlotPieChart (props) { 
 
+
     const dispatch = useDispatch();  
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const request = useSelector(state => state.twitterSna.request);
@@ -43,7 +44,7 @@ export default function PlotPieChart (props) {
     useEffect(() => {
         setfilesNames('WordCloud_' + props.request.keywordList.join("&") + "_" + props.request.from + "_" + props.request.until);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(props.request), props.request]);
+    }, [props.request]);
 
     const [state, setState] = useState(
         {
@@ -56,7 +57,7 @@ export default function PlotPieChart (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.pieCharts]);
 
     useEffect(()=> {
         switch (donutIndex) {

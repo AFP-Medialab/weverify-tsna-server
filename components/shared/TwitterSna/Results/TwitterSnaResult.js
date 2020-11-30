@@ -69,7 +69,8 @@ export default function TwitterSnaResult(props) {
                 }
                 
                 {
-                    request && result.pieCharts &&
+                    request && request.userList && request.userList.length === 0 &&
+                    result && result.pieCharts &&
                     <PlotPieChart result={result} request={request}/>
                 }
                 {

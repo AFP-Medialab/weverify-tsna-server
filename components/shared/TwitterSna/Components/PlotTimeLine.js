@@ -38,7 +38,7 @@ export default function PlotTimeLine(props){
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.histogram]);
 
     const onHistogramClick = (data) => {
         
