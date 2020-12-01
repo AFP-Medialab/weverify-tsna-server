@@ -15,7 +15,7 @@ export function getAggregationData(param) {
     let mustNot = constructMatchNotPhrase(param);
     let aggs = constructAggs(param);
 
-    let query = JSON.stringify(buildQuery(aggs, must, mustNot, 0)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
+    let query = JSON.stringify(buildQuery(aggs, must, mustNot, 0, false)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
 
     const userAction = async () => {
         const response = await fetch(elasticSearch_url, {
@@ -36,7 +36,20 @@ export async function getTweets(param) {
     let must = constructMatchPhrase(param);
     let mustNot = constructMatchNotPhrase(param);
     let aggs = {};
-    return queryTweetsFromES(aggs, must, mustNot).then(elasticResponse => {
+    let cloudTweets = false;
+    return queryTweetsFromES(aggs, must, mustNot, cloudTweets).then(elasticResponse => {
+        return {
+            tweets: elasticResponse.hits.hits
+        }
+    });
+}
+
+export async function getCloudTweets(param) {
+    let must = constructMatchPhrase(param);
+    let mustNot = constructMatchNotPhrase(param);
+    let aggs = {};
+    let cloudTweets = true;
+    return queryTweetsFromES(aggs, must, mustNot, cloudTweets).then(elasticResponse => {
         return {
             tweets: elasticResponse.hits.hits
         }
@@ -44,10 +57,10 @@ export async function getTweets(param) {
 }
 
 //Get tweets
-async function queryTweetsFromES(aggs, must, mustNot) {
+async function queryTweetsFromES(aggs, must, mustNot, cloudTweets) {
     const response = await fetch(elasticSearch_url, {
         method: 'POST',
-        body: JSON.stringify(buildQuery(aggs, must, mustNot, 10000)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
+        body: JSON.stringify(buildQuery(aggs, must, mustNot, 10000, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -61,7 +74,7 @@ async function queryTweetsFromES(aggs, must, mustNot) {
             let tweets = elasticResponse.hits.hits;
             let searchAfter = tweets[tweets.length - 1]["sort"];
 
-            elasticResponse = await continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, searchAfter, elasticResponse);
+            elasticResponse = await continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, searchAfter, elasticResponse, cloudTweets);
         } while (elasticResponse["current_hits_length"] !== 0)
 
         return elasticResponse;
@@ -71,12 +84,12 @@ async function queryTweetsFromES(aggs, must, mustNot) {
     }
 }
 
-async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, searchAfter, elasticResponse) {
+async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, searchAfter, elasticResponse, cloudTweets) {
     let arr = Array.from(elasticResponse.hits.hits);
 
     const response = await fetch(elasticSearch_url, {
         method: 'POST',
-        body: JSON.stringify(buildQuerySearchAfter(aggs, must, mustNot, 10000, searchAfter)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
+        body: JSON.stringify(buildQuerySearchAfter(aggs, must, mustNot, 10000, searchAfter, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -97,17 +110,14 @@ async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, searchA
 }
 
 //Build a query for elastic search
-function buildQuery(aggs, must, mustNot, size) {
-    let query = {
-        "aggs": aggs,
+function buildQuery(aggs, must, mustNot, size, cloudTweets) {
+    let query;
+    if (cloudTweets) {
+    query = {
         "size": size,
         "_source": {
-            "excludes": []
+            "includes": ["wit"]
         },
-        "stored_fields": [
-            "*"
-        ],
-        "script_fields": {},
         "query": {
             "bool": {
                 "must": must,
@@ -119,34 +129,75 @@ function buildQuery(aggs, must, mustNot, size) {
         "sort": [
             {"datetimestamp": {"order": "asc"}}
         ]
-    };
+    };}
+    else {
+        query = {
+            "aggs": aggs,
+            "size": size,
+            "_source": {
+                "excludes": ["wit", "essid"]
+            },
+            "query": {
+                "bool": {
+                    "must": must,
+                    "filter": [],
+                    "should": [],
+                    "must_not": mustNot
+                }
+            },
+            "sort": [
+                {"datetimestamp": {"order": "asc"}}
+            ]
+        };
+    }
     return query;
 }
 //Build a query for elastic search
-function buildQuerySearchAfter(aggs, must, mustNot, size, searchAfter) {
-    let query = {
-        "aggs": aggs,
-        "size": size,
-        "_source": {
-            "excludes": []
-        },
-        "stored_fields": [
-            "*"
-        ],
-        "script_fields": {},
-        "query": {
-            "bool": {
-                "must": must,
-                "filter": [],
-                "should": [],
-                "must_not": mustNot
-            }
-        },
-        "search_after": searchAfter,
-        "sort": [
-            {"datetimestamp": {"order": "asc"}}
-        ]
-    };
+function buildQuerySearchAfter(aggs, must, mustNot, size, searchAfter, cloudTweets) {
+    let query;
+    if (cloudTweets) {
+        query = {
+            "aggs": aggs,
+            "size": size,
+            "_source": {
+                "includes": ["wit"]
+            },
+            "query": {
+                "bool": {
+                    "must": must,
+                    "filter": [],
+                    "should": [],
+                    "must_not": mustNot
+                }
+            },
+            "search_after": searchAfter,
+            "sort": [
+                {"datetimestamp": {"order": "asc"}}
+            ]
+        };}
+        else {
+            query = {
+                "aggs": aggs,
+                "size": size,
+                "_source": {
+                    "excludes": ["wit", "essid"]
+                },
+                "query": {
+                    "bool": {
+                        "must": must,
+                        "filter": [],
+                        "should": [],
+                        "must_not": mustNot
+                    }
+                },
+                "search_after": searchAfter,
+                "sort": [
+                    {"datetimestamp": {"order": "asc"}}
+                ]
+            };
+        
+    }
+
     return query;
 }
 

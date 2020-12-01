@@ -20,7 +20,8 @@ import {
 import {
     getAggregationData,
     getTweets,
-    getUserAccounts
+    getUserAccounts,
+    getCloudTweets
 } from "./call-elastic";
 import {
     createTimeLineChart,
@@ -73,7 +74,7 @@ const useTwitterSnaRequest = (request) => {
         const lastRenderCall = (sessionId, request) => {
             dispatch(setTwitterSnaLoadingMessage(keyword('twittersna_building_graphs')));
           
-            generateGraph(request, true).then(() => {
+            (generateFirstGraph(request) && generateSecondGraph(request) && generateThirdGraph(request)).then(() => {
               dispatch(setTwitterSnaLoading(false));
             });
           
@@ -89,7 +90,7 @@ const useTwitterSnaRequest = (request) => {
               // await axios.get(TwintWrapperUrl + /status/ + sessionId)
               .then(async response => {
                 if (isFirst)
-                  await generateGraph(request, false);
+                  await generateFirstGraph(request);
       
                 if (response.data.status === "Error")
                   handleErrors("twitterSnaErrorMessage");
@@ -101,7 +102,7 @@ const useTwitterSnaRequest = (request) => {
                   setTimeout(() => getResultUntilsDone(sessionId, false, request), 3000);
                 }
                 else {
-                  generateGraph(request, false).then(() => {
+                  generateFirstGraph(request).then(() => {
                     setTimeout(() => getResultUntilsDone(sessionId, false, request), 5000);
       
                     dispatch(setTwitterSnaLoading(true));
@@ -130,15 +131,43 @@ const useTwitterSnaRequest = (request) => {
          * @param {*} request request
          * @param {*} final if scrapping is done
          */
-        const generateGraph = async (request, final) => {
+        const generateFirstGraph = async (request) => {
             let entries = makeEntries(request);        
             // call ES. If scrapping ongoing get scrapping aggregations. if done get all tweets
-            const responseArrayOf9 = await axios.all(
+
+            const responseArrayOf9 = await axios.all([getAggregationData(entries)]);
+
+          makeFirstResult(request, responseArrayOf9);
+
+            /*const responseArrayOf9 = await axios.all(
             (final) ? [getAggregationData(entries), getTweets(entries)] : [getAggregationData(entries)]
             );
-            makeResult(request, responseArrayOf9, final);
-    
+            makeResult(request, responseArrayOf9, final);*/
         };
+      const generateSecondGraph = async (request) => {
+          let entries = makeEntries(request);        
+          // call ES. If scrapping ongoing get scrapping aggregations. if done get all tweets
+
+          const responseArrayOf9 = await axios.all([getAggregationData(entries), getTweets(entries)]);
+
+        makeSecondResult(request, responseArrayOf9);
+          /*const responseArrayOf9 = await axios.all(
+          (final) ? [getAggregationData(entries), getTweets(entries)] : [getAggregationData(entries)]
+          );
+          makeResult(request, responseArrayOf9, final);*/
+      };
+
+      const generateThirdGraph = async (request) => {
+        let entries = makeEntries(request);
+        const responseArrayOf9 = await axios.all([getCloudTweets(entries)]);
+
+        makeThirdResult(request, responseArrayOf9);
+      }
+
+
+      
+        //get aggregation en premier
+        //generate getTweets en second
 
         function getTopActiveUsers(tweets, topN) {
             let tweetCountObj = _.countBy(tweets.map((tweet) => {return tweet._source.screen_name.toLowerCase(); }));
@@ -195,7 +224,7 @@ const useTwitterSnaRequest = (request) => {
             }
         }
 
-        const makeResult = (request, responseArrayOf9, final) => {
+        const makeFirstResult = (request, responseArrayOf9) => {
             let responseAggs = responseArrayOf9[0]['aggregations']
             const result = {};
             //result.histogram = createTimeLineChart(request, getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']), keyword);
@@ -208,8 +237,13 @@ const useTwitterSnaRequest = (request) => {
             //result.pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
             buildPieCharts(request, responseAggs);
             //result.cloudChart = { title: "top_words_cloud_chart_title" };
-            if (final) {
-                const tweets = responseArrayOf9[1].tweets;
+
+            buildUrls(responseAggs); // was originaly in if final, but don't seens to need it
+
+        };
+
+        const makeSecondResult = (request, responseArrayOf9) =>{
+          const tweets = responseArrayOf9[1].tweets;
                 dispatch(setTweetResult(tweets));
                 buildHeatMap(request, tweets);
                 //result.heatMap = createHeatMap(request, tweets, keyword);
@@ -219,19 +253,18 @@ const useTwitterSnaRequest = (request) => {
                 //result.cloudChart = { title: "top_words_cloud_chart_title" };
                 //result.cloudChart = createWordCloud(result.tweets, request);
                 buildSocioGraph(tweets);
-                wordCount(tweets, request);
+
                 //result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
                 //result.urls = getJsonDataForURLTable(responseAggs['top_url_keyword']['buckets'], keyword);
-                buildUrls(responseAggs);
                 buidTopUsers(tweets);
-                /*let authors = getTopActiveUsers(tweets, 100).map((arr) => {return arr[0];});
-                if (authors.length > 0) {
-                    getUserAccounts(authors).then((data) => dispatch(setUserProfileMostActive(data.hits.hits)))
-                }*/
-            }
+        }
 
-            //dispatch(setTwitterSnaResult(request, result, false, true));
-        };
+        const makeThirdResult = (request, responseArrayOf9) =>{ //word cloud
+          wordCount(responseArrayOf9[0].tweets, request);
+        }
+
+        //make result pour tweet
+        //make result world count
 
         if (_.isNil(request)
             || (_.isNil(request.keywordList) || _.isEmpty(request.keywordList))
