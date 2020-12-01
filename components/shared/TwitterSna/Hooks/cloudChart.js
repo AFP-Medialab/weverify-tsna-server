@@ -1,4 +1,4 @@
-let tweetIE = { text: "" };
+
 
 const includeWordObj = (wordObj, wordsArray) => {
     for (let i = 0; i < wordsArray.length; i++) {
@@ -18,7 +18,7 @@ const getAllWordsMap = (elasticResponse, request) => {
     let wordsMap = [];
 
     for (let i = 0; i < hits.length; i++) {
-      tweetIE.text = hits[i]._source.twittieTweet;
+
 
       let tweetWordsmap = hits[i]._source.wit;
       if (!(tweetWordsmap === null || tweetWordsmap === undefined)) {
@@ -90,7 +90,6 @@ export const createWordCloud = (plotlyJson, request) => {
       };
 
       return {
-        title: "top_words_cloud_chart_title",
         json: mostUsedWords,
         options: options,
       };

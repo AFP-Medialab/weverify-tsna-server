@@ -4,6 +4,7 @@ WORKDIR /home/node/app/build
 
 COPY . .
 RUN npm ci --only=production
+RUN npx next telemetry disable
 RUN npm run build
 RUN npm prune --production
 

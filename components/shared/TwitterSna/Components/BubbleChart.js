@@ -22,7 +22,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import {downloadClick} from "../lib/downloadClick";
 
 const Plot = createPlotComponent(plotly);
-let from = "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE";
+let from = "SET_TWITTER_SNA_BUBBLE_CHART_RESULTS";
 export default function BubbleChart(props) {
     
     const dispatch = useDispatch();
@@ -31,6 +31,7 @@ export default function BubbleChart(props) {
 
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
+    const request = useSelector(state => state.twitterSna.request);
 
     const [state, setState] = useState(
         {
@@ -43,12 +44,12 @@ export default function BubbleChart(props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.bubbleChart]);
 
     useEffect(() => {
         setBubbleTweets(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.request])
+    }, [request])
 
     const onBubbleChartClick = (data, result) => {
         let selectedUser = data.points[0].text.split("<br>")[0].replace("@","");
@@ -85,15 +86,16 @@ export default function BubbleChart(props) {
                     topUserProfile && topUserProfile.length !== 0 &&
                     <div style={{ width: '100%', }}>
                         { 
-                            [createBubbleChartOfMostActiveUsers(topUserProfile, props.request, props.result, keyword)].map((bubbdleChart) => {
+                            [createBubbleChartOfMostActiveUsers(topUserProfile, request, props.result, keyword)].map((bubbleChart) => {
                                 return (
                                     <div key={Math.random()}>
                                         <Plot useResizeHandler
                                             style={{ width: '100%', height: "600px" }}
-                                            data={bubbdleChart.data}
-                                            layout={bubbdleChart.layout}
-                                            config={bubbdleChart.config}
+                                            data={bubbleChart.data}
+                                            layout={bubbleChart.layout}
+                                            config={bubbleChart.config}
                                             onClick={(e) => onBubbleChartClick(e, props.result)}
+                                            
                                         />
                                         <Box m={1} />
                                         <OnClickInfo keyword={"twittersna_bubble_chart_tip"} />
@@ -121,7 +123,7 @@ export default function BubbleChart(props) {
                                         <Button
                                             variant={"contained"}
                                             color={"primary"}
-                                            onClick={() => downloadClick(props.request, bubbleTweets.csvArr, bubbleTweets.selected)}>
+                                            onClick={() => downloadClick(request, bubbleTweets.csvArr, bubbleTweets.selected)}>
                                             {
                                                 keyword('twittersna_result_download')
                                             }

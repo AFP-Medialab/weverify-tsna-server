@@ -33,6 +33,7 @@ import { setTSNAReset, cleanTwitterSnaState, setTwitterSnaNewRequest } from "../
 import convertToGMT from "../../components/shared/DateTimePicker/convertToGMT";
 import MyErrorbar from "../../components/shared/ErrorBar/ErrorBar";
 import {cleanError} from "../../redux/actions/errorActions"
+import OnClickInfo from '../../components/shared/OnClickInfo/OnClickInfo';
 
 const TwitterSna = () => {
 
@@ -317,23 +318,23 @@ useEffect(() => {
   console.log("dispatch user authenticated");
 
 
-if (userAuthenticated) {
-  dispatch(cleanTwitterSnaState());
+  if (userAuthenticated) {
 
-  setSubmittedRequest(null);
-  if (request && !request.default){
-  menuSet(request);
+    
+    if (request && !request.default){
+      menuSet(request);
+    }
+    else{
+          dispatch(cleanTwitterSnaState());
+    setSubmittedRequest(null);
+      menuSet(null);
+    }  
   }
-  else{
-        menuSet(null);
+  else {
+    dispatch(setTSNAReset(defaultRequest));
+    menuSet(defaultRequest);
+    setSubmittedRequest(defaultRequest)
   }
-  
-}
-else {
-  dispatch(setTSNAReset(defaultRequest));
-  menuSet(defaultRequest);
-  setSubmittedRequest(defaultRequest)
-}
 
 },[userAuthenticated]); 
 
@@ -539,7 +540,9 @@ else {
                                 <Box m={2} />
                                 <Typography>{loadingMessage}</Typography>
                                 <LinearProgress hidden={!isLoading} />
+                                <OnClickInfo keyword={"twittersna_explication"} />
             </Paper>
+
             {
         reduxResult &&
         <TwitterSnaResult result={reduxResult} 

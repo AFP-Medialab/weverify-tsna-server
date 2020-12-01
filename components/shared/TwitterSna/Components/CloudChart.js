@@ -20,6 +20,7 @@ import { saveSvgAsPng } from 'save-svg-as-png';
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
 import {downloadClick} from "../lib/downloadClick";
+import {createGraphWhenClickANode} from "../../lib/sigmaGraph"
 
 export default function cloudChart (props) {
 
@@ -40,7 +41,7 @@ export default function cloudChart (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.cloudChart]);
 
     useEffect(() => {
         setCloudTweets(null);
@@ -112,45 +113,6 @@ export default function cloudChart (props) {
         return filteredTweets;
     }createGraphWhenClickANode;
 
-    function createGraphWhenClickANode(e) {
-
-        let selectedNode = e.data.node;
-
-        let neighborNodes = e.data.renderer.graph.adjacentNodes(selectedNode.id);
-        let neighborEdges = e.data.renderer.graph.adjacentEdges(selectedNode.id);
-
-        let neighborNodeIds = neighborNodes.map((node) => { return node.id; });
-        neighborNodeIds.push(selectedNode.id);
-        let neighborEdgeIds = neighborEdges.map((edge) => { return edge.id; });
-
-        let clonedNodes = JSON.parse(JSON.stringify(e.data.renderer.graph.nodes()));
-        let clonedEdges = JSON.parse(JSON.stringify(e.data.renderer.graph.edges()));
-
-        let updatedNodes = clonedNodes.map((node) => {
-            if (!neighborNodeIds.includes(node.id)) {
-                node.color = "#C0C0C0";
-            }
-            return node;
-        })
-
-        let updatedEdges = clonedEdges.map((edge) => {
-            if (neighborEdgeIds.includes(edge.id)) {
-                edge.color = "#000000";
-            } else {
-                edge.color = "#C0C0C0";
-            }
-            return edge;
-        })
-
-        let newGraph = {
-            nodes: updatedNodes,
-            edges: updatedEdges
-        }
-
-        console.log("newGraph", newGraph);
-        return newGraph;
-    }
-
     function downloadAsPNG(elementId) {
         let element = document.getElementById(elementId);
 
@@ -212,7 +174,7 @@ export default function cloudChart (props) {
                         aria-controls={"panel0a-content"}
                         id={"panel0a-header"}
                     >
-                        <Typography className={classes.heading}>{keyword(props.result.cloudChart.title)}</Typography>
+                        <Typography className={classes.heading}>{keyword("top_words_cloud_chart_title")}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         {

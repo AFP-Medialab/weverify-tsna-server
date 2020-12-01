@@ -1,7 +1,9 @@
-import fetch from 'isomorphic-unfetch'
+import fetch from 'isomorphic-unfetch';
 
 let elasticURL = process.env.REACT_APP_ELK_URL;
-
+let request ={
+    "keywordList": [""]
+};
 export default (req, res) =>{
    /* console.log("request");
     console.log(elasticURL);
@@ -16,11 +18,20 @@ export default (req, res) =>{
         body: JSON.stringify(req.body)
     }).then(res => res.json())
     .then(data => {
+       // console.log("process(data) : " + process(data));
         setTimeout(() => {
-            res.json(data)
+
+            //const words = createWordCloud(data["hits"], request);
+            //res.json({"tweets": data, "words": words})
+            res.json(data);
             }, 2000)
     })
     return;
-    
-        
 }
+/*function process(data){
+    
+    const words = createWordCloud(data, request);
+     console.log("words " + JSON.stringify(words));
+     //return {"tweets": data, "words": words};
+ 
+ }*/

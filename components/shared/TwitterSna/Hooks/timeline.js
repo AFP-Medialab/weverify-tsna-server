@@ -116,3 +116,25 @@ export const getJsonDataForTimeLineChart = (dataResponse) => {
 
     return lines;
   };
+
+  export function isInRange(pointDate, objDate, periode) {
+
+    if (periode === "isHours") {
+        return (((pointDate.getDate() === objDate.getDate()
+            && pointDate.getHours() - 1 === objDate.getHours()))
+            && pointDate.getMonth() === objDate.getMonth()
+            && pointDate.getFullYear() === objDate.getFullYear());
+    }
+    else {
+        return (pointDate - objDate) === 0;
+    }
+}
+
+export function filterTweetsForTimeLine(tweetDate, selectedPoints) {
+  for (let i = 0; i < selectedPoints.length; i++) {
+      let pointedDate = new Date(selectedPoints[i].x);
+      if (selectedPoints[i].data.mode !== "lines" && isInRange(pointedDate, tweetDate, "isDays")) {
+          return true;
+      };
+  }
+}

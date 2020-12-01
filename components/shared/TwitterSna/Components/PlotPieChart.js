@@ -17,7 +17,6 @@ import {createCSVFromPieChart} from "../Hooks/pieCharts";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {displayTweets} from "../lib/displayTweets";
-
 import {downloadClick} from "../lib/downloadClick";
 import Plotly from 'plotly.js-dist';
 
@@ -26,6 +25,7 @@ let from = "PLOT_PIE_CHART";
 
 
 export default function PlotPieChart (props) { 
+
 
     const dispatch = useDispatch();  
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
@@ -44,7 +44,7 @@ export default function PlotPieChart (props) {
     useEffect(() => {
         setfilesNames('WordCloud_' + props.request.keywordList.join("&") + "_" + props.request.from + "_" + props.request.until);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(props.request), props.request]);
+    }, [props.request]);
 
     const [state, setState] = useState(
         {
@@ -57,7 +57,7 @@ export default function PlotPieChart (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.pieCharts]);
 
     useEffect(()=> {
         switch (donutIndex) {
@@ -79,22 +79,7 @@ export default function PlotPieChart (props) {
     }, [donutIndex]);
 
        //Download as PNG
- function downloadAsPNG(keyword, filesNames, elementId) {
-    let element = document.getElementById(elementId);
 
-    if (elementId === "top_words_cloud_chart") {
-        let name = filesNames + '.png';
-        saveSvgAsPng(element.children[0].children[0], name, { backgroundColor: "white", scale: 2 });
-    } else {
-        let positionInfo = element.getBoundingClientRect();
-        let height = positionInfo.height;
-        let width = positionInfo.width;
-        let name = keyword(elementId) + filesNames.replace("WordCloud", "") + '.png';
-        Plotly.downloadImage(elementId,
-            { format: 'png', width: width * 1.2, height: height * 1.2, filename: name }
-        );
-    }
-}
 
  function downloadAsSVG(elementId, keyword, filesNames) {
 

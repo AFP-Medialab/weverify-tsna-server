@@ -34,19 +34,23 @@ export default function TwitterSnaResult(props) {
 
     const dispatch = useDispatch();
     const classes = useMyStyles();
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
-    
+    const request = useSelector(state => state.twitterSna.request);
+    const resultStore = useSelector(state => state.twitterSna.result);
     const [result, setResult] = useState(null);
+    const [histogram, setHistogram] = useState(null);
 
     //Set result 
     useEffect(() => {
-        setResult(props.result);
-
+        setResult(resultStore);
+        console.log("result use effect");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(props.result), props.result]);
-
-
-   
+    }, [resultStore]);
+    useEffect(() => {
+        setHistogram(resultStore.histogram);
+        console.log("result use effect histogram");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [resultStore.histogram]);
+        
     if (result === null)
         return <div />;
     
@@ -55,7 +59,7 @@ export default function TwitterSnaResult(props) {
             <Paper className={classes.root}>
                 <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
                 {
-                    result.histogram &&
+                    histogram &&
                     <PlotTimeLine result={result} />
                     
                 }
@@ -65,34 +69,35 @@ export default function TwitterSnaResult(props) {
                 }
                 
                 {
-                    result.pieCharts &&
-                    <PlotPieChart result={result} request={props.request}/>
+                    request && request.userList && request.userList.length === 0 &&
+                    result && result.pieCharts &&
+                    <PlotPieChart result={result} request={request}/>
                 }
                 {
                     //vérifier que correct, une fois l'authentification active
-                    props.request.userList.length === 0 &&
-                    result &&
-                    <BubbleChart result={result} request={props.request}/>
+                    request && request.userList && request.userList.length === 0 &&
+                    result && result.tweetCount &&
+                    <BubbleChart result={result} request={request}/>
                 }
                 {
                     
-                    <HeatMap result={result} request={props.request} />
+                    <HeatMap result={result} request={request} />
                 }
                 {
-                    
-                    <HashtagGraph result={result} request={props.request}/>
+                    request &&
+                    <HashtagGraph result={result} request={request}/>
                 }
                 {
-                    
-                    <SocioSemGraph result={result} request={props.request}/>
+                    request &&
+                    <SocioSemGraph result={result} request={request}/>
                 }        
                 {
-                    
-                    <CloudChart result={result} request={props.request} />
+                   request && result.cloudChart &&
+                    <CloudChart result={result} request={request} />
                 }   
                 {
                     result.urls && 
-                    <UrlList result={result} request={props.request}/>
+                    <UrlList result={result} request={request}/>
                 }     
             </Paper>
         </div>

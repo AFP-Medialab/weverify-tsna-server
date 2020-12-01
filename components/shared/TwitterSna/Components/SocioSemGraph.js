@@ -18,9 +18,10 @@ import {downloadClick} from "../lib/downloadClick";
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
 
-import {displayTweets} from "../lib/displayTweets"
-//possible error, same as plot
+import {displayTweets} from "../lib/displayTweets";
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
+import {createGraphWhenClickANode} from "../../lib/sigmaGraph";
+import {getDomain} from "../Hooks/socioSemGraph"
 
 
 export default function SocioSemGraph (props) {
@@ -34,6 +35,7 @@ export default function SocioSemGraph (props) {
     const [socioSemantic4ModeGraphTweets, setSocioSemantic4ModeGraphTweets] = useState(null);
     const [socioSemantic4ModeGraphReset, setSocioSemantic4ModeGraphReset] = useState(null);
     const [socioSemantic4ModeGraphClickNode, setSocioSemantic4ModeGraphClickNode] = useState(null);
+    const request = useSelector(state => state.twitterSna.request);
 
     const [state, setState] = useState(
         {
@@ -46,54 +48,14 @@ export default function SocioSemGraph (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    }, [props.result.socioSemantic4ModeGraph]);
 
     useEffect(() => {
         setSocioSemantic4ModeGraphTweets(null);
         setSocioSemantic4ModeGraphReset(null);
         setSocioSemantic4ModeGraphClickNode(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.request])
-
-    function createGraphWhenClickANode(e) {
-
-        let selectedNode = e.data.node;
-    
-        let neighborNodes = e.data.renderer.graph.adjacentNodes(selectedNode.id);
-        let neighborEdges = e.data.renderer.graph.adjacentEdges(selectedNode.id);
-    
-        let neighborNodeIds = neighborNodes.map((node) => { return node.id; });
-        neighborNodeIds.push(selectedNode.id);
-        let neighborEdgeIds = neighborEdges.map((edge) => { return edge.id; });
-    
-        let clonedNodes = JSON.parse(JSON.stringify(e.data.renderer.graph.nodes()));
-        let clonedEdges = JSON.parse(JSON.stringify(e.data.renderer.graph.edges()));
-    
-        let updatedNodes = clonedNodes.map((node) => {
-            if (!neighborNodeIds.includes(node.id)) {
-                node.color = "#C0C0C0";
-            }
-            return node;
-        })
-    
-        let updatedEdges = clonedEdges.map((edge) => {
-            if (neighborEdgeIds.includes(edge.id)) {
-                edge.color = "#000000";
-            } else {
-                edge.color = "#C0C0C0";
-            }
-            return edge;
-        })
-    
-        let newGraph = {
-            nodes: updatedNodes,
-            edges: updatedEdges
-        }
-    
-        console.log("newGraph", newGraph);
-        return newGraph;
-    }
-
+    }, [request])
 
     const onClickNodeSocioSemantic4ModeGraph = (data) => {
 
@@ -159,26 +121,6 @@ export default function SocioSemGraph (props) {
         }
     }
 
-    function getDomain(url) {
-        var domain;
-
-        if (url.indexOf("://") > -1) {
-            domain = url.split('/')[2];
-        }
-        else {
-            domain = url.split('/')[0];
-        }
-
-        if (domain.indexOf("www.") > -1) {
-            domain = domain.split('www.')[1];
-        }
-
-        domain = domain.split(':')[0];
-        domain = domain.split('?')[0];
-
-        return domain;
-    }
-
     let goToTweetAction = [{
         icon: TwitterIcon,
         tooltip: keyword("twittersna_result_go_to_tweet"),
@@ -188,7 +130,7 @@ export default function SocioSemGraph (props) {
     }]
 
     return (
-    //props.request.userList.length === 0 && result &&
+    //request.userList.length === 0 && result &&
     <Accordion>
         <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -205,7 +147,7 @@ export default function SocioSemGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.socioSemantic4ModeGraph.data.nodes}
-                                    filename={"Nodes_" + keyword("sosem_4mode_graph_title") + '_' + props.request.keywordList.join('&') + '_' + props.request.from + "_" + props.request.until + ".csv"} 
+                                    filename={"Nodes_" + keyword("sosem_4mode_graph_title") + '_' + request.keywordList.join('&') + '_' + request.from + "_" + request.until + ".csv"} 
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Nodes"
@@ -215,7 +157,7 @@ export default function SocioSemGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.socioSemantic4ModeGraph.data.edges}
-                                    filename={"Edges_" + keyword("sosem_4mode_graph_title") + '_' + props.request.keywordList.join('&') + '_' + props.request.from + "_" + props.request.until + ".csv"} 
+                                    filename={"Edges_" + keyword("sosem_4mode_graph_title") + '_' + request.keywordList.join('&') + '_' + request.from + "_" + request.until + ".csv"} 
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Edges"
@@ -315,7 +257,7 @@ export default function SocioSemGraph (props) {
                                     <Button
                                         variant={"contained"}
                                         color={"primary"}
-                                        onClick={() => downloadClick(props.request, socioSemantic4ModeGraphTweets.csvArr, socioSemantic4ModeGraphTweets.selected)}>
+                                        onClick={() => downloadClick(request, socioSemantic4ModeGraphTweets.csvArr, socioSemantic4ModeGraphTweets.selected)}>
                                         {
                                             keyword('twittersna_result_download')
                                         }

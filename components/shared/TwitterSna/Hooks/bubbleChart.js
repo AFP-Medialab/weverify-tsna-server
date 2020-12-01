@@ -81,9 +81,15 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
         } 
     ]
 
+    let nameTitle = request.keywordList.join(", ")
+    if (nameTitle.length > 90){
+        nameTitle = nameTitle.substr(0,90) + "...";
+    }
+
+
     let layout = {
         title: {
-            text: keyword("bubble_chart_title") + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"],
+            text: keyword("bubble_chart_title") + "<br>" + nameTitle + " - " + request["from"] + " - " + request["until"],
             font: {
                 family: 'Arial, sans-serif',
                 size: 18
@@ -114,7 +120,7 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
                 size: 18,
                 color: '#C0C0C0'
             },
-            range:[0, Math.max(...y) + 10],
+            range:[0, Math.max(...y) + 0.1 * Math.max(...y)],
             rangemode: 'tozero'
         }
         
@@ -139,6 +145,7 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
             ['eraseshape']
         ],
         displaylogo: false,
+        
     }
 
     return {

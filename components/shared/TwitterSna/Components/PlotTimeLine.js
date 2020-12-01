@@ -14,6 +14,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
+import {filterTweetsForTimeLine} from "../Hooks/timeline"
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
@@ -37,32 +38,7 @@ export default function PlotTimeLine(props){
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
-
-    
-
-    function isInRange(pointDate, objDate, periode) {
-
-        if (periode === "isHours") {
-            return (((pointDate.getDate() === objDate.getDate()
-                && pointDate.getHours() - 1 === objDate.getHours()))
-                && pointDate.getMonth() === objDate.getMonth()
-                && pointDate.getFullYear() === objDate.getFullYear());
-        }
-        else {
-            return (pointDate - objDate) === 0;
-        }
-    }
-
-    function filterTweetsForTimeLine(tweetDate, selectedPoints) {
-        for (let i = 0; i < selectedPoints.length; i++) {
-            let pointedDate = new Date(selectedPoints[i].x);
-            if (selectedPoints[i].data.mode !== "lines" && isInRange(pointedDate, tweetDate, "isDays")) {
-                return true;
-            };
-        }
-    }
-
+    }, [props.result.histogram]);
 
     const onHistogramClick = (data) => {
         
@@ -78,7 +54,6 @@ export default function PlotTimeLine(props){
     }
 
     
-
     return (
         <Accordion expanded={histoVisible} onChange={() => setHistoVisible(!histoVisible)}>
             <AccordionSummary

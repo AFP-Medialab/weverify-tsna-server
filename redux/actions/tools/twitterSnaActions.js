@@ -66,6 +66,63 @@ export const setTSNAReset = (data) => {
     }
 }
 
+export const setCloudWordsResult = (cloudWords) => {
+    return {
+        type : "SET_TWITTER_SNA_CLOUD_WORDS_RESULTS",
+        payload :  cloudWords
+    }
+};
+
+export const setSocioGraphResult = (sociodata) => {
+    return {
+        type : "SET_TWITTER_SNA_SOCIO_GRAPH_RESULTS",
+        payload :  sociodata
+    }
+};
+export const setHeatMapResult = (heatMapData) => {
+    return {
+        type : "SET_TWITTER_SNA_HEATMAP_RESULTS",
+        payload :  heatMapData
+    }
+};
+export const setHistogramResult = (histogramData) => {
+    return {
+        type : "SET_TWITTER_SNA_HISTOGRAM_RESULTS",
+        payload :  histogramData
+    }
+};
+export const setCountResult = (countData) => {
+    return {
+        type : "SET_TWITTER_SNA_COUNT_RESULTS",
+        payload :  countData
+    }
+};
+export const setTweetResult = (tweetData) => {
+    return {
+        type : "SET_TWITTER_TWEETS_RESULTS",
+        payload :  tweetData
+    }
+};
+export const setPieChartsResult = (pieChartData) => {
+    return {
+        type : "SET_TWITTER_PIE_CHARTS_RESULTS",
+        payload :  pieChartData
+    }
+};
+export const setCoHashtagResult = (coHashtagData) => {
+    return {
+        type : "SET_TWITTER_COHASHTAG_RESULTS",
+        payload :  coHashtagData
+    }
+};
+export const setUrlsResult = (urlData) => {
+    return {
+        type : "SET_TWITTER_URLS_RESULTS",
+        payload :  urlData
+    }
+};
+
+
 export const setTweetsDetailPanel = (from, data) => {    
     console.log("from " + from)
     switch(from){
