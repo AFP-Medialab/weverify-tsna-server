@@ -61,6 +61,9 @@ const useTwitterSnaRequest = (request) => {
     const authenticatedRequest = useAuthenticatedRequest();
     const userAuthenticated = useSelector(state => state.userSession && state.userSession.userAuthenticated);
 
+    const [firstCallRenderer, setFirstCallRenderer] = useState(true);
+
+
     useEffect(() => {
 
         const handleErrors = (e) => {           
@@ -71,7 +74,7 @@ const useTwitterSnaRequest = (request) => {
             dispatch(setTwitterSnaLoading(false));
           };
         // Check request
-        const lastRenderCall = (sessionId, request) => {
+        const cacheRenderCall = (sessionId, request) => {
             dispatch(setTwitterSnaLoadingMessage(keyword('twittersna_building_graphs')));
           
             (generateFirstGraph(request) && generateSecondGraph(request) && generateThirdGraph(request)).then(() => {
@@ -80,7 +83,7 @@ const useTwitterSnaRequest = (request) => {
           
         };
 
-        const getResultUntilsDone = async (sessionId, isFirst, request) => {
+        const getResultUntilsDone = async (sessionId, request) => {
             const axiosConfig = {
               method: 'get',
 
@@ -89,21 +92,28 @@ const useTwitterSnaRequest = (request) => {
             await authenticatedRequest(axiosConfig)
               // await axios.get(TwintWrapperUrl + /status/ + sessionId)
               .then(async response => {
-                if (isFirst)
-                  await generateFirstGraph(request);
       
                 if (response.data.status === "Error")
                   handleErrors("twitterSnaErrorMessage");
                 else if (response.data.status === "Done") {
-                  lastRenderCall(sessionId, request);
+                  generateThirdGraph(request);
+                  dispatch(setTwitterSnaLoading(false));
                 }
                 else if (response.data.status === "CountingWords") {
                   dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_counting_words")));
-                  setTimeout(() => getResultUntilsDone(sessionId, false, request), 3000);
+
+                  if (firstCallRenderer) { //flag 
+                    generateFirstGraph(request);
+                    generateSecondGraph(request);
+                    setFirstCallRenderer(false);
+                  }
+
+
+                  setTimeout(() => getResultUntilsDone(sessionId, request), 3000);
                 }
-                else {
+                else { //running
                   generateFirstGraph(request).then(() => {
-                    setTimeout(() => getResultUntilsDone(sessionId, false, request), 5000);
+                    setTimeout(() => getResultUntilsDone(sessionId, request), 5000);
       
                     dispatch(setTwitterSnaLoading(true));
                     dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_fetching_tweets")));
@@ -133,28 +143,15 @@ const useTwitterSnaRequest = (request) => {
          */
         const generateFirstGraph = async (request) => {
             let entries = makeEntries(request);        
-            // call ES. If scrapping ongoing get scrapping aggregations. if done get all tweets
-
             const responseArrayOf9 = await axios.all([getAggregationData(entries)]);
-
           makeFirstResult(request, responseArrayOf9);
-
-            /*const responseArrayOf9 = await axios.all(
-            (final) ? [getAggregationData(entries), getTweets(entries)] : [getAggregationData(entries)]
-            );
-            makeResult(request, responseArrayOf9, final);*/
         };
+
       const generateSecondGraph = async (request) => {
           let entries = makeEntries(request);        
-          // call ES. If scrapping ongoing get scrapping aggregations. if done get all tweets
-
           const responseArrayOf9 = await axios.all([getAggregationData(entries), getTweets(entries)]);
-
         makeSecondResult(request, responseArrayOf9);
-          /*const responseArrayOf9 = await axios.all(
-          (final) ? [getAggregationData(entries), getTweets(entries)] : [getAggregationData(entries)]
-          );
-          makeResult(request, responseArrayOf9, final);*/
+
       };
 
       const generateThirdGraph = async (request) => {
@@ -164,10 +161,28 @@ const useTwitterSnaRequest = (request) => {
         makeThirdResult(request, responseArrayOf9);
       }
 
+      const makeFirstResult = (request, responseArrayOf9) => {
+        let responseAggs = responseArrayOf9[0]['aggregations']
+        const result = {};
+        buildHistogram(request, responseAggs);
+        buildTweetCount(responseAggs);
+        buildPieCharts(request, responseAggs);
+        buildUrls(responseAggs);
 
-      
-        //get aggregation en premier
-        //generate getTweets en second
+    };
+
+    const makeSecondResult = (request, responseArrayOf9) =>{
+      const tweets = responseArrayOf9[1].tweets;
+            dispatch(setTweetResult(tweets));
+            buildHeatMap(request, tweets);
+            buildCoHashTag(tweets);
+            buildSocioGraph(tweets);
+            buidTopUsers(tweets);
+    }
+
+    const makeThirdResult = (request, responseArrayOf9) =>{ //word cloud
+      wordCount(responseArrayOf9[0].tweets, request);
+    }
 
         function getTopActiveUsers(tweets, topN) {
             let tweetCountObj = _.countBy(tweets.map((tweet) => {return tweet._source.screen_name.toLowerCase(); }));
@@ -224,47 +239,8 @@ const useTwitterSnaRequest = (request) => {
             }
         }
 
-        const makeFirstResult = (request, responseArrayOf9) => {
-            let responseAggs = responseArrayOf9[0]['aggregations']
-            const result = {};
-            //result.histogram = createTimeLineChart(request, getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']), keyword);
-            buildHistogram(request, responseAggs);
-            buildTweetCount(responseAggs);
-            /*result.tweetCount = {};
-            result.tweetCount.count = responseAggs['tweet_count']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
-            result.tweetCount.retweet = responseAggs['retweets']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
-            result.tweetCount.like = responseAggs['likes']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");*/
-            //result.pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
-            buildPieCharts(request, responseAggs);
-            //result.cloudChart = { title: "top_words_cloud_chart_title" };
+        
 
-            buildUrls(responseAggs); // was originaly in if final, but don't seens to need it
-
-        };
-
-        const makeSecondResult = (request, responseArrayOf9) =>{
-          const tweets = responseArrayOf9[1].tweets;
-                dispatch(setTweetResult(tweets));
-                buildHeatMap(request, tweets);
-                //result.heatMap = createHeatMap(request, tweets, keyword);
-                //result.coHashtagGraph = createCoHashtagGraph(tweets);
-                buildCoHashTag(tweets);
-               
-                //result.cloudChart = { title: "top_words_cloud_chart_title" };
-                //result.cloudChart = createWordCloud(result.tweets, request);
-                buildSocioGraph(tweets);
-
-                //result.socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(result.tweets);
-                //result.urls = getJsonDataForURLTable(responseAggs['top_url_keyword']['buckets'], keyword);
-                buidTopUsers(tweets);
-        }
-
-        const makeThirdResult = (request, responseArrayOf9) =>{ //word cloud
-          wordCount(responseArrayOf9[0].tweets, request);
-        }
-
-        //make result pour tweet
-        //make result world count
 
         if (_.isNil(request)
             || (_.isNil(request.keywordList) || _.isEmpty(request.keywordList))
@@ -290,14 +266,16 @@ const useTwitterSnaRequest = (request) => {
                 if (response.data.status === "Error")
                   handleErrors("twitterSnaErrorMessage");
                 else if (response.data.status === "Done")
-                  lastRenderCall(response.data.session, request);
-                else
-                  getResultUntilsDone(response.data.session, true, request);
+                  cacheRenderCall(response.data.session, request);
+                else {
+                  setFirstCallRenderer(true);
+                  getResultUntilsDone(response.data.session,request);}
+
               }).catch(error => {
                 handleErrors(error);
               });
           } else {
-            lastRenderCall(null, request);
+            cacheRenderCall(null, request);
           }
        
 
