@@ -129,6 +129,12 @@ export default function SocioSemGraph (props) {
         }
     }]
 
+    const onClickStageSocioSemantic4ModeGraph = (e) => {
+        setSocioSemantic4ModeGraphClickNode(null);
+        setSocioSemantic4ModeGraphTweets(null);
+    }
+
+
     return (
     //request.userList.length === 0 && result &&
     <Accordion>
