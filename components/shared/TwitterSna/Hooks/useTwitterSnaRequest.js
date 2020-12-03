@@ -184,8 +184,9 @@ const useTwitterSnaRequest = (request) => {
         }
         const buildSocioGraph = async (tweets) => {
           const instance = socioWorker();
-            const socioSemantic4ModeGraph = await instance.createSocioSemantic4ModeGraph(tweets);
-            dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+          const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(tweets);
+          const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
+          dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
         };
 
         const buildCoHashTag = async (tweets) => {

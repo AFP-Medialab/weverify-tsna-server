@@ -23,6 +23,22 @@ function lowercaseFieldInTweets(tweets, field = 'hashtags') {
     });
     return newTweets;
 }
+function removeUnusedFields(tweets, fields){
+  let newTweets = tweets.map((tweet) => {
+    let tweetObj = JSON.parse(JSON.stringify(tweet));
+      delete tweetObj._index;
+      delete tweetObj._type;
+      delete tweetObj._id;
+      delete tweetObj._score;
+      fields.map((field) =>{
+        if (tweetObj._source[field] !== undefined && tweetObj._source[field] !== null) {
+          delete tweetObj._source[field];        
+        }
+      });
+      return tweetObj;
+  });
+  return newTweets;
+}
 
 function getTweetAttrObjArr(tweets) {
     let tweetAttrObjArr = tweets.map((tweet) => {
@@ -254,11 +270,12 @@ function getTweetAttrObjArr(tweets) {
 
 
 export const createSocioSemantic4ModeGraph = (tweets) => {
-      let lcTweets = lowercaseFieldInTweets(tweets, 'hashtags');
+      let lcTweets = removeUnusedFields(tweets, ["full_text", "coordinates", "geo", "created_at", "datetimestamp", "source", "limited_actions", "forward_pivot", "place", "lang"]);   
+      lcTweets = lowercaseFieldInTweets(lcTweets, 'hashtags');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'user_mentions');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'screen_name');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'in_reply_to_screen_name');
-      lcTweets = lowercaseFieldInTweets(lcTweets, 'urls');
+      lcTweets = lowercaseFieldInTweets(lcTweets, 'urls');     
       
       let tweetAttrObjArr = getTweetAttrObjArr(lcTweets);
 
@@ -278,7 +295,7 @@ export const createSocioSemantic4ModeGraph = (tweets) => {
       Object.entries(freqURLObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("URL"), type: "URL" }));
 
       let topNodeGraph = getTopNodeGraph({ nodes: nodes, edges: edges}, ["size"], [20, 10, 10, 10, 15], ['Hashtag', 'Mention', 'RetweetWC', 'Reply', 'URL']);
-      return {
+      return JSON.stringify({
         data: topNodeGraph
-      };
+      });
 }
