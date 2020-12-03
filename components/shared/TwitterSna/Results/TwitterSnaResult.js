@@ -4,19 +4,6 @@ import { cleanTwitterSnaState } from "../../../../redux/actions/tools/twitterSna
 import { Paper } from "@material-ui/core";
 import useMyStyles from "../../styles/useMyStyles";
 import React, { useEffect, useState, useCallback } from "react";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Typography from "@material-ui/core/Typography";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import Box from "@material-ui/core/Box";
-import useLoadLanguage from "../../hooks/useLoadLanguage"
-
-import CustomTable from "../../CustomTable/CustomTable";
-import CustomTableURL from "../../CustomTable/CustomTableURL";
-
-import OnClickInfo from '../../OnClickInfo/OnClickInfo';
-import Grid from "@material-ui/core/Grid";
 
 import dynamic from "next/dynamic"
 import TweetCount from "../Components/TweetCount";
@@ -59,9 +46,7 @@ export default function TwitterSnaResult(props) {
             <Paper className={classes.root}>
                 <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
                 {
-                    histogram &&
-                    <PlotTimeLine result={result} />
-                    
+                    <PlotTimeLine result={result} />                    
                 }
                 {
                     result && result.tweetCount &&

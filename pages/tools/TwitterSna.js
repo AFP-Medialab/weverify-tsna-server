@@ -95,7 +95,7 @@ const TwitterSna = () => {
       trimedBannedWords = removeQuotes(bannedWordsP.trim().match(/("[^"]+"|[^"\s]+)/g));
     const newFrom = (localTimeP === "false") ? convertToGMT(sinceP) : sinceP;
     const newUntil = (localTimeP === "false") ? convertToGMT(untilP) : untilP;
-    console.log("make params");
+    
     return {
       "keywordList": trimedKeywords,
       "bannedWords": trimedBannedWords,
@@ -256,8 +256,6 @@ const TwitterSna = () => {
   );
 
   
-  console.log("request " + JSON.stringify(request));
-  console.log("submittedRequest " + JSON.stringify(submittedRequest));
   useTwitterSnaRequest(submittedRequest);
 
   function listToString (list){

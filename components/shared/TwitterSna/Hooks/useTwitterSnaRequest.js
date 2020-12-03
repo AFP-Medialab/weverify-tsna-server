@@ -40,9 +40,11 @@ import {
 import {
     createSocioSemantic4ModeGraph
 } from "./socioSemGraph";
+import socioWorker from "workerize-loader?inline!./socioSemGraph";
 import {
     createWordCloud
 } from "./cloudChart";
+import cloudWorker from "workerize-loader?inline!./cloudChart";
 import {
     getJsonDataForURLTable
 } from "./urlList"
@@ -163,7 +165,6 @@ const useTwitterSnaRequest = (request) => {
 
       const makeFirstResult = (request, responseArrayOf9) => {
         let responseAggs = responseArrayOf9[0]['aggregations']
-        const result = {};
         buildHistogram(request, responseAggs);
         buildTweetCount(responseAggs);
         buildPieCharts(request, responseAggs);
@@ -193,11 +194,14 @@ const useTwitterSnaRequest = (request) => {
           }
           
         const wordCount = async (tweets, request) => {
-            const wordCountResponse = createWordCloud(tweets, request);
+          const instance = cloudWorker();
+            const wordCountResponse = await instance.createWordCloud(tweets, request);
             dispatch(setCloudWordsResult(wordCountResponse));
+            
         }
         const buildSocioGraph = async (tweets) => {
-            const socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(tweets);
+          const instance = socioWorker();
+            const socioSemantic4ModeGraph = await instance.createSocioSemantic4ModeGraph(tweets);
             dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
         };
         const buildHistogram = async (request, responseAggs)=>{

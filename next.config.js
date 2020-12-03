@@ -20,5 +20,10 @@ module.exports = {
     
     publicRuntimeConfig: {
       baseFolder: getBasePath() ,
-    }
+    },
+    webpack: (config) => {
+      
+    config.output.globalObject = `(typeof self !== 'undefined' ? self : this)`;
+    return config;
+  }
 }
