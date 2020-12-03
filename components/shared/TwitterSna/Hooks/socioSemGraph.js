@@ -1,3 +1,4 @@
+import _ from "lodash";
 
 function lowercaseFieldInTweets(tweets, field = 'hashtags') {
     let newTweets = tweets.map((tweet) => {

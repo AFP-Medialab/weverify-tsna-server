@@ -222,7 +222,7 @@ export default function cloudChart (props) {
                                 </div>
                                 <Box m={2} />
                                 {
-                                    props.result.cloudChart.json && (props.result.cloudChart.json.length !== 0) &&
+                                    props.result.cloudChart && props.result.cloudChart.json && (props.result.cloudChart.json.length !== 0) &&
                                     <div id="top_words_cloud_chart" height={"100%"} width={"100%"}>
                                         <ReactWordcloud key={JSON.stringify(props.result)} options={props.result.cloudChart.options} callbacks={call} words={props.result.cloudChart.json} />
                                         <Box m={1}/>
@@ -269,7 +269,7 @@ export default function cloudChart (props) {
                             </Box>
                         }
                         {
-                            props.result.cloudChart.json === undefined &&
+                             props.result.cloudChart  === undefined &&
                             <CircularProgress className={classes.circularProgress} />
                         }
                     </AccordionDetails>

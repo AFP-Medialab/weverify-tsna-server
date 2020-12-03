@@ -37,12 +37,9 @@ import {
 import {
     createCoHashtagGraph
 } from "./hashtagGraph";
-import {
-    createSocioSemantic4ModeGraph
-} from "./socioSemGraph";
-import {
-    createWordCloud
-} from "./cloudChart";
+
+import socioWorker from "workerize-loader?inline!./socioSemGraph";
+import cloudWorker from "workerize-loader?inline!./cloudChart";
 import {
     getJsonDataForURLTable
 } from "./urlList"
@@ -61,9 +58,6 @@ const useTwitterSnaRequest = (request) => {
     const authenticatedRequest = useAuthenticatedRequest();
     const userAuthenticated = useSelector(state => state.userSession && state.userSession.userAuthenticated);
 
-    const [firstCallRenderer, setFirstCallRenderer] = useState(true);
-
-
     useEffect(() => {
 
         const handleErrors = (e) => {           
@@ -74,7 +68,7 @@ const useTwitterSnaRequest = (request) => {
             dispatch(setTwitterSnaLoading(false));
           };
         // Check request
-        const cacheRenderCall = (sessionId, request) => {
+        const cacheRenderCall = (request) => {
             dispatch(setTwitterSnaLoadingMessage(keyword('twittersna_building_graphs')));
           
             (generateFirstGraph(request) && generateSecondGraph(request) && generateThirdGraph(request)).then(() => {
@@ -83,14 +77,13 @@ const useTwitterSnaRequest = (request) => {
           
         };
 
-        const getResultUntilsDone = async (sessionId, request) => {
+        const getResultUntilsDone = async (sessionId, request, lastStep) => {
             const axiosConfig = {
               method: 'get',
 
               url: `${publicRuntimeConfig.baseFolder}/api/wrapper/status/${sessionId}`
             };
             await authenticatedRequest(axiosConfig)
-              // await axios.get(TwintWrapperUrl + /status/ + sessionId)
               .then(async response => {
       
                 if (response.data.status === "Error")
@@ -102,18 +95,16 @@ const useTwitterSnaRequest = (request) => {
                 else if (response.data.status === "CountingWords") {
                   dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_counting_words")));
 
-                  if (firstCallRenderer) { //flag 
+                  if (lastStep === "Running") { //flag 
                     generateFirstGraph(request);
                     generateSecondGraph(request);
-                    setFirstCallRenderer(false);
                   }
 
-
-                  setTimeout(() => getResultUntilsDone(sessionId, request), 3000);
+                  setTimeout(() => getResultUntilsDone(sessionId, request, "CountingWords"), 3000);
                 }
                 else { //running
                   generateFirstGraph(request).then(() => {
-                    setTimeout(() => getResultUntilsDone(sessionId, request), 5000);
+                    setTimeout(() => getResultUntilsDone(sessionId, request, "Running"), 5000);
       
                     dispatch(setTwitterSnaLoading(true));
                     dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_fetching_tweets")));
@@ -163,7 +154,6 @@ const useTwitterSnaRequest = (request) => {
 
       const makeFirstResult = (request, responseArrayOf9) => {
         let responseAggs = responseArrayOf9[0]['aggregations']
-        const result = {};
         buildHistogram(request, responseAggs);
         buildTweetCount(responseAggs);
         buildPieCharts(request, responseAggs);
@@ -193,11 +183,14 @@ const useTwitterSnaRequest = (request) => {
           }
           
         const wordCount = async (tweets, request) => {
-            const wordCountResponse = createWordCloud(tweets, request);
+          const instance = cloudWorker();
+            const wordCountResponse = await instance.createWordCloud(tweets, request);
             dispatch(setCloudWordsResult(wordCountResponse));
+            
         }
         const buildSocioGraph = async (tweets) => {
-            const socioSemantic4ModeGraph = createSocioSemantic4ModeGraph(tweets);
+          const instance = socioWorker();
+            const socioSemantic4ModeGraph = await instance.createSocioSemantic4ModeGraph(tweets);
             dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
         };
         const buildHistogram = async (request, responseAggs)=>{
@@ -239,9 +232,6 @@ const useTwitterSnaRequest = (request) => {
             }
         }
 
-        
-
-
         if (_.isNil(request)
             || (_.isNil(request.keywordList) || _.isEmpty(request.keywordList))
             // || (_.isNil(request.userList) || _.isEmpty(request.userList))
@@ -252,6 +242,7 @@ const useTwitterSnaRequest = (request) => {
         }
         
         dispatch(setTwitterSnaLoading(true));
+        //TODO premier message à mettre ici
 
         //authentication test to set later
         if (userAuthenticated) {
@@ -266,16 +257,15 @@ const useTwitterSnaRequest = (request) => {
                 if (response.data.status === "Error")
                   handleErrors("twitterSnaErrorMessage");
                 else if (response.data.status === "Done")
-                  cacheRenderCall(response.data.session, request);
+                  cacheRenderCall(request);
                 else {
-                  setFirstCallRenderer(true);
-                  getResultUntilsDone(response.data.session,request);}
+                  getResultUntilsDone(response.data.session,request, "Pending");}
 
               }).catch(error => {
                 handleErrors(error);
               });
           } else {
-            cacheRenderCall(null, request);
+            cacheRenderCall(request);
           }
        
 
