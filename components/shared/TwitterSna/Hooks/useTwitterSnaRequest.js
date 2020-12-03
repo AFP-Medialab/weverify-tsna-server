@@ -147,8 +147,8 @@ const useTwitterSnaRequest = (request) => {
       }
 
       const makeFirstResult = (request, responseArrayOf9) => {
-        let responseAggs = responseArrayOf9[0]['aggregations']
-        buildHistogram(request, responseAggs);
+        let responseAggs = responseArrayOf9[0]['aggregations'];
+
         buildTweetCount(responseAggs);
         buildPieCharts(request, responseAggs);
         buildUrls(responseAggs);
@@ -157,7 +157,9 @@ const useTwitterSnaRequest = (request) => {
 
     const makeSecondResult = (request, responseArrayOf9) =>{
       const tweets = responseArrayOf9[1].tweets;
+      let responseAggs = responseArrayOf9[0]['aggregations']
             dispatch(setTweetResult(tweets));
+            buildHistogram(request, responseAggs);
             buildHeatMap(request, tweets);
             buildCoHashTag(tweets);
             buildSocioGraph(tweets);
