@@ -77,7 +77,7 @@ export default function TwitterSnaResult(props) {
                     <SocioSemGraph result={result} request={request}/>
                 }        
                 {
-                   request && result.cloudChart &&
+                   request && 
                     <CloudChart result={result} request={request} />
                 }   
                 {
