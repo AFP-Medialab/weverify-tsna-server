@@ -93,21 +93,18 @@ const useTwitterSnaRequest = (request) => {
                   dispatch(setTwitterSnaLoading(false));
                 }
                 else if (response.data.status === "CountingWords") {
-                  dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_counting_words")));
-
                   if (lastStep === "Running") { //flag 
+                    dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_counting_words")));
                     generateFirstGraph(request);
                     generateSecondGraph(request);
                   }
-
                   setTimeout(() => getResultUntilsDone(sessionId, request, "CountingWords"), 3000);
                 }
                 else { //running
                   generateFirstGraph(request).then(() => {
-                    setTimeout(() => getResultUntilsDone(sessionId, request, "Running"), 5000);
-      
-                    dispatch(setTwitterSnaLoading(true));
+                    if(lastStep === "Pending")
                     dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_fetching_tweets")));
+                    setTimeout(() => getResultUntilsDone(sessionId, request, "Running"), 5000);
                   });
                 }
               })
