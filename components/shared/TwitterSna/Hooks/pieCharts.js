@@ -1,4 +1,7 @@
-export const createPieCharts = (request, jsonPieCharts, keyword) => {
+import _ from "lodash";
+
+export const createPieCharts = (request, jsonPieCharts, keywordTitlesKey) => {
+  
     let layout = {
       title: {
         font: {
@@ -50,7 +53,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
 
     for (let cpt = 0; cpt < keywordTitles.length; cpt++) {
       let specificLayout = JSON.parse(JSON.stringify(layout));
-      let specificTitle = keyword(keywordTitles[cpt]) + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"];
+      let specificTitle = keywordTitlesKey[cpt] + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"];
       specificLayout.title.text = specificTitle;
       pieCharts.push(
         {

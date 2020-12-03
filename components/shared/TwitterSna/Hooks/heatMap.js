@@ -1,5 +1,4 @@
-//import {displayTweets} from "../lib/displayTweets"
-//error with the import
+import _ from "lodash";
 
 const getTweetWithClickableLink = (cellData) => {
     let urls = cellData.tweet.match(/((http|https|ftp|ftps):\/\/[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,3}(\/\S*)?|pic\.twitter\.com\/([-a-zA-Z0-9()@:%_+.~#?&//=]*))/g);
@@ -129,7 +128,7 @@ function getNbTweetsByHourDay(dayArr, hourArr, bucket) {
   }
 
 
-export function createHeatMap(request, hits, keyword) {
+export function createHeatMap(request, hits, titleKey) {
 
     let hourAxis = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
       '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
@@ -155,7 +154,7 @@ export function createHeatMap(request, hits, keyword) {
 
     let layout = {
       title: {
-        text: keyword("heatmap_chart_title") + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"],
+        text: titleKey + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"],
         font: {
           family: 'Arial, sans-serif',
           size: 18

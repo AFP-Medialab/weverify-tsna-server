@@ -21,7 +21,6 @@ let from = "PLOT_LINE";
 export default function PlotTimeLine(props){
     const dispatch = useDispatch();
     //HISTOGRAM
-    const [histoVisible, setHistoVisible] = useState(true);
     const histoTweets =  useSelector(state => state.twitterSna.histoview);
 
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
@@ -55,7 +54,7 @@ export default function PlotTimeLine(props){
 
     
     return (
-        <Accordion expanded={histoVisible} onChange={() => setHistoVisible(!histoVisible)}>
+        <Accordion>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel0a-content"}

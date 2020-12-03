@@ -46,20 +46,20 @@ export default function TwitterSnaResult(props) {
             <Paper className={classes.root}>
                 <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
                 {
-                    <PlotTimeLine result={result} />                    
-                }
-                {
                     result && result.tweetCount &&
                     <TweetCount result={result} />
                 }
-                
+                {
+                    result.histogram &&
+                    <PlotTimeLine result={result} />                    
+                }
+               
                 {
                     request && request.userList && request.userList.length === 0 &&
                     result && result.pieCharts &&
                     <PlotPieChart result={result} request={request}/>
                 }
                 {
-                    //vérifier que correct, une fois l'authentification active
                     request && request.userList && request.userList.length === 0 &&
                     result && result.tweetCount &&
                     <BubbleChart result={result} request={request}/>

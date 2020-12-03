@@ -24,22 +24,19 @@ import {
     getCloudTweets
 } from "./call-elastic";
 import {
-    createTimeLineChart,
     getJsonDataForTimeLineChart
 } from "./timeline";
 import {
-    createPieCharts,
     getJsonDataForPieCharts
 } from "./pieCharts";
-import {
-    createHeatMap
-} from "./heatMap";
-import {
-    createCoHashtagGraph
-} from "./hashtagGraph";
 
 import socioWorker from "workerize-loader?inline!./socioSemGraph";
 import cloudWorker from "workerize-loader?inline!./cloudChart";
+import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
+import pieWorker from "workerize-loader?inline!./pieCharts";
+import histoWorker from "workerize-loader?inline!./timeline";
+import heatWorker from "workerize-loader?inline!./heatMap";
+
 import {
     getJsonDataForURLTable
 } from "./urlList"
@@ -190,31 +187,52 @@ const useTwitterSnaRequest = (request) => {
             const socioSemantic4ModeGraph = await instance.createSocioSemantic4ModeGraph(tweets);
             dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
         };
+
+        const buildCoHashTag = async (tweets) => {
+          const instance = hashtagWorker();
+            const coHashtagGraph = await instance.createCoHashtagGraph(tweets);
+            dispatch(setCoHashtagResult(coHashtagGraph));
+        };
+
+        const buildPieCharts = async (request, responseAggs) => {
+          const instance = pieWorker()
+          const pieJson = getJsonDataForPieCharts(responseAggs, request.keywordList);
+          let keywordTitles = [
+            "retweets_cloud_chart_title",
+            "likes_cloud_chart_title",
+            "top_users_pie_chart_title",
+            "mention_cloud_chart_title"
+          ];
+          let keywordTitlesKey = [];
+          for (let cpt = 0; cpt < keywordTitles.length; cpt++) {
+            keywordTitlesKey[cpt] = keyword(keywordTitles[cpt]);
+          }
+            const pieCharts = await instance.createPieCharts(request, pieJson, keywordTitlesKey);
+            dispatch(setPieChartsResult(pieCharts));
+        };
+
         const buildHistogram = async (request, responseAggs)=>{
-            const histogram = createTimeLineChart(request, getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']), keyword);
+            const instance = histoWorker();
+            const histoJson = getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']);
+            let titleKey = keyword("user_time_chart_title");            
+            let textKey = keyword('twitter_local_time');
+            const histogram = await instance.createTimeLineChart(request, histoJson, titleKey, textKey);
             dispatch(setHistogramResult(histogram));
         };
+
+        const buildHeatMap = async (request, tweets) => {
+          const instance = heatWorker();
+          let titleKey = keyword("heatmap_chart_title");
+          const heatMap = await instance.createHeatMap(request, tweets, titleKey);
+          dispatch(setHeatMapResult(heatMap));
+      };
+
         const buildTweetCount = async (responseAggs) => {
             const tweetCount = {};
             tweetCount.count = responseAggs['tweet_count']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             tweetCount.retweet = responseAggs['retweets']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             tweetCount.like = responseAggs['likes']['value'].toString().replace(/(?=(\d{3})+(?!\d))/g, " ");
             dispatch(setCountResult(tweetCount));
-        };
-
-        const buildPieCharts = async (request, responseAggs) => {
-            const pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
-            dispatch(setPieChartsResult(pieCharts));
-        };
-
-        const buildHeatMap = async (request, tweets) => {
-            const heatMap = createHeatMap(request, tweets, keyword);
-            dispatch(setHeatMapResult(heatMap));
-        };
-
-        const buildCoHashTag = async (tweets) => {
-            const coHashtagGraph = createCoHashtagGraph(tweets);
-            dispatch(setCoHashtagResult(coHashtagGraph));
         };
 
         const buildUrls = async (responseAggs) => {

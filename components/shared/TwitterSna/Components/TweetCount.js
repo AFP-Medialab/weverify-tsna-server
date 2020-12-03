@@ -18,7 +18,7 @@ export default function TweetCount(props){
 
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
-
+    const [countVisible, setCountVisible] = useState(true);
     const [state, setState] = useState(
         {
             result: props.result        
@@ -34,7 +34,7 @@ export default function TweetCount(props){
 
 
     return (
-        <Accordion>
+        <Accordion expanded={countVisible} onChange={() => setCountVisible(!countVisible)}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls={"panel0a-content"}
