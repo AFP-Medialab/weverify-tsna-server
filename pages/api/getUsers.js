@@ -2,11 +2,7 @@ import fetch from 'isomorphic-unfetch'
 let elasticSearchUserURL = process.env.REACT_APP_ES_USER_URL;
 
 export default (req, res) =>{
-    /* console.log("request");
-     console.log(elasticURL);
-     console.log(req.body);*/
- 
-     
+   
      fetch(elasticSearchUserURL, {
          method: 'POST',
          headers: {
