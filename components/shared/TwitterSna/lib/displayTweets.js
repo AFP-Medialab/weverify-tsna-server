@@ -71,4 +71,21 @@ export function displayTweets (filteredTweets, keyword, sortedColumn) {
         columns: columns,
         csvArr: csvArr,
     };
-}; 
+};
+
+export function removeUnusedFields(tweets, fields){
+    let newTweets = tweets.map((tweet) => {
+      let tweetObj = JSON.parse(JSON.stringify(tweet));
+        delete tweetObj._index;
+        delete tweetObj._type;
+        delete tweetObj._id;
+        delete tweetObj._score;
+        fields.map((field) =>{
+          if (tweetObj._source[field] !== undefined && tweetObj._source[field] !== null) {
+            delete tweetObj._source[field];        
+          }
+        });
+        return tweetObj;
+    });
+    return newTweets;
+  }

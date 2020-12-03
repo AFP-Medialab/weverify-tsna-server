@@ -23,22 +23,6 @@ function lowercaseFieldInTweets(tweets, field = 'hashtags') {
     });
     return newTweets;
 }
-function removeUnusedFields(tweets, fields){
-  let newTweets = tweets.map((tweet) => {
-    let tweetObj = JSON.parse(JSON.stringify(tweet));
-      delete tweetObj._index;
-      delete tweetObj._type;
-      delete tweetObj._id;
-      delete tweetObj._score;
-      fields.map((field) =>{
-        if (tweetObj._source[field] !== undefined && tweetObj._source[field] !== null) {
-          delete tweetObj._source[field];        
-        }
-      });
-      return tweetObj;
-  });
-  return newTweets;
-}
 
 function getTweetAttrObjArr(tweets) {
     let tweetAttrObjArr = tweets.map((tweet) => {
@@ -138,8 +122,8 @@ function getTweetAttrObjArr(tweets) {
         coOccur.push(getCombinationFrom2Arrs(obj.userReply, obj.urls));
       }
   
-      let coOccurGroupedBy = groupByThenSum(coOccur.flat(), 'id', [], ['count'], []);
-      return coOccurGroupedBy;
+      /*let coOccurGroupedBy = groupByThenSum(coOccur.flat(), 'id', [], ['count'], []);
+      return coOccurGroupedBy;*/
     })
     let coOccurGroupedBy = groupByThenSum(coOccur.flat(), 'id', [], ['count'], []);
     return coOccurGroupedBy;
@@ -270,17 +254,19 @@ function getTweetAttrObjArr(tweets) {
 
 
 export const createSocioSemantic4ModeGraph = (tweets) => {
-      let lcTweets = removeUnusedFields(tweets, ["full_text", "coordinates", "geo", "created_at", "datetimestamp", "source", "limited_actions", "forward_pivot", "place", "lang"]);   
-      lcTweets = lowercaseFieldInTweets(lcTweets, 'hashtags');
+      console.log("1 ", new Date().valueOf());
+      let lcTweets = lowercaseFieldInTweets(tweets, 'hashtags');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'user_mentions');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'screen_name');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'in_reply_to_screen_name');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'urls');     
-      
+      console.log("2 ",new Date().valueOf());
       let tweetAttrObjArr = getTweetAttrObjArr(lcTweets);
-
+      console.log("3 ",new Date().valueOf());
       let coOccurObjArr = getCoOccurence(tweetAttrObjArr);
+      console.log("4 ",new Date().valueOf());
       let edges = getEdgesFromCoOcurObjArr(coOccurObjArr);
+      console.log("5 ",new Date().valueOf());
       
       let nodes = [];
       let freqHashtagObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.hashtags; }).flat());
@@ -293,8 +279,9 @@ export const createSocioSemantic4ModeGraph = (tweets) => {
       Object.entries(freqRTWCObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("RetweetWC"), type: "RetweetWC" }));
       Object.entries(freqReplyObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Reply"), type: "Reply" }));
       Object.entries(freqURLObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("URL"), type: "URL" }));
-
+      console.log("6 ",new Date().valueOf());
       let topNodeGraph = getTopNodeGraph({ nodes: nodes, edges: edges}, ["size"], [20, 10, 10, 10, 15], ['Hashtag', 'Mention', 'RetweetWC', 'Reply', 'URL']);
+      console.log("7 ",new Date().valueOf());
       return JSON.stringify({
         data: topNodeGraph
       });

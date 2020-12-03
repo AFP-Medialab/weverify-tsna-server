@@ -29,7 +29,7 @@ import {
 import {
     getJsonDataForPieCharts
 } from "./pieCharts";
-
+import {removeUnusedFields} from "../lib/displayTweets";
 import socioWorker from "workerize-loader?inline!./socioSemGraph";
 import cloudWorker from "workerize-loader?inline!./cloudChart";
 import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
@@ -183,8 +183,21 @@ const useTwitterSnaRequest = (request) => {
             
         }
         const buildSocioGraph = async (tweets) => {
+
+          /*const graphURL = `${publicRuntimeConfig.baseFolder}/api/buildGraph`;
+          const response = await fetch(graphURL, {
+            method: 'POST',
+            body:
+            JSON.stringify(tweets),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const socioSemantic4ModeGraph = await response.json();*/
+
           const instance = socioWorker();
-          const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(tweets);
+          const lcTweets = removeUnusedFields(tweets, ["full_text", "coordinates", "geo", "created_at", "datetimestamp", "source", "limited_actions", "forward_pivot", "place", "lang"]);   
+          const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(lcTweets);
           const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
           dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
         };
