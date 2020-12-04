@@ -37,7 +37,11 @@ import cloudWorker from "workerize-loader?inline!./cloudChart";
 import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
 //import pieWorker from "workerize-loader?inline!./pieCharts";
 //import histoWorker from "workerize-loader?inline!./timeline";
-import heatWorker from "workerize-loader?inline!./heatMap";
+//import heatWorker from "workerize-loader?inline!./heatMap";
+
+import {
+  createHeatMap
+} from "./heatMap";
 
 import {
     getJsonDataForURLTable
@@ -255,10 +259,13 @@ const useTwitterSnaRequest = (request) => {
     };
 
     const buildHeatMap = async (request, tweets) => {
-      const instance = heatWorker();
+      const heatMap = createHeatMap(request, tweets, keyword);
+      dispatch(setHeatMapResult(heatMap));
+
+      /*const instance = heatWorker();
       let titleKey = keyword("heatmap_chart_title");
       const heatMap = await instance.createHeatMap(request, tweets, titleKey);
-      dispatch(setHeatMapResult(heatMap));
+      dispatch(setHeatMapResult(heatMap));*/
     };
 
     const buildTweetCount = async (responseAggs) => {
