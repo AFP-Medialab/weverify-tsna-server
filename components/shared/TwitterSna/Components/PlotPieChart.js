@@ -57,7 +57,7 @@ export default function PlotPieChart (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result.pieCharts]);
+    }, [props.result.pieCharts, props.result.tweets]);
 
     useEffect(()=> {
         switch (donutIndex) {

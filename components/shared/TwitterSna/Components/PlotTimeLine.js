@@ -21,6 +21,7 @@ let from = "PLOT_LINE";
 export default function PlotTimeLine(props){
     const dispatch = useDispatch();
     //HISTOGRAM
+    const [histoVisible, setHistoVisible] = useState(true);
     const histoTweets =  useSelector(state => state.twitterSna.histoview);
 
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
@@ -37,7 +38,7 @@ export default function PlotTimeLine(props){
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result.histogram]);
+    }, [props.result.histogram, props.result.tweets]);
 
     const onHistogramClick = (data) => {
         
@@ -54,7 +55,7 @@ export default function PlotTimeLine(props){
 
     
     return (
-        <Accordion>
+        <Accordion expanded={histoVisible} onChange={() => setHistoVisible(!histoVisible)}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel0a-content"}

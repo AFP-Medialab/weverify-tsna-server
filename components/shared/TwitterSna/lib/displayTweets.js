@@ -89,3 +89,27 @@ export function removeUnusedFields(tweets, fields){
     });
     return newTweets;
   }
+
+  export function lowercaseFieldInTweets(tweets, field = 'hashtags') {
+    let newTweets = tweets.map((tweet) => {
+      let tweetObj = JSON.parse(JSON.stringify(tweet));
+      if (tweetObj._source[field] !== undefined && tweetObj._source[field] !== null) {
+        if (Array.isArray(tweetObj._source[field])) {
+          let newArr = tweetObj._source[field].map((element) => {
+            if(field === "user_mentions") {
+              element.screen_name = element.screen_name.toLowerCase();
+              element.name = element.name.toLowerCase();
+              return element;
+            } else {
+              return element.toLowerCase();
+            }
+          });
+          tweetObj._source[field] = [...new Set(newArr)];
+        } else {
+          tweetObj._source[field] = tweetObj._source[field].toLowerCase();
+        }
+      }
+      return tweetObj;
+    });
+    return newTweets;
+}
