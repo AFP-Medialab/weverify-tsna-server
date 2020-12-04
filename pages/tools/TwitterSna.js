@@ -339,8 +339,8 @@ useEffect(() => {
 
     return (
         <div className={classes.all}>
-            <Paper className={classes.root} style={{marginTop: "0px", marginBottom: "0px", paddingTop: "0px"}}>
-                <CustomTitle text={keyword("twitter_sna_title")} />
+            <Paper className={classes.rootmain} style={{marginTop: "0px", marginBottom: "0px", paddingTop: "0px"}}>
+
                 <AuthenticationCard />
                 <TextField
                     disabled={searchFormDisabled}

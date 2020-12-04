@@ -8,10 +8,24 @@ const useMyStyles = makeStyles(theme => ({
         minWidth: "1280px",
         maxWidth: "1280px",
     },
+    titleTSN: {
+        position: 'absolute',
+        textAlign: "center",
+        left: '40%',
+        
+
+    },
     root: {
         padding: theme.spacing(3, 2),
         marginTop: 5,
         textAlign: "center",
+       
+    },
+    rootmain: {
+        padding: theme.spacing(3, 2),
+        marginTop: 5,
+        textAlign: "center",
+        
        
     },
     circularProgress: {
@@ -276,6 +290,9 @@ const useMyStyles = makeStyles(theme => ({
         padding: '15px',
         width: "auto",
         margin: 5,
+        display: "block",
+        marginLeft: "30%",
+        marginRight: "auto",
     },
     forensicCard: {
         width: "100%",

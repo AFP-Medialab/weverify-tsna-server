@@ -6,12 +6,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import styles from './layout.module.css';
 import useMyStyles from './shared/styles/useMyStyles';
 import getConfig from 'next/config';
+import useLoadLanguage from "../components/shared/hooks/useLoadLanguage";
+import CustomTitle from "../components/shared/CustomTitle/CustomTitle"
 const { publicRuntimeConfig } = getConfig();
 
 export const siteTitle = 'Weverify'
 
 function Layout({ children }) {
     const classes = useMyStyles();
+    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     return (
         <div className={styles.container}>
             <Head>
@@ -39,7 +42,8 @@ function Layout({ children }) {
                         />
                     </Box>
                     <Languages/>
-                    <div className={classes.grow}/>
+                    <CustomTitle text={keyword("twitter_sna_title")}/>
+
                     </Toolbar>
                 </AppBar>
             </div>
