@@ -31,16 +31,15 @@ function Layout({ children }) {
             <div className={classes.flex}>
                 <AppBar position="fixed" color="default" className={classes.appBar}>
                     <Toolbar className={classes.toolbar}>
-                    
-                    <div className={classes.grow}/>
-                    <Languages/>
                     <Box display={{xs: 'none', md: 'block'}}>
                         <img
                             src={`${publicRuntimeConfig.baseFolder}/images/logo-we-verifymini.png`}
                             alt="logo"
-                            className={classes.logoRight}
+                            className={classes.logoLeft}
                         />
                     </Box>
+                    <Languages/>
+                    <div className={classes.grow}/>
                     </Toolbar>
                 </AppBar>
             </div>
