@@ -1,7 +1,4 @@
-//with worker
-//import _ from "lodash";
-
-export const createPieCharts = (request, jsonPieCharts, keyword/*keywordTitlesKey with workers*/) => {
+export const createPieCharts = (request, jsonPieCharts, keyword) => {
   
     let layout = {
       title: {
