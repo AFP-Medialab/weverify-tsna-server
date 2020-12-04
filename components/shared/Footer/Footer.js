@@ -11,50 +11,12 @@ const Footer = (props) => {
 
     let provideBy, link, linkLabel, contactUs;
 
-    switch (props.type) {
-        case "iti":
-            provideBy = keyword("iti_part_1");
-            link = keyword("iti_link");
-            linkLabel = keyword("iti_link_label");
-            contactUs = keyword("iti_part_2");
-            break;
-        case "GRIHO":
-            return (
-                <div className={classes.footer}>
-                    <Typography variant={"body2"}>
-                        {
-                            keyword("GRIHO_part_1")
-                        }
-                    </Typography>
-                    <Typography variant={"body2"}>
-                        {
-                            keyword("GRIHO_part_2")
-                        }
-                        <Link href={"mailto:" + keyword("GRIHO_email")}>
-                            {keyword("GRIHO_email")}
-                        </Link>
-                    </Typography>
-                </div>
-            );
-        case "usfd":
-            provideBy = keyword("usfd_part_1")
-            link = keyword("usfd_link");
-            linkLabel = keyword("usfd_link_label");
-            contactUs = keyword("usfd_part_2")
-            break;
-        case "afp-usfd-eudisinfolab":
-            provideBy = keyword("apf_part_1");
-            link = [keyword("apf_link"), keyword("usfd_link"), keyword("eudisinfolab_link")];
-            linkLabel = [keyword("apf_link_label"), ", " + keyword("usfd_link_label"), " " + keyword("and") + " " + keyword("eudisinfolab_link_label")];
-            contactUs = keyword("apf_part_2");
-            break;
-        default:
-            provideBy = keyword("apf_part_1");
-            link = keyword("apf_link");
-            linkLabel = keyword("apf_link_label");
-            contactUs = keyword("apf_part_2");
-            break;
-    }
+    provideBy = keyword("apf_part_1");
+    link = keyword("apf_link");
+    linkLabel = keyword("apf_link_label");
+    contactUs = keyword("apf_part_2");
+
+
 
     return (
         <div className={classes.footer}>

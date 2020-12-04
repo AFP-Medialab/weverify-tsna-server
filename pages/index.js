@@ -18,7 +18,7 @@ const Index = props => {
             <TwitterSna />
         </main>
         <footer>
-        <Footer type={"afp"}/>
+        <Footer/>
         </footer>
         <style jsx>{`
           main {
