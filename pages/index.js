@@ -2,7 +2,7 @@ import Head from "next/head"
 import React from 'react';
 import Layout from '../components/layout';
 import TwitterSna from './tools/TwitterSna';
-
+import Footer from "../components/shared/Footer/Footer"
 
 
 const Index = props => {
@@ -18,7 +18,7 @@ const Index = props => {
             <TwitterSna />
         </main>
         <footer>
-        Powered by{' '}
+        <Footer type={"afp"}/>
         </footer>
         <style jsx>{`
           main {
