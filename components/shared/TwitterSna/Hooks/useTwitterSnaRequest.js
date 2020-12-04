@@ -24,18 +24,24 @@ import {
     getCloudTweets
 } from "./call-elastic";
 import {
+  createTimeLineChart,
     getJsonDataForTimeLineChart
 } from "./timeline";
 import {
+    createPieCharts,
     getJsonDataForPieCharts
 } from "./pieCharts";
 import {removeUnusedFields} from "../lib/displayTweets";
 import socioWorker from "workerize-loader?inline!./socioSemGraph";
 import cloudWorker from "workerize-loader?inline!./cloudChart";
 import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
-import pieWorker from "workerize-loader?inline!./pieCharts";
-import histoWorker from "workerize-loader?inline!./timeline";
-import heatWorker from "workerize-loader?inline!./heatMap";
+//import pieWorker from "workerize-loader?inline!./pieCharts";
+//import histoWorker from "workerize-loader?inline!./timeline";
+//import heatWorker from "workerize-loader?inline!./heatMap";
+
+import {
+  createHeatMap
+} from "./heatMap";
 
 import {
     getJsonDataForURLTable
@@ -157,7 +163,8 @@ const useTwitterSnaRequest = (request) => {
       buildFirstResult(request, responseArrayOf9[0]['aggregations']);
       const tweets = responseArrayOf9[1].tweets;
       const lcTweets = removeUnusedFields(tweets, ["full_text", "coordinates", "geo", "created_at", "datetimestamp", "source", "limited_actions", "forward_pivot", "place", "lang"]);   
-      dispatch(setTweetResult(tweets));      
+      dispatch(setTweetResult(tweets));    
+      buildHistogram(request, responseArrayOf9[0]['aggregations']);
       buildHeatMap(request, tweets);
       buildCoHashTag(lcTweets);
       buildSocioGraph(lcTweets);
@@ -165,7 +172,7 @@ const useTwitterSnaRequest = (request) => {
     }
 
     const buildFirstResult = (request, responseAggs) => {
-      buildHistogram(request, responseAggs);
+      //buildHistogram(request, responseAggs);
         buildTweetCount(responseAggs);
         buildPieCharts(request, responseAggs);
         buildUrls(responseAggs);
@@ -215,6 +222,12 @@ const useTwitterSnaRequest = (request) => {
     };
 
     const buildPieCharts = async (request, responseAggs) => {
+      //without workers
+      const pieCharts = createPieCharts(request, getJsonDataForPieCharts(responseAggs, request.keywordList), keyword);
+      dispatch(setPieChartsResult(pieCharts));
+
+      //with workers
+      /*
       const instance = pieWorker()
       const pieJson = getJsonDataForPieCharts(responseAggs, request.keywordList);
       let keywordTitles = [
@@ -228,23 +241,31 @@ const useTwitterSnaRequest = (request) => {
         keywordTitlesKey[cpt] = keyword(keywordTitles[cpt]);
       }
         const pieCharts = await instance.createPieCharts(request, pieJson, keywordTitlesKey);
-        dispatch(setPieChartsResult(pieCharts));
+        dispatch(setPieChartsResult(pieCharts));*/
     };
 
     const buildHistogram = async (request, responseAggs)=>{
-      const instance = histoWorker();
+      //without worker
+      const histogram = createTimeLineChart(request, getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']), keyword);
+      dispatch(setHistogramResult(histogram));
+      
+      //with worker
+      /*const instance = histoWorker();
       const histoJson = getJsonDataForTimeLineChart(responseAggs['date_histo']['buckets']);
       let titleKey = keyword("user_time_chart_title");            
       let textKey = keyword('twitter_local_time');
       const histogram = await instance.createTimeLineChart(request, histoJson, titleKey, textKey);
-      dispatch(setHistogramResult(histogram));
+      dispatch(setHistogramResult(histogram));*/
     };
 
     const buildHeatMap = async (request, tweets) => {
-      const instance = heatWorker();
+      const heatMap = createHeatMap(request, tweets, keyword);
+      dispatch(setHeatMapResult(heatMap));
+
+      /*const instance = heatWorker();
       let titleKey = keyword("heatmap_chart_title");
       const heatMap = await instance.createHeatMap(request, tweets, titleKey);
-      dispatch(setHeatMapResult(heatMap));
+      dispatch(setHeatMapResult(heatMap));*/
     };
 
     const buildTweetCount = async (responseAggs) => {
