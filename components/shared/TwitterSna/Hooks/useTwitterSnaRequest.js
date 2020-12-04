@@ -67,8 +67,8 @@ const useTwitterSnaRequest = (request) => {
         // Check request
       const cacheRenderCall = (request) => {
           dispatch(setTwitterSnaLoadingMessage(keyword('twittersna_building_graphs')));
-        
-          (generateFirstGraph(request) && generateSecondGraph(request) && generateThirdGraph(request)).then(() => {
+          //generateFirstGraph(request);
+          (generateSecondGraph(request) && generateThirdGraph(request)).then(() => {
             dispatch(setTwitterSnaLoading(false));
           });
         
@@ -87,7 +87,6 @@ const useTwitterSnaRequest = (request) => {
                 handleErrors("twitterSnaErrorMessage");
               else if (response.data.status === "Done") {
                 if (lastStep === "Running") { 
-                  generateFirstGraph(request);
                   generateSecondGraph(request);
                 }
                 generateThirdGraph(request);
@@ -96,7 +95,6 @@ const useTwitterSnaRequest = (request) => {
               else if (response.data.status === "CountingWords") {
                 if (lastStep === "Running") { //flag 
                   dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_counting_words")));
-                  generateFirstGraph(request);
                   generateSecondGraph(request);
                 }
                 setTimeout(() => getResultUntilsDone(sessionId, request, "CountingWords"), 3000);
@@ -152,13 +150,11 @@ const useTwitterSnaRequest = (request) => {
 
       const makeFirstResult = (request, responseArrayOf9) => {
         let responseAggs = responseArrayOf9[0]['aggregations'];
-        buildHistogram(request, responseAggs);
-        buildTweetCount(responseAggs);
-        buildPieCharts(request, responseAggs);
-        buildUrls(responseAggs);
+        buildFirstResult(request, responseAggs);
     };
 
     const makeSecondResult = (request, responseArrayOf9) =>{
+      buildFirstResult(request, responseArrayOf9[0]['aggregations']);
       const tweets = responseArrayOf9[1].tweets;
       const lcTweets = removeUnusedFields(tweets, ["full_text", "coordinates", "geo", "created_at", "datetimestamp", "source", "limited_actions", "forward_pivot", "place", "lang"]);   
       dispatch(setTweetResult(tweets));      
@@ -166,6 +162,13 @@ const useTwitterSnaRequest = (request) => {
       buildCoHashTag(lcTweets);
       buildSocioGraph(lcTweets);
       buidTopUsers(lcTweets);
+    }
+
+    const buildFirstResult = (request, responseAggs) => {
+      buildHistogram(request, responseAggs);
+        buildTweetCount(responseAggs);
+        buildPieCharts(request, responseAggs);
+        buildUrls(responseAggs);
     }
 
     const makeThirdResult = (request, responseArrayOf9) =>{ //word cloud

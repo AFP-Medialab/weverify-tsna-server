@@ -27,6 +27,7 @@ export default function PlotTimeLine(props){
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
 
+
     const [state, setState] = useState(
         {
             result: props.result        
@@ -38,7 +39,8 @@ export default function PlotTimeLine(props){
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result.histogram, props.result.tweets]);
+    }, [props.result.histogram]);
+
 
     const onHistogramClick = (data) => {
         
