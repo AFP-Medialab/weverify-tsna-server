@@ -1,14 +1,14 @@
 
-import CustomTitle from "../../components/shared/CustomTitle/CustomTitle"
+import CustomTitle from "../CustomTitle/CustomTitle"
 import Paper from "@material-ui/core/Paper";
-import useMyStyles from '../../components/shared/styles/useMyStyles';
-import useLoadLanguage from "../../components/shared/hooks/useLoadLanguage";
+import useMyStyles from '../styles/useMyStyles';
+import useLoadLanguage from "../hooks/useLoadLanguage";
 import { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import "../../redux/actions/tools/twitterSnaActions"
+import "../../../redux/actions/tools/twitterSnaActions"
 import { useDispatch, useSelector, useStore } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import DateTimePicker from "../../components/shared/DateTimePicker/DateTimePicker";
+import DateTimePicker from "../DateTimePicker/DateTimePicker";
 import FormControl from "@material-ui/core/FormControl";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -22,18 +22,18 @@ import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from "@material-ui/core/Typography";
-import useTwitterSnaRequest from "../../components/shared/TwitterSna/Hooks/useTwitterSnaRequest";
-import TwitterSnaResult from "../../components/shared/TwitterSna/Results/TwitterSnaResult"
+import useTwitterSnaRequest from "./Hooks/useTwitterSnaRequest";
+import TwitterSnaResult from "./Results/TwitterSnaResult"
 import _ from "lodash";
-import { replaceAll, stringToList } from "../../components/shared/lib/StringUtil";
+import { replaceAll, stringToList } from "../lib/StringUtil";
 import dateFormat from "dateformat";
-import AuthenticationCard from "../../components/shared/AuthenticationCard/AuthenticationCard";
-import { setError } from "../../redux/actions/errorActions";
-import { setTSNAReset, cleanTwitterSnaState, setTwitterSnaNewRequest } from "../../redux/actions/tools/twitterSnaActions";
-import convertToGMT from "../../components/shared/DateTimePicker/convertToGMT";
-import MyErrorbar from "../../components/shared/ErrorBar/ErrorBar";
-import {cleanError} from "../../redux/actions/errorActions"
-import OnClickInfo from '../../components/shared/OnClickInfo/OnClickInfo';
+import AuthenticationCard from "../AuthenticationCard/AuthenticationCard";
+import { setError } from "../../../redux/actions/errorActions";
+import { setTSNAReset, cleanTwitterSnaState, setTwitterSnaNewRequest } from "../../../redux/actions/tools/twitterSnaActions";
+import convertToGMT from "../DateTimePicker/convertToGMT";
+import MyErrorbar from "../ErrorBar/ErrorBar";
+import {cleanError} from "../../../redux/actions/errorActions"
+import OnClickInfo from '../OnClickInfo/OnClickInfo';
 
 const TwitterSna = () => {
 
@@ -318,13 +318,12 @@ useEffect(() => {
 
   if (userAuthenticated) {
 
-    
     if (request && !request.default){
       menuSet(request);
     }
     else{
-          dispatch(cleanTwitterSnaState());
-    setSubmittedRequest(null);
+      dispatch(cleanTwitterSnaState());
+      setSubmittedRequest(null);
       menuSet(null);
     }  
   }
