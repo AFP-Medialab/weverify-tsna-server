@@ -86,6 +86,10 @@ const useTwitterSnaRequest = (request) => {
               if (response.data.status === "Error")
                 handleErrors("twitterSnaErrorMessage");
               else if (response.data.status === "Done") {
+                if (lastStep === "Running") { 
+                  generateFirstGraph(request);
+                  generateSecondGraph(request);
+                }
                 generateThirdGraph(request);
                 dispatch(setTwitterSnaLoading(false));
               }
@@ -100,7 +104,7 @@ const useTwitterSnaRequest = (request) => {
               else { //running
                 generateFirstGraph(request).then(() => {
                   if(lastStep === "Pending")
-                  dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_fetching_tweets")));
+                    dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_fetching_tweets")));
                   setTimeout(() => getResultUntilsDone(sessionId, request, "Running"), 5000);
                 });
               }
@@ -133,8 +137,8 @@ const useTwitterSnaRequest = (request) => {
       };
 
       const generateSecondGraph = async (request) => {
-          let entries = makeEntries(request);        
-          const responseArrayOf9 = await axios.all([getAggregationData(entries), getTweets(entries)]);
+        let entries = makeEntries(request);        
+        const responseArrayOf9 = await axios.all([getAggregationData(entries), getTweets(entries)]);
         makeSecondResult(request, responseArrayOf9);
 
       };
@@ -156,6 +160,7 @@ const useTwitterSnaRequest = (request) => {
 
     const makeSecondResult = (request, responseArrayOf9) =>{
       const tweets = responseArrayOf9[1].tweets;
+      console.log("make res ", tweets);
       const lcTweets = removeUnusedFields(tweets, ["full_text", "coordinates", "geo", "created_at", "datetimestamp", "source", "limited_actions", "forward_pivot", "place", "lang"]);   
       dispatch(setTweetResult(tweets));      
       buildHeatMap(request, tweets);
