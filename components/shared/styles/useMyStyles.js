@@ -14,6 +14,12 @@ const useMyStyles = makeStyles(theme => ({
         textAlign: "center",
        
     },
+    rootmain: {
+        padding: theme.spacing(3, 2),
+        marginTop: 5,
+        textAlign: "center",
+       
+    },
     circularProgress: {
         margin: "auto",
         width: "100%"
@@ -276,6 +282,9 @@ const useMyStyles = makeStyles(theme => ({
         padding: '15px',
         width: "auto",
         margin: 5,
+        display: "block",
+        marginLeft: "22%",
+        marginRight: "auto",
     },
     forensicCard: {
         width: "100%",
