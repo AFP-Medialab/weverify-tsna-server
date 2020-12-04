@@ -160,7 +160,6 @@ const useTwitterSnaRequest = (request) => {
 
     const makeSecondResult = (request, responseArrayOf9) =>{
       const tweets = responseArrayOf9[1].tweets;
-      console.log("make res ", tweets);
       const lcTweets = removeUnusedFields(tweets, ["full_text", "coordinates", "geo", "created_at", "datetimestamp", "source", "limited_actions", "forward_pivot", "place", "lang"]);   
       dispatch(setTweetResult(tweets));      
       buildHeatMap(request, tweets);
