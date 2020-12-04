@@ -1,4 +1,4 @@
-export const createTimeLineChart = (request, json, keyword /*layoutTitleKey, annotationTextKey with worker*/) => {
+export const createTimeLineChart = (request, json, keyword) => {
 
     let layout = {
         title: keyword("user_time_chart_title") + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"],
