@@ -1,7 +1,7 @@
-export const createTimeLineChart = (request, json, layoutTitleKey, annotationTextKey) => {
+export const createTimeLineChart = (request, json, keyword /*layoutTitleKey, annotationTextKey with worker*/) => {
 
     let layout = {
-        title: layoutTitleKey + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"],
+        title: keyword("user_time_chart_title") + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"],
         automargin: true,
         xaxis: {
         range: [request.from, request.until],
@@ -24,7 +24,7 @@ export const createTimeLineChart = (request, json, layoutTitleKey, annotationTex
         xanchor: 'right',
         y: -0.6,
         yanchor: 'top',
-        text: annotationTextKey,
+        text: keyword('twitter_local_time'),
         showarrow: false
         }],
         autosize: true,
