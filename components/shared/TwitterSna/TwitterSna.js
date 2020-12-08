@@ -54,26 +54,6 @@ const TwitterSna = () => {
   const [localTime, setLocalTime] = useState("true");
   const [openLangInput, setLangInputOpen] = React.useState(false);
   const [keyWordsError, setKeyWordsError] = useState(false);
-
-  const defaultRequest = {
-    "keywordList" : ["'fake news'"],
-    "keywordListStr" : "'fake news'",
-    "userList" : ["@realDonaldTrump"],
-    "userListStr" : "@realDonaldTrump",
-    "verified" : false,
-    "media" : "none",
-    "from" : "2016-12-10 00:00:00",
-    "until" : "2020-01-01 00:00:00",
-    "bannedWords" : [""],
-    "bannedWordsStr" : "",
-    "lang" : "en",
-    "langStr" : "lang_en",
-    "default" : true,
-    "localTime": "true",
-  };
-
-  //let request = userAuthenticated ? requestStore: defaultRequest; 
- 
   
   //PARAMS
   
@@ -318,19 +298,16 @@ useEffect(() => {
 
   if (userAuthenticated) {
 
-    if (request && !request.default){
+    if (request){
       menuSet(request);
     }
-    else{
-      dispatch(cleanTwitterSnaState());
-      setSubmittedRequest(null);
-      menuSet(null);
-    }  
+
   }
   else {
-    dispatch(setTSNAReset(defaultRequest));
-    menuSet(defaultRequest);
-    setSubmittedRequest(defaultRequest)
+    dispatch(cleanTwitterSnaState());
+    setSubmittedRequest(null);
+    menuSet(null);
+
   }
 
 },[userAuthenticated]); 
@@ -539,7 +516,11 @@ useEffect(() => {
                                 <LinearProgress hidden={!isLoading} />
                                 <OnClickInfo keyword={"twittersna_explication"} />
             </Paper>
-
+            <div className={classes.rootmain}>
+            {
+              !userAuthenticated && <OnClickInfo keyword={"twittersna_explication"} trueClick={true}/>
+            }
+            </div>
             {
         reduxResult &&
         <TwitterSnaResult result={reduxResult} 

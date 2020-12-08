@@ -14,7 +14,7 @@ const OnClickInfo = (props) => {
     const [checked, setChecked] = useState(false);
 
     useEffect(() => {
-        setChecked(false);
+        setChecked(props.trueClick ? true : false);
     }, [props.keyword]);
 
     const handleClick = () => {
