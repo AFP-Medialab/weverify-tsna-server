@@ -9,12 +9,37 @@ import CustomTableURL from "../../CustomTable/CustomTableURL";
 import OnClickInfo from '../../OnClickInfo/OnClickInfo';
 import {downloadClick} from "../lib/downloadClick";
 
+
+
 export default function cloudChart (props) {
 
     const dispatch = useDispatch();
 
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
+    //to redirect
+    const userLogined = useSelector(state => state.userSession && state.userSession.user);
+    const userToken = useSelector(state => state.userSession && state.userSession.accessToken);
+
+    const userData = encodeURIComponent(JSON.stringify(userLogined));
+
+
+
+    function goToTwitterSnaWithUrlSearch(event, rowData) {
+
+        let newReq = props.request;
+        newReq.keywordList = [];
+        let index = 0;
+
+        //NEED TO ASK PEOPLE TO ALLOW POPUP
+
+        for (let obj in rowData) {
+            console.log("obj " + rowData[index].url);
+            newReq.keywordList[0] = rowData[index].url;
+            window.open("http://localhost:3000/pluginredirect" + "?data=" + encodeURIComponent(JSON.stringify(newReq)) + "&token=" + userToken + "&user=" + userData, "_blank");
+            index++;
+        }       
+    }
 
     function createCSVFromURLTable(urls) {
         let csvArr = "Url,Count\n";
