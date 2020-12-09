@@ -5,9 +5,9 @@ import WarningRoundedIcon from '@material-ui/icons/WarningRounded';
 import useLoadLanguage from "../hooks/useLoadLanguage";
 import Linkify from 'react-linkify';
 
-const tsv = "/localDictionary/components/Shared/OnClickInfo.tsv";
+const tsv = "/localDictionary/components/Shared/OnWarningInfo.tsv";
 
-const OnClickInfo = (props) => {
+const OnWarningInfo = (props) => {
     const classes = useMyStyles();
     const keyword = useLoadLanguage(tsv);
 
@@ -39,4 +39,4 @@ const OnClickInfo = (props) => {
         </div>
     )
 };
-export default OnClickInfo;
+export default OnWarningInfo;

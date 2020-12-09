@@ -34,7 +34,7 @@ import convertToGMT from "../DateTimePicker/convertToGMT";
 import MyErrorbar from "../ErrorBar/ErrorBar";
 import {cleanError} from "../../../redux/actions/errorActions"
 import OnClickInfo from '../OnClickInfo/OnClickInfo';
-import OnWarningInfo from "../OnClickInfo/OnWraningInfo";
+import OnWarningInfo from "../OnClickInfo/OnWarningInfo";
 
 const TwitterSna = () => {
 
@@ -521,7 +521,7 @@ useEffect(() => {
                                 }
                                 {
                                 !userAuthenticated &&
-                                <OnWarningInfo keyword={"twittersna_explication"} />
+                                <OnWarningInfo keyword={"warning_sna"} />
                                 }
             </Paper>
             {
