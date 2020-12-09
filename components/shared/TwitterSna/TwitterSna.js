@@ -34,6 +34,7 @@ import convertToGMT from "../DateTimePicker/convertToGMT";
 import MyErrorbar from "../ErrorBar/ErrorBar";
 import {cleanError} from "../../../redux/actions/errorActions"
 import OnClickInfo from '../OnClickInfo/OnClickInfo';
+import OnWarningInfo from "../OnClickInfo/OnWraningInfo";
 
 const TwitterSna = () => {
 
@@ -514,13 +515,15 @@ useEffect(() => {
                                 <Box m={2} />
                                 <Typography>{loadingMessage}</Typography>
                                 <LinearProgress hidden={!isLoading} />
+                                {
+                                userAuthenticated &&
                                 <OnClickInfo keyword={"twittersna_explication"} />
+                                }
+                                {
+                                !userAuthenticated &&
+                                <OnWarningInfo keyword={"twittersna_explication"} />
+                                }
             </Paper>
-            <div className={classes.rootmain}>
-            {
-              !userAuthenticated && <OnClickInfo keyword={"twittersna_explication"} trueClick={true}/>
-            }
-            </div>
             {
         reduxResult &&
         <TwitterSnaResult result={reduxResult} 

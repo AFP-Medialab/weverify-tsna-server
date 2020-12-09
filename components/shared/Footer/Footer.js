@@ -12,8 +12,8 @@ const Footer = (props) => {
     let provideBy, link, linkLabel, contactUs;
 
     provideBy = keyword("apf_part_1");
-    link = keyword("apf_link");
-    linkLabel = keyword("apf_link_label");
+    link = [keyword("apf_link"), keyword("usfd_link"), keyword("eudisinfolab_link")];
+    linkLabel = [keyword("apf_link_label"), ", " + keyword("usfd_link_label"), " " + keyword("and") + " " + keyword("eudisinfolab_link_label")];
     contactUs = keyword("apf_part_2");
 
 
