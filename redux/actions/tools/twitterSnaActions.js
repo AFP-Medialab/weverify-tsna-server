@@ -45,13 +45,6 @@ export const setUserProfileMostActive = (data) => {
         payload : data
     }
 };
-
-export const setGexfExport = (data) => {
-    return {
-        type : "SET_TWITTER_SNA_GEXF_EXPORT",
-        payload : data
-    }
-};
 export const redirectFromPlugin = (data) => {
     return {
         type : "SET_TWITTER_SNA_REDIRECT_REQUEST",
@@ -119,6 +112,12 @@ export const setUrlsResult = (urlData) => {
     return {
         type : "SET_TWITTER_URLS_RESULTS",
         payload :  urlData
+    }
+};
+export const setGexfExport = (gexfData) => {
+    return {
+        type : "SET_TWITTER_SNA_GEXF_EXPORT",
+        payload : gexfData
     }
 };
 

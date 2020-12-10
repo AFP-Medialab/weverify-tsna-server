@@ -6,6 +6,7 @@ const { publicRuntimeConfig } = getConfig();
 
 let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/getTweets`;
 let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/getUsers`;
+let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/getGexf`;
 
 //let elasticSearch_url = process.env.REACT_APP_ELK_URL;
 
@@ -526,3 +527,104 @@ function buildQueryMultipleMatchPhrase (field, arr) {
           promise.then(resolve, reject)
         })
       }
+
+      // Export gexf file
+    export function getESQuery4Gexf(param) {
+
+        let must = constructMatchPhrase(param);
+        let mustNot = constructMatchNotPhrase(param);
+        // let aggs = constructAggs("urls");
+
+        let size=1000;
+        // let esQuery = JSON.stringify(buildQuery4Gexf(must, mustNot,size)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
+        let gexfParams=JSON.stringify({
+            "esURL": "http://185.249.140.38/elk/tsnatweets/_search", //elasticSearch_url,
+            "esUserURL": "http://185.249.140.38/elk/tsnausers/_search", //elasticSearchUser_url,
+            "mentions":true,
+            "retweets":true,
+            "replies":true,
+            "trim":false,
+            "tweetJson":"TWINTPLUS", //values can be TWINTPLUS, TWINT, TWEEP
+            "flow":false,
+            "esQuery":buildQuery4Gexf(must, mustNot,size)
+        }).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
+         console.log("gexfParams:"+gexfParams);
+
+        const userAction = async () => {
+            const response = await fetch(gexfGen_url, { // start gex gen process
+                method: 'POST',
+                body:gexfParams,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            var gexfResponse = await response.json();
+            var gexfStatus = gexfResponse.gexfStatus;
+             console.log("Status", gexfStatus.status, " and gexfResponse", gexfResponse)
+            //if status is not completed or failed then continue to run
+
+            
+            while (!((gexfStatus.status==="COMPLETED") || (gexfStatus.status==="FAILED"))){ 
+                await timer(3000);
+                console.log("gexf  " + JSON.stringify(gexfResponse.gexfStatus.id));
+                const statusResp = await fetch(gexfGen_url, {//check gexf status
+                    method: 'POST',
+                    body:JSON.stringify({"id":gexfResponse.gexfStatus.id}),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                console.log("AFTER REQ");
+                gexfResponse = await statusResp.json();
+                gexfStatus = gexfResponse.gexfStatus;
+                // console.log("Status in While", gexfStatus.status, " and gexfResponse", gexfResponse)
+            }
+
+            //convert the response in appropriate format for GUI
+            
+            let gexfResults = [];
+            if (gexfStatus.status==="COMPLETED" && gexfResponse.gexfStatus.message?.length) {// if messages has element
+                //convert message to JSON object
+                const messsages = JSON.parse(gexfResponse.gexfStatus.message);
+                // console.log("messages as obj",messsages);
+                for (const message of messsages){
+                    let gexfRes = {};
+                    gexfRes.title = message.title
+                    gexfRes.fileName = message.fileName;
+                    gexfRes.getUrl = `${gexfGen_url}downloadGEXF?fileName=${message.fileName}`;
+                    gexfRes.visualizationUrl = `http://networkx.iti.gr/network_url/?filepath=${gexfRes.getUrl}`;
+                    gexfRes.message = message.message
+                    gexfResults.push(gexfRes)
+                }
+            }
+            return gexfResults;
+
+            // return gexfResponse;
+        };
+        return userAction();
+    }
+
+    function buildQuery4Gexf(must, mustNot, size) {
+        let query = {
+            "size": size,
+            "query": {
+                "bool": {
+                    "must": must,
+                    "filter": [],
+                    "should": [],
+                    "must_not": mustNot
+                }
+            },
+            "sort": [
+                {"datetimestamp": {"order": "asc"}},
+                {"id_str":{"order": "asc"}}
+            ]
+        };
+        return query;
+    }
+
+    // Returns a Promise that resolves after "ms" Milliseconds
+    function timer(ms) {
+        return new Promise(res => setTimeout(res, ms));
+    }
+        

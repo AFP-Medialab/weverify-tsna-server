@@ -4,10 +4,12 @@ import { cleanTwitterSnaState } from "../../../../redux/actions/tools/twitterSna
 import { Paper } from "@material-ui/core";
 import useMyStyles from "../../styles/useMyStyles";
 import React, { useEffect, useState, useCallback } from "react";
+import Box from "@material-ui/core/Box";
 
 import dynamic from "next/dynamic"
 import TweetCount from "../Components/TweetCount";
 import UrlList from "../Components/UrlList";
+import GexfExport from "../Components/GexfExport";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false});
@@ -80,6 +82,11 @@ export default function TwitterSnaResult(props) {
                    request && 
                     <CloudChart result={result} request={request} />
                 }   
+                {
+                    request &&
+                    <GexfExport result={result} request={request} />
+                }
+                <Box m={3} />
                 {
                     result.urls && 
                     <UrlList result={result} request={request}/>

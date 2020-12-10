@@ -15,13 +15,15 @@ import {
     setTweetResult,
     setPieChartsResult,
     setUrlsResult,
-    setCoHashtagResult
+    setCoHashtagResult,
+    setGexfExport
 } from "../../../../redux/actions/tools/twitterSnaActions";
 import {
     getAggregationData,
     getTweets,
     getUserAccounts,
-    getCloudTweets
+    getCloudTweets,
+    getESQuery4Gexf
 } from "./call-elastic";
 import {
   createTimeLineChart,
@@ -138,7 +140,13 @@ const useTwitterSnaRequest = (request) => {
       };
 
       const generateSecondGraph = async (request) => {
-        let entries = makeEntries(request);        
+        let entries = makeEntries(request);       
+
+        axios.all([getESQuery4Gexf(entries)])
+        .then(response => {
+          dispatch(setGexfExport(response[0]));
+        })
+
         const responseArrayOf9 = await axios.all([getAggregationData(entries), getTweets(entries)]);
         makeSecondResult(request, responseArrayOf9);
 

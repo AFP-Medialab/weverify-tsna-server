@@ -86,6 +86,8 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             return {...state, result: {...state.result, urls: payload}}
         case "SET_TWITTER_SNA_BUBBLE_CHART_RESULTS":
             return {...state, result: {...state.result, topUser: payload}}
+        case "SET_TWITTER_SNA_GEXF_EXPORT":
+            return {...state, result: {...state.result, gexf: payload}}
         default:
             return state;
     }
