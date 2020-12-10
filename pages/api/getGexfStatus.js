@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 
-let gexfURL = process.env.REACT_APP_GEXF_GENERATOR_URL_STATUS;
+let gexfURL = process.env.REACT_APP_GEXF_GENERATOR_URL + "gexfStatus";
 
 export default (req, res) =>{
    
