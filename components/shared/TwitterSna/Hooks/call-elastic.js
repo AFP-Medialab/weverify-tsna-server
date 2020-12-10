@@ -7,6 +7,7 @@ const { publicRuntimeConfig } = getConfig();
 let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/getTweets`;
 let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/getUsers`;
 let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/getGexf`;
+let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/getGexfStatus`;
 
 //let elasticSearch_url = process.env.REACT_APP_ELK_URL;
 
@@ -567,7 +568,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
             while (!((gexfStatus.status==="COMPLETED") || (gexfStatus.status==="FAILED"))){ 
                 await timer(3000);
                 console.log("gexf  " + JSON.stringify(gexfResponse.gexfStatus.id));
-                const statusResp = await fetch(gexfGen_url, {//check gexf status
+                const statusResp = await fetch(gexfStatus_url, {//check gexf status
                     method: 'POST',
                     body:JSON.stringify({"id":gexfResponse.gexfStatus.id}),
                     headers: {
