@@ -10,6 +10,8 @@ import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import OnClickInfo from '../../OnClickInfo/OnClickInfo';
 import React, {useEffect, useState} from 'react';
+import SaveIcon from '@material-ui/icons/Save';
+import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 
 export default function BubbleChart(props) {
    
