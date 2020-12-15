@@ -10,7 +10,7 @@ const Index = props => {
   return (
       <Layout>
         <Head>
-          <title>Weverify Twitter SNA</title>
+          <title>WeVerify Twitter SNA</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
 

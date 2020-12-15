@@ -35,6 +35,7 @@ import MyErrorbar from "../ErrorBar/ErrorBar";
 import {cleanError} from "../../../redux/actions/errorActions"
 import OnClickInfo from '../OnClickInfo/OnClickInfo';
 import OnWarningInfo from "../OnClickInfo/OnWarningInfo";
+import FeedBack from "../FeedBack/FeedBack";
 
 const TwitterSna = () => {
 
@@ -530,6 +531,8 @@ useEffect(() => {
                             request={request}
                             />
             }
+
+        <FeedBack/>
         
         </div>
     );

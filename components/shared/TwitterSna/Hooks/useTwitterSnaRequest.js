@@ -142,15 +142,14 @@ const useTwitterSnaRequest = (request) => {
       const generateSecondGraph = async (request) => {
         let entries = makeEntries(request);       
 
-        axios.all([getESQuery4Gexf(entries)])
-        .then(response => {
-          dispatch(setGexfExport(response[0]));
-        })
+        buildGexf(entries);
 
         const responseArrayOf9 = await axios.all([getAggregationData(entries), getTweets(entries)]);
         makeSecondResult(request, responseArrayOf9);
 
       };
+
+
 
       const generateThirdGraph = async (request) => {
         let entries = makeEntries(request);
@@ -201,6 +200,13 @@ const useTwitterSnaRequest = (request) => {
       dispatch(setCloudWordsResult(wordCountResponse));
         
     }
+      const buildGexf = async (entries) => {
+        axios.all([getESQuery4Gexf(entries)])
+        .then(response => {
+          dispatch(setGexfExport(response[0]));
+        })
+    }
+
     const buildSocioGraph = async (tweets) => {
 
       /*const graphURL = `${publicRuntimeConfig.baseFolder}/api/buildGraph`;
