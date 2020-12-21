@@ -36,7 +36,7 @@ export default function cloudChart (props) {
         for (let obj in rowData) {
             console.log("obj " + rowData[index].url);
             newReq.keywordList[0] = rowData[index].url;
-            window.open("http://localhost:3000/pluginredirect" + "?data=" + encodeURIComponent(JSON.stringify(newReq)) + "&token=" + userToken + "&user=" + userData, "_blank");
+            window.open("/pluginredirect" + "?data=" + encodeURIComponent(JSON.stringify(newReq)) + "&user=" + userData, "_blank");
             index++;
         }       
     }
