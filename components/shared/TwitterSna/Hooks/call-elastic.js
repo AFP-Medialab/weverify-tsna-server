@@ -575,7 +575,6 @@ function buildQueryMultipleMatchPhrase (field, arr) {
                         'Content-Type': 'application/json'
                     }
                 });
-                console.log("AFTER REQ");
                 gexfResponse = await statusResp.json();
                 gexfStatus = gexfResponse.gexfStatus;
                  console.log("Status in While", gexfStatus.status, " and gexfResponse", gexfResponse)
