@@ -270,6 +270,7 @@ const TwitterSna = () => {
       setVerifiedUsers("false");
     }
     else { 
+      setCache(!req.cached);
       setKeywords(req.keywordListStr);
       setBannedWords(req.bannedWordsStr);
         if (_.isUndefined(req.userListStr))
@@ -311,8 +312,6 @@ useEffect(() => {
       menuSet(request);
     }
 
-    if (cacheCheck()) {setCache(false);}
-
   }
   else {
     dispatch(cleanTwitterSnaState());
@@ -331,7 +330,6 @@ function cacheCheck() {
   }
   return false;
 }
-
 
     return (
         <div className={classes.all}>

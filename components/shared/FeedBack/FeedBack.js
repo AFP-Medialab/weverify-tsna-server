@@ -39,15 +39,13 @@ const FeedBack = () => {
     console.log(translationJson);
 
     const sendToSlack = (payload, success, error) => {
-        console.log("reqq");
-        console.log(JSON.stringify(payload));
+
         return fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         })
             .then(res => {
-                /*console.log("aftre reqs");
                 if (!res.ok) {
                     error(res);
                     throw res
