@@ -59,7 +59,7 @@ const TwitterSna = () => {
   const [keyWordsError, setKeyWordsError] = useState(false);
   
   const role = useSelector(state => state.userSession.user.roles);
-  const [cache, setCache] = useState(role[0] == "Cache_Override" ?
+  const [cache, setCache] = useState(cacheCheck() ?
     false :
     true);
   //PARAMS
