@@ -34,7 +34,6 @@ export default function cloudChart (props) {
         //NEED TO ASK PEOPLE TO ALLOW POPUP
 
         for (let obj in rowData) {
-            console.log("obj " + rowData[index].url);
             newReq.keywordList[0] = rowData[index].url;
             window.open("/pluginredirect" + "?data=" + encodeURIComponent(JSON.stringify(newReq)) + "&user=" + userData, "_blank");
             index++;

@@ -549,7 +549,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
             "flow":false,
             "esQuery":buildQuery4Gexf(must, mustNot,size)
         }).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
-         console.log("gexfParams:"+gexfParams);
+        // console.log("gexfParams:"+gexfParams);
 
         const userAction = async () => {
             const response = await fetch(gexfGen_url, { // start gex gen process
@@ -561,13 +561,12 @@ function buildQueryMultipleMatchPhrase (field, arr) {
             });
             var gexfResponse = await response.json();
             var gexfStatus = gexfResponse.gexfStatus;
-             console.log("Status", gexfStatus.status, " and gexfResponse", gexfResponse)
+            // console.log("Status", gexfStatus.status, " and gexfResponse", gexfResponse)
             //if status is not completed or failed then continue to run
 
             
             while (!((gexfStatus.status==="COMPLETED") || (gexfStatus.status==="FAILED"))){ 
                 await timer(3000);
-                console.log("gexf  " + JSON.stringify(gexfResponse.gexfStatus.id));
                 const statusResp = await fetch(gexfStatus_url, {//check gexf status
                     method: 'POST',
                     body:JSON.stringify({"id":gexfResponse.gexfStatus.id}),
@@ -575,10 +574,9 @@ function buildQueryMultipleMatchPhrase (field, arr) {
                         'Content-Type': 'application/json'
                     }
                 });
-                console.log("AFTER REQ");
                 gexfResponse = await statusResp.json();
                 gexfStatus = gexfResponse.gexfStatus;
-                 console.log("Status in While", gexfStatus.status, " and gexfResponse", gexfResponse)
+                // console.log("Status in While", gexfStatus.status, " and gexfResponse", gexfResponse)
             }
 
             //convert the response in appropriate format for GUI

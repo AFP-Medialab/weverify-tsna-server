@@ -19,6 +19,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from "@material-ui/core/Typography";
@@ -57,6 +58,8 @@ const TwitterSna = () => {
   const [openLangInput, setLangInputOpen] = React.useState(false);
   const [keyWordsError, setKeyWordsError] = useState(false);
   
+  const role = useSelector(state => state.userSession.user.roles);
+  const [cache, setCache] = useState(false);
   //PARAMS
   
   const makeRequestParams = (keywordsP, bannedWordsP, usersInputP, sinceP, untilP, localTimeP, langInputP, filtersP, verifiedUsersP) => {
@@ -88,6 +91,7 @@ const TwitterSna = () => {
       "verified": String(verifiedUsersP) === "true",
       "media": (filtersP === "none") ? null : filtersP,
       "retweetsHandling": null,
+      "cached" : !cache,
       
     };
   };
@@ -97,6 +101,10 @@ const TwitterSna = () => {
   };
 
   //HANDLE INPUT
+
+  const cacheChange = () => {
+    setCache(!cache);
+};
 
   const [usersInput, setUsersInput] = useState(
     request && request.userList ?
@@ -226,7 +234,6 @@ const TwitterSna = () => {
       if (prevResult && prevResult.socioSemantic4ModeGraph) {
         delete prevResult.socioSemantic4ModeGraph;
       }
-
       setSubmittedRequest(newRequest);
       dispatch(setTwitterSnaNewRequest(newRequest));
     }
@@ -263,6 +270,7 @@ const TwitterSna = () => {
       setVerifiedUsers("false");
     }
     else { 
+      setCache(!req.cached);
       setKeywords(req.keywordListStr);
       setBannedWords(req.bannedWordsStr);
         if (_.isUndefined(req.userListStr))
@@ -314,6 +322,14 @@ useEffect(() => {
 
 },[userAuthenticated]); 
 
+function cacheCheck() {
+  for (let index in role)
+  {
+    if (role[index] == "CACHEOVERRIDE")
+    {return true;}
+  }
+  return false;
+}
 
     return (
         <div className={classes.all}>
@@ -499,6 +515,19 @@ useEffect(() => {
                                 </Select>
                                 </FormControl>
                             </Grid>
+                            {
+                                  cacheCheck() &&
+                                  <FormControlLabel
+                                  control={
+                                      <Checkbox
+                                          checked={cache}
+                                          onChange={cacheChange}
+                                          value="checkedBox"
+                                          color="primary"
+                                      />
+                                  }
+                                  label={keyword("disable_cache")}
+                              />}
                             </Grid>
                             <Box m={2} />
                             <Button variant="contained" color="primary" startIcon={<SearchIcon />}
@@ -524,6 +553,7 @@ useEffect(() => {
                                 !userAuthenticated &&
                                 <OnWarningInfo keyword={"warning_sna"} />
                                 }
+
             </Paper>
             {
         reduxResult &&
