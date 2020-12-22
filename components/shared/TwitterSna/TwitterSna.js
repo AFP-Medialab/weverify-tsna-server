@@ -521,7 +521,7 @@ useEffect(() => {
                                           color="primary"
                                       />
                                   }
-                                  label={keyword("cache_override_box")}
+                                  label={"CACHE"}
                               />}
                             </Grid>
                             <Box m={2} />
