@@ -60,8 +60,8 @@ const TwitterSna = () => {
   
   const role = useSelector(state => state.userSession.user.roles);
   const [cache, setCache] = useState(role[0] == "Cache_Override" ?
-    true :
-    false);
+    false :
+    true);
   //PARAMS
   
   const makeRequestParams = (keywordsP, bannedWordsP, usersInputP, sinceP, untilP, localTimeP, langInputP, filtersP, verifiedUsersP) => {
@@ -93,7 +93,7 @@ const TwitterSna = () => {
       "verified": String(verifiedUsersP) === "true",
       "media": (filtersP === "none") ? null : filtersP,
       "retweetsHandling": null,
-      "cached" : cache,
+      "cached" : !cache,
       
     };
   };
@@ -313,7 +313,7 @@ useEffect(() => {
       menuSet(request);
     }
 
-    if (role[0] == "Cache_Override") {setCache(true);}
+    if (cacheCheck()) {setCache(false);}
 
   }
   else {
@@ -324,6 +324,15 @@ useEffect(() => {
   }
 
 },[userAuthenticated]); 
+
+function cacheCheck() {
+  for (let index in role)
+  {
+    if (role[index] == "CACHEOVERRIDE")
+    {return true;}
+  }
+  return false;
+}
 
 
     return (
@@ -511,7 +520,7 @@ useEffect(() => {
                                 </FormControl>
                             </Grid>
                             {
-                                  role[0] == "Cache_Override" &&
+                                  cacheCheck() &&
                                   <FormControlLabel
                                   control={
                                       <Checkbox
@@ -521,7 +530,7 @@ useEffect(() => {
                                           color="primary"
                                       />
                                   }
-                                  label={"CACHE"}
+                                  label={keyword("disable_cache")}
                               />}
                             </Grid>
                             <Box m={2} />
