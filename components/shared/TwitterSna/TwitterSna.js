@@ -59,9 +59,7 @@ const TwitterSna = () => {
   const [keyWordsError, setKeyWordsError] = useState(false);
   
   const role = useSelector(state => state.userSession.user.roles);
-  const [cache, setCache] = useState(cacheCheck() ?
-    false :
-    true);
+  const [cache, setCache] = useState(false);
   //PARAMS
   
   const makeRequestParams = (keywordsP, bannedWordsP, usersInputP, sinceP, untilP, localTimeP, langInputP, filtersP, verifiedUsersP) => {
