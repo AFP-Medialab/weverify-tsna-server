@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   tsna-server:
-    image: tsna-server:0.5
+    image: tsna-server:0.8
     container_name: tsna-server
     ports: 
       - 8090:3000
@@ -9,4 +9,5 @@ services:
       REACT_APP_ELK_URL: ${REACT_APP_ELK_URL}
       REACT_APP_ES_USER_URL: ${REACT_APP_ES_USER_URL}
       REACT_APP_AUTH_BASE_URL: ${REACT_APP_AUTH_BASE_URL}
+      REACT_APP_GEXF_GENERATOR_URL: ${REACT_APP_GEXF_GENERATOR_URL}
       #REACT_APP_BASE_DOC: ${REACT_APP_BASE_DOC}
