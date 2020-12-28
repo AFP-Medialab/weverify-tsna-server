@@ -49,7 +49,7 @@ const FeedBack = () => {
                 if (!res.ok) {
                     error(res);
                     throw res
-                }*/
+                }
                 
                 return res
             })
