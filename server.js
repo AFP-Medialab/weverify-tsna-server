@@ -26,7 +26,8 @@ app
   .then(() => {
     const server = express();
 
-    server.use(basePath+'/api/wrapper', proxy, cookieParser());
+    server.use(basePath+'/api/wrapper', proxy);
+    server.use( cookieParser());
 
     server.get('*', (req, res) => {
       return handle(req, res);

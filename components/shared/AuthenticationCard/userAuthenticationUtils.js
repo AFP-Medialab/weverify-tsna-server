@@ -15,7 +15,6 @@ export function decodeJWTToken(token) {
   
     // Decode JWT Token
     const tokenContent = jwtDecode(token);
-    // console.log("tokenContent: ", tokenContent);
   
     // Token Expiry
     result.accessTokenExpiry = new Date(tokenContent.exp * 1000);

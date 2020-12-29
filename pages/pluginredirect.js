@@ -16,8 +16,9 @@ const PluginRedirect = () => {
     const dispatch = useDispatch();
     const { query } = router;
     if(!_.isEmpty(query)){
-        const {data, token, user} = query;
+        const {data, token, refreshToken, user} = query;
         const loadData = decodeURIComponent(data);
+      
         const request =  JSON.parse(loadData);
         dispatch(redirectFromPlugin(request));
         //token
@@ -28,7 +29,7 @@ const PluginRedirect = () => {
             //console.log(token);
             const tokenContent = decodeJWTToken(token);
             //console.log("token create " + JSON.stringify(tokenContent));         
-            dispatch(userLoginAction(token, tokenContent.accessTokenExpiry, userInfo));
+            dispatch(userLoginAction(token, tokenContent.accessTokenExpiry, refreshToken, userInfo));
         }
         catch (jwtError) {
             console.log("error token");

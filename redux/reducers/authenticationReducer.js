@@ -15,8 +15,9 @@ const defaultState = {
   accessCodeRequestSent: false,
   userLoginLoading: false,
   userAuthenticated: false,
-  accessToken: null,
+  accessToken: null,  
   accessTokenExpiry: null,
+  refreshToken: null,
   // user: null
   user: {
     id: null,
@@ -69,6 +70,7 @@ function authenticationReducer(state = defaultState, action) {
         accessToken:action.payload.accessToken, 
         accessTokenExpiry: 
         action.payload.accessTokenExpiry, 
+        refreshToken: action.payload.refreshToken,
         user:action.payload.user
       };
 
@@ -78,6 +80,7 @@ function authenticationReducer(state = defaultState, action) {
         userAuthenticated: false,
         accessToken: null,
         accessTokenExpiry: null,
+        refreshToken: null,
         user:{
           id: null,
           firstName: null,
@@ -102,17 +105,19 @@ function authenticationReducer(state = defaultState, action) {
 
     case AUTH_USER_SESSION_EXPIRED:
       // TODO
-      state.userAuthenticated = false;
-      state.accessToken = null;
-      state.accessTokenExpiry = null;
-      state.user = {
-        id: null,
-        firstName: null,
-        lastName: null,
-        email: null,
-        roles: []
-      };
-      return state;
+      return {...state, 
+        userAuthenticated: false,
+        accessToken: null,
+        accessTokenExpiry: null,
+        refreshToken: null,
+        user:{
+          id: null,
+          firstName: null,
+          lastName: null,
+          email: null,
+          roles: []
+          }
+        };
     default:
       return state;
   }

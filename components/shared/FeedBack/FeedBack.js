@@ -36,7 +36,6 @@ const FeedBack = () => {
         "trigger.text": keyword("button"),
         "footer.text": "React Slack Feedback"
     };
-    console.log(translationJson);
 
     const sendToSlack = (payload, success, error) => {
 

@@ -16,6 +16,5 @@ export async function postFetcher(...args){
         body: args[1]
     });
     const res =  await response.json();
-    console.log("echo " + res);
     return res;
 };

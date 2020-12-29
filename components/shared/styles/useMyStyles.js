@@ -5,16 +5,9 @@ const drawerWidth = 200;
 
 const useMyStyles = makeStyles(theme => ({
     all: {
-        minWidth: "1280px",
-        maxWidth: "1280px",
+        width: "80%"
     },
     root: {
-        padding: theme.spacing(3, 2),
-        marginTop: 5,
-        textAlign: "center",
-       
-    },
-    rootmain: {
         padding: theme.spacing(3, 2),
         marginTop: 5,
         textAlign: "center",

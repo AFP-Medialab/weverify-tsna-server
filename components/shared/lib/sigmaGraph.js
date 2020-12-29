@@ -33,6 +33,5 @@ export function createGraphWhenClickANode(e) {
         edges: updatedEdges
     }
 
-    console.log("newGraph", newGraph);
     return newGraph;
 }

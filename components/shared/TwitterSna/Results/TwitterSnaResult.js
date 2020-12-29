@@ -44,7 +44,7 @@ export default function TwitterSnaResult(props) {
         return <div />;
     
     return (
-        <div className={classes.all}>
+       
             <Paper className={classes.root}>
                 <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
                 {
@@ -92,6 +92,6 @@ export default function TwitterSnaResult(props) {
                     <UrlList result={result} request={request}/>
                 }     
             </Paper>
-        </div>
+       
     );
 };
