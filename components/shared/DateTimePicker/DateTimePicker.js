@@ -19,7 +19,6 @@ const DateTimePicker = (props) => {
                 <TextField
                     {...newProps}
                     type={"dateTime"}
-                    id="standard-full-width"
                     label={props.label}
                     style={{margin: 8}}
                     placeholder={"ex : (need tsv changes)"}

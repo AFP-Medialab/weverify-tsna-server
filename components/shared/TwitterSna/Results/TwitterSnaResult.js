@@ -31,12 +31,10 @@ export default function TwitterSnaResult(props) {
     //Set result 
     useEffect(() => {
         setResult(resultStore);
-        console.log("result use effect");
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resultStore]);
     useEffect(() => {
         setHistogram(resultStore.histogram);
-        console.log("result use effect histogram");
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resultStore.histogram]);
         

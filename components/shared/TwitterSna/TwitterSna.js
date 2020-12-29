@@ -1,7 +1,7 @@
 import Paper from "@material-ui/core/Paper";
 import useMyStyles from '../styles/useMyStyles';
 import useLoadLanguage from "../hooks/useLoadLanguage";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import TextField from "@material-ui/core/TextField";
 import "../../../redux/actions/tools/twitterSnaActions"
 import { useDispatch, useSelector, useStore } from "react-redux";
@@ -53,56 +53,13 @@ const TwitterSna = () => {
   const [sinceError, setSinceError] = useState(false);
   const [untilError, setUntilError] = useState(false);
   const [localTime, setLocalTime] = useState("true");
-  const [openLangInput, setLangInputOpen] = React.useState(false);
+  const [openLangInput, setLangInputOpen] = useState(false);
   const [keyWordsError, setKeyWordsError] = useState(false);
   
   const role = useSelector(state => state.userSession.user.roles);
+
   const [cache, setCache] = useState(false);
-  //PARAMS
-  
-  const makeRequestParams = (keywordsP, bannedWordsP, usersInputP, sinceP, untilP, localTimeP, langInputP, filtersP, verifiedUsersP) => {
-    //Creating Request Object.
-    const removeQuotes = (list) => {
-      let res = [];
-      !_.isNil(list) &&
-        list.forEach(string => {
-          res.push(replaceAll(string, "\"", ""));
-        });
-      return res;
-    };
-
-    let trimedKeywords = !_.isNil(keywordsP) ? removeQuotes(keywordsP.trim().match(/("[^"]+"|[^"\s]+)/g)) : [];
-
-    let trimedBannedWords = null;
-    if (!_.isNil(bannedWordsP) && bannedWordsP.trim() !== "")
-      trimedBannedWords = removeQuotes(bannedWordsP.trim().match(/("[^"]+"|[^"\s]+)/g));
-    const newFrom = (localTimeP === "false") ? convertToGMT(sinceP) : sinceP;
-    const newUntil = (localTimeP === "false") ? convertToGMT(untilP) : untilP;
-    
-    return {
-      "keywordList": trimedKeywords,
-      "bannedWords": trimedBannedWords,
-      "lang": (langInputP === "lang_all") ? null : langInputP.replace("lang_", ""),
-      "userList": stringToList(usersInputP),
-      "from": dateFormat(newFrom, "yyyy-mm-dd HH:MM:ss"),
-      "until": dateFormat(newUntil, "yyyy-mm-dd HH:MM:ss"),
-      "verified": String(verifiedUsersP) === "true",
-      "media": (filtersP === "none") ? null : filtersP,
-      "retweetsHandling": null,
-      "cached" : !cache,
-      
-    };
-  };
-
-  const makeRequest = () => {
-    return makeRequestParams(keyWords, bannedWords, usersInput, since, until, localTime, langInput, filters, verifiedUsers);
-  };
-
-    //HANDLE INPUT
-
-  const cacheChange = () => {
-    setCache(!cache);
-  };
+  //HANDLE INPUT
 
   const [usersInput, setUsersInput] = useState(
     request && request.userList ?
@@ -115,42 +72,56 @@ const TwitterSna = () => {
       ""          
   );
 
-
   const [verifiedUsers, setVerifiedUsers] = useState(
     request && request.verified ?
     listToString(request.verified) :
       "false"
   );
 
-  const handleVerifiedUsersChange = event => {
-    setVerifiedUsers(event.target.value);
-  };
-
   const [filters, setFilers] = useState(
     request && request.media ?
       request.media :
       "none"
   );
+  const [until, setUntil] = useState(
+    request ? new Date(request.until) : null
+  );
+  const [since, setSince] = useState(        
+    request ? new Date(request.from) : null          
+  );
+  const [bannedWords, setBannedWords] = useState(
+    request && request.bannedWords ?
+      request.bannedWords.join(" ") :
+      ""
+  );
 
+  const searchFormDisabled = isLoading || !userAuthenticated ;
 
-    //HANDLE DATE
-
-  const handleUntilDateChange = (date) => {
-    setUntilError(date === null);
-    if (since && date < since)
-      setUntilError(true);
-    setUntil(date);
+  //HANDLERS
+  const cacheChange = () => {
+    setCache(!cache);
   };
 
-  const [until, setUntil] = useState(
-    request ? request.until : null
-  );
+  const handleVerifiedUsersChange = event => {
+    setVerifiedUsers(event.target.value);
+  };
+
+  //HANDLE DATE
 
   const untilDateIsValid = (momentDate) => {
     const itemDate = momentDate.toDate();
     const currentDate = new Date();
-    if (since)
+    if (since){
       return itemDate <= currentDate && since < itemDate;
+    } 
+    return itemDate <= currentDate;
+  };
+  const sinceDateIsValid = (momentDate) => {
+    const itemDate = momentDate.toDate();
+    const currentDate = new Date();
+    if (until){
+      return itemDate <= currentDate && itemDate < until;
+    }
     return itemDate <= currentDate;
   };
 
@@ -161,27 +132,13 @@ const TwitterSna = () => {
     setSince(date);
   };
 
-
-  const [since, setSince] = useState(        
-    request ? request.from : null          
-  );
-
-  const sinceDateIsValid = (momentDate) => {
-    const itemDate = momentDate.toDate();
-    const currentDate = new Date();
-    if (until)
-      return itemDate <= currentDate && itemDate < until;
-    return itemDate <= currentDate;
+  const handleUntilDateChange = (date) => {
+    setUntilError(date === null);
+    if (since && date < since)
+      setUntilError(true);
+    setUntil(date);
   };
 
-  const searchFormDisabled = isLoading || !userAuthenticated ;
-
-    
-  const [bannedWords, setBannedWords] = useState(
-    request && request.bannedWords ?
-      request.bannedWords.join(" ") :
-      ""
-  );
 
     //HANDLE LANGUAGE
 
@@ -198,10 +155,44 @@ const TwitterSna = () => {
     dispatch(setError(e));
   };
 
+  const makeRequest = () => {
+    //Creating Request Object.
+    const removeQuotes = (list) => {
+      let res = [];
+      !_.isNil(list) &&
+        list.forEach(string => {
+          res.push(replaceAll(string, "\"", ""));
+        });
+      return res;
+    };
+
+    let trimedKeywords = !_.isNil(keyWords) ? removeQuotes(keyWords.trim().match(/("[^"]+"|[^"\s]+)/g)) : [];
+
+    let trimedBannedWords = null;
+    if (!_.isNil(bannedWords) && bannedWords.trim() !== "")
+      trimedBannedWords = removeQuotes(bannedWords.trim().match(/("[^"]+"|[^"\s]+)/g));
+    const newFrom = (localTime === "false") ? convertToGMT(since) : since;
+    const newUntil = (localTime === "false") ? convertToGMT(until) : until;
+    
+    return {
+      "keywordList": trimedKeywords,
+      "bannedWords": trimedBannedWords,
+      "lang": (langInput === "lang_all") ? null : langInput.replace("lang_", ""),
+      "userList": stringToList(usersInput),
+      "from": dateFormat(newFrom, "yyyy-mm-dd HH:MM:ss"),
+      "until": dateFormat(newUntil, "yyyy-mm-dd HH:MM:ss"),
+      "verified": String(verifiedUsers) === "true",
+      "media": (filters === "none") ? null : filters,
+      "retweetsHandling": null,
+      "cached" : !cache,
+      
+    };
+   
+  };
+
     //HANDLE SUBMISSION
 
   const onSubmit = () => {
-    console.log("req", JSON.stringify(request) );
     
     //Mandatory Fields errors
     if (keyWords.trim() === "") {
@@ -257,64 +248,23 @@ const TwitterSna = () => {
       return mystring;
   }
 
-  function menuSet (req) {
-    if (req == null) {
+  function resetForm () {
       setKeywords("");
       setBannedWords("");
       setUsersInput("");
-      setSince(null);
-      setUntil(null);
       setLocalTime("true");
       setLangInput("lang_all");
       setFilers("none");
       setVerifiedUsers("false");
-    }
-    else { 
-      setCache(!req.cached);
-      setKeywords(req.keywordListStr);
-      setBannedWords(req.bannedWordsStr);
-        if (_.isUndefined(req.userListStr))
-          {setUsersInput(listToString(req.userList));}
-        else
-          {setUsersInput(req.userListStr);}
-      setSince(req.from);
-      setUntil(req.until);
-      setLocalTime(req.localTime);
-        if (_.isUndefined(req.langStr))
-        {
-          if (_.isNull(req.lang))
-            {setLangInput("lang_all");}
-            else {
-          setLangInput("lang_" + req.lang);}
-        }
-        else{
-          setLangInput(req.langStr);
-        }
-      if (_.isNull(req.media))
-      {
-        setFilers("none");
-      }
-      else {
-      setFilers(req.media);}
-      req.verified ? setVerifiedUsers("true") : setVerifiedUsers("false");
-      
-    }
   }
 
 // Reset form & result when user login
   useEffect(() => {
-    if (userAuthenticated) {
-
-      if (request){
-        menuSet(request);
-      }
-
-    }
-    else {
+    console.log("use effect TNSA ... ")
+    if (!userAuthenticated) {
       dispatch(cleanTwitterSnaState());
       setSubmittedRequest(null);
-      menuSet(null);
-
+      resetForm();
     }
 
   },[userAuthenticated]); 
@@ -341,7 +291,7 @@ const TwitterSna = () => {
                     setKeywords(e.target.value);
                         setKeyWordsError(false);
                 }}
-                id="standard-full-width"
+                id="standard-full-width-keyword"
                 label={'*  ' + keyword("twitter_sna_search")}
                 className={classes.neededField}
                 style={{ marginTop: 0, marginBottom:0, marginLeft: 8, marginRight: 8 }}
@@ -351,7 +301,7 @@ const TwitterSna = () => {
               disabled={searchFormDisabled}
               value={bannedWords}
               onChange={e => setBannedWords(e.target.value)}
-              id="standard-full-width"
+              id="standard-full-width-words"
               label={keyword("twitter_sna_not")}
               style={{ marginTop: 0, marginBottom:0, marginLeft: 8, marginRight: 8 }}
               placeholder={"word word2"}
@@ -360,7 +310,7 @@ const TwitterSna = () => {
               disabled={searchFormDisabled}
               value={usersInput}
               onChange={e => setUsersInput(e.target.value)}
-              id="standard-full-width"
+              id="standard-full-width-users"
               label={keyword("twitter_sna_user")}
               style={{ marginTop: 0, marginBottom:0, marginLeft: 8, marginRight: 8 }}
               placeholder={keyword("user_placeholder")}
@@ -368,6 +318,7 @@ const TwitterSna = () => {
             <Grid container justify={"center"} spacing={4} className={classes.grow}>
               <Grid item>
                   <DateTimePicker
+                    id="standard-full-width-since"
                     disabled={searchFormDisabled}
                     input={true}
                     isValidDate={sinceDateIsValid}
@@ -380,7 +331,8 @@ const TwitterSna = () => {
                     error={sinceError} />
               </Grid>
               <Grid item>
-                  <DateTimePicker
+                <DateTimePicker
+                  id="standard-full-width-until"
                   disabled={searchFormDisabled}
                   input={true}
                   isValidDate={untilDateIsValid}
@@ -444,17 +396,17 @@ const TwitterSna = () => {
                     <RadioGroup aria-label="position" name="position" value={verifiedUsers}
                         onChange={handleVerifiedUsersChange} row>
                         <FormControlLabel
-                        value={"false"}
-                        control={<Radio color="primary" />}
-                        label={keyword("twitterStats_verified_no")}
-                        labelPlacement="end"
-                        />
+                          value={"false"}
+                          control={<Radio color="primary" />}
+                          label={keyword("twitterStats_verified_no")}
+                          labelPlacement="end"
+                          />
                         <FormControlLabel
-                        value={"true"}
-                        control={<Radio color="primary" />}
-                        label={keyword("twitterStats_verified_yes")}
-                        labelPlacement="end"
-                        />
+                          value={"true"}
+                          control={<Radio color="primary" />}
+                          label={keyword("twitterStats_verified_yes")}
+                          labelPlacement="end"
+                          />
                     </RadioGroup>
                   </FormControl>
                 </Grid>
