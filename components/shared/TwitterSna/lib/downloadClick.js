@@ -7,3 +7,5 @@ export function downloadClick(request, csvArr, name, histo, type = "Tweets_") {
     link.click();
     document.body.removeChild(link);
 };
+
+

@@ -19,7 +19,6 @@ const PluginRedirect = () => {
         const {data, token, refreshToken, user} = query;
         const loadData = decodeURIComponent(data);
         const request =  JSON.parse(loadData);
-       
         dispatch(redirectFromPlugin(request));
         //token
         const userData = decodeURIComponent(user);

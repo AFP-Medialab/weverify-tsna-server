@@ -1,7 +1,6 @@
 import {useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import useLoadLanguage from "../../hooks/useLoadLanguage";
 import {
     setTwitterSnaLoading, 
     setTwitterSnaResult, 
@@ -52,19 +51,17 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
 
-
-const useTwitterSnaRequest = (request) => {
+const useTwitterSnaRequest = (request, keyword) => {
     const dispatch = useDispatch();
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
-
     const authenticatedRequest = useAuthenticatedRequest();
     const userAuthenticated = useSelector(state => state.userSession && state.userSession.userAuthenticated);
 
     useEffect(() => {
 
-      const handleErrors = (e) => {           
-          if (keyword(e) !== "")
-            dispatch(setError(keyword(e)));
+      const handleErrors = (e) => {      
+       
+          if (keyword(e) !== ""){
+            dispatch(setError(keyword(e)));}
           else
             dispatch(setError(keyword("default_sna_error")));
           dispatch(setTwitterSnaLoading(false));
@@ -112,7 +109,11 @@ const useTwitterSnaRequest = (request) => {
                 });
               }
             })
-            .catch(e => handleErrors(e));
+            .catch(e => {
+              dispatch(userLogoutAction());
+              handleErrors("twittersna_invalid_credentials")
+              }
+            );
         };
 
       const makeEntries = (data) => {
@@ -276,8 +277,8 @@ const useTwitterSnaRequest = (request) => {
         dispatch(setTwitterSnaResult(request, null, false, false));
         return;
     }
-        
     dispatch(setTwitterSnaLoading(true));
+    dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_start")));
         //TODO premier message à mettre ici
 
           //authentication test to set later
@@ -298,7 +299,8 @@ const useTwitterSnaRequest = (request) => {
             getResultUntilsDone(response.data.session,request, "Pending");}
 
         }).catch(error => {
-          handleErrors(error);
+
+          handleErrors("twittersna_invalid_credentials");
         });
     } else {
       cacheRenderCall(request);

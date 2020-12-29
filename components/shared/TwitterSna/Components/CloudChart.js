@@ -10,17 +10,16 @@ import Button from "@material-ui/core/Button";
 import CustomTable from "../../CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState, useCallback} from 'react';
-import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import ReactWordcloud from "react-wordcloud";
 import { select } from 'd3-selection';
 import {displayTweets} from "../lib/displayTweets";
-import { saveSvgAsPng } from 'save-svg-as-png';
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useLoadLanguage";
-import {downloadClick} from "../lib/downloadClick";
-import {createGraphWhenClickANode} from "../../lib/sigmaGraph"
+import {downloadClick, downloadAsPNG} from "../lib/downloadClick";
+import Plotly from 'plotly.js-dist';
+import { saveSvgAsPng } from 'save-svg-as-png';
 
 export default function cloudChart (props) {
 
@@ -111,34 +110,8 @@ export default function cloudChart (props) {
             return tweetObj._source.full_text.toLowerCase().match(new RegExp('(^|((.)*[.()0-9!?\'’‘":,/\\%><«» ^#]))' + word + '(([.()!?\'’‘":,/><«» ](.)*)|$)', "i"));
         });
         return filteredTweets;
-    }createGraphWhenClickANode;
-
-    function downloadAsPNG(elementId) {
-        let element = document.getElementById(elementId);
-
-        if (elementId === "top_words_cloud_chart") {
-            let name = filesNames + '.png';
-            saveSvgAsPng(element.children[0].children[0], name, { backgroundColor: "white", scale: 2 });
-        } else {
-            let positionInfo = element.getBoundingClientRect();
-            let height = positionInfo.height;
-            let width = positionInfo.width;
-            let name = keyword(elementId) + filesNames.replace("WordCloud", "") + '.png';
-            Plotly.downloadImage(elementId,
-                { format: 'png', width: width * 1.2, height: height * 1.2, filename: name }
-            );
-        }
     }
-
-    let call = getCallbacks();
-
-    let goToTweetAction = [{
-        icon: TwitterIcon,
-        tooltip: keyword("twittersna_result_go_to_tweet"),
-        onClick: (event, rowData) => {
-            window.open(rowData.link, '_blank');
-        }
-    }]
+    //createGraphWhenClickANode;
 
     function downloadAsSVG(elementId, keyword, filesNames) {
 
@@ -166,6 +139,32 @@ export default function cloudChart (props) {
         }
       
       }
+      function downloadAsPNG(elementId, keyword, filesNames) {
+        let element = document.getElementById(elementId);
+    
+        if (elementId === "top_words_cloud_chart") {
+            let name = filesNames + '.png';
+            saveSvgAsPng(element.children[0].children[0], name, { backgroundColor: "white", scale: 2 });
+        } else {
+            let positionInfo = element.getBoundingClientRect();
+            let height = positionInfo.height;
+            let width = positionInfo.width;
+            let name = keyword(elementId) + filesNames.replace("WordCloud", "") + '.png';
+            Plotly.downloadImage(elementId,
+                { format: 'png', width: width * 1.2, height: height * 1.2, filename: name }
+            );
+        }
+    }
+
+    let call = getCallbacks();
+
+    let goToTweetAction = [{
+        icon: TwitterIcon,
+        tooltip: keyword("twittersna_result_go_to_tweet"),
+        onClick: (event, rowData) => {
+            window.open(rowData.link, '_blank');
+        }
+    }]
 
     return (
         <Accordion>
@@ -210,7 +209,7 @@ export default function cloudChart (props) {
                                                 <Button
                                                     variant={"contained"}
                                                     color={"primary"}
-                                                    onClick={() => downloadAsSVG("top_words_cloud_chart")}>
+                                                    onClick={() => downloadAsSVG("top_words_cloud_chart",  keyword, filesNames)}>
                                                     {
                                                         keyword('twittersna_result_download_svg')
                                                     }

@@ -57,8 +57,10 @@ const TwitterSna = () => {
   const [keyWordsError, setKeyWordsError] = useState(false);
   
   const role = useSelector(state => state.userSession.user.roles);
-
-  const [cache, setCache] = useState(false);
+  
+  const [cache, setCache] = useState(
+    request && request.cached !== null ? !request.cached : false
+  );
   //HANDLE INPUT
 
   const [usersInput, setUsersInput] = useState(
@@ -99,6 +101,7 @@ const TwitterSna = () => {
 
   //HANDLERS
   const cacheChange = () => {
+    console.log("prev value cache ", cache);
     setCache(!cache);
   };
 
@@ -212,7 +215,7 @@ const TwitterSna = () => {
     }
     let newRequest = makeRequest();
 
-    console.log("Submit, newRequest: ", newRequest);
+    //console.log("Submit, newRequest: ", newRequest);
     if (JSON.stringify(newRequest) !== JSON.stringify(request)) {
 
       let prevResult = reduxResult;
@@ -236,7 +239,7 @@ const TwitterSna = () => {
   );
 
   
-  useTwitterSnaRequest(submittedRequest);
+  useTwitterSnaRequest(submittedRequest, keyword);
 
   function listToString (list){
       var index = 0;
@@ -260,7 +263,7 @@ const TwitterSna = () => {
 
 // Reset form & result when user login
   useEffect(() => {
-    console.log("use effect TNSA ... ")
+    //console.log("use effect TNSA ... ")
     if (!userAuthenticated) {
       dispatch(cleanTwitterSnaState());
       setSubmittedRequest(null);

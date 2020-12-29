@@ -18,8 +18,6 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {displayTweets} from "../lib/displayTweets";
 import {downloadClick} from "../lib/downloadClick";
-import Plotly from 'plotly.js-dist';
-
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 
@@ -42,7 +40,7 @@ export default function PlotPieChart (props) {
     const [filesNames, setfilesNames] = useState(null);
     //Set the file name for wordsCloud export
     useEffect(() => {
-        setfilesNames('WordCloud_' + props.request.keywordList.join("&") + "_" + props.request.from + "_" + props.request.until);
+        setfilesNames('PlotChart_' + props.request.keywordList.join("&") + "_" + props.request.from + "_" + props.request.until);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.request]);
 
@@ -78,35 +76,48 @@ export default function PlotPieChart (props) {
         }
     }, [donutIndex]);
 
+    function downloadAsSVG(elementId, keyword, filesNames) {
+
+        if (elementId === "top_words_cloud_chart") {
+            let name = filesNames + '.svg';
+            var svgEl = document.getElementById("top_words_cloud_chart").children[0].children[0];
+            svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            var svgData = svgEl.outerHTML;
+            var preface = '<?xml version="1.0" standalone="no"?>\r\n';
+            var svgBlob = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
+            var svgUrl = URL.createObjectURL(svgBlob);
+            var downloadLink = document.createElement("a");
+            downloadLink.href = svgUrl;
+            downloadLink.download = name;
+            downloadLink.click();
+        } else {
+            let element = document.getElementById(elementId);
+            let positionInfo = element.getBoundingClientRect();
+            let height = positionInfo.height;
+            let width = positionInfo.width;
+            let name = keyword(elementId) + filesNames.replace("WordCloud", "");
+            plotly.downloadImage(elementId,
+                { format: 'svg', width: width * 1.2, height: height * 1.2, filename: name }
+            );
+        }
+      }
        //Download as PNG
-
-
- function downloadAsSVG(elementId, keyword, filesNames) {
-
-    if (elementId === "top_words_cloud_chart") {
-        let name = filesNames + '.svg';
-        var svgEl = document.getElementById("top_words_cloud_chart").children[0].children[0];
-        svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        var svgData = svgEl.outerHTML;
-        var preface = '<?xml version="1.0" standalone="no"?>\r\n';
-        var svgBlob = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
-        var svgUrl = URL.createObjectURL(svgBlob);
-        var downloadLink = document.createElement("a");
-        downloadLink.href = svgUrl;
-        downloadLink.download = name;
-        downloadLink.click();
-    } else {
+       function downloadAsPNG(elementId, keyword, filesNames) {
         let element = document.getElementById(elementId);
-        let positionInfo = element.getBoundingClientRect();
-        let height = positionInfo.height;
-        let width = positionInfo.width;
-        let name = keyword(elementId) + filesNames.replace("WordCloud", "");
-        Plotly.downloadImage(elementId,
-            { format: 'svg', width: width * 1.2, height: height * 1.2, filename: name }
-        );
+    
+        if (elementId === "top_words_cloud_chart") {
+            let name = filesNames + '.png';
+            saveSvgAsPng(element.children[0].children[0], name, { backgroundColor: "white", scale: 2 });
+        } else {
+            let positionInfo = element.getBoundingClientRect();
+            let height = positionInfo.height;
+            let width = positionInfo.width;
+            let name = keyword(elementId) + filesNames.replace("WordCloud", "") + '.png';
+            plotly.downloadImage(elementId,
+                { format: 'png', width: width * 1.2, height: height * 1.2, filename: name }
+            );
+        }
     }
-  
-  }
 
     const onDonutsClick = (data, index, tweets) => {
         //For mention donuts
@@ -182,7 +193,7 @@ return (
                                         <Button
                                             variant={"contained"}
                                             color={"primary"}
-                                            onClick={() => downloadAsPNG(keyword, filesNames, obj.title)}>
+                                            onClick={() => downloadAsPNG(obj.title, keyword, filesNames)}>
                                             {
                                                 keyword('twittersna_result_download_png')
                                             }

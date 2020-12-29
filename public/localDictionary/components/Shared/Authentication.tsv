@@ -5,7 +5,7 @@ ERR_AUTH_INVALID_PARAMS	Invalid parameters	Paramètres invalides	Parámetros inv
 ERR_AUTH_BAD_REQUEST	Invalid request sent to the service	La requête envoyée au service est invalide	La solicitud enviada al servicio no es válida	Μη έγκυρη αίτηση αποστάλθηκε στην υπηρεσία
 ERR_AUTH_SERVER_ERROR	Service not available or in error state	Service indisponible ou en erreur	El servicio no está disponible o disfunciona	Υπηρεσία δεν είναι διαθέσιμη ή σε κατάσταση σφάλματος
 ERR_AUTH_INVALID_TOKEN	Authentication token is invalid	Le token d'authentification n'est pas valable	El token de autenticación no es válido	Το πιστοποιητικό αυθεντικοποίησης δεν είναι έγκυρο
-ERR_AUTH_INVALID_CREDENTIALS	Invalid authentifcation information	Les informations d'authentification ne sont pas valables	La información de autenticación no es válida	Μη έγκυρη πληροφόρηση αυθεντικοποίησης
+ERR_AUTH_INVALID_CREDENTIALS	Invalid authentication information	Les informations d'authentification ne sont pas valables	La información de autenticación no es válida	Μη έγκυρη πληροφόρηση αυθεντικοποίησης
 ERR_AUTH_INVALID_USER_STATE	User account's state is invalid	L'état du compte utilisateur est invalide	El estado de la cuenta de usuario no es válida	Κατάσταση λογαριασμού χρήστη δεν είναι έγκυρη
 ERR_AUTH_USER_EXPIRED	User account is expired	Le compte utilisateur a expiré	La cuenta de usuario ha caducado	Ο λογαριασμός χρήστη έχει λήξει
 ERR_AUTH_SESSION_EXPIRED	Your session has expired	Votre session a expiré	Su sesión ha caducado	Η συνεδρία σας έχει λήξει
