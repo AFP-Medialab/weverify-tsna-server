@@ -12,6 +12,7 @@ twitter_sna_media	Filters :	Filtres :	Filtros :	Φιλτρα:
 twitterStats_media_none	none	aucune	ninguna	κανένα
 twitterStats_media_images	pictures	images	fotos	εικόνες
 twitterStats_media_videos	videos	vidéos	vídeo	βίντεο
+twitterStats_media_medias	media	média	medios de comunicación	μεσο ΜΑΖΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ
 twitterStats_media_both	both	les deux	ambos	και ταδύο
 twitterStats_media_both	both	les deux	ambos	και τα δύο
 twitter_sna_verified	Verified users Only :	Utilisateurs verifiés uniquement :	Usuarios verificados únicamente :	Μόνο επαληθευμένοι χρήστες:
@@ -90,4 +91,4 @@ twittersna_acd	Account Creation Date	Date de création du compte	Fecha de creaci
 twittersna_nb_followers	Number of followers	Nombre d'abonnés	Número de abonados	Αριθμός ακολούθων
 disable_cache	Disable cache	Désactiver le cache	Desactivar el caché	απενεργοποίηση προσωρινής μνήμης
 twittersna_invalid_credentials	Invalid authentication information	Les informations d'authentification ne sont pas valables	La información de autenticación no es válida	Μη έγκυρη πληροφόρηση αυθεντικοποίησης
-twittersna_start	Chargement	Loading	Cargando	Φόρτωση	
+twittersna_start	Loading	Chargement	Cargando	Φόρτωση	
