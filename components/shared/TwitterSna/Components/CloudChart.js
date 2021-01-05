@@ -21,6 +21,9 @@ import {downloadClick, downloadAsPNG} from "../lib/downloadClick";
 import Plotly from 'plotly.js-dist';
 import { saveSvgAsPng } from 'save-svg-as-png';
 
+import "tippy.js/dist/tippy.css";
+import "tippy.js/animations/scale.css";
+
 export default function cloudChart (props) {
 
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");

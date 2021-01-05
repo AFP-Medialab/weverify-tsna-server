@@ -83,7 +83,7 @@ export const createWordCloud = (plotlyJson, request) => {
         fontWeight: 'normal',
         padding: 1,
         rotations: 3,
-        rotationAngles: [0, 30],
+        rotationAngles: [15, -15],
         scale: 'sqrt',
         spiral: 'rectangular',
         transitionDuration: 1000,
