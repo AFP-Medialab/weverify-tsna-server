@@ -23,7 +23,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
     };
 
     let config = {
-      displayModeBar: true,
+      displayModeBar: false,
       toImageButtonOptions: {
         format: 'png', // one of png, svg, jpeg, webp
         filename: request.keywordList.join("&") + "_" + request.from + "_" + request.until + "_Tweets",

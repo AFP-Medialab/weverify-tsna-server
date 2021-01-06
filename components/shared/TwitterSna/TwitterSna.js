@@ -35,6 +35,7 @@ import {cleanError} from "../../../redux/actions/errorActions"
 import OnClickInfo from '../OnClickInfo/OnClickInfo';
 import OnWarningInfo from "../OnClickInfo/OnWarningInfo";
 import FeedBack from "../FeedBack/FeedBack";
+import {changeLanguage} from "../../../redux/actions"
 
 const TwitterSna = () => {
 
@@ -48,11 +49,13 @@ const TwitterSna = () => {
   const loadingMessage = useSelector(state => state.twitterSna.loadingMessage);
   const reduxResult = useSelector(state => state.twitterSna.result);
 
+  const lang = useSelector(state => state.language);
+
   const userAuthenticated = useSelector(state => state.userSession && state.userSession.userAuthenticated);
 
   const [sinceError, setSinceError] = useState(false);
   const [untilError, setUntilError] = useState(false);
-  const [localTime, setLocalTime] = useState("true");
+ // const [localTime, setLocalTime] = useState("true");
   const [openLangInput, setLangInputOpen] = useState(false);
   const [keyWordsError, setKeyWordsError] = useState(false);
   
@@ -61,7 +64,16 @@ const TwitterSna = () => {
   const [cache, setCache] = useState(
     request && request.cached !== null ? !request.cached : false
   );
+
+  const [langPage, setLangPage] = useState(
+    request && request.pageLanguage && request.pageLanguage !== lang ?  dispatch(changeLanguage(request.pageLanguage)) : null
+  )
   //HANDLE INPUT
+
+  const [localTime, setLocalTime] = useState(
+    request && request.localTime ?
+    request.localTime : "true"    
+    );
 
   const [usersInput, setUsersInput] = useState(
     request && request.userList ?

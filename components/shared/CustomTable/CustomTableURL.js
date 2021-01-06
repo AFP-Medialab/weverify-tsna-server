@@ -88,6 +88,7 @@ export default function CustomTableURL(props) {
                     }
                 }
             }}
+            
             icons={tableIcons}
             title={state.title}
             columns={
@@ -106,9 +107,12 @@ export default function CustomTableURL(props) {
             data={state.data}
             actions={state.actions}
             options={{
+                emptyRowsWhenPaging: false,
+                pageSizeOptions:[5, 10, 15, 20, 25],
                 search: true,
                 selection: true
             }}
         />
+        
     );
 }
