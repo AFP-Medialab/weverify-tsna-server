@@ -172,7 +172,7 @@ const useTwitterSnaRequest = (request, keyword) => {
       buildFirstResult(request, responseArrayOf9[0]['aggregations']);
       buildHeatMap(request, tweets);
       buildCoHashTag(lcTweets);
-      buildSocioGraph(lcTweets);
+      buildSocioGraph(lcTweets, responseArrayOf9[0]['aggregations'].top_user_retweet.buckets);
       buidTopUsers(lcTweets);
     }
 
@@ -208,7 +208,7 @@ const useTwitterSnaRequest = (request, keyword) => {
         })
     }
 
-    const buildSocioGraph = async (tweets) => {
+    const buildSocioGraph = async (tweets, topUser) => {
 
       /*const graphURL = `${publicRuntimeConfig.baseFolder}/api/buildGraph`;
       const response = await fetch(graphURL, {
@@ -222,7 +222,7 @@ const useTwitterSnaRequest = (request, keyword) => {
     const socioSemantic4ModeGraph = await response.json();*/
 
       const instance = socioWorker();
-      const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(tweets);
+      const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(tweets, topUser);
       const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
       dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
     };

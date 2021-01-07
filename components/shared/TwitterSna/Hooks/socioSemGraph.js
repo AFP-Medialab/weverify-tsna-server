@@ -1,7 +1,14 @@
 import _ from "lodash";
 import {lowercaseFieldInTweets} from "../lib/displayTweets";
 
-function getTweetAttrObjArr(tweets) {
+function getTweetAttrObjArr(tweets, topUser) {
+  let topUsers = [];
+  for (let user in topUser)
+  {
+    if (user < 10){ //change here to choose the number of Top Retweeted User in the graphe
+    topUsers.push(topUser[user].key.toLowerCase());}
+  }
+
     let tweetAttrObjArr = tweets.map((tweet) => {
       let hashtags = (tweet._source.hashtags !== undefined && tweet._source.hashtags !== null)
         ? tweet._source.hashtags.map((hashtag) => { return "#" + hashtag; })
@@ -16,6 +23,13 @@ function getTweetAttrObjArr(tweets) {
       ? ["Rpl:@" + tweet._source.screen_name]
       : [];
   
+      let userTopTweet = (tweet._source.screen_name !== undefined && tweet._source.screen_name !== null && topUsers.includes(tweet._source.screen_name))
+      ? ["TopRetweetedUser:" + tweet._source.screen_name]
+      : [];
+      let retweetCount = (tweet._source.retweet_count !== undefined && tweet._source.retweet_count !== null && topUsers.includes(tweet._source.screen_name))
+      ? ["RTcount:" + tweet._source.retweet_count]
+      : [];
+
       let urls = (tweet._source.urls !== undefined && tweet._source.urls.length !== 0)
       ? tweet._source.urls.map((url) => { return "URL:" + getDomain(url); })
       : [];
@@ -25,6 +39,8 @@ function getTweetAttrObjArr(tweets) {
         userIsMentioned: [...new Set(userIsMentioned)],
         userRTWC: userRTWC,
         userReply: userReply,
+        userTopTweet: userTopTweet,
+        retweetCount: retweetCount,
         urls: [...new Set(urls)]
       }
       return obj;
@@ -55,6 +71,7 @@ function getTweetAttrObjArr(tweets) {
   function getCoOccurence(tweetAttrObjArr) {
     let coOccur = [];
     tweetAttrObjArr.forEach((obj) => {
+
       if (obj.hashtags.length > 0) {
         coOccur.push(getCoOccurCombinationFrom1Arr(obj.hashtags));
       }
@@ -71,6 +88,9 @@ function getTweetAttrObjArr(tweets) {
       if (obj.hashtags.length > 0 && obj.userRTWC.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.hashtags, obj.userRTWC));
       }
+      if (obj.hashtags.length > 0 && obj.userTopTweet.length > 0) {
+        coOccur.push(getCombinationFrom2Arrs(obj.hashtags, obj.userTopTweet));
+      }
       if (obj.hashtags.length > 0 && obj.userReply.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.hashtags, obj.userReply));
       }
@@ -80,6 +100,9 @@ function getTweetAttrObjArr(tweets) {
   
       if (obj.userIsMentioned.length > 0 && obj.userRTWC.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.userIsMentioned, obj.userRTWC));
+      }
+      if (obj.userIsMentioned.length > 0 && obj.userTopTweet.length > 0) {
+        coOccur.push(getCombinationFrom2Arrs(obj.userIsMentioned, obj.userTopTweet));
       }
       if (obj.userIsMentioned.length > 0 && obj.userReply.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.userIsMentioned, obj.userReply));
@@ -94,6 +117,15 @@ function getTweetAttrObjArr(tweets) {
       if (obj.userRTWC.length > 0 && obj.urls.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.userRTWC, obj.urls));
       }
+
+      if (obj.userTopTweet.length > 0 && obj.userReply.length > 0) {
+        coOccur.push(getCombinationFrom2Arrs(obj.userTopTweet, obj.userReply));
+      }
+      if (obj.userTopTweet.length > 0 && obj.urls.length > 0) {
+        coOccur.push(getCombinationFrom2Arrs(obj.userTopTweet, obj.urls));
+      }
+
+
   
       if (obj.userReply.length > 0 && obj.urls.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.userReply, obj.urls));
@@ -170,6 +202,8 @@ function getTweetAttrObjArr(tweets) {
         connectionType = "Reply-Reply";
       } else if (first.startsWith("URL:") && second.startsWith("URL:")) {
         connectionType = "URL-URL";
+      } else if (first.startsWith("RetweetedUser:") && second.startsWith("RetweetedUser:")) {
+        connectionType = "TopRetweetedUser-TopRetweetedUser";
       }
        else {
         connectionType = "Else-Else";
@@ -204,6 +238,7 @@ function getTweetAttrObjArr(tweets) {
     if (entity === "Reply" || entity === "Reply-Reply") return '#FFEEAD';
     if (entity === "Hashtag-Hashtag") return "#96cce0";
     if (entity === "URL-URL") return "#CC99C9";
+    if (entity === "TopRetweetedUser-TopRetweetedUser") return "#000000";
     if (entity === "Else-Else") return "#C0C0C0";
   
     return '#35347B';
@@ -230,15 +265,15 @@ function getTweetAttrObjArr(tweets) {
   }
 
 
-export const createSocioSemantic4ModeGraph = (tweets) => {
-      //console.log("1 ", new Date().valueOf());
+export const createSocioSemantic4ModeGraph = (tweets, topUser) => {
+  //console.log("1 ", new Date().valueOf());
       let lcTweets = lowercaseFieldInTweets(tweets, 'hashtags');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'user_mentions');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'screen_name');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'in_reply_to_screen_name');
       lcTweets = lowercaseFieldInTweets(lcTweets, 'urls');     
       //console.log("2 ",new Date().valueOf());
-      let tweetAttrObjArr = getTweetAttrObjArr(lcTweets);
+      let tweetAttrObjArr = getTweetAttrObjArr(lcTweets, topUser);
       //console.log("3 ",new Date().valueOf());
       let coOccurObjArr = getCoOccurence(tweetAttrObjArr);
       //console.log("4 ",new Date().valueOf());
@@ -251,13 +286,18 @@ export const createSocioSemantic4ModeGraph = (tweets) => {
       let freqRTWCObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userRTWC; }).flat());
       let freqReplyObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userReply; }).flat());
       let freqURLObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.urls; }).flat());
+      
+      let freqTopRetweetedUserObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userTopTweet; }).flat());
+
       Object.entries(freqHashtagObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Hashtag"), type: "Hashtag" }));
       Object.entries(freqMentionObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Mention"), type: "Mention" }));
       Object.entries(freqRTWCObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("RetweetWC"), type: "RetweetWC" }));
       Object.entries(freqReplyObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Reply"), type: "Reply" }));
       Object.entries(freqURLObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("URL"), type: "URL" }));
+      Object.entries(freqTopRetweetedUserObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("TopRetweetedUser"), type: "TopRetweetedUser" }));
+
       //console.log("6 ",new Date().valueOf());
-      let topNodeGraph = getTopNodeGraph({ nodes: nodes, edges: edges}, ["size"], [20, 10, 10, 10, 15], ['Hashtag', 'Mention', 'RetweetWC', 'Reply', 'URL']);
+      let topNodeGraph = getTopNodeGraph({ nodes: nodes, edges: edges}, ["size"], [20, 10, 10, 10, 15, 21], ['Hashtag', 'Mention', 'RetweetWC', 'Reply', 'URL', 'TopRetweetedUser']);
       //console.log("7 ",new Date().valueOf());
       return JSON.stringify({
         data: topNodeGraph

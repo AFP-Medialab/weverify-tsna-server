@@ -97,6 +97,15 @@ export default function SocioSemGraph (props) {
             let dataToDisplay = displayTweets(filteredTweets, keyword);
             dataToDisplay["selected"] = data.data.node.id;
             setSocioSemantic4ModeGraphTweets(dataToDisplay);
+        } else if (data.data.node.type === "TopRetweetedUser") {
+            let selectedUser = data.data.node.id.replace("TopRetweetedUser:", "");
+            let filteredTweets = props.result.tweets.filter(tweet => 
+                tweet._source.screen_name !== undefined 
+                && tweet._source.screen_name !== null
+                && tweet._source.screen_name.toLowerCase() === selectedUser);
+            let dataToDisplay = displayTweets(filteredTweets, keyword);
+            dataToDisplay["selected"] = data.data.node.id;
+            setSocioSemantic4ModeGraphTweets(dataToDisplay);
         } else if (data.data.node.type === "Reply") {
             let selectedUser = data.data.node.id.replace("Rpl:@", "");
             let filteredTweets = props.result.tweets.filter(tweet => 
