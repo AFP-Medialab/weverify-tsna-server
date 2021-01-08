@@ -5,7 +5,7 @@ function getTweetAttrObjArr(tweets, topUser) {
   let topUsers = [];
   for (let user in topUser)
   {
-    if (user < 10){ //change here to choose the number of Top Retweeted User in the graphe
+    if (user < 20){ //change here to choose the number of Top Retweeted User in the graphe
     topUsers.push(topUser[user].key.toLowerCase());}
   }
 
@@ -24,7 +24,7 @@ function getTweetAttrObjArr(tweets, topUser) {
       : [];
   
       let userTopTweet = (tweet._source.screen_name !== undefined && tweet._source.screen_name !== null && topUsers.includes(tweet._source.screen_name))
-      ? ["TopRetweetedUser:" + tweet._source.screen_name]
+      ? ["TopRT:" + tweet._source.screen_name]
       : [];
       let retweetCount = (tweet._source.retweet_count !== undefined && tweet._source.retweet_count !== null && topUsers.includes(tweet._source.screen_name))
       ? ["RTcount:" + tweet._source.retweet_count]
@@ -203,7 +203,7 @@ function getTweetAttrObjArr(tweets, topUser) {
       } else if (first.startsWith("URL:") && second.startsWith("URL:")) {
         connectionType = "URL-URL";
       } else if (first.startsWith("RetweetedUser:") && second.startsWith("RetweetedUser:")) {
-        connectionType = "TopRetweetedUser-TopRetweetedUser";
+        connectionType = "TopRT-TopRT";
       }
        else {
         connectionType = "Else-Else";
@@ -235,10 +235,10 @@ function getTweetAttrObjArr(tweets, topUser) {
     if (entity === "URL") return "#9400D3";
     if (entity === "Mention" || entity === "Mention-Mention") return '#88D8B0';
     if (entity === "RetweetWC" || entity === "RetweetWC-RetweetWC") return '#FF6F69';
-    if (entity === "Reply" || entity === "Reply-Reply") return '#FFEEAD';
+    if (entity === "Reply" || entity === "Reply-Reply") return '#FFF000';
     if (entity === "Hashtag-Hashtag") return "#96cce0";
     if (entity === "URL-URL") return "#CC99C9";
-    if (entity === "TopRetweetedUser-TopRetweetedUser") return "#000000";
+    if (entity === "TopRT-TopRT") return "#000000";
     if (entity === "Else-Else") return "#C0C0C0";
   
     return '#35347B';
@@ -287,17 +287,17 @@ export const createSocioSemantic4ModeGraph = (tweets, topUser) => {
       let freqReplyObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userReply; }).flat());
       let freqURLObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.urls; }).flat());
       
-      let freqTopRetweetedUserObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userTopTweet; }).flat());
+      let freqTopRTUserObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userTopTweet; }).flat());
 
       Object.entries(freqHashtagObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Hashtag"), type: "Hashtag" }));
       Object.entries(freqMentionObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Mention"), type: "Mention" }));
       Object.entries(freqRTWCObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("RetweetWC"), type: "RetweetWC" }));
       Object.entries(freqReplyObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Reply"), type: "Reply" }));
       Object.entries(freqURLObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("URL"), type: "URL" }));
-      Object.entries(freqTopRetweetedUserObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("TopRetweetedUser"), type: "TopRetweetedUser" }));
+      Object.entries(freqTopRTUserObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("TopRT"), type: "TopRT" }));
 
       //console.log("6 ",new Date().valueOf());
-      let topNodeGraph = getTopNodeGraph({ nodes: nodes, edges: edges}, ["size"], [20, 10, 10, 10, 15, 21], ['Hashtag', 'Mention', 'RetweetWC', 'Reply', 'URL', 'TopRetweetedUser']);
+      let topNodeGraph = getTopNodeGraph({ nodes: nodes, edges: edges}, ["size"], [20, 20, 20, 20, 20, 20], ['Hashtag', 'Mention', 'RetweetWC', 'Reply', 'URL', 'TopRT']);
       //console.log("7 ",new Date().valueOf());
       return JSON.stringify({
         data: topNodeGraph
