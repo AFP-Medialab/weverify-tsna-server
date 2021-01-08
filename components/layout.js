@@ -8,6 +8,8 @@ import useMyStyles from './shared/styles/useMyStyles';
 import getConfig from 'next/config';
 import useLoadLanguage from "../components/shared/hooks/useLoadLanguage";
 import CustomTitle from "../components/shared/CustomTitle/CustomTitle"
+import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
+import Grid from '@material-ui/core/Grid';
 const { publicRuntimeConfig } = getConfig();
 
 export const siteTitle = 'Weverify'
@@ -15,6 +17,11 @@ export const siteTitle = 'Weverify'
 function Layout({ children }) {
     const classes = useMyStyles();
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+
+    const handleClick = event => {
+        window.open("https://weverify.eu/about/", "_blank");
+    };
+
     return (
         <div className={styles.container}>
             <Head>
@@ -31,6 +38,7 @@ function Layout({ children }) {
                 <meta name="twitter:card" content="summary_large_image" />
 
             </Head>
+
             <div className={classes.flex}>
                 <AppBar position="fixed" color="default" className={classes.appBar}>
                     <Toolbar className={classes.toolbar}>
@@ -39,13 +47,19 @@ function Layout({ children }) {
                             src={`${publicRuntimeConfig.baseFolder}/images/logo-we-verifymini.png`}
                             alt="logo"
                             className={classes.logoLeft}
+                            onClick={()=> handleClick()}
                         />
                     </Box>
                     <Languages/>
                     <CustomTitle text={keyword("twitter_sna_title")}/>
-
+                    <Grid>
+                {<HelpDialog paragraphs={["assistant_help_1", "assistant_help_2", "assistant_help_3"]}
+                             />
+                }
+            </Grid>
                     </Toolbar>
                 </AppBar>
+
             </div>
         {children}</div>
     )

@@ -3,7 +3,9 @@ import useMyStyles from "..//styles/useMyStyles";
 import useLoadLanguage from "../hooks/useLoadLanguage";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-
+import Box from '@material-ui/core/Box';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 const Footer = (props) => {
     const classes = useMyStyles();
@@ -50,6 +52,12 @@ const Footer = (props) => {
                     contactUs
                 }
             </Typography>
+            <Box display={{xs: 'none', md: 'block'}}>
+                        <img
+                            src={`${publicRuntimeConfig.baseFolder}/images/logo_EUh2020_horizontal.png`}
+                            className={classes.logoLeft}
+                        />
+            </Box>
         </div>
     )
 };
