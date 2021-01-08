@@ -53,7 +53,9 @@ function Layout({ children }) {
                     <Languages/>
                     <CustomTitle text={keyword("twitter_sna_title")}/>
                     <Grid>
-                {<HelpDialog paragraphs={["assistant_help_1", "assistant_help_2", "assistant_help_3"]}
+                {<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
+                 "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",
+                 "aboutsna_wordcloud", "aboutsna_gexf_export", "aboutsna_urls"]}
                              />
                 }
             </Grid>

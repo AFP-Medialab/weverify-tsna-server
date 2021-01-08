@@ -1,0 +1,18 @@
+	en	fr	es	el
+
+assistant_help_title	What is this?	Temp	Temp	Temp
+
+aboutsna_intro	intro	intro	intro	intro
+aboutsna_count	count explanation	count explanation	count explanation	count explanation
+aboutsna_timeline	timeline explanation	timeline explanation	timeline explanation	timeline explanation
+aboutsna_most_RT	most RT explanation	most RT explanation	most RT explanation	most RT explanation
+aboutsna_most_liked	most liked explanation	most liked explanation	most liked explanation	most liked explanation
+aboutsna_most_active	most liked explanation	most liked explanation	most liked explanation	most liked explanation
+aboutsna_most_mentions	most mentions explanation	most mentions explanation	most mentions explanation	most mentions explanation
+aboutsna_bubblegraph	bubblegraph explanation	bubblegraph explanation	bubblegraph explanation	bubblegraph explanation
+aboutsna_heatmap	heatmap explanation	heatmap explanation	heatmap explanation	heatmap explanation
+aboutsna_most_associated_hashtag	most associated hashtag explanation	most associated hashtag explanation	most associated hashtag explanation	most associated hashtag explanation
+aboutsna_ssgraph	ssgraph explanation	ssgraph explanation	ssgraph explanation	ssgraph explanation
+aboutsna_wordcloud	wordcloud explanation	wordcloud explanation	wordcloud explanation	wordcloud explanation
+aboutsna_gexf_export	gexf explanation	gexf explanation	gexf explanation	gexf explanation
+aboutsna_urls	urls explanation	urls explanation	urls explanation	urls explanation

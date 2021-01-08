@@ -18,7 +18,7 @@ const HelpDialog = (props) => {
 
     // a list of keywords found in a tsv file. pass in tsv labels and tsv file location
     const paragraphs = props.paragraphs
-    const keyword = useLoadLanguage("/localDictionary/components/Shared/Assistant.tsv");
+    const keyword = useLoadLanguage("/localDictionary/components/Shared/aboutTsna.tsv");
 
     const handleClickOpen = () => {
         setOpen(true);
