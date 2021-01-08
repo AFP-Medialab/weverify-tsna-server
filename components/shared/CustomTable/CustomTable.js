@@ -90,7 +90,9 @@ export default function CustomTable(props) {
             data={state.data}
             actions={state.actions}
             options={{
-                search: true
+                search: true,
+                emptyRowsWhenPaging: false,
+                pageSizeOptions:[5, 10, 20, 50],
             }}
         />
     );
