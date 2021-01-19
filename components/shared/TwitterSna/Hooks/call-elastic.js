@@ -4,10 +4,10 @@ const { publicRuntimeConfig } = getConfig();
 
 //console.log(publicRuntimeConfig.baseFolder);
 
-let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/getTweets`;
-let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/getUsers`;
-let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/getGexf`;
-let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/getGexfStatus`;
+let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/search/getTweets`;
+let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUsers`;
+let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/search/getGexf`;
+let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/search/getGexfStatus`;
 
 //let elasticSearch_url = process.env.REACT_APP_ELK_URL;
 

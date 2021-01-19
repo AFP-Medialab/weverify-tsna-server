@@ -6,7 +6,7 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
 const tsv = "/localDictionary/components/Shared/FeedBack.tsv";
-let API_URL = `${publicRuntimeConfig.baseFolder}/api/getfeedBack`;
+let API_URL = `${publicRuntimeConfig.baseFolder}/api/support/getfeedBack`;
 
 const FeedBack = () => {
     const keyword = useLoadLanguage(tsv);
