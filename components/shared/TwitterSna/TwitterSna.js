@@ -510,6 +510,7 @@ const TwitterSna = () => {
             <FormControlLabel
               control={
                 <Checkbox
+                  disabled={searchFormDisabled}
                   checked={cache}
                   onChange={cacheChange}
                   value="checkedBox"
