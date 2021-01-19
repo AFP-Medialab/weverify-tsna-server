@@ -277,23 +277,12 @@ const TwitterSna = () => {
     return mystring;
   }
 
-  function resetForm() {
-    setKeywords("");
-    setBannedWords("");
-    setUsersInput("");
-    setLocalTime("true");
-    setLangInput("lang_all");
-    setFilers("none");
-    setVerifiedUsers("false");
-  }
-
   // Reset form & result when user login
   useEffect(() => {
     //console.log("use effect TNSA ... ")
     if (!userAuthenticated) {
       dispatch(cleanTwitterSnaState());
       setSubmittedRequest(null);
-      resetForm();
     }
   }, [userAuthenticated]);
 
