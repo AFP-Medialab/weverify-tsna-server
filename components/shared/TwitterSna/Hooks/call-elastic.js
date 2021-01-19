@@ -311,6 +311,14 @@ function constructMatchPhrase(param, startDate, endDate) {
             }
         })
     }
+    // ALL MEDIA
+    if (param.media === "both") {
+        match_phrases += ',' + JSON.stringify({
+            "exists": {
+                "field": "media.id_str"
+            }
+        })
+    }
 
     // VERIFIED ACCOUNT ?
 
