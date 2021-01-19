@@ -1,11 +1,10 @@
 {
   "name": "weverify-tsna-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Weverify TSNA",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js",
-    "dev2": "next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
