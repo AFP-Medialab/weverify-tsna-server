@@ -46,11 +46,9 @@ export default function TwitterSnaResult(props) {
             <Paper className={classes.root}>
                 <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
                 {
-                    result && result.tweetCount &&
                     <TweetCount result={result} />
                 }
                 {
-                    result.histogram &&
                     <PlotTimeLine result={result} />                    
                 }
                

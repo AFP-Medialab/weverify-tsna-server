@@ -256,15 +256,6 @@ const useMyStyles = makeStyles(theme => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    AboutMedia: {
-        height: "auto",
-        width: "auto",
-        maxWidth: "60%",
-    },
-    InteractiveMedia: {
-        maxWidth: "80%",
-        //maxHeight: window.innerHeight / 2,
-    },
     customTitle: {
         background: theme.palette.primary.main,
         borderRadius: 5,
@@ -278,13 +269,6 @@ const useMyStyles = makeStyles(theme => ({
         display: "block",
         marginLeft: "22%",
         marginRight: "auto",
-    },
-    forensicCard: {
-        width: "100%",
-    },
-    forensicMedia: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
     },
     expand: {
         transform: 'rotate(0deg)',
@@ -301,29 +285,6 @@ const useMyStyles = makeStyles(theme => ({
             zIndex: theme.zIndex.drawer + 1,
         },
     },
-    imgMagnifierContainer: {
-        position: "relative",
-        cursor: "none",
-        margin: 0,
-        padding: 0,
-    },
-    imgMagnifierGlass: {
-        width: "175px",
-        height: "175px",
-        position: "absolute",
-        borderRadius: "100%",
-        boxShadow: "0 0 0 7px rgba(255, 255, 255, 0.85), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25)",
-        /*hide the glass by default*/
-        display: "none",
-    },
-    imgMagnifierImg: {
-        position: "relative",
-        cursor: "none",
-        display: "block",
-    },
-    FactCheckCard : {
-        maxWidth: "80%"
-    },
     bullet: {
         display: 'inline-block',
         margin: '0 2px',
@@ -335,29 +296,12 @@ const useMyStyles = makeStyles(theme => ({
     pos: {
         marginBottom: 12,
     },
-    factCheckLogos : {
-        width: "20%"
-    },
     tab: {
         [theme.breakpoints.up('sm')]: {
             fontSize: theme.typography.pxToRem(13),
             minWidth: 100,
         },
-    },
-    assistantCards: {
-        backgroundColor: "#F8F8F8",
-        width: "100%",
-        marginBottom: 2,
-        textAlign: "centre",
-        '&:hover': {
-            backgroundColor: "#a9e8ef",
-        },
-    },
-    assistantText: {
-        width: "100%",
-        marginBottom: 2,
-        textAlign: "left",
-    },
+    },    
     twitterIcon: {
         color: theme.palette.secondary.main,
         position: "relative",
@@ -365,18 +309,6 @@ const useMyStyles = makeStyles(theme => ({
         width: theme.typography.h5.fontSize,
         height: theme.typography.h5.fontSize,
         marginRight: 3
-    },
-    twitterHeading: {
-        fontSize: theme.typography.h5.fontSize,
-        color: theme.palette.primary.main,
-        textAlign: "left",
-        marginBottom: 25
-    },
-    newAssistantGrid: {
-        width: "100%",
-        marginBottom: 2,
-        textAlign: "left",
-        font: theme.typography.h6.fontSize
     }
 
 }));

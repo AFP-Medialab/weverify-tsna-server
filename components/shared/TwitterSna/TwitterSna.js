@@ -1,10 +1,10 @@
 import Paper from "@material-ui/core/Paper";
 import useMyStyles from "../styles/useMyStyles";
 import useLoadLanguage from "../hooks/useLoadLanguage";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import "../../../redux/actions/tools/twitterSnaActions";
-import { useDispatch, useSelector, useStore } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import DateTimePicker from "../DateTimePicker/DateTimePicker";
 import FormControl from "@material-ui/core/FormControl";
@@ -29,7 +29,6 @@ import dateFormat from "dateformat";
 import AuthenticationCard from "../AuthenticationCard/AuthenticationCard";
 import { setError } from "../../../redux/actions/errorActions";
 import {
-  setTSNAReset,
   cleanTwitterSnaState,
   setTwitterSnaNewRequest,
 } from "../../../redux/actions/tools/twitterSnaActions";
@@ -40,7 +39,6 @@ import OnClickInfo from "../OnClickInfo/OnClickInfo";
 import OnWarningInfo from "../OnClickInfo/OnWarningInfo";
 import FeedBack from "../FeedBack/FeedBack";
 import { changeLanguage } from "../../../redux/actions";
-import FormGroup from "@material-ui/core/FormGroup";
 
 const TwitterSna = () => {
   const dispatch = useDispatch();
