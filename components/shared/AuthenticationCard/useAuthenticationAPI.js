@@ -44,6 +44,7 @@ export default function useAuthenticationAPI() {
   const defaultTimeout = 5000;
   const loginTimeout = 30000;
   const jsonContentType = "application/json";
+  const textContentType = "text/plain";
 
   // Services URL
   const AUTH_SRV_REGISTER_USER_URL = `${publicRuntimeConfig.baseFolder}/api/wrapper/auth/registration`;
@@ -317,7 +318,7 @@ export default function useAuthenticationAPI() {
   const refreshToken = (refreshToken) => {
     return axios.post(AUTH_SRV_REFRESH_TOKEN_URL, refreshToken, {
        headers: {
-         "Content-Type": jsonContentType
+         "Content-Type": textContentType
        },
       // timeout: defaultTimeout
       timeout: 10000

@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react'
-import { format } from 'url'
 import { useDispatch } from "react-redux";
 import { redirectFromPlugin } from "../redux/actions/tools/twitterSnaActions";
 import { userLoginAction, userLoginLoadingAction } from "../redux/actions/authentificationActions";

@@ -6,8 +6,8 @@ const { publicRuntimeConfig } = getConfig();
 
 let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/search/getTweets`;
 let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUsers`;
-let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/search/getGexf`;
-let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/search/getGexfStatus`;
+let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/gexf/getGexf`;
+let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexfStatus`;
 
 //let elasticSearch_url = process.env.REACT_APP_ELK_URL;
 
@@ -547,8 +547,6 @@ function buildQueryMultipleMatchPhrase (field, arr) {
         let size=1000;
         // let esQuery = JSON.stringify(buildQuery4Gexf(must, mustNot,size)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
         let gexfParams=JSON.stringify({
-            "esURL": "http://185.249.140.38/elk/tsnatweets/_search", //elasticSearch_url,
-            "esUserURL": "http://185.249.140.38/elk/tsnausers/_search", //elasticSearchUser_url,
             "mentions":true,
             "retweets":true,
             "replies":true,
