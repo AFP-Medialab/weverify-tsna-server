@@ -61,7 +61,6 @@ async function createCountFb (data) {
 
 
 const useFacebookSnaRequest = (data, keyword) => {
-  const dispatch = useDispatch();
   const buildFirstFbGraph = (data) => {
     //buildHistogram(data);
     buildCountFb(data);
