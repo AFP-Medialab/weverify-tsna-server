@@ -10,7 +10,6 @@ import {
     setSocioGraphResult,
     setHeatMapResult,
     setHistogramResult, 
-    setCountResult,
     setTweetResult,
     setPieChartsResult,
     setUrlsResult,

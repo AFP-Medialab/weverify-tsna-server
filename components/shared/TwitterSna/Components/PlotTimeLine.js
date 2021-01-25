@@ -39,7 +39,7 @@ export default function PlotTimeLine(props){
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result.histogram]);
+    }, [props.result.histogramFb]);
 
 
     const onHistogramClick = (data) => {
@@ -63,19 +63,19 @@ export default function PlotTimeLine(props){
                 aria-controls={"panel0a-content"}
                 id={"panel0a-header"}
             >
-                <Typography className={classes.heading}>{keyword(state.result.histogram.title)}</Typography>
+                <Typography className={classes.heading}>{keyword(state.result.histogramFb.title)}</Typography>
             </AccordionSummary>
             <AccordionDetails>
                 {}
                 <div style={{ width: '100%', }}>
-                    {(state.result.histogram.json && (state.result.histogram.json.length === 0) &&
+                    {(state.result.histogramFb.json && (state.result.histogramFb.json.length === 0) &&
                         <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>)}
-                    {(state.result.histogram.json && state.result.histogram.json.length !== 0) &&
+                    {(state.result.histogramFb.json && state.result.histogramFb.json.length !== 0) &&
                     <Plot useResizeHandler
                         style={{ width: '100%', height: "450px" }}
-                        data={state.result.histogram.json}
-                        layout={state.result.histogram.layout}
-                        config={state.result.histogram.config}
+                        data={state.result.histogramFb.json}
+                        layout={state.result.histogramFb.layout}
+                        config={state.result.histogramFb.config}
                         onClick={(e) => onHistogramClick(e)}
                         onPurge={(a, b) => {
                             console.log(a);

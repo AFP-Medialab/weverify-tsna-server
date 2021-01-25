@@ -1,11 +1,14 @@
-export const createTimeLineChart = (request, json, keyword) => {
+export const createTimeLineChart = (date_min, date_max, json, keyword) => {
+
+  const range_min = date_min.slice(0, -4);
+  const range_max = date_max.slice(0, -4);
 
     let layout = {
-        title: keyword("user_time_chart_title") + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"],
+        title: keyword("user_time_chart_title") + "<br>" + "FACEBOOK CSV NAME" + " - " + date_min + " - " + date_max,
         automargin: true,
         xaxis: {
-        range: [request.from, request.until],
-        rangeslider: { range: [request.from, request.until] },
+          range: [range_min, range_max],
+          rangeslider: { range: [range_min, range_max] },
         },
         annotations: [{
         xref: 'paper',
@@ -33,7 +36,7 @@ export const createTimeLineChart = (request, json, keyword) => {
         displayModeBar: true,
         toImageButtonOptions: {
         format: 'png', // one of png, svg, jpeg, webp
-        filename: request.keywordList.join("&") + "_" + request["from"] + "_" + request["until"] + "_Timeline",
+        filename: "FACEBOOK CSV NAME" + "_" + date_max + "_" + date_max + "_Timeline",
         scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
         },
 
@@ -42,7 +45,7 @@ export const createTimeLineChart = (request, json, keyword) => {
         displaylogo: false,
     };
     json.map((obj) => {
-        obj.x = obj.x.map((timestamp) => {return new Date(parseInt(timestamp) * 1000)});
+        obj.x = obj.x.map((timestamp) => {return new Date(parseInt(timestamp))});
         return obj;
     })
     return {

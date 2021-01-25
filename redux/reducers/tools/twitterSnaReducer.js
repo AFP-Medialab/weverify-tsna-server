@@ -68,8 +68,7 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             return {...state, "request" : payload, "result" : null, "loadingMessage" : null};
         case "SET_TWITTER_SNA_HISTOGRAM_RESULTS":
              return {...state, result: {...state.result, histogram: payload}} 
-        case "SET_TWITTER_SNA_COUNT_RESULTS":
-            return {...state, result: {...state.result, tweetCount: payload}} 
+
         case "SET_TWITTER_TWEETS_RESULTS":
             return {...state, result: {...state.result, tweets: payload}} 
         case "SET_TWITTER_SNA_CLOUD_WORDS_RESULTS":
@@ -88,6 +87,15 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             return {...state, result: {...state.result, topUser: payload}}
         case "SET_TWITTER_SNA_GEXF_EXPORT":
             return {...state, result: {...state.result, gexf: payload}}
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        case "SET_FB_CSV_COUNT_RESULTS":
+            return {...state, result: {...state.result, tweetCountFb: payload}} 
+        case "SET_INSTA_CSV_COUNT_RESULTS":
+            return {...state, result: {...state.result, tweetCountInsta: payload}} 
+        case "SET_TWITTER_SNA_HISTOGRAM_RESULTS_FB":
+            return {...state, result: {...state.result, histogramFb: payload}} 
+        case "SET_TWITTER_PIE_CHARTS_RESULTS_FB":
+            return {...state, result: {...state.result, pieCharts: payload}} 
         default:
             return state;
     }

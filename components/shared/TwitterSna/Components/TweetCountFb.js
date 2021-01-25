@@ -12,8 +12,7 @@ import useMyStyles from "../../styles/useMyStyles";
 import Grid from "@material-ui/core/Grid";
 
 
-let from = "TWEETCOUNT"
-export default function TweetCount(props){
+export default function TweetCountFb(props){
 
 
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
@@ -30,7 +29,7 @@ export default function TweetCount(props){
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result.tweetCount]);
+    }, [props.result.tweetCountFb]);
 
 
     return (
@@ -47,16 +46,24 @@ export default function TweetCount(props){
                             <Grid container justify="space-around" spacing={2}
                                 alignContent={"center"}>
                                 <Grid item>
-                                    <Typography variant={"h6"}>Tweets</Typography>
-                                    <Typography variant={"h2"}>{props.result.tweetCount.count}</Typography>
+                                    <Typography variant={"h6"}>Publications</Typography>
+                                    <Typography variant={"h2"}>{props.result.tweetCountFb.count}</Typography>
                                 </Grid>
                                 <Grid item>
-                                    <Typography variant={"h6"}>Retweets</Typography>
-                                    <Typography variant={"h2"}>{props.result.tweetCount.retweet}</Typography>
+                                    <Typography variant={"h6"}>Total interactions</Typography>
+                                    <Typography variant={"h2"}>{props.result.tweetCountFb.total_interactions}</Typography>
                                 </Grid>
                                 <Grid item>
                                     <Typography variant={"h6"}>Likes</Typography>
-                                    <Typography variant={"h2"}>{props.result.tweetCount.like}</Typography>
+                                    <Typography variant={"h2"}>{props.result.tweetCountFb.likes}</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant={"h6"}>comments</Typography>
+                                    <Typography variant={"h2"}>{props.result.tweetCountFb.comments}</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant={"h6"}>Shares</Typography>
+                                    <Typography variant={"h2"}>{props.result.tweetCountFb.shares}</Typography>
                                 </Grid>
                             </Grid>
                             <Box m={3}/>

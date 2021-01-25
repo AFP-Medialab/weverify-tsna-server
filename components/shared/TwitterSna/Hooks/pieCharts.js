@@ -26,7 +26,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
       displayModeBar: false,
       toImageButtonOptions: {
         format: 'png', // one of png, svg, jpeg, webp
-        filename: request.keywordList.join("&") + "_" + request.from + "_" + request.until + "_Tweets",
+        filename: "request.keywordList.join("&")" + "_" + "request.from" + "_" + "request.until" + "_Tweets",
         scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
       },
       modeBarButtons: [["toImage"]],
@@ -51,7 +51,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
 
     for (let cpt = 0; cpt < keywordTitles.length; cpt++) {
       let specificLayout = JSON.parse(JSON.stringify(layout));
-      let specificTitle = keyword(keywordTitles[cpt]); + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"];
+      let specificTitle = keyword(keywordTitles[cpt]); + "<br>" + " - " + "request[]" + " - ";
       specificLayout.title.text = specificTitle;
       pieCharts.push(
         {

@@ -84,12 +84,10 @@ export const setHistogramResult = (histogramData) => {
         payload :  histogramData
     }
 };
-export const setCountResult = (countData) => {
-    return {
-        type : "SET_TWITTER_SNA_COUNT_RESULTS",
-        payload :  countData
-    }
-};
+
+
+
+
 export const setTweetResult = (tweetData) => {
     return {
         type : "SET_TWITTER_TWEETS_RESULTS",
@@ -169,4 +167,34 @@ export const setTweetsDetailPanel = (from, data) => {
             }
     }
     
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+export const setCountResultFb = (countDataFb) => {
+    return {
+        type : "SET_FB_CSV_COUNT_RESULTS",
+        payload :  countDataFb
+    }
+};
+
+export const setCountResultInsta = (countDataInsta) => {
+    return {
+        type : "SET_INSTA_CSV_COUNT_RESULTS",
+        payload :  countDataInsta
+    }
+};
+
+export const setHistogramResultFb = (histogramDataFb) => {
+    return {
+        type : "SET_TWITTER_SNA_HISTOGRAM_RESULTS_FB",
+        payload :  histogramDataFb
+    }
+};
+
+export const setPieChartsResultFb = (pieChartData) => {
+    return {
+        type : "SET_TWITTER_PIE_CHARTS_RESULTS_FB",
+        payload :  pieChartData
+    }
 };
