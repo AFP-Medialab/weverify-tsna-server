@@ -335,9 +335,7 @@ const useTwitterSnaRequest = (request, keyword) => {
         .catch((error) => {
           handleErrors("twittersna_invalid_credentials");
         });
-    } else {
-      cacheRenderCall(request);
-    }
+    } 
   }, [JSON.stringify(request)]);
 };
 export default useTwitterSnaRequest;

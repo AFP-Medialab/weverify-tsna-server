@@ -13,7 +13,7 @@ import React, {useEffect, useState} from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 
-export default function BubbleChart(props) {
+export default function GexfExport(props) {
    
     const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const classes = useMyStyles();
@@ -26,13 +26,13 @@ export default function BubbleChart(props) {
             result: props.result        
         }
     );
-    useEffect(() => {
+   /* useEffect(() => {
         setState({
             ...state,
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result.gexfExport]);
+    }, [props.result]);*/
     
 
     return (
