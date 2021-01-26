@@ -93,9 +93,13 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
         case "SET_INSTA_CSV_COUNT_RESULTS":
             return {...state, result: {...state.result, tweetCountInsta: payload}} 
         case "SET_TWITTER_SNA_HISTOGRAM_RESULTS_FB":
-            return {...state, result: {...state.result, histogramFb: payload}} 
+            return {...state, result: {...state.result, histogramFb: payload}}
+        case "SET_TWITTER_SNA_HISTOGRAM_RESULTS_INSTA":
+            return {...state, result: {...state.result, histogramInsta: payload}} 
         case "SET_TWITTER_PIE_CHARTS_RESULTS_FB":
-            return {...state, result: {...state.result, pieCharts: payload}} 
+            return {...state, result: {...state.result, pieCharts: payload}}
+        case "SET_TWITTER_PIE_CHARTS_RESULTS_INSTA":
+            return {...state, result: {...state.result, pieChartsInsta: payload}} 
         default:
             return state;
     }

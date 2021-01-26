@@ -15,7 +15,9 @@ import UrlList from "../Components/UrlList";
 import GexfExport from "../Components/GexfExport";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
+const PlotTimeLineInsta = dynamic(import("../Components/PlotTimeLineInsta"), {ssr: false});
 const PlotPieChartFb = dynamic(import("../Components/PlotPieChartFb"), {ssr: false});
+const PlotPieChartInsta = dynamic(import("../Components/PlotPieChartInsta"), {ssr: false});
 const BubbleChart = dynamic(import("../Components/BubbleChart"), {ssr: false});
 const HeatMap = dynamic(import("../Components/HeatMap"), {ssr: false});
 const HashtagGraph = dynamic(import("../Components/HashtagGraph"), {ssr: false});
@@ -66,8 +68,18 @@ export default function TwitterSnaResult(props) {
                 }
 
                 {
+                    result.histogramInsta &&
+                    <PlotTimeLineInsta result={result} />                    
+                }
+
+                {
                     result && result.pieCharts &&
                     <PlotPieChartFb result={result}/>
+                }
+
+                {
+                    result && result.pieChartsInsta &&
+                    <PlotPieChartInsta result={result}/>
                 }
 
                 

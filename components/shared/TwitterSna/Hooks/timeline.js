@@ -4,7 +4,7 @@ export const createTimeLineChart = (date_min, date_max, json, keyword) => {
   const range_max = date_max.slice(0, -4);
 
     let layout = {
-        title: keyword("user_time_chart_title") + "<br>" + "FACEBOOK CSV NAME" + " - " + date_min + " - " + date_max,
+        title: keyword("user_time_chart_title") + "<br>" + "INSTAGRAM CSV NAME" + " - " + date_min + " - " + date_max,
         automargin: true,
         xaxis: {
           range: [range_min, range_max],
