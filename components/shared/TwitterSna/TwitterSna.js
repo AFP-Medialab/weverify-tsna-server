@@ -579,7 +579,7 @@ const getJsonDataForPieChartsInsta = (esResponse, paramKeywordList) => {
     }]);
   }
 
-  //most shares
+  //most followers
   newmap.sort((a, b) => (a.shares < b.shares) ? 1 : -1);
 
   for (let i = 0; i < 20; i++) {
