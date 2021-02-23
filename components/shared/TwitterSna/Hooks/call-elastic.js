@@ -498,6 +498,7 @@ function getIntervalForTimeLineChart(param) {
 }
 
 // Build a query to get documents matching any value in the given array
+// Bug ES index workaround. Get the latest index user per screen name
 function buildQueryMultipleMatchPhrase (field, arr) {
     let match_phrases = [];
     arr.forEach((value) => {
@@ -506,7 +507,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
     });
     match_phrases = match_phrases.join(",");
 
-    let query = '{ "size": 10000, "query": { "bool": { "should": [' + match_phrases + ' ] } } }';
+    let query = '{ "size": 10000, "collapse": {  "field": "screen_name.keyword" }, "sort": [ { "indexedat": "desc" } ] ,"query": { "bool": { "should": [' + match_phrases + ' ] } } }';
     return query;
 }
 
