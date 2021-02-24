@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import Transition from "react-transition-group/Transition";
 import HelpIcon from "@material-ui/icons/Help";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
-import markdownToHtml from "../lib/markdownToHtml";
 
 //const tsv = "/localDictionary/components/Shared/aboutTsna.tsv";
 const tsv = "/components/Shared/aboutTsna.tsv";
@@ -47,7 +46,7 @@ const HelpDialog = (props) => {
               {
                 <div
                   className={"content"}
-                  dangerouslySetInnerHTML={{ __html: markdownToHtml(keyword(text)) }}
+                  dangerouslySetInnerHTML={{ __html: keyword(text) }}
                 ></div>
               }
             </Typography>
