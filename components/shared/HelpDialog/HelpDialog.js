@@ -8,16 +8,18 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Transition from "react-transition-group/Transition";
 import HelpIcon from "@material-ui/icons/Help";
-import useLoadLanguage from "../hooks/useLoadLanguage";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+import markdownToHtml from "../lib/markdownToHtml";
+
+//const tsv = "/localDictionary/components/Shared/aboutTsna.tsv";
+const tsv = "/components/Shared/aboutTsna.tsv";
 
 const HelpDialog = (props) => {
   const [open, setOpen] = useState(false);
 
   // a list of keywords found in a tsv file. pass in tsv labels and tsv file location
   const paragraphs = props.paragraphs;
-  const keyword = useLoadLanguage(
-    "/localDictionary/components/Shared/aboutTsna.tsv"
-  );
+  const keyword = useLoadLanguage(tsv);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,7 +47,7 @@ const HelpDialog = (props) => {
               {
                 <div
                   className={"content"}
-                  dangerouslySetInnerHTML={{ __html: keyword(text) }}
+                  dangerouslySetInnerHTML={{ __html: markdownToHtml(keyword(text)) }}
                 ></div>
               }
             </Typography>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import plotly from "plotly.js-dist";
 import createPlotComponent from "react-plotly.js/factory";
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import { displayTweets } from "../lib/displayTweets";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -19,13 +19,16 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+
 export default function PlotTimeLine(props) {
   const dispatch = useDispatch();
   //HISTOGRAM
   const [histoVisible, setHistoVisible] = useState(true);
   const histoTweets = useSelector((state) => state.twitterSna.histoview);
 
-  const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+  const keyword = useLoadLanguage(tsv);
   const classes = useMyStyles();
 
   const [state, setState] = useState({

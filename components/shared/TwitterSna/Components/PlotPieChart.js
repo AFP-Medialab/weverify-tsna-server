@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import plotly from "plotly.js-dist";
 import createPlotComponent from "react-plotly.js/factory";
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
@@ -20,10 +20,13 @@ import { displayTweets } from "../lib/displayTweets";
 import { downloadClick } from "../lib/downloadClick";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+
 
 export default function PlotPieChart(props) {
   const dispatch = useDispatch();
-  const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+  const keyword = useLoadLanguage(tsv);
   const request = useSelector((state) => state.twitterSna.request);
   const [pieCharts0, setPieCharts0] = useState(null);
   const [pieCharts1, setPieCharts1] = useState(null);

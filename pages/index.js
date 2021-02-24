@@ -3,8 +3,10 @@ import React from "react";
 import Layout from "../components/layout";
 import TwitterSna from "../components/shared/TwitterSna/TwitterSna";
 import Footer from "../components/shared/Footer/Footer";
+import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
-const Index = () => {
+const Index = ({keyword}) => {
  
   return (
     <Layout>

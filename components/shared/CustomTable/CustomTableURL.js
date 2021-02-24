@@ -15,12 +15,13 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import useLoadLanguage from "../hooks/useLoadLanguage";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { Paper } from "@material-ui/core";
 
 import Link from "@material-ui/core/Link";
 
-const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
+//const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
+const tsv = "/components/Shared/CustomTable.tsv";
 
 const tableIcons = {
     Add: AddBox,

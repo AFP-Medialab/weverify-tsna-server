@@ -1,15 +1,18 @@
 import React from "react";
 import useMyStyles from "..//styles/useMyStyles";
-import useLoadLanguage from "../hooks/useLoadLanguage";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import Box from '@material-ui/core/Box';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
+//const tsv = "/localDictionary/components/Shared/Footer.tsv";
+const tsv = "/components/Shared/Footer.tsv";
+
 const Footer = (props) => {
     const classes = useMyStyles();
-    const keyword = useLoadLanguage("/localDictionary/components/Shared/Footer.tsv");
+    const keyword = useLoadLanguage(tsv);
 
     let provideBy, link, linkLabel, contactUs;
 

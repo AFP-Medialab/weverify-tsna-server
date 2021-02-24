@@ -20,15 +20,17 @@ import {downloadClick} from "../lib/downloadClick";
 import {getDayAsString} from "../Hooks/heatMap"
 
 import useMyStyles from "../../styles/useMyStyles";
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_HEAT_MAP";
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function HeatMap (props) { 
     const dispatch = useDispatch();
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage(tsv);
     const classes = useMyStyles();
 
     const [heatMapTweets, setheatMapTweets] = useState(null);

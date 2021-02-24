@@ -3,19 +3,20 @@ import { Paper } from "@material-ui/core";
 import useMyStyles from "../../styles/useMyStyles";
 import React, { useEffect, useState, useCallback } from "react";
 import Box from "@material-ui/core/Box";
-import useLoadLanguage from "../../hooks/useLoadLanguage"
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage"
 import Button from "@material-ui/core/Button";
 import CustomTableURL from "../../CustomTable/CustomTableURL";
 import OnClickInfo from '../../OnClickInfo/OnClickInfo';
 import {downloadClick} from "../lib/downloadClick";
 
-
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function cloudChart (props) {
 
     const dispatch = useDispatch();
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage(tsv);
     const classes = useMyStyles();
     //to redirect
     const userLogined = useSelector(state => state.userSession && state.userSession.user);
