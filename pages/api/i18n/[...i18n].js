@@ -6,7 +6,6 @@ export default (req, res) => {
   } = req;
   const path = i18n.join("/");
   const url = i18nURL + "/" + path;
-  console.log("url ", url);
   const headers = {
     "Content-Type": "text/plain",
   };
