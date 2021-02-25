@@ -1,6 +1,5 @@
 import Paper from "@material-ui/core/Paper";
 import useMyStyles from "../styles/useMyStyles";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import "../../../redux/actions/tools/twitterSnaActions";
@@ -40,14 +39,11 @@ import OnWarningInfo from "../OnClickInfo/OnWarningInfo";
 import FeedBack from "../FeedBack/FeedBack";
 import { changeLanguage } from "../../../redux/actions";
 
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-
-const TwitterSna = () => {
+//keyword from /components/NavItems/tools/TwitterSna.tsv
+const TwitterSna = ({keyword}) => {
   const dispatch = useDispatch();
   const classes = useMyStyles();
-  const keyword = useLoadLanguage(tsv);
   const request = useSelector((state) => state.twitterSna.request);
   const error = useSelector((state) => state.error);
 

@@ -6,16 +6,16 @@ import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
-const Index = ({keyword}) => {
- 
+const Index = () => {
+  const keyword = useLoadLanguage(tsv);
   return (
-    <Layout>
+    <Layout keyword={keyword}>
       <Head>
         <title>WeVerify Twitter SNA</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <TwitterSna />
+        <TwitterSna keyword={keyword} />
       </main>
       <footer>
         <Footer />

@@ -6,18 +6,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 import styles from './layout.module.css';
 import useMyStyles from './shared/styles/useMyStyles';
 import getConfig from 'next/config';
-import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import CustomTitle from "../components/shared/CustomTitle/CustomTitle"
 import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
 import Grid from '@material-ui/core/Grid';
 const { publicRuntimeConfig } = getConfig();
 
 export const siteTitle = 'Weverify'
-//const tsv = /localDictionary/tools/TwitterSna.tsv;
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-function Layout({ children }) {
+
+function Layout(props) {
     const classes = useMyStyles();
-    const keyword = useLoadLanguage(tsv);
+    //keyword from /components/NavItems/tools/TwitterSna.tsv
+    const keyword = props.keyword;
 
     const handleClick = event => {
         window.open("https://weverify.eu/about/", "_blank");
@@ -52,7 +51,7 @@ function Layout({ children }) {
                         />
                     </Box>
                     <Languages/>
-                    <CustomTitle text={keyword("twitter_sna_title") + "(beta)"}/>
+                    <CustomTitle text={keyword("twitter_sna_title")}/>
                     <Grid>
                 {<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
                  "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",
@@ -64,7 +63,7 @@ function Layout({ children }) {
                 </AppBar>
 
             </div>
-        {children}</div>
+        {props.children}</div>
     )
   }
   
