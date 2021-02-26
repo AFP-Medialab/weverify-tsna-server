@@ -1,4 +1,4 @@
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
@@ -8,9 +8,13 @@ import CustomTable from "../../CustomTable/CustomTable";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+
+
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
-  const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+  const keyword = useLoadLanguage(tsv);
   const request = useSelector((state) => state.twitterSna.request);
 
   function downloadClick(csvArr, name, histo, type = "Tweets_") {

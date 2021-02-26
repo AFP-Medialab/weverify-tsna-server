@@ -5,14 +5,16 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import OnClickInfo from "../../OnClickInfo/OnClickInfo";
 import React, { useEffect, useState } from "react";
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
 import Grid from "@material-ui/core/Grid";
 
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function TweetCount(props) {
-  const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+  const keyword = useLoadLanguage(tsv);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   const [tweetCount, setTweetCount] = useState({

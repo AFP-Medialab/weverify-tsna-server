@@ -2,10 +2,11 @@ import useMyStyles from "../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
-import useLoadLanguage from "../hooks/useLoadLanguage";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Linkify from 'react-linkify';
 
-const tsv = "/localDictionary/components/Shared/OnClickInfo.tsv";
+//const tsv = "/localDictionary/components/Shared/OnClickInfo.tsv";
+const tsv = "/components/Shared/OnClickInfo.tsv";
 
 const OnClickInfo = (props) => {
     const classes = useMyStyles();

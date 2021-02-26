@@ -17,11 +17,14 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import {downloadClick} from "../lib/downloadClick";
 
 import useMyStyles from "../../styles/useMyStyles";
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import {createGraphWhenClickANode} from "../../lib/sigmaGraph"
 
 //possible error, same as plot
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
+
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 let from = "PLOT_HASHTAG_GRAPH";
 
@@ -29,7 +32,7 @@ export default function HashtagGraph (props) {
 
     const dispatch = useDispatch();
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage(tsv);
     const classes = useMyStyles();
 
     const [coHashtagGraphTweets, setCoHashtagGraphTweets] = useState(null);

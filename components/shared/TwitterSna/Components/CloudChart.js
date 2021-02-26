@@ -16,7 +16,7 @@ import ReactWordcloud from "react-wordcloud";
 import { select } from 'd3-selection';
 import {displayTweets} from "../lib/displayTweets";
 import useMyStyles from "../../styles/useMyStyles";
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import {downloadClick, downloadAsPNG} from "../lib/downloadClick";
 import Plotly from 'plotly.js-dist';
 import { saveSvgAsPng } from 'save-svg-as-png';
@@ -24,9 +24,12 @@ import { saveSvgAsPng } from 'save-svg-as-png';
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+
 export default function cloudChart (props) {
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage(tsv);
     const classes = useMyStyles();
 
     const [filesNames, setfilesNames] = useState(null);
