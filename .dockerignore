@@ -7,3 +7,5 @@ node_modules
 .DS_Store
 .dockerignore
 nginx
+docker-compose.yml
+docker-compose-tsv-server.yml
