@@ -7,7 +7,7 @@ const { publicRuntimeConfig } = getConfig();
 
 //const tsv = "/localDictionary/components/Shared/FeedBack.tsv";
 const tsv = "/components/FeedBack.tsv";
-let API_URL = `${publicRuntimeConfig.baseFolder}/api/support/getfeedBack`;
+let API_URL = `${publicRuntimeConfig.baseFolder}/api/support/getFeedBack`;
 
 const FeedBack = () => {
     const keyword = useLoadLanguage(tsv);
