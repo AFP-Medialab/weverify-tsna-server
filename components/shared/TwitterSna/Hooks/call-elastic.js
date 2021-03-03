@@ -470,7 +470,8 @@ function constructAggForTimeLineChart(calendar_interval) {
                     },
                     "dt": {
                         "terms": {
-                            "field": "datetimestamp"
+                            "field": "datetimestamp",
+                            "size": 1
                         }
                     }
                 }
@@ -483,7 +484,6 @@ function constructAggForTimeLineChart(calendar_interval) {
 function getIntervalForTimeLineChart(param) {
     let queryStart = param["from"];
     let queryEnd = param["until"];
-
     let dateEndQuery = new Date(queryEnd);
     let dateStartQuery = new Date(queryStart);
 
