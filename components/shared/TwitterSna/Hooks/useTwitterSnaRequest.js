@@ -56,6 +56,7 @@ const useTwitterSnaRequest = (request, keyword) => {
     };
     // Check request
     const cacheRenderCall = (request) => {
+      console.log("cache cachce");
       dispatch(
         setTwitterSnaLoadingMessage(keyword("twittersna_building_graphs"))
       );
@@ -96,19 +97,18 @@ const useTwitterSnaRequest = (request, keyword) => {
             );
           } else {
             //running
-            generateFirstGraph(request)
-              .then(() => {
-                if (lastStep === "Pending")
-                  dispatch(
-                    setTwitterSnaLoadingMessage(
-                      keyword("twittersna_fetching_tweets")
-                    )
-                  );
-                setTimeout(
-                  () => getResultUntilsDone(sessionId, request, "Running"),
-                  5000
+            generateFirstGraph(request).then(() => {
+              if (lastStep === "Pending")
+                dispatch(
+                  setTwitterSnaLoadingMessage(
+                    keyword("twittersna_fetching_tweets")
+                  )
                 );
-              });
+              setTimeout(
+                () => getResultUntilsDone(sessionId, request, "Running"),
+                5000
+              );
+            });
           }
         })
         .catch(() => {
@@ -341,8 +341,9 @@ const useTwitterSnaRequest = (request, keyword) => {
         .then((response) => {
           if (response.data.status === "Error")
             handleErrors("twitterSnaErrorMessage");
-          else if (response.data.status === "Done") cacheRenderCall(request);
-          else {
+          else if (response.data.status === "Done") { 
+            cacheRenderCall(request);
+          } else {
             getResultUntilsDone(response.data.session, request, "Pending");
           }
         })
