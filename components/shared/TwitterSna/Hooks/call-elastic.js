@@ -9,8 +9,6 @@ let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUse
 let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/gexf/getGexf`;
 let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexfStatus`;
 
-//let elasticSearch_url = process.env.REACT_APP_ELK_URL;
-
 // Aggregation data for pie charts, timelime chart,...
 export function getAggregationData(param) {
     let must = constructMatchPhrase(param);
@@ -43,7 +41,7 @@ export async function getTweets(param) {
         return {
             tweets: elasticResponse.hits.hits
         }
-    });
+    }).catch((error)=>{throw error});
 }
 
 export async function getCloudTweets(param) {
@@ -55,7 +53,7 @@ export async function getCloudTweets(param) {
         return {
             tweets: elasticResponse.hits.hits
         }
-    });
+    }).catch((error)=>{throw error});
 }
 
 //Get tweets
@@ -67,6 +65,10 @@ async function queryTweetsFromES(aggs, must, mustNot, cloudTweets) {
             'Content-Type': 'application/json'
         }
     });
+    if(!response.ok){
+        throw new Error("error ES Call");
+    }
+
     let elasticResponse = await response.json();
 
     let isMore10kRecords = (elasticResponse["hits"]["total"]["value"] === 10000 && elasticResponse["hits"]["total"]["relation"] === "gte") ? true : false;
@@ -84,6 +86,7 @@ async function queryTweetsFromES(aggs, must, mustNot, cloudTweets) {
     } else {
         return elasticResponse;
     }
+    
 }
 
 async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, searchAfter, elasticResponse, cloudTweets) {
@@ -467,7 +470,8 @@ function constructAggForTimeLineChart(calendar_interval) {
                     },
                     "dt": {
                         "terms": {
-                            "field": "datetimestamp"
+                            "field": "datetimestamp",
+                            "size": 1
                         }
                     }
                 }
@@ -480,21 +484,25 @@ function constructAggForTimeLineChart(calendar_interval) {
 function getIntervalForTimeLineChart(param) {
     let queryStart = param["from"];
     let queryEnd = param["until"];
-
     let dateEndQuery = new Date(queryEnd);
     let dateStartQuery = new Date(queryStart);
 
     let diff = (dateEndQuery - dateStartQuery) / (1000 * 3600 * 24);
     let interval = "";
-    if (diff > 7) {
-        interval = "1d";
+    if(diff>30){
+        interval = "1w";
     } else {
-        interval = "1h";
+        if (diff > 7) {
+            interval = "1d";
+        } else {
+            interval = "1h";
+        }
     }
     return interval;
 }
 
 // Build a query to get documents matching any value in the given array
+// Bug ES index workaround. Get the latest index user per screen name
 function buildQueryMultipleMatchPhrase (field, arr) {
     let match_phrases = [];
     arr.forEach((value) => {
@@ -503,7 +511,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
     });
     match_phrases = match_phrases.join(",");
 
-    let query = '{ "size": 10000, "query": { "bool": { "should": [' + match_phrases + ' ] } } }';
+    let query = '{ "size": 10000, "collapse": {  "field": "screen_name.keyword" }, "sort": [ { "indexedat": "desc" } ] ,"query": { "bool": { "should": [' + match_phrases + ' ] } } }';
     return query;
 }
 

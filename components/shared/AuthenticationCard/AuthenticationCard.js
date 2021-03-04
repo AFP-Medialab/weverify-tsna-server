@@ -8,7 +8,7 @@ import useMyStyles from "../styles/useMyStyles";
 import useAuthenticationAPI from './useAuthenticationAPI';
 import { ERR_AUTH_UNKNOWN_ERROR } from './authenticationErrors';
 import { setError } from "../../../redux/actions/errorActions";
-import useLoadLanguage from "../hooks/useLoadLanguage";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
@@ -64,7 +64,8 @@ const loginValidationSchema = yup.object().shape({
   accessCode: yup.string()
     .required("LOGINFORM_ACCESSCODE_ERR_REQUIRED")
 });
-
+//const tsv = "/localDictionary/components/Shared/Authentication.tsv";
+const tsv = "/components/Shared/Authentication.tsv";
 /**
  * Authentication card component.
  *
@@ -89,7 +90,7 @@ const AuthenticationCard = (props) => {
   const userLoginLoading = useSelector(state => state.userSession && state.userSession.userLoginLoading);
 
   // i18n
-  const messageI18NResolver = useLoadLanguage("/localDictionary/components/Shared/Authentication.tsv");
+  const messageI18NResolver = useLoadLanguage(tsv);
 
   // Authentication API
   const authenticationAPI = useAuthenticationAPI();

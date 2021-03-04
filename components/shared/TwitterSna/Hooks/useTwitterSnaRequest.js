@@ -56,6 +56,7 @@ const useTwitterSnaRequest = (request, keyword) => {
     };
     // Check request
     const cacheRenderCall = (request) => {
+      console.log("cache cachce");
       dispatch(
         setTwitterSnaLoadingMessage(keyword("twittersna_building_graphs"))
       );
@@ -110,7 +111,7 @@ const useTwitterSnaRequest = (request, keyword) => {
             });
           }
         })
-        .catch((e) => {
+        .catch(() => {
           dispatch(userLogoutAction());
           handleErrors("twittersna_invalid_credentials");
         });
@@ -136,27 +137,40 @@ const useTwitterSnaRequest = (request, keyword) => {
      */
     const generateFirstGraph = async (request) => {
       let entries = makeEntries(request);
-      const responseArrayOf9 = await axios.all([getAggregationData(entries)]);
-      makeFirstResult(request, responseArrayOf9);
+
+      axios
+        .all([getAggregationData(entries)])
+        .then((responseArrayOf9) => {
+          makeFirstResult(request, responseArrayOf9);
+        })
+        .catch(() => {
+          handleErrors("twitterSnaErrorMessage");
+        });
     };
 
     const generateSecondGraph = async (request) => {
       let entries = makeEntries(request);
-
-      buildGexf(entries);
-
-      const responseArrayOf9 = await axios.all([
-        getAggregationData(entries),
-        getTweets(entries),
-      ]);
-      makeSecondResult(request, responseArrayOf9);
+      await axios
+        .all([getAggregationData(entries), getTweets(entries)])
+        .then((responseArrayOf9) => {
+          buildGexf(entries);
+          makeSecondResult(request, responseArrayOf9);
+        })
+        .catch(() => {
+          handleErrors("twitterSnaErrorMessage");
+        });
     };
 
     const generateThirdGraph = async (request) => {
       let entries = makeEntries(request);
-      const responseArrayOf9 = await axios.all([getCloudTweets(entries)]);
-
-      makeThirdResult(request, responseArrayOf9);
+      axios
+        .all([getCloudTweets(entries)])
+        .then((responseArrayOf9) => {
+          makeThirdResult(request, responseArrayOf9);
+        })
+        .catch(() => {
+          handleErrors("twitterSnaErrorMessage");
+        });
     };
 
     const makeFirstResult = (request, responseArrayOf9) => {
@@ -327,16 +341,15 @@ const useTwitterSnaRequest = (request, keyword) => {
         .then((response) => {
           if (response.data.status === "Error")
             handleErrors("twitterSnaErrorMessage");
-          else if (response.data.status === "Done") cacheRenderCall(request);
-          else {
+          else if (response.data.status === "Done") { 
+            cacheRenderCall(request);
+          } else {
             getResultUntilsDone(response.data.session, request, "Pending");
           }
         })
-        .catch((error) => {
+        .catch(() => {
           handleErrors("twittersna_invalid_credentials");
         });
-    } else {
-      cacheRenderCall(request);
     }
   }, [JSON.stringify(request)]);
 };

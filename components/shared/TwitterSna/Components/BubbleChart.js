@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import CustomTable from "../../CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {displayTweets} from "../lib/displayTweets"
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../styles/useMyStyles";
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
@@ -22,14 +22,16 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import {downloadClick} from "../lib/downloadClick";
 
 const Plot = createPlotComponent(plotly);
-let from = "SET_TWITTER_SNA_BUBBLE_CHART_RESULTS";
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+
 export default function BubbleChart(props) {
     
     const dispatch = useDispatch();
     const [bubbleTweets, setBubbleTweets] = useState(null);
     const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage(tsv);
     const classes = useMyStyles();
     const request = useSelector(state => state.twitterSna.request);
 

@@ -5,20 +5,22 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from "@material-ui/core/Tooltip";
 import TranslateIcon from '@material-ui/icons/Language';
 import {useSelector, useDispatch} from "react-redux";
-import useLoadLanguage from "../hooks/useLoadLanguage";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+
 import {changeLanguage} from "../../../redux/actions"
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
-const tsv = "/localDictionary/components/languages.tsv";
-
+//const tsv = "/localDictionary/components/languages.tsv";
+const tsv = "/components/NavItems/languages.tsv";
 
 const Languages = () => {
+    
     const keyword = useLoadLanguage(tsv);
     const dictionary = useSelector(state => state.dictionary);
-    const localtsv = `${publicRuntimeConfig.baseFolder}`+tsv;
+    
     const keywordByLang = (language) => {
-        return (dictionary && dictionary[localtsv] && dictionary[localtsv][language])? dictionary[localtsv][language]["lang_label"]: "";
+        return (dictionary && dictionary[tsv] && dictionary[tsv][language])? dictionary[tsv][language]["lang_label"]: "";
     };
 
     const dispatch = useDispatch();
@@ -38,7 +40,7 @@ const Languages = () => {
         setAnchorEl(null);
     };
 
-    const language_list = (dictionary && dictionary[localtsv])? Object.keys(dictionary[localtsv]) : [];
+    const language_list = (dictionary && dictionary[tsv])? Object.keys(dictionary[tsv]) : [];
 
     return (
         <div>

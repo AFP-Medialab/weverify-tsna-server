@@ -16,20 +16,19 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import {downloadClick} from "../lib/downloadClick";
 
 import useMyStyles from "../../styles/useMyStyles";
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 
 import {displayTweets} from "../lib/displayTweets";
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
 import {createGraphWhenClickANode} from "../../lib/sigmaGraph";
 import {getDomain} from "../Hooks/socioSemGraph"
 
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function SocioSemGraph (props) {
-
-
-    const dispatch = useDispatch();
-
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    
+    const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+    const keyword = useLoadLanguage(tsv);
     const classes = useMyStyles();
 
     const [socioSemantic4ModeGraphTweets, setSocioSemantic4ModeGraphTweets] = useState(null);

@@ -1,12 +1,13 @@
 import React from "react";
 import SlackFeedback from "react-slack-feedback";
 import feedBackTheme from "./feedBackTheme";
-import useLoadLanguage from "../hooks/useLoadLanguage";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
-const tsv = "/localDictionary/components/Shared/FeedBack.tsv";
-let API_URL = `${publicRuntimeConfig.baseFolder}/api/support/getfeedBack`;
+//const tsv = "/localDictionary/components/Shared/FeedBack.tsv";
+const tsv = "/components/FeedBack.tsv";
+let API_URL = `${publicRuntimeConfig.baseFolder}/api/support/getFeedBack`;
 
 const FeedBack = () => {
     const keyword = useLoadLanguage(tsv);

@@ -6,7 +6,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import styles from './layout.module.css';
 import useMyStyles from './shared/styles/useMyStyles';
 import getConfig from 'next/config';
-import useLoadLanguage from "../components/shared/hooks/useLoadLanguage";
 import CustomTitle from "../components/shared/CustomTitle/CustomTitle"
 import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
 import Grid from '@material-ui/core/Grid';
@@ -14,9 +13,10 @@ const { publicRuntimeConfig } = getConfig();
 
 export const siteTitle = 'Weverify'
 
-function Layout({ children }) {
+function Layout(props) {
     const classes = useMyStyles();
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    //keyword from /components/NavItems/tools/TwitterSna.tsv
+    const keyword = props.keyword;
 
     const handleClick = event => {
         window.open("https://weverify.eu/about/", "_blank");
@@ -63,7 +63,7 @@ function Layout({ children }) {
                 </AppBar>
 
             </div>
-        {children}</div>
+        {props.children}</div>
     )
   }
   

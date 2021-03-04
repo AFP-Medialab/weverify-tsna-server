@@ -1,7 +1,7 @@
 import { Paper } from "@material-ui/core";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../styles/useMyStyles";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
@@ -13,9 +13,12 @@ import React, {useEffect, useState} from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 
-export default function BubbleChart(props) {
+//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+
+export default function GexfExport(props) {
    
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+    const keyword = useLoadLanguage(tsv);
     const classes = useMyStyles();
     const request = useSelector(state => state.twitterSna.request);
 
@@ -26,13 +29,13 @@ export default function BubbleChart(props) {
             result: props.result        
         }
     );
-    useEffect(() => {
+   /* useEffect(() => {
         setState({
             ...state,
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result.gexfExport]);
+    }, [props.result]);*/
     
 
     return (

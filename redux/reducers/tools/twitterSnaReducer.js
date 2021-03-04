@@ -29,7 +29,7 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
         case "SET_TWITTER_SNA_NEW_REQUEST":
             return {...state, "notification" : false, "loading" : false,
                 "request" : payload.request, "result" : null, "pieCharts" : [null,null,null,null], 
-                "donutIndex" : null, "topUser" : null}
+                "donutIndex" : null, "topUser" : null, "gexfExport" : null}
         case "SET_TWITTER_SNA_RESULT":
             state.notification = payload.notification;
             state.loading = payload.loading;
@@ -86,8 +86,7 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             return {...state, result: {...state.result, urls: payload}}
         case "SET_TWITTER_SNA_BUBBLE_CHART_RESULTS":
             return {...state, result: {...state.result, topUser: payload}}
-        case "SET_TWITTER_SNA_GEXF_EXPORT":
-            return {...state, result: {...state.result, gexf: payload}}
+       
         default:
             return state;
     }
