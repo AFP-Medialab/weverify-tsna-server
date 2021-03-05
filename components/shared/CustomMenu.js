@@ -2,6 +2,9 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import {Route, BrowserRouter as Router} from "react-router-dom";
+import CSV from '../../pages/index';
+import twitter from '../../pages/csvReader';
 
 export default function SimpleMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);  
@@ -16,6 +19,7 @@ export default function SimpleMenu() {
   };
 
   return (
+    <Router>    
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
         Open Menu
@@ -31,5 +35,8 @@ export default function SimpleMenu() {
         <MenuItem onClick={handleClose}>CSV-Reader</MenuItem>
       </Menu>
     </div>
+    <Route path="/" component={CSV}/>
+    <Route path="/csvReader" component={twitter}/>
+    </Router>
   );
 }

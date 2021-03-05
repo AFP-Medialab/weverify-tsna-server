@@ -38,6 +38,7 @@
     "react-plotly": "^1.0.0",
     "react-plotly.js": "^2.5.0",
     "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
     "react-sigma": "^1.2.35",
     "react-slack-feedback": "^2.1.0",
     "react-wordcloud": "^1.2.7",
