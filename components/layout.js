@@ -1,6 +1,7 @@
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Head from 'next/head';
+import CustomMenu from './shared/CustomMenu';
 import Languages from './shared/languages/languages';
 import Toolbar from '@material-ui/core/Toolbar';
 import styles from './layout.module.css';
@@ -50,8 +51,9 @@ function Layout(props) {
                             onClick={()=> handleClick()}
                         />
                     </Box>
+                    <CustomMenu/>
                     <Languages/>
-                    <CustomTitle text={keyword("twitter_sna_title")}/>
+                    <CustomTitle text={props.title}/>
                     <Grid>
                 {<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
                  "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import Layout from "../components/layout";
-import TwitterSna from "../components/shared/TwitterSna/TwitterSna";
+import CsvSna from "../components/shared/CsvSna/CsvSna";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
@@ -9,13 +9,13 @@ const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 const Index = () => {
   const keyword = useLoadLanguage(tsv);
   return (
-    <Layout title={keyword("twitter_sna_title")}>
+    <Layout title={"CsvSna"}>
       <Head>
-        <title>WeVerify Twitter SNA</title>
+        <title>Csv Reader</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <TwitterSna keyword={keyword} />
+        <CsvSna keyword={keyword} />
       </main>
       <footer>
         <Footer />
