@@ -17,6 +17,7 @@ const Index = props => {
             <link rel="icon" href="/favicon.ico" />
           </Head>
           <main>
+            
           <TwitterSna />
           </main>
           <footer>

@@ -78,12 +78,12 @@ export const getJsonDataForTimeLineChart = (dataResponse) => {
       usersGet(dateObj, infos);
       infos.push({
         date: dateObj['key_as_string'],
-        key: "Tweets",
+        key: "Posts",
         nb: dateObj["doc_count"],
       });
       infos.push({
         date: dateObj['key_as_string'],
-        key: "Retweets",
+        key: "Shares",
         nb: dateObj["1"]["value"]
       });
     });
@@ -95,7 +95,7 @@ export const getJsonDataForTimeLineChart = (dataResponse) => {
       let date = info.date;
       let nb = info.nb;
       var type = "markers";
-      if (info.key === "Tweets" || info.key === "Retweets")
+      if (info.key === "Posts" || info.key === "Shares")
         type = 'lines';
       let plotlyInfo = {
         mode: type,

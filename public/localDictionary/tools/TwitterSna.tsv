@@ -1,6 +1,6 @@
 	en	fr	es	el
 twitterStatsErrorMessage	Please fill the required fields (＊)	Veuillez remplir les champs requis (＊)	Rellene los campos requeridos (＊)	Παρακαλώ συμπληρώστε τα απαιτούμενα πεδία (＊)
-twitter_sna_title	Twitter Social network analysis (beta)	Analyse des réseaux sociaux sur Twitter (beta)	Twitter Análisis de redes sociales (beta)	Ανάλυση κοινωνικού δικτύου Twitter (beta)
+twitter_sna_title	Facebook & Instagram CSV analysis	Analyse des réseaux sociaux sur Twitter (beta)	Twitter Análisis de redes sociales (beta)	Ανάλυση κοινωνικού δικτύου Twitter (beta)
 twitter_sna_search	Keyword, URL or #	Mot clé, URL ou #	Palabra clave, URL o #	Λέξη-κλειδί, διεύθυνση URL ή #
 twitter_sna_not	Words to exclude in the query	Mots à exclure de la requête	Palabras a excluir en la consulta	Λέξεις για εξαίρεση στο ερώτημα
 twitter_sna_user	Tweeted by (Twitter account name)	Tweeté par (Nom de compte Twitter)	Twiteado por (Nombre de una cuenta de Twitter)	Tweet από (Όνομα λογαριασμού Twitter)
@@ -50,10 +50,10 @@ top_users_pie_chart_title	Most active users	Utilisateurs les plus actifs	Usuario
 mention_cloud_chart_title	Most mentioned accounts	Compte les plus mentionnés	Usuarios más mencionados	Λογαριασμοί που έχουν αναφερθεί πιο πολύ
 user_time_chart_title	Propagation timeline	Frise chronologique de propagation	Línea de tiempo de propagación	Χρονοδιάγραμμα διάδοσης
 hashtag_graph_title	Most associated hashtags	Hashtags les plus associés	Hashtags más Asociados	Πιο σχετικά hashtag
-retweets_cloud_chart_title	Most retweeted users	Utilisateurs les plus retweetés	Usuarios más retweeteados	Χρήστες που έχουν γίνει περισσότερο retweet
+retweets_cloud_chart_title	Most shared users	Utilisateurs les plus partagés	Usuarios más compartidos	Οι περισσότεροι κοινόχρηστοι χρήστες retweet
 likes_cloud_chart_title	Most liked users	Utilisateurs les plus likés	Usuarios más retweeteados	Χρήστες που εχουν γίνεi περισσότερο like
 top_words_cloud_chart_title	Most used words in tweets	Mots les plus utilisés dans les tweets	Palabras más utilizadas en tweets	Λέξεις που χρησιμοποιήθηκαν πιο πολύ στα tweets
-tweetCounter_title	Tweets number	Nombre de tweets	Número de Tweet	Αριθμος tweets
+tweetCounter_title	Logistics	Logistique	logística	Επιμελητεία
 sosem_graph_title	Socio-semantic graph (hashtags and mentioned users)	Graphe socio-sémantique (hashtags et utilisateurs mentionnés)	Grafo socio-semantico (hashtags y usuarios mencionados)	Κοινωνικο-σημασιολογικό γράφημα (hashtag και αναφερόμενοι χρήστες)
 sosem_4mode_graph_title	Socio-semantic graph (hashtags, URLs, mentions, RTs with comment, replies)	Graphe socio-sémantique (hashtags, URLs, mentions, RTs avec commentaire, réponses)	Grafo socio-semantico (hashtags, URLs, mencionados, RTs con comentarios, respuestas)	Κοινωνικο σημασιολογικό γράφημα (hashtag, URLs, αναφορές, RT με σχόλιο, απαντήσεις)
 account_creation_date_chart_title	Count of account creation date chart	Graphique des créations de compte	Gráfico de fechas de creación de cuentas	Διάγραμμα των ημερομηνιών δημιουργίας λογαριασμών

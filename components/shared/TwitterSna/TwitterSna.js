@@ -247,12 +247,12 @@ const getJsonDataForTimeLineChartFb = (data) => {
     usersGet(dateObj, infos, tot_inte, date_epoch); // pour chaque user, on recupe l'obj avec nom tot_interact date
     infos.push({
       date: date_epoch,
-      key: "Tweets",                    //nb de tweets
+      key: "Posts",                    //nb de posts
       nb: tot_inte,         //au format epoch
     });
     infos.push({
       date: date_epoch,
-      key: "Retweets",                   //nb de retweets
+      key: "Shares",                   //nb de shares
       nb: tot_inte,
     });
   });
@@ -266,7 +266,7 @@ const getJsonDataForTimeLineChartFb = (data) => {
     let date = info.date;
     let nb = info.nb;
     var type = "markers";
-    if (info.key === "Tweets" || info.key === "Retweets")
+    if (info.key === "Posts" || info.key === "Shares")
       type = 'lines';
     let plotlyInfo = {
       mode: type,
@@ -483,12 +483,12 @@ const getJsonDataForTimeLineChartInsta = (data) => {
     usersGet(dateObj, infos, tot_inte, date_epoch); // pour chaque user, on recupe l'obj avec nom tot_interact date
     infos.push({
       date: date_epoch,
-      key: "Tweets",                    //nb de tweets
+      key: "Posts",                    //nb de posts
       nb: tot_inte,         //au format epoch
     });
     infos.push({
       date: date_epoch,
-      key: "Retweets",                   //nb de retweets
+      key: "Shares",                   //nb de shares
       nb: tot_inte,
     });
   });
@@ -502,7 +502,7 @@ const getJsonDataForTimeLineChartInsta = (data) => {
     let date = info.date;
     let nb = info.nb;
     var type = "markers";
-    if (info.key === "Tweets" || info.key === "Retweets")
+    if (info.key === "Posts" || info.key === "Shares")
       type = 'lines';
     let plotlyInfo = {
       mode: type,
