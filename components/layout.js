@@ -10,6 +10,8 @@ import getConfig from 'next/config';
 import CustomTitle from "../components/shared/CustomTitle/CustomTitle"
 import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
 import Grid from '@material-ui/core/Grid';
+import Link from 'next/link'
+
 const { publicRuntimeConfig } = getConfig();
 
 export const siteTitle = 'Weverify'
@@ -21,6 +23,7 @@ function Layout(props) {
 
     const handleClick = event => {
         window.open("https://weverify.eu/about/", "_blank");
+       
     };
 
     return (

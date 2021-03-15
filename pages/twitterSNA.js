@@ -1,12 +1,11 @@
 import Head from "next/head";
 import React from "react";
 import Layout from "../components/layout";
-import CsvSna from "../components/shared/CsvSna/CsvSna";
+import TwitterSna from "../components/shared/TwitterSna/TwitterSna";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
-import {makeStyles} from '@material-ui/core/styles';
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,15 +20,16 @@ const Index = () => {
   const classes = useStyles();
   const keyword = useLoadLanguage(tsv);
   return (
+
     <div className={classes.root}>
-    <Layout title={"CsvSna"}>
+     <Layout title={keyword("twitter_sna_title")}>
       <Head>
-        <title>Csv Reader</title>
+        <title>WeVerify Twitter SNA</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <CsvSna keyword={keyword} />
-        
+        <TwitterSna keyword={keyword} />
+      
       </main>
       <footer>
         <Footer />
@@ -54,6 +54,7 @@ const Index = () => {
       `}</style>
     </Layout>
     </div>
+    
   );
 };
 

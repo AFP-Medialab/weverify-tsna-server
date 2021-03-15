@@ -5,10 +5,18 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import Box from '@material-ui/core/Box';
 import getConfig from 'next/config';
+import {makeStyles} from '@material-ui/core/styles';
+
 const { publicRuntimeConfig } = getConfig();
 
 //const tsv = "/localDictionary/components/Shared/Footer.tsv";
 const tsv = "/components/Shared/Footer.tsv";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      color: '#FFFFFF',
+    },
+  }));
 
 const Footer = (props) => {
     const classes = useMyStyles();
@@ -24,10 +32,11 @@ const Footer = (props) => {
 
 
     return (
-        <div className={classes.footer}>
+        <div >
             <Typography variant={"body2"}>
                 {
-                    provideBy
+                  provideBy
+                  
                 }
                 {
                     linkLabel.constructor === Array && link.constructor === Array ? (

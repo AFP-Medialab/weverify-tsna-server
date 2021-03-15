@@ -3,12 +3,36 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import createPalette from '@material-ui/core/styles/createPalette';
-import CSV from '../../pages/csvReader';
+import CSV from '../csvReader';
 import Link from 'next/link'
+import style from '../intro/intro1.module.css'
+import { makeStyles } from '@material-ui/core/styles';
+import SortIcon from '@material-ui/icons/Sort';
 
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    color: '#fff',  
+    fontFamily: 'Nunito',
+    fontSize: '1.5em',  
+    flexGrow: '10',
+  },
+  appbarTitle: {
+    color: '#5AFF3D', 
+    fontFamily: 'Nunito',
+    fontSize: '1.5em',  
+    flexGrow: '10'
+  },
+  icon: {
+    color: '#fff',
+    fontSize: '2rem',
+  },
+  }));
 
 
 export default function SimpleMenu() {
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);  
   const handleClick = (event) => {
     console.log("handleOpen");
@@ -38,11 +62,15 @@ export default function SimpleMenu() {
   };
 
   return (
-      
+    
+
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}  >
+      <SortIcon className={classes.icon}  />
+      <div className={classes.root}>
+      Open<span className={classes.appbarTitle}>Menu.</span>
+          </div>
         
-        Open Menu
       </Button>
       <Menu 
         id="simple-menu"
@@ -54,11 +82,7 @@ export default function SimpleMenu() {
 
       >
        
-       <Link href="/">
-        
-        <MenuItem onClick={handleClose2}>Back to Intro</MenuItem>
-     
-        </Link>
+       
 
           <Link href="/twitterSNA">
         
