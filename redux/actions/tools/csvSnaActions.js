@@ -1,3 +1,5 @@
+import {CSV_SNA_CLEAN, CSV_COUNT_SET_RESULTS, CSV_SNA_SET_TYPE} from "../types/csvSnaTypes";
+
 export const setCountResultFb = (countDataFb) => {
     return {
         type : "SET_FB_CSV_COUNT_RESULTS",
@@ -37,5 +39,24 @@ export const setPieChartsResultInsta = (pieChartData) => {
     return {
         type : "SET_TWITTER_PIE_CHARTS_RESULTS_INSTA",
         payload :  pieChartData
+    }
+};
+
+export const cleanCsvSnaState = () => {
+    return {
+        type: CSV_SNA_CLEAN
+    }
+};
+
+export const setCountResult = (count) => {
+    return {
+        type : CSV_COUNT_SET_RESULTS,
+        payload : count
+    }
+};
+export const setSnaType = (type) => {
+    return {
+        type : CSV_SNA_SET_TYPE,
+        payload : type
     }
 };
