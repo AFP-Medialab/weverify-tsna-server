@@ -31,9 +31,7 @@ export default function App() {
       <Header />
       <BottomPart />
      
-     
-
-
+    
     </div>
   );
 }

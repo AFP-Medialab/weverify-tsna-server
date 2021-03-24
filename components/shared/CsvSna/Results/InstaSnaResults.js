@@ -5,14 +5,12 @@ import Count from "../Components/Count";
 import { useDispatch} from "react-redux";
 import {cleanCsvSnaState} from "../../../../redux/actions/tools/csvSnaActions"
 
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
-const tsv = "";
+
 
 
 export default function CsvSnaResults(props) {
   const dispatch = useDispatch();
   const classes = useMyStyles();
-  const keyword = useLoadLanguage(tsv);
 
   return (
     <Paper className={classes.root}>

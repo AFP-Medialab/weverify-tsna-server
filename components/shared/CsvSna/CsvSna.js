@@ -14,12 +14,16 @@ import CSVReader from "react-csv-reader";
 import FBSnaResults from "../CsvSna/Results/FBSnaResults";
 import InstaSnaResults from "../CsvSna/Results/InstaSnaResults";
 import {countInsta} from "./Insta/hooks/instaCount";
-import {countFB} from "./Insta/hooks/FBcount";
+import {countFB} from "./Components/FB/hooks/FBcount";
+import {getJsonDataForTimeLineChartFb,createTimeLineChart} from "./Components/FB/hooks/timeline"
+
+
 /////////////////////////////////////////////////////////////////////////////
 
 import {
   setCountResult,
   setSnaType,
+  setHistogramResult,
 } from "../../../redux/actions/tools/csvSnaActions";
 
 const FB_TYPE = "FB";
@@ -42,8 +46,10 @@ const useFacebookResult = (data) => {
   dispatch(setSnaType(FB_TYPE));
 }
 
+
+
 const buildFirstFbResult = (data) => {
-  //buildHistogramFb(data);
+  buildHistogramFb(data);
   buildCountFb(data);
   //buildPieCharts(data);
   //buildUrls(responseAggs);
@@ -55,7 +61,13 @@ const buildCountFb = async (data) => {
   const countFb= countFB(data)
   dispatch(setCountResult(countFb));
 };
+//////////////////////////////////////////////////////HISTOGRAM FB
 
+const buildHistogramFb = async (data)=>{
+  let getDataResult = getJsonDataForTimeLineChartFb(data)
+  const histogram = createTimeLineChart(getDataResult[1], getDataResult[2], getDataResult[0], keyword);
+  dispatch(setHistogramResult(histogram));
+};
 //////////////////////////////////////////////////////////////////////////////////BUILD INSTA
 
 const useInstagramResult = (data) => {

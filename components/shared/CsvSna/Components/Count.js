@@ -11,10 +11,8 @@ import React, { useEffect, useState } from "react";
 import OnClickInfo from "../../OnClickInfo/OnClickInfo";
 
 export default function Count({ result, onClickInfoLabel}) {
-  console.log("label ", onClickInfoLabel);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
-  console.log("echo FB ", JSON.stringify(result));
   const [state, setState] = useState({
     result: result,
   });
