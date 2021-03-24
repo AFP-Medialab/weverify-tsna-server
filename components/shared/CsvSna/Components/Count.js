@@ -10,7 +10,8 @@ import useMyStyles from "../../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import OnClickInfo from "../../OnClickInfo/OnClickInfo";
 
-export default function Count({ result },  {onClickInfo}) {
+export default function Count({ result },  onClickInfoLabel) {
+  console.log("label ", onClickInfoLabel);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   console.log("echo FB ", JSON.stringify(result));
@@ -76,7 +77,7 @@ export default function Count({ result },  {onClickInfo}) {
             )}
             <Box m={3} />
             {
-            <OnClickInfo keyword={onClickInfo} />
+            <OnClickInfo keyword={onClickInfoLabel} />
             }
           </Grid>
         </Box>

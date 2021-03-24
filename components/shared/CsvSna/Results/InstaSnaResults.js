@@ -9,11 +9,11 @@ const tsv = "";
 export default function CsvSnaResults(props) {
   const classes = useMyStyles();
   const keyword = useLoadLanguage(tsv);
-  
+
   return (
     <Paper className={classes.root}>
       <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
-      {<Count result={props.result} keyword={keyword}/>}
+      {<Count result={props.result} onClickInfoLabel={"insta_sna_tweetnb_tip"}/>}
     </Paper>
   );
 }
