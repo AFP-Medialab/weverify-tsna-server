@@ -14,7 +14,7 @@ import CSVReader from "react-csv-reader";
 import FBSnaResults from "../CsvSna/Results/FBSnaResults";
 import InstaSnaResults from "../CsvSna/Results/InstaSnaResults";
 import {countInsta} from "./Insta/hooks/instaCount";
-
+import {countFB} from "./Insta/hooks/FBcount";
 /////////////////////////////////////////////////////////////////////////////
 
 import {
@@ -51,31 +51,9 @@ const buildFirstFbResult = (data) => {
 
 //////////////////////////////////////////////////////COUNT FB
 const buildCountFb = async (data) => {
-  let tot_interactions = 0;
-  let tot_comments = 0;
-  let tot_shares = 0;
-  let tot_likes = 0;
-
-  for (let index in data) {
-    if (typeof data[index].total_interactions === 'string')
-    {
-      tot_interactions += parseInt(data[index].total_interactions.replace(/,/g, ''));
-    }
-    else{
-      tot_interactions += data[index].total_interactions;
-    }
-    tot_comments += data[index].comments;
-    tot_shares += data[index].shares;
-    tot_likes += data[index].likes;
-  }
-  
-  const fbCount = {};
-  fbCount.count = data.length;
-  fbCount.total_interactions = tot_interactions;
-  fbCount.likes = tot_likes;
-  fbCount.comments = tot_comments;
-  fbCount.shares = tot_shares;
-  dispatch(setCountResult(fbCount));
+    
+  const countFb= countFB(data)
+  dispatch(setCountResult(countFb));
 };
 
 //////////////////////////////////////////////////////////////////////////////////BUILD INSTA
