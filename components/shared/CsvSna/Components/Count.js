@@ -10,7 +10,7 @@ import useMyStyles from "../../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import OnClickInfo from "../../OnClickInfo/OnClickInfo";
 
-export default function Count({ result },  onClickInfoLabel) {
+export default function Count({ result, onClickInfoLabel}) {
   console.log("label ", onClickInfoLabel);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
