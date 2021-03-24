@@ -8,8 +8,9 @@ import Typography from "@material-ui/core/Typography";
 
 import useMyStyles from "../../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
+import OnClickInfo from "../../OnClickInfo/OnClickInfo";
 
-export default function Count({ result }, { keyword }) {
+export default function Count({ result },  {onClickInfo}) {
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   console.log("echo FB ", JSON.stringify(result));
@@ -75,7 +76,7 @@ export default function Count({ result }, { keyword }) {
             )}
             <Box m={3} />
             {
-            //<OnClickInfo keyword={"twittersna_tweetnb_tip"} />
+            <OnClickInfo keyword={onClickInfo} />
             }
           </Grid>
         </Box>

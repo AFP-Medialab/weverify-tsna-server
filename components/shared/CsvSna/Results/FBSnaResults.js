@@ -14,7 +14,7 @@ export default function CsvSnaResults(props) {
   return (
     <Paper className={classes.root}>
       <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
-      {<Count result={props.result} keyword={keyword}/>}
+      {<Count result={props.result}  onClickInfo={"twittersna_tweetnb_tip"}/>}
     </Paper>
   );
 }
