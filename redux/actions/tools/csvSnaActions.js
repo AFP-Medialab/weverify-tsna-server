@@ -1,4 +1,4 @@
-import {CSV_SNA_CLEAN, CSV_COUNT_SET_RESULTS, CSV_SNA_SET_TYPE,CSV_HISTOGRAM_SET_RESULTS} from "../types/csvSnaTypes";
+import {CSV_SNA_CLEAN, CSV_COUNT_SET_RESULTS, CSV_SNA_SET_TYPE,CSV_HISTOGRAM_SET_RESULTS,CSV_PIECHART_SET_RESULTS} from "../types/csvSnaTypes";
 
 export const cleanCsvSnaState = () => {
     return {
@@ -27,3 +27,11 @@ export const setHistogramResult = (result) => {
     }
     
 };
+export const setPieChartsResultFb = (result) => {
+    return {
+        type : CSV_PIECHART_SET_RESULTS,
+        payload : result
+    }
+    
+};
+

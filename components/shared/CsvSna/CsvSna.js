@@ -16,6 +16,8 @@ import InstaSnaResults from "../CsvSna/Results/InstaSnaResults";
 import {countInsta} from "./Insta/hooks/instaCount";
 import {countFB} from "./Components/FB/hooks/FBcount";
 import {getJsonDataForTimeLineChartFb,createTimeLineChart} from "./Components/FB/hooks/timeline"
+import {createPieCharts,getJsonDataForPieCharts} from "./Components/FB/hooks/pieCharts"
+
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -24,13 +26,14 @@ import {
   setCountResult,
   setSnaType,
   setHistogramResult,
+  setPieChartsResultFb,
 } from "../../../redux/actions/tools/csvSnaActions";
 
 const FB_TYPE = "FB";
 const INSTA_TYPE = "INSTA"
 
 const CsvSna = () => {
-
+  const request = useSelector(state => state.csvSna.request);
   const dispatch = useDispatch();
   const classes = useMyStyles();
   const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
@@ -51,7 +54,7 @@ const useFacebookResult = (data) => {
 const buildFirstFbResult = (data) => {
   buildHistogramFb(data);
   buildCountFb(data);
-  //buildPieCharts(data);
+  buildPieCharts(data);
   //buildUrls(responseAggs);
 }
 
@@ -67,6 +70,13 @@ const buildHistogramFb = async (data)=>{
   let getDataResult = getJsonDataForTimeLineChartFb(data)
   const histogram = createTimeLineChart(getDataResult[1], getDataResult[2], getDataResult[0], keyword);
   dispatch(setHistogramResult(histogram));
+};
+
+////////////////////////////////////////////////////// PieChart FB
+const buildPieCharts = async (data) => {
+  console.log("KEYWORD ", keyword)
+  const pieCharts = createPieCharts("",getJsonDataForPieCharts(data), keyword);
+  dispatch(setPieChartsResultFb(pieCharts));
 };
 //////////////////////////////////////////////////////////////////////////////////BUILD INSTA
 

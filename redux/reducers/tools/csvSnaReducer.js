@@ -4,6 +4,7 @@ import {
   CSV_COUNT_SET_RESULTS,
   CSV_SNA_SET_TYPE,
   CSV_HISTOGRAM_SET_RESULTS,
+  CSV_PIECHART_SET_RESULTS,
 } from "../../actions/types/csvSnaTypes";
 
 const defaultState = {
@@ -36,6 +37,10 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
     case CSV_HISTOGRAM_SET_RESULTS:
       return {...state,
         result: { ...state.result, histogram: payload },
+      };
+    case CSV_PIECHART_SET_RESULTS:
+      return {...state,
+        result: { ...state.result, pieCharts: payload },
       };
     default:
       return state;

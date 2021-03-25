@@ -16,6 +16,8 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
 export default function PlotTimeLine(props){
+    console.log("PlotTimeLine");
+
     const dispatch = useDispatch();
     //HISTOGRAM
     const [histoVisible, setHistoVisible] = useState(true);
