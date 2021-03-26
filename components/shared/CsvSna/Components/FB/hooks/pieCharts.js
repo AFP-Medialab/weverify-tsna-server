@@ -1,4 +1,4 @@
-export const createPieCharts = (request, jsonPieCharts, keyword) => {
+export const createPieCharts = (request, jsonPieCharts) => {
     //console.log("KEYWORD ", keyword)
     let layout = {
       title: {
@@ -51,7 +51,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
 
     for (let cpt = 0; cpt < keywordTitles.length; cpt++) {
       let specificLayout = JSON.parse(JSON.stringify(layout));
-      let specificTitle = keyword(keywordTitles[cpt]); + "<br>" + " - " + "request[]" + " - ";
+      let specificTitle = keywordTitles[cpt]; + "<br>" + " - " + "request[]" + " - ";
       specificLayout.title.text = specificTitle;
       pieCharts.push(
         {

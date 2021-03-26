@@ -1,10 +1,10 @@
-export const createTimeLineChart = (date_min, date_max, json, keyword) => {
+export const createTimeLineChart = (date_min, date_max, json, titleLabel, timeLabel) => {
 
   const range_min = date_min.slice(0, -4);
   const range_max = date_max.slice(0, -4);
 
     let layout = {
-        title: keyword("user_time_chart_title") + "<br>" + "INSTAGRAM CSV NAME" + " - " + date_min + " - " + date_max,
+        title: titleLabel + "<br>" + "INSTAGRAM CSV NAME" + " - " + date_min + " - " + date_max,
         automargin: true,
         xaxis: {
           range: [range_min, range_max],
@@ -27,7 +27,7 @@ export const createTimeLineChart = (date_min, date_max, json, keyword) => {
         xanchor: 'right',
         y: -0.6,
         yanchor: 'top',
-        text: keyword('twitter_local_time'),
+        text: timeLabel,
         showarrow: false
         }],
         autosize: true,
@@ -117,7 +117,7 @@ export const getJsonDataForTimeLineChartFb = (data) => {
     let date = info.date;
     let nb = info.nb;
     var type = "markers";
-    if (info.key === "Tweets" || info.key === "Retweets")
+    if (info.key === "Post" || info.key === "Shared")
       type = 'lines';
     let plotlyInfo = {
       mode: type,
