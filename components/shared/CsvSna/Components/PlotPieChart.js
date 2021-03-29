@@ -199,19 +199,7 @@ return (
                                         </Button>
 
                                     </Grid>
-                                    <Grid item>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"primary"}
-                                            onClick={() => downloadClick(request,
-                                                                        createCSVFromPieChart(obj), 
-                                                                        keyword(obj.title), 
-                                                                        false, 
-                                                                        "")}>
-                                            
-                                            CSV
-                                        </Button>
-                                    </Grid>
+                                    
                                     <Grid item>
                                         <Button
                                             variant={"contained"}

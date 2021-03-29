@@ -1,6 +1,5 @@
 export const createPieCharts = (request, jsonPieCharts) => {
-    //console.log("KEYWORD ", keyword)
-    let layout = {
+  let layout = {
       title: {
         font: {
           family: 'Arial, sans-serif',
@@ -169,6 +168,83 @@ export const createPieCharts = (request, jsonPieCharts) => {
   }
   return result;
 };
+
+
+export const getJsonDataForPieChartsInsta = (esResponse, paramKeywordList) => {
+  let newmap = [];
+  for (let i = 0; i < esResponse.length; i++)
+  {
+    let flag = 0;
+    for (let y = 0; y < newmap.length; y++)
+    {
+      if (newmap[y].labels == esResponse[i].account){
+        newmap[y].shares += esResponse[i].followers_at_posting;
+        newmap[y].likes += esResponse[i].likes;
+        newmap[y].comments += esResponse[i].comments;
+        newmap[y].message += 1;
+        flag = 1;
+      }
+    }
+    if (flag == 0) {
+      newmap.push({
+        labels: esResponse[i].account,
+        shares : esResponse[i].followers_at_posting,
+        likes : esResponse[i].likes,
+        comments : esResponse[i].comments,
+        message : 1,
+    });
+    }
+  }
+  let result = [];
+  for (let i = 0; i < 4; i++) {
+    result.push([{
+      type: "sunburst",
+      labels : ["csv"],
+      parents: [""],
+      values: [""],
+      textinfo: "label+value",
+      outsidetextfont: {
+        size: 20,
+        color: "#377eb8"
+      },
+    }]);
+  }
+
+  //most followers
+  newmap.sort((a, b) => (a.shares < b.shares) ? 1 : -1);
+  
+
+  let j= newmap.length >20 ? 20: newmap.length
+  for (let i = 0; i < j; i++) {
+    result[0][0].labels.push(newmap[i].labels);
+    result[0][0].values.push(newmap[i].shares);
+    result[0][0].parents.push("csv");
+  }
+  //most likes
+  newmap.sort((a, b) => (a.likes < b.likes) ? 1 : -1);
+  for (let i = 0; i < j; i++) {
+    result[1][0].labels.push(newmap[i].labels);
+    result[1][0].values.push(newmap[i].likes);
+    result[1][0].parents.push("csv");
+  }
+  //comments
+  newmap.sort((a, b) => (a.comments < b.comments) ? 1 : -1);
+  for (let i = 0; i < j; i++) {
+    result[2][0].labels.push(newmap[i].labels);
+    result[2][0].values.push(newmap[i].comments);
+    result[2][0].parents.push("csv");
+  }
+  //message
+  newmap.sort((a, b) => (a.message < b.message) ? 1 : -1);
+  for (let i = 0; i < j; i++) {
+    result[3][0].labels.push(newmap[i].labels);
+    result[3][0].values.push(newmap[i].message);
+    result[3][0].parents.push("csv");
+  }
+  return result;
+};
+
+
 
 //Download as SVG
 

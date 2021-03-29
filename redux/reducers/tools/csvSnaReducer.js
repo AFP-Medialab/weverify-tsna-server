@@ -19,7 +19,7 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
   switch (type) {
     case CSV_SNA_CLEAN:
       return (state = defaultState);
-    case CSV_IS_LOADING:
+      case CSV_IS_LOADING:
         return {
             ...state,
             loading: payload.loading,
@@ -41,7 +41,6 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
       };
     case CSV_PIECHART_SET_RESULTS:
       return {...state,
-       
         result: { ...state.result, pieCharts: payload },
       };
     default:

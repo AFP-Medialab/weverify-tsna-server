@@ -8,6 +8,7 @@ import {makeStyles} from '@material-ui/core/styles';
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
@@ -22,7 +23,7 @@ const Index = () => {
   const keyword = useLoadLanguage(tsv);
   return (
     <div className={classes.root}>
-    <Layout title={"CsvSna"}>
+    <Layout title={"Facebook & Instagram CSV analysis"}>
       <Head>
         <title>Csv Reader</title>
         <link rel="icon" href="/favicon.ico" />
