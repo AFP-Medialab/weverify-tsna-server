@@ -8,9 +8,10 @@ import Typography from "@material-ui/core/Typography";
 
 import useMyStyles from "../../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
-import OnClickInfo from "../../OnClickInfo/OnClickInfo";
+import OnClickInfo from "../../OnClickInfo/OnClickInfoFB";
 
 export default function Count({ result, onClickInfoLabel}) {
+  onClickInfoLabel="twittersna_timeline_tip";
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   const [state, setState] = useState({
@@ -38,7 +39,7 @@ export default function Count({ result, onClickInfoLabel}) {
           {
             //keyword("tweetCounter_title")
           }
-          Publisher
+          Metrics
         </Typography>
       </AccordionSummary>
       <AccordionDetails>

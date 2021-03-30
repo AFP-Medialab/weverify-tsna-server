@@ -7,7 +7,7 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from '../../OnClickInfo/OnClickInfo';
+import OnClickInfo from '../../OnClickInfo/OnClickInfoFB';
 import HistoTweetsTable from "../../TwitterSna/Components/HistoTweetsTable";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
