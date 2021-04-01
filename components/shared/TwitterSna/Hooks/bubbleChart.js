@@ -18,10 +18,10 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
     nbDays = nbDays > 1 ? nbDays : 1;
     let objArr = userProfile.map((obj) => {
         return {
-            screen_name: obj._source.screen_name,
+            screen_name: obj._source.screen_name[obj._source.screen_name.length -1],
             followers_count: obj._source.followers_count,
             datetimestamp: obj._source.datetimestamp,
-            indexedat: obj._source.indexedat,
+            
             verified: obj._source.verified
         }; 
     });
@@ -30,17 +30,17 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
         r[a.screen_name] = [...r[a.screen_name] || [], a];
         return r;
        }, {});
+
     let closestDateObjArr = Object.entries(groupByUserArr).map((row) => { 
-        let filteredUndef = row[1].filter(obj => obj.indexedat !== undefined);
+        let filteredUndef = row[1];
         filteredUndef.map((obj) => {
-            obj.distanceDateTime = Math.abs((Date.parse(request['until']) / 1000) - obj.indexedat);
             return obj;
         });
-        return _.orderBy(filteredUndef, ['distanceDateTime'], ['asc'])[0];
+        return filteredUndef[0];
+        
      })
-
+     
     let sortedObjArr = _.orderBy(closestDateObjArr, ['datetimestamp', 'screen_name'], ['asc', 'asc']);
-
     let x = [];
     let y = [];
     let text = [];
