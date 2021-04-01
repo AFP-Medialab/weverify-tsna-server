@@ -511,7 +511,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
     });
     match_phrases = match_phrases.join(",");
 
-    let query = '{ "size": 10000, "collapse": {  "field": "screen_name.keyword" }, "sort": [ { "indexedat": "desc" } ] ,"query": { "bool": { "should": [' + match_phrases + ' ] } } }';
+    let query = '{ "size": 10000,  "sort": [ { "indexedat": "desc" } ] ,"query": { "bool": { "should": [' + match_phrases + ' ] } } }';
     return query;
 }
 
