@@ -9,7 +9,7 @@ import Linkify from 'react-linkify';
 const tsv = "/components/fb/OnClickInfo.tsv";
 
 const OnClickInfo = (props) => {
-   console.log("SOMETHING ",props.keyword)
+   //console.log("SOMETHING ",props.keyword)
     const classes = useMyStyles();
     const keyword = useLoadLanguage(tsv);
 

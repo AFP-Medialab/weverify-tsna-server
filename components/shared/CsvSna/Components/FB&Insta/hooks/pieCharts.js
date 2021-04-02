@@ -1,4 +1,6 @@
-export const createPieCharts = (request, jsonPieCharts) => {
+
+
+export const createPieCharts = (request, jsonPieCharts,keywordTitles) => {
   let layout = {
       title: {
         font: {
@@ -32,25 +34,21 @@ export const createPieCharts = (request, jsonPieCharts) => {
       displaylogo: false
     };
 
-    let keywordTitles = [
-      "retweets_cloud_chart_title",
-      "likes_cloud_chart_title",
-      "top_users_pie_chart_title",
-      "mention_cloud_chart_title"
-    ];
+    
 
-    let tips = [
+    const tips = [
       "twittersna_most_retweet_tip",
       "twittersna_most_likes_tip",
       "twittersna_most_active_tip",
       "twittersna_most_mentions_tip"
     ]
+    
 
     let pieCharts = [];
 
     for (let cpt = 0; cpt < keywordTitles.length; cpt++) {
       let specificLayout = JSON.parse(JSON.stringify(layout));
-      let specificTitle = keywordTitles[cpt]; + "<br>" + " - " + "request[]" + " - ";
+      let specificTitle =keywordTitles[cpt]; + "<br>" + " - " + "request[]" + " - ";
       specificLayout.title.text = specificTitle;
       pieCharts.push(
         {

@@ -57,6 +57,13 @@ export const createTimeLineChart = (date_min, date_max, json, titleLabel, timeLa
     };
 };
 
+export const getEpochMillis = (dateStr) => {
+    
+  var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CET\s*$/
+    , m = (""+dateStr).match(r);
+  return (m) ? Date.UTC(m[1], m[2]-1, m[3], m[4], m[5], m[6]) : undefined;
+};
+
 export const getJsonDataForTimeLineChartFb = (data) => {
   let datas = data;
   var infos = [];
@@ -160,6 +167,8 @@ export const getJsonDataForTimeLineChartInsta = (data) => {
       , m = (""+dateStr).match(r);
     return (m) ? Date.UTC(m[1], m[2]-1, m[3], m[4], m[5], m[6]) : undefined;
   };
+
+  
   datas.forEach(dateObj => {
     let tot_inte = 0;
     if (typeof dateObj.total_interactions === 'string')
@@ -235,10 +244,10 @@ export const getJsonDataForTimeLineChartInsta = (data) => {
     }
 }
 
-export function filterTweetsForTimeLine(tweetDate, selectedPoints) {
+export function filterForTimeLine(postDate, selectedPoints) {
   for (let i = 0; i < selectedPoints.length; i++) {
       let pointedDate = new Date(selectedPoints[i].x);
-      if (selectedPoints[i].data.mode !== "lines" && isInRange(pointedDate, tweetDate, "isDays")) {
+      if (selectedPoints[i].data.mode !== "lines" && isInRange(pointedDate, postDate, "isDays")) {
           return true;
       };
   }

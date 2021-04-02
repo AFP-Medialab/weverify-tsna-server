@@ -6,6 +6,9 @@ import {
   CSV_HISTOGRAM_SET_RESULTS,
   CSV_PIECHART_SET_RESULTS,
   CSV_IS_LOADING,
+  CSV_PARSING_RESULT,
+  CSV_HISTOVIEW_RESULT,
+  
 
 } from "../../actions/types/csvSnaTypes";
 
@@ -19,6 +22,17 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
   switch (type) {
     case CSV_SNA_CLEAN:
       return (state = defaultState);
+      case CSV_PARSING_RESULT:
+        return {
+            ...state,
+            result: { ...state.result, data: payload },
+
+        }
+        case CSV_HISTOVIEW_RESULT:
+          return {
+            ...state,
+            result: { ...state.result, histoview: payload },
+          };  
       case CSV_IS_LOADING:
         return {
             ...state,
@@ -43,6 +57,8 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
       return {...state,
         result: { ...state.result, pieCharts: payload },
       };
+       
+      
     default:
       return state;
   }

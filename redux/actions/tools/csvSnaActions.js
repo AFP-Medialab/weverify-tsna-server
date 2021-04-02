@@ -5,6 +5,8 @@ import {
   CSV_HISTOGRAM_SET_RESULTS,
   CSV_PIECHART_SET_RESULTS,
   CSV_IS_LOADING,
+  CSV_PARSING_RESULT,
+  CSV_HISTOVIEW_RESULT,
 } from "../types/csvSnaTypes";
 
 export const cleanCsvSnaState = () => {
@@ -46,5 +48,17 @@ export const setCSVLoading = (bool, message) => {
   return {
     type: CSV_IS_LOADING,
     payload: { loading: bool, loadingMessage: message },
+  };
+};
+export const setCSVResult = (data) => {
+  return {
+    type: CSV_PARSING_RESULT,
+    payload: data,
+  };
+};
+export const setCSVHistoview = (from,data) => {
+  return {
+    type: CSV_HISTOVIEW_RESULT,
+    payload: data, 
   };
 };

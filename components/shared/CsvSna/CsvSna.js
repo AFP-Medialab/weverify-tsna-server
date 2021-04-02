@@ -1,6 +1,6 @@
 import Paper from "@material-ui/core/Paper";
 import useMyStyles from '../styles/useMyStyles';
-import useLoadLanguage from "../hooks/useLoadLanguage";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { useEffect, useState, useRef } from "react";
 import "../../../redux/actions/tools/twitterSnaActions"
 import { useDispatch, useSelector, useStore } from "react-redux";
@@ -11,8 +11,6 @@ import MyErrorbar from "../ErrorBar/ErrorBar";
 import {cleanError} from "../../../redux/actions/errorActions"
 import FeedBack from "../FeedBack/FeedBack";
 import CSVReader from "react-csv-reader";
-import FBSnaResults from "../CsvSna/Results/FBSnaResults";
-import InstaSnaResults from "../CsvSna/Results/InstaSnaResults";
 import {countInsta} from "./Components/Insta/hooks/instaCount";
 import {countFB} from "./Components/FB/hooks/FBcount";
 //import {getJsonDataForTimeLineChartFb,createTimeLineChart,getJsonDataForTimeLineChartInsta } from "./Components/FB&Insta/hooks/timeline"
@@ -20,6 +18,7 @@ import {countFB} from "./Components/FB/hooks/FBcount";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import timelineWorker from "workerize-loader?inline!./Components/FB&Insta/hooks/timeline";
 import pieChartsWorker from "workerize-loader?inline!./Components/FB&Insta/hooks/pieCharts";
+
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -30,27 +29,37 @@ import {
   setHistogramResult,
   setPieChartsResult,
   setCSVLoading,
+  setCSVResult,
+ 
 } from "../../../redux/actions/tools/csvSnaActions";
+import CsvSnaResults from "./Results/CsvSnaResults";
 
-const FB_TYPE = "FB";
-const INSTA_TYPE = "INSTA"
 
+
+const FB_SNA_TYPE= {snaType:"FB",tsv:"/components/CsvFb.tsv" }
+const INSTA_SNA_TYPE= {snaType:"INSTA",tsv:"/components/CsvInsta.tsv" }
 const CsvSna = () => {
-  const request = useSelector(state => state.csvSna.request);
+
   const dispatch = useDispatch();
   const classes = useMyStyles();
-  const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+
+  const keywordFB = useLoadLanguage(FB_SNA_TYPE.tsv);
+  const keywordINSTA = useLoadLanguage(INSTA_SNA_TYPE.tsv);
+ 
   const error = useSelector(state => state.error);
   const loadingMessage = useSelector(state => state.csvSna.loadingMessage);
   const isloading = useSelector(state => state.csvSna.loading);
   const resultRedux = useSelector(state => state.csvSna.result);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 ///////////////////////////////////////////////////////////////////////////////////////////BUILD FB
 const useFacebookResult = (data) => {
+  dispatch(setSnaType(FB_SNA_TYPE));
   buildFirstFbResult(data);
-  dispatch(setSnaType(FB_TYPE));
+  
+
 }
+
+
 
 
 
@@ -72,28 +81,41 @@ const buildCountFb = async (data) => {
 const buildHistogramFb = async (data)=>{
   const instance = timelineWorker();
   let getDataResult = await instance.getJsonDataForTimeLineChartFb(data)
-  let titleLabel = keyword("user_time_chart_title");
-  let timeLabel = keyword('twitter_local_time');
+  let titleLabel = keywordFB("user_time_chart_title");
+  let timeLabel = keywordFB('twitter_local_time');
   const histogram = await instance.createTimeLineChart(getDataResult[1], getDataResult[2], getDataResult[0], titleLabel, timeLabel);
   dispatch(setHistogramResult(histogram));
 };
 
 ////////////////////////////////////////////////////// PieChart FB
 const buildPieCharts = async (data) => {
+  const keywordTitles = [
+    keywordFB("retweets_cloud_chart_title"),
+    keywordFB("likes_cloud_chart_title"),
+    keywordFB("top_users_pie_chart_title"),
+    keywordFB("mention_cloud_chart_title")
+  ];
+  
+  
   const instance = pieChartsWorker();
   const jsonPieChart = await instance.getJsonDataForPieCharts(data);
-  const pieCharts = await instance.createPieCharts("",jsonPieChart);
+  const pieCharts = await instance.createPieCharts("",jsonPieChart,keywordTitles);
   dispatch(setPieChartsResult(pieCharts));
 };
 
 //////////////////////////////////////////////////////////////////////////////////BUILD INSTA
 
 const useInstagramResult = (data) => {
+  dispatch(setSnaType(INSTA_SNA_TYPE));
   buildFirstInstaResult(data);
-  dispatch(setSnaType(INSTA_TYPE));
+ 
+
 }
 
+
 const buildFirstInstaResult = (data) => {
+  
+  
   buildHistogramInsta(data);
   buildCountInsta(data);
   buildPieChartsInsta(data);
@@ -129,23 +151,32 @@ const buildFirstInstaResult = (data) => {
   }
   const completeCsvParse = (results, file) => {
     console.log("Parsing complete:", results, file);
+    dispatch(setCSVResult(results.data));
   }
+
 
   //////////////////////////////////////// HISTOGRAM Insta
   const buildHistogramInsta = async (data)=>{
+    
     const instance = timelineWorker();
     let getDataResult = await instance.getJsonDataForTimeLineChartInsta(data)
-    let titleLabel = keyword("user_time_chart_title");
-    let timeLabel = keyword('twitter_local_time');
+    let titleLabel = keywordINSTA("user_time_chart_title");
+    let timeLabel = keywordINSTA('twitter_local_time');
     const histogram = await instance.createTimeLineChart(getDataResult[1], getDataResult[2], getDataResult[0], titleLabel, timeLabel);
 
     dispatch(setHistogramResult(histogram));
   };
   /////////////////////////////////////////////////////// PieChart Insta
 const buildPieChartsInsta = async (data) => {
+  const keywordTitles = [
+    keywordINSTA("retweets_cloud_chart_title"),
+    keywordINSTA("likes_cloud_chart_title"),
+    keywordINSTA("top_users_pie_chart_title"),
+    keywordINSTA("mention_cloud_chart_title")
+  ];
   const instance = pieChartsWorker();
   const jsonPieChart = await instance.getJsonDataForPieChartsInsta(data);
-  const pieCharts = await instance.createPieCharts("",jsonPieChart);
+  const pieCharts = await instance.createPieCharts("",jsonPieChart,keywordTitles);
   dispatch(setPieChartsResult(pieCharts));
 };
 
@@ -193,11 +224,9 @@ useEffect(() => {
                 }
 
           </Paper>
+          
           {
-          resultRedux && resultRedux.snaType === FB_TYPE && <FBSnaResults result={resultRedux} keyword={keyword}/>
-          }
-          {
-            resultRedux && resultRedux.snaType === INSTA_TYPE && <InstaSnaResults result={resultRedux} keyword={keyword}/>
+            resultRedux && <CsvSnaResults result={resultRedux} />
           }
       <FeedBack/>
     </div>

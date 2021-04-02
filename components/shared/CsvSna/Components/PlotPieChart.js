@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import plotly from 'plotly.js-dist';
 import createPlotComponent from 'react-plotly.js/factory';
-import useLoadLanguage from "../../hooks/useLoadLanguage";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
@@ -24,9 +24,10 @@ let from = "PLOT_PIE_CHART";
 
 export default function PlotPieChart (props) { 
     console.log("PlotPieChart");
-
+    const snatype = useSelector((state) => state.csvSna.result.snaType);
+    const keyword = useLoadLanguage(snatype.tsv);
     const dispatch = useDispatch();  
-    const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
+   // const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const [pieCharts0, setPieCharts0] = useState(null);
     const [pieCharts1, setPieCharts1] = useState(null);
     const [pieCharts2, setPieCharts2] = useState(null);
@@ -176,7 +177,7 @@ return (
                         aria-controls={"panel" + index + "a-content"}
                         id={"panel" + index + "a-header"}
                     >
-                        <Typography className={classes.heading}>{keyword(obj.title)}</Typography>
+                        <Typography className={classes.heading}>{obj.title}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Box alignItems="center" justifyContent="center" width={"100%"}>
