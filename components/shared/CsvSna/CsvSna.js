@@ -13,11 +13,11 @@ import FeedBack from "../FeedBack/FeedBack";
 import CSVReader from "react-csv-reader";
 import {countInsta} from "./Components/Insta/hooks/instaCount";
 import {countFB} from "./Components/FB/hooks/FBcount";
-//import {getJsonDataForTimeLineChartFb,createTimeLineChart,getJsonDataForTimeLineChartInsta } from "./Components/FB&Insta/hooks/timeline"
-//import {createPieCharts,getJsonDataForPieCharts,getJsonDataForPieChartsInsta} from "./Components/FB&Insta/hooks/pieCharts"
+//import {getJsonDataForTimeLineChartFb,createTimeLineChart,getJsonDataForTimeLineChartInsta } from "./Components/Common/hooks/timeline"
+//import {createPieCharts,getJsonDataForPieCharts,getJsonDataForPieChartsInsta} from "./Components/Common/hooks/pieCharts"
 import CircularProgress from "@material-ui/core/CircularProgress";
-import timelineWorker from "workerize-loader?inline!./Components/FB&Insta/hooks/timeline";
-import pieChartsWorker from "workerize-loader?inline!./Components/FB&Insta/hooks/pieCharts";
+import timelineWorker from "workerize-loader?inline!./Components/Common/hooks/timeline";
+import pieChartsWorker from "workerize-loader?inline!./Components/Common/hooks/pieCharts";
 
 
 

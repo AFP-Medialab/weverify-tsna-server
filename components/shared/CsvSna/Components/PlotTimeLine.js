@@ -14,7 +14,7 @@ import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { displayPosts } from "./lib/displayPosts";
-import { filterForTimeLine,getEpochMillis } from "./FB&Insta/hooks/timeline";
+import { filterForTimeLine,getEpochMillis } from "./Common/hooks/timeline";
 import {setCSVHistoview} from "../../../../redux/actions/tools/csvSnaActions";
 
 
