@@ -23,7 +23,6 @@ let from = "PLOT_PIE_CHART";
 
 
 export default function PlotPieChart (props) { 
-    console.log("PlotPieChart");
     const snatype = useSelector((state) => state.csvSna.result.snaType);
     const keyword = useLoadLanguage(snatype.tsv);
     const dispatch = useDispatch();  

@@ -30,6 +30,7 @@ import {
   setPieChartsResult,
   setCSVLoading,
   setCSVResult,
+  setCSVHistoview,
  
 } from "../../../redux/actions/tools/csvSnaActions";
 import CsvSnaResults from "./Results/CsvSnaResults";
@@ -139,7 +140,7 @@ const buildFirstInstaResult = (data) => {
     //console.log("DATA" + JSON.stringify(data));
     //sort by date
     dispatch(setCSVLoading(true, "processing"));
-
+    dispatch(setCSVHistoview(null, null)) 
     //
     //facebook else instagram
     if(data[0].facebook_id) {

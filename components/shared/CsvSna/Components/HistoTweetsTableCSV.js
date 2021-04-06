@@ -6,19 +6,49 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import CustomTable from "../../CustomTable/CustomTable";
 import InstagramIcon from '@material-ui/icons/Instagram';
+import FacebookIcon from '@material-ui/icons/Facebook';
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
+import {setCSVHistoview} from "../../../../redux/actions/tools/csvSnaActions";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 const tsv = "/components/CsvFb.tsv";
 
-console.log("histoTweetsTableCSV")
 export default function HistoTweetsTable(props) {
-  console.log("histoTweetsTableCSV1")
+  
   const dispatch = useDispatch();
-  //const keyword = useLoadLanguage(tsv);
   const request = useSelector((state) => state.twitterSna.request);
   const snatype = useSelector((state) => state.csvSna.result.snaType);
   const keyword = useLoadLanguage(snatype.tsv);
+  const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
+  console.log("PROPS ",typer)
+  var goToAction;
+
+  if(typer=="INSTA"){
+    goToAction = [
+      {
+       icon: InstagramIcon,
+        tooltip: keyword("twittersna_result_go_to_tweet"),
+        onClick: (event, rowData) => {
+          window.open("https://www.instagram.com/", "_blank");
+        },
+      },
+    ];
+  }
+  else {
+    goToAction = [
+      {
+       icon: FacebookIcon,
+        tooltip: keyword("twittersna_result_go_to_tweet"),
+        onClick: (event, rowData) => {
+          window.open("https://facebook.com/", "_blank");
+        },
+      },
+    ];
+  }
+
+
+  
+
 
   function downloadClick(csvArr, name, histo, type = "Tweets_") {
 
@@ -40,15 +70,7 @@ export default function HistoTweetsTable(props) {
     document.body.removeChild(link);
   }
 
-  let goToInstagramAction = [
-    {
-      icon: InstagramIcon,
-      tooltip: keyword("twittersna_result_go_to_tweet"),
-      onClick: (event, rowData) => {
-        window.open("https://www.instagram.com/", "_blank");
-      },
-    },
-  ];
+  
 
   return (
     <div>
@@ -66,7 +88,7 @@ export default function HistoTweetsTable(props) {
             
             onClick={() => 
               dispatch(
-                setTweetsDetailPanel(
+                setCSVHistoview(
                   props.from, null
                   )) 
             }
@@ -96,7 +118,7 @@ export default function HistoTweetsTable(props) {
         title={keyword("twittersna_result_slected_tweets")}
         colums={props.data.columns}
         data={props.data.data}
-        actions={goToInstagramAction}
+        actions={goToAction}
       />
     </div>
   );

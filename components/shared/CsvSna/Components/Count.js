@@ -9,9 +9,15 @@ import Typography from "@material-ui/core/Typography";
 import useMyStyles from "../../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import OnClickInfo from "../../OnClickInfo/OnClickInfoFB";
+import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
+import {useSelector} from "react-redux";
+
+
 
 export default function Count({ result, onClickInfoLabel}) {
   onClickInfoLabel="twittersna_timeline_tip";
+  const snatype = useSelector((state) => state.csvSna.result.snaType);
+  const keyword = useLoadLanguage(snatype.tsv);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   const [state, setState] = useState({
@@ -26,6 +32,7 @@ export default function Count({ result, onClickInfoLabel}) {
   }, [result.countSna]);
 
   return (
+
     <Accordion
       expanded={countVisible}
       onChange={() => setCountVisible(!countVisible)}
@@ -37,12 +44,13 @@ export default function Count({ result, onClickInfoLabel}) {
       >
         <Typography className={classes.heading}>
           {
-            //keyword("tweetCounter_title")
+            keyword("tweetCounter_title")
           }
-          Metrics
+          
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
+
         <Box alignItems="center" justifyContent="center" width={"100%"}>
           <Grid
             container
@@ -51,35 +59,36 @@ export default function Count({ result, onClickInfoLabel}) {
             alignContent={"center"}
           >
             <Grid item>
-              <Typography variant={"h6"}>Publications</Typography>
+              <Typography variant={"h6"}>{keyword("csv_sna_publications")}</Typography>
               <Typography variant={"h2"}>{result.countSna.count}</Typography>
             </Grid>
             <Grid item>
-              <Typography variant={"h6"}>Total interactions</Typography>
+              <Typography variant={"h6"}>{keyword("csv_sna_total_interactions")}</Typography>
               <Typography variant={"h2"}>
                 {result.countSna.total_interactions}
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant={"h6"}>Likes</Typography>
+              <Typography variant={"h6"}>{keyword("csv_sna_likes")}</Typography>
               <Typography variant={"h2"}>{result.countSna.likes}</Typography>
             </Grid>
             <Grid item>
-              <Typography variant={"h6"}>Comments</Typography>
+              <Typography variant={"h6"}>{keyword("csv_sna_comments")}</Typography>
               <Typography variant={"h2"}>{result.countSna.comments}</Typography>
             </Grid>
             {result.countSna.shares && (
               <Grid item>
-                <Typography variant={"h6"}>Shares</Typography>
+                <Typography variant={"h6"}>{keyword("csv_sna_shares")}</Typography>
                 <Typography variant={"h2"}>{result.countSna.shares}</Typography>
               </Grid>
             )}
-            <Box m={3} />
-            {
+
+            </Grid>
+            
             <OnClickInfo keyword={onClickInfoLabel} />
-            }
-          </Grid>
         </Box>
+        
+
       </AccordionDetails>
     </Accordion>
   );

@@ -13,7 +13,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { displayPosts } from "./lib/displayPosts";
+import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
 import { filterForTimeLine,getEpochMillis } from "./Common/hooks/timeline";
 import {setCSVHistoview} from "../../../../redux/actions/tools/csvSnaActions";
 
@@ -23,11 +23,9 @@ let from = "PLOT_LINE";
 
 
 export default function PlotTimeLine(props){
-  //  console.log("CEVA ", props.result.snaType);
   const snatype = useSelector((state) => state.csvSna.result.snaType);
-  console.log("SOMETHING ",snatype.tsv)
 
-  const keyword = useLoadLanguage(snatype.tsv);
+    const keyword = useLoadLanguage(snatype.tsv);
     const dispatch = useDispatch();
     //HISTOGRAM
     const [histoVisible, setHistoVisible] = useState(true);
@@ -52,17 +50,25 @@ export default function PlotTimeLine(props){
     const onHistogramClick = (data) => {
             let selectedPoints = data.points;
            let filteredPost = state.result.data.filter(function(post) {
-               // console.log("HISTO2 ",post.created)
                 let postDate =getEpochMillis(post.created);
 
-               // console.log("HISTO3 ",postDate)
                 return filterForTimeLine(postDate, selectedPoints);
                 
             });
+            if (filteredPost[0].link[12] =="i"){
+                console.log("INSTAGRAM")
+                dispatch(setCSVHistoview(from, displayPostsInsta(filteredPost, keyword)));
+
+            }
+            else
+            {
+                console.log("FACEBOOK")
+                dispatch(setCSVHistoview(from, displayPostsFb(filteredPost, keyword)));
+
+ 
+            }
+            //console.log("onHISTOGRAM" ,filteredPost[0].link[12])
             
-            
-             dispatch(setCSVHistoview(from, displayPosts(filteredPost, keyword)));
-             console.log("CEVAA ", keyword)
         
     }
 
@@ -89,8 +95,6 @@ export default function PlotTimeLine(props){
                         config={state.result.histogram.config}
                         onClick={(e) => onHistogramClick(e)}
                         onPurge={(a, b) => {
-                            console.log(a);
-                            console.log(b);
                         }}
                     />
                     }
