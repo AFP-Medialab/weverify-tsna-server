@@ -33,6 +33,8 @@ import {
   setCSVHistoview,
  
 } from "../../../redux/actions/tools/csvSnaActions";
+import {setTweetsDetailPanel} from "../../../redux/actions/tools/twitterSnaActions"
+
 import CsvSnaResults from "./Results/CsvSnaResults";
 
 
@@ -136,12 +138,24 @@ const buildFirstInstaResult = (data) => {
 
   //handle options for csv
   const makeResultCsv = (data) => {
+    var from =["PLOT_LINE","PLOT_PIE_CHART_0","PLOT_PIE_CHART_1","PLOT_PIE_CHART_2","PLOT_PIE_CHART_3"]
+   /*
+    for(var i=0; i<=from.length;i++)
 
-    //console.log("DATA" + JSON.stringify(data));
-    //sort by date
+    {
+   return dispatch(setCSVHistoview(from, null)) 
+    }
+    */
+   
     dispatch(setCSVLoading(true, "processing"));
-    dispatch(setCSVHistoview(null, null)) 
-    //
+    dispatch(setCSVHistoview(from[0], null)) 
+    dispatch(setCSVHistoview(from[1], null)) 
+    dispatch(setCSVHistoview(from[2], null)) 
+    dispatch(setCSVHistoview(from[3], null)) 
+    dispatch(setCSVHistoview(from[4], null)) 
+
+
+
     //facebook else instagram
     if(data[0].facebook_id) {
       useFacebookResult(data);
@@ -150,6 +164,7 @@ const buildFirstInstaResult = (data) => {
       useInstagramResult(data);
     }
   }
+
   const completeCsvParse = (results, file) => {
     console.log("Parsing complete:", results, file);
     dispatch(setCSVResult(results.data));

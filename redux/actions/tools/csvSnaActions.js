@@ -7,6 +7,7 @@ import {
   CSV_IS_LOADING,
   CSV_PARSING_RESULT,
   CSV_HISTOVIEW_RESULT,
+  CSV_PIE_CHART_RESULT,
 } from "../types/csvSnaTypes";
 
 export const cleanCsvSnaState = () => {
@@ -57,8 +58,33 @@ export const setCSVResult = (data) => {
   };
 };
 export const setCSVHistoview = (from,data) => {
-  return {
-    type: CSV_HISTOVIEW_RESULT,
-    payload: data, 
-  };
+  switch(from){
+    case "PLOT_LINE":
+      return {
+        type: CSV_HISTOVIEW_RESULT,
+        payload: data, 
+      }
+      case "PLOT_PIE_CHART_0":
+            return {
+                /*type : "SET_PIE_CHART_RESULT_0",
+                payload :  data*/
+                type : CSV_PIE_CHART_RESULT,
+                payload :  data != null ? null : 0
+            }
+        case "PLOT_PIE_CHART_1":
+            return {
+                type : CSV_PIE_CHART_RESULT,
+                payload :  data != null ? null : 1
+            }
+        case "PLOT_PIE_CHART_2":
+            return {
+                type : CSV_PIE_CHART_RESULT,
+                payload :  data != null ? null : 2
+            }
+        case "PLOT_PIE_CHART_3":
+            return {
+                type : CSV_PIE_CHART_RESULT,
+                payload :  data != null ? null : 3
+            }
+}
 };

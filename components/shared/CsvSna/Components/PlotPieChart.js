@@ -8,16 +8,18 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import OnClickInfo from '../../OnClickInfo/OnClickInfoFB';
-import HistoTweetsTable from "../../TwitterSna/Components/HistoTweetsTable";
+import HistoTweetsTable from "../Components/HistoTweetsTableCSV";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
-import {createCSVFromPieChart} from "../../TwitterSna/Hooks/pieCharts";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {displayTweets} from "../../TwitterSna/lib/displayTweets";
-import {downloadClick} from "../../TwitterSna/lib/downloadClick";
+import {setCSVHistoview} from "../../../../redux/actions/tools/csvSnaActions";
+import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
+
+
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 
@@ -26,6 +28,8 @@ export default function PlotPieChart (props) {
     const snatype = useSelector((state) => state.csvSna.result.snaType);
     const keyword = useLoadLanguage(snatype.tsv);
     const dispatch = useDispatch();  
+    
+
    // const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const [pieCharts0, setPieCharts0] = useState(null);
     const [pieCharts1, setPieCharts1] = useState(null);
@@ -33,7 +37,7 @@ export default function PlotPieChart (props) {
     const [pieCharts3, setPieCharts3] = useState(null);
     //const charts = useSelector(state => state.twitterSna.pieCharts);
     const charts = [pieCharts0, pieCharts1, pieCharts2, pieCharts3];
-    const donutIndex = useSelector(state => state.twitterSna.pieCharts);
+    const donutIndex = useSelector(state => state.csvSna.result.donutIndex);
     const classes = useMyStyles();
 
     const [filesNames, setfilesNames] = useState(null);
@@ -54,7 +58,7 @@ export default function PlotPieChart (props) {
             result: props.result,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result.pieCharts, props.result.tweets]);
+    }, [props.result.pieCharts, props.result.data]);
 
     useEffect(()=> {
         switch (donutIndex) {
@@ -117,42 +121,205 @@ export default function PlotPieChart (props) {
             );
         }
     }
+    const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
+      //   console.log("PROPS ",typer)
+    
+    var onDonutsClick=(null,null);
+    if(typer=="INSTA"){
+      //  console.log("INSTAAAAAA")
 
-    const onDonutsClick = (data, index, tweets) => {
+         onDonutsClick = (data, index) => {
+        
+            console.log("DONUTS-DATA ", data)
+            //console.log("DONUTS-CSV-tweets ", tweets)
+    
+            //For mention donuts
+            if (index === 3) {
+                console.log("INDEX=3")
+    
+                
+                    let selectedUser = data.points[0].label;
+                    let filteredTweets = state.result.data.filter(tweet => tweet.account !== undefined && tweet.account.length > 0)
+                        .filter(function (tweet) {
+                            return tweet.account.toLowerCase() === selectedUser.toLowerCase();
+                        });
+                        console.log("filtered tweets  ",filteredTweets)
+    
+                    let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
+                    dataToDisplay["selected"] = selectedUser;
+                    setPieCharts3(dataToDisplay);
+                    dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                
+            }
+            // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
+            else {
+            //    console.log("CENTER ")
+                let selectedUser = data.points[0].label;
+                console.log("DONUT ", data)
+                console.log("DATA0 ",data.points[0].label)
+                
+                
+    
+                    let filteredTweets = state.result.data.filter(function (tweetObj) {
+                        return tweetObj.account.toLowerCase() === selectedUser.toLowerCase();
+                    });
+                    console.log("filtered tweets  ",filteredTweets)
+    
+                    
+                    let dataToDisplay = index === 0 ? displayPostsInsta(filteredTweets, keyword, "retweetNb") : (index === 1 ? displayPostsInsta(filteredTweets, keyword, "nbLikes") : displayPostsInsta(filteredTweets, keyword));
+                    console.log("DATA_DISPLAY ",dataToDisplay)
+                    
+                    dataToDisplay["selected"] = selectedUser;
+                    
+                    switch (index) {
+                        case 0:
+                            setPieCharts0(dataToDisplay);
+                           // dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
+                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+
+                            break;
+                        case 1:
+                            setPieCharts1(dataToDisplay);
+                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+    
+                            break;
+                        case 2:
+                            setPieCharts2(dataToDisplay);
+                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                
+            }
+        
+        };
+      }
+      else {
+       // console.log("FACEBOOOOOK")
+         onDonutsClick = (data, index) => {
+        
+          //  console.log("DONUTS-DATA ", data)
+            //console.log("DONUTS-CSV-tweets ", tweets)
+    
+            //For mention donuts
+            if (index === 3) {
+                console.log("INDEX=3")
+    
+                
+                    let selectedUser = data.points[0].label;
+                    let filteredTweets = state.result.data.filter(tweet => tweet.page_name !== undefined && tweet.page_name.length > 0)
+                        .filter(function (tweet) {
+                            return tweet.page_name.toLowerCase() === selectedUser.toLowerCase();
+                        });
+                        console.log("filtered tweets  ",filteredTweets)
+    
+                    let dataToDisplay = displayPostsFb(filteredTweets, keyword);
+                    dataToDisplay["selected"] = selectedUser;
+                    setPieCharts3(dataToDisplay);
+                    dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                
+            }
+            // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
+            else {
+                console.log("CENTER ")
+                let selectedUser = data.points[0].label;
+               // console.log("DONUT ", data)
+               // console.log("DATA0 ",data.points[0].label)
+                
+                
+    
+                    let filteredTweets = state.result.data.filter(function (tweetObj) {
+                        return tweetObj.page_name.toLowerCase() === selectedUser.toLowerCase();
+                    });
+               //     console.log("filtered tweets  ",filteredTweets)
+    
+                    
+                    let dataToDisplay = index === 0 ? displayPostsFb(filteredTweets, keyword, "retweetNb") : (index === 1 ? displayPostsFb(filteredTweets, keyword, "nbLikes") : displayPostsFb(filteredTweets, keyword));
+                //    console.log("DATA_DISPLAY ",dataToDisplay)
+                    
+                    dataToDisplay["selected"] = selectedUser;
+                    
+                    switch (index) {
+                        case 0:
+                            setPieCharts0(dataToDisplay);
+                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                            
+                            break;
+                        case 1:
+                            setPieCharts1(dataToDisplay);
+                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+    
+                            break;
+                        case 2:
+                            setPieCharts2(dataToDisplay);
+                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                
+            }
+        
+        };
+      }
+
+
+    const onDonutsClick1 = (data, index) => {
+        
+        console.log("DONUTS-DATA ", data)
+        //console.log("DONUTS-CSV-tweets ", tweets)
+
         //For mention donuts
         if (index === 3) {
-            if (tweets != null && typeof data.points[0].label != 'undefined') {
+            console.log("INDEX=3")
+
+            
                 let selectedUser = data.points[0].label;
-                let filteredTweets = tweets.filter(tweet => tweet._source.user_mentions !== undefined && tweet._source.user_mentions.length > 0)
+                let filteredTweets = state.result.data.filter(tweet => tweet.account !== undefined && tweet.account.length > 0)
                     .filter(function (tweet) {
-                        let lcMentionArr = tweet._source.user_mentions.map(v => v.screen_name.toLowerCase());
-                        return lcMentionArr.includes(selectedUser.toLowerCase());
+                        return tweet.account.toLowerCase() === selectedUser.toLowerCase();
                     });
-                let dataToDisplay = displayTweets(filteredTweets, keyword);
+                    console.log("filtered tweets  ",filteredTweets)
+
+                let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
                 dataToDisplay["selected"] = selectedUser;
                 setPieCharts3(dataToDisplay);
                 dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
-            }
+            
         }
         // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
         else {
-            if (tweets != null && typeof data.points[0].label != 'undefined') {
+            console.log("CENTER ")
+            let selectedUser = data.points[0].label;
+            console.log("DONUT ", data)
+            console.log("DATA0 ",data.points[0].label)
+            
+            
 
-                let selectedUser = data.points[0].label;
-                let filteredTweets = tweets.filter(function (tweetObj) {
-                    return tweetObj._source.screen_name.toLowerCase() === selectedUser.toLowerCase();
+                let filteredTweets = state.result.data.filter(function (tweetObj) {
+                    return tweetObj.account.toLowerCase() === selectedUser.toLowerCase();
                 });
-                let dataToDisplay = index === 0 ? displayTweets(filteredTweets, keyword, "retweetNb") : (index === 1 ? displayTweets(filteredTweets, keyword, "nbLikes") : displayTweets(filteredTweets, keyword));
-    
+                console.log("filtered tweets  ",filteredTweets)
+
+                
+                let dataToDisplay = index === 0 ? displayPostsInsta(filteredTweets, keyword, "retweetNb") : (index === 1 ? displayPostsInsta(filteredTweets, keyword, "nbLikes") : displayPostsInsta(filteredTweets, keyword));
+                console.log("DATA_DISPLAY ",dataToDisplay)
+                
                 dataToDisplay["selected"] = selectedUser;
+                
                 switch (index) {
                     case 0:
                         setPieCharts0(dataToDisplay);
                         dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
+                        
                         break;
                     case 1:
                         setPieCharts1(dataToDisplay);
                         dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
+
                         break;
                     case 2:
                         setPieCharts2(dataToDisplay);
@@ -161,10 +328,12 @@ export default function PlotPieChart (props) {
                     default:
                         break;
                 }
-            }
+                
+            
         }
     
     };
+   
 
 return (
     state.result.pieCharts.map((obj, index) => {
@@ -220,7 +389,7 @@ return (
                                         layout={obj.layout}
                                         config={obj.config}
                                         onClick={e => {
-                                            onDonutsClick(e, index, state.result.tweets)
+                                            onDonutsClick(e, index)
                                         }}
                                         divId={obj.title}
                                     />
@@ -230,9 +399,9 @@ return (
                             }
                             {
                                 charts[index] && 
-                                <HistoTweetsTable 
+                                <HistoTweetsTable
                                     data={charts[index]} 
-                                    from={from+"_"+index} 
+                                    from={from+ "_"+ index} 
                                 />
                                 /*
                                 <div>

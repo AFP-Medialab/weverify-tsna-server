@@ -8,6 +8,7 @@ import {
   CSV_IS_LOADING,
   CSV_PARSING_RESULT,
   CSV_HISTOVIEW_RESULT,
+  CSV_PIE_CHART_RESULT,
   
 
 } from "../../actions/types/csvSnaTypes";
@@ -32,7 +33,16 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
           return {
             ...state,
             result: { ...state.result, histoview: payload },
-          };  
+          }; 
+          
+          
+          case CSV_PIE_CHART_RESULT:
+            return {
+              ...state,
+              result: { ...state.result, donutIndex: payload },
+            }; 
+
+
       case CSV_IS_LOADING:
         return {
             ...state,

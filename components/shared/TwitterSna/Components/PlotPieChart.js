@@ -137,8 +137,15 @@ export default function PlotPieChart(props) {
   }
 
   const onDonutsClick = (data, index, tweets) => {
+    console.log("DONUTS-CSV-index ", index)
+    console.log("DONUTS-CSV-tweets ", tweets)
+    console.log("DONUTS-CSV-tweets ", data)
+
     //For mention donuts
+    
     if (index === 3) {
+      console.log("INDEX=3")
+
       if (tweets != null && typeof data.points[0].label != "undefined") {
         let selectedUser = data.points[0].label;
         let filteredTweets = tweets
@@ -161,6 +168,8 @@ export default function PlotPieChart(props) {
     }
     // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
     else {
+      console.log("CENTER ")
+
       if (tweets != null && typeof data.points[0].label != "undefined") {
         let selectedUser = data.points[0].label;
         let filteredTweets = tweets.filter(function (tweetObj) {
@@ -180,7 +189,8 @@ export default function PlotPieChart(props) {
         switch (index) {
           case 0:
             setPieCharts0(dataToDisplay);
-            dispatch(setTweetsDetailPanel(from + "_" + index, "dataToDisplay"));
+            dispatch(
+              setTweetsDetailPanel(from + "_" + index, "dataToDisplay"));
             break;
           case 1:
             setPieCharts1(dataToDisplay);
@@ -196,6 +206,7 @@ export default function PlotPieChart(props) {
       }
     }
   };
+
   return state.result.pieCharts.map((obj, index) => {
     if (request.userList.length === 0 || index === 3) {
       return (

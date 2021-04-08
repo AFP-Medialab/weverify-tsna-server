@@ -53,17 +53,22 @@ export default function PlotTimeLine(props){
                 let postDate =getEpochMillis(post.created);
 
                 return filterForTimeLine(postDate, selectedPoints);
-                
+
             });
-            if (filteredPost[0].link[12] =="i"){
-                console.log("INSTAGRAM")
-                dispatch(setCSVHistoview(from, displayPostsInsta(filteredPost, keyword)));
+            //console.log("FILTERED_HIST ", filterForTimeLine)
+
+            
+            if (filteredPost[0].facebook_id){
+                console.log("FACEBOOK")
+                dispatch(
+                    setCSVHistoview(from, displayPostsFb(filteredPost, keyword)));
 
             }
             else
             {
-                console.log("FACEBOOK")
-                dispatch(setCSVHistoview(from, displayPostsFb(filteredPost, keyword)));
+                console.log("INSTA")
+                dispatch(
+                    setCSVHistoview(from, displayPostsInsta(filteredPost, keyword)));
 
  
             }
