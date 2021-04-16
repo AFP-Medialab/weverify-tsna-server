@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import OnClickInfo from '../../OnClickInfo/OnClickInfo';
+import OnClickInfo from '../../OnClickInfo/OnClickInfoFB';
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import CustomTable from "../../CustomTable/CustomTable";
@@ -12,9 +12,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
-import {displayTweets} from "../lib/displayTweets"
+import {displayTweets} from "../../TwitterSna/lib/displayTweets"
+import {displayPostsInsta} from "./lib/displayPosts"
 import TwitterIcon from '@material-ui/icons/Twitter';
-import {downloadClick} from "../lib/downloadClick";
+import {downloadClick} from "./lib/downloadClick";
 
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
@@ -24,7 +25,6 @@ import {createGraphWhenClickANode} from "../../lib/sigmaGraph"
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 let from = "PLOT_HASHTAG_GRAPH";
 
@@ -32,7 +32,9 @@ export default function HashtagGraph (props) {
 
     const dispatch = useDispatch();
 
-    const keyword = useLoadLanguage(tsv);
+    const snatype = useSelector((state) => state.csvSna.result.snaType);
+    const keyword = useLoadLanguage(snatype.tsv);
+
     const classes = useMyStyles();
 
     const [coHashtagGraphTweets, setCoHashtagGraphTweets] = useState(null);
@@ -68,18 +70,24 @@ export default function HashtagGraph (props) {
             nodes: data.data.renderer.graph.nodes(),
             edges: data.data.renderer.graph.edges()
         }
-
+        console.log("initGraph ", initGraph)
         setCoHashtagGraphClickNode(createGraphWhenClickANode(data));
 
         setCoHashtagGraphReset(initGraph);
 
         let selectedHashtag = data.data.node.id;
-        let filteredTweets = props.result.tweets.filter(tweet => tweet._source.hashtags !== undefined && tweet._source.hashtags.length > 0)
+        console.log("selectedHashtag ", selectedHashtag)
+
+        let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description.length > 0)
             .filter(function (tweet) {
-                let hashtagArr = tweet._source.hashtags.map((v) => { return v.toLowerCase();});
+                let hashtagArr = tweet.description.map((v) => { return v.toLowerCase();});
                 return hashtagArr.includes(selectedHashtag.toLowerCase());
             });
-        let dataToDisplay = displayTweets(filteredTweets, keyword);
+        console.log("filteredTweets ", selectedHashtag)
+
+        let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
+        console.log("dataToDisplay ", dataToDisplay)
+
         dataToDisplay["selected"] = selectedHashtag;
         setCoHashtagGraphTweets(dataToDisplay);
     }
@@ -118,7 +126,7 @@ export default function HashtagGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.coHashtagGraph.data.nodes}
-                                    filename={"Nodes_" + keyword("hashtag_graph_title") + '_' + props.request.keywordList.join('&') + '_' + props.request.from + "_" + props.request.until + ".csv"}
+                                    filename={"Nodes_" + keyword("hashtag_graph_title")+ ".csv"}
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Nodes"
@@ -128,7 +136,7 @@ export default function HashtagGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.coHashtagGraph.data.edges}
-                                    filename={"Edges_" + keyword("hashtag_graph_title") + '_' + props.request.keywordList.join('&') + '_' + props.request.from + "_" + props.request.until + ".csv"}
+                                    filename={"Edges_" + keyword("hashtag_graph_title") + ".csv"}
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Edges"

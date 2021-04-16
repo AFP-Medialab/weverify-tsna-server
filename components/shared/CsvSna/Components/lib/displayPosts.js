@@ -1,16 +1,4 @@
 
-const getPostWithClickableLink = (cellData) => {
-    let urls = cellData.post.match(/((http|https|ftp|ftps):\/\/[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,3}(\/\S*)?|pic\.facebook\.com\/([-a-zA-Z0-9()@:%_+.~#?&//=]*))/g);
-    if (urls === null)
-        return cellData.post;
-
-    let postText = cellData.post.split(urls[0]);
-    if (urls[0].match(/pic\.facebook\.com\/([-a-zA-Z0-9()@:%_+.~#?&//=]*)/))
-        urls[0] = "https://" + urls[0];
-    let element = <div>{postText[0]} <a href={urls[0]} target="_blank" rel="noopener noreferrer">{urls[0]}</a>{postText[1]}</div>;
-    return element;
-};
-
 
 export function displayPostsInsta (filteredPost, keyword, sortedColumn) {
     let columns = [];
@@ -18,28 +6,25 @@ export function displayPostsInsta (filteredPost, keyword, sortedColumn) {
         columns = [
             { title: keyword('twittersna_result_date'), field: 'date'},
             { title: keyword('twittersna_result_username'), field: 'screen_name'},
-            { title: keyword('twittersna_result_tweet'), field: 'post'/*, render: getPostWithClickableLink*/ },
+            { title: keyword('twittersna_result_tweet'), field: 'post'},
             { title: keyword('twittersna_result_like_nb'), field: "nbLikes", defaultSort: "desc" },
-            { title: keyword('twittersna_result_retweet_nb'), field: 'shareNb'},
-            { title: keyword('elastic_url'), field: 'link'}
+            { title: keyword('csv_sna_total_interactions'), field: 'total_interactions'},
         ];
-    } else if (sortedColumn === "shareNb") {
+    } else if (sortedColumn === "total_interactions") {
         columns = [
             { title: keyword('twittersna_result_date'), field: 'date'},
             { title: keyword('twittersna_result_username'), field: 'screen_name'},
-            { title: keyword('twittersna_result_tweet'), field: 'post'/*, render: getPostWithClickableLink*/ },
+            { title: keyword('twittersna_result_tweet'), field: 'post'},
             { title: keyword('twittersna_result_like_nb'), field: "nbLikes"},
-            { title: keyword('twittersna_result_retweet_nb'), field: 'shareNb', defaultSort: "desc" },
-            { title: keyword('elastic_url'), field: 'link'}
+            { title: keyword('csv_sna_total_interactions'), field: 'total_interactions', defaultSort: "desc" },
         ];
     } else {
         columns = [
             { title: keyword('twittersna_result_date'), field: 'date', defaultSort: "asc" },
             { title: keyword('twittersna_result_username'), field: 'screen_name'},
-            { title: keyword('twittersna_result_tweet'), field: 'post'/*, render: getPostWithClickableLink*/ },
+            { title: keyword('twittersna_result_tweet'), field: 'post'},
             { title: keyword('twittersna_result_like_nb'), field: "nbLikes"},
-            { title: keyword('twittersna_result_retweet_nb'), field: 'shareNb'},
-            {title: keyword('elastic_url'), field: 'link'}
+            { title: keyword('csv_sna_total_interactions'), field: 'total_interactions'},
             
             
             
@@ -50,8 +35,8 @@ export function displayPostsInsta (filteredPost, keyword, sortedColumn) {
                 + keyword("twittersna_result_username") + ',' 
                 + keyword("twittersna_result_tweet") + ',' 
                 + keyword('twittersna_result_like_nb') + ',' 
-                + keyword("twittersna_result_retweet_nb") + ',' 
-                + keyword("elastic_url") +'\n';
+                + keyword("csv_sna_total_interactions") + ',' 
+               
     
     let resData = [];
     filteredPost.forEach(postObj => {
@@ -61,7 +46,7 @@ export function displayPostsInsta (filteredPost, keyword, sortedColumn) {
                 screen_name: <a href={"https://instagram.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
                 post: postObj.description,
                 nbLikes: postObj.likes,
-                shareNb: postObj.total_interactions,
+                total_interactions: postObj.total_interactions,
                 link: <a href={postObj.link} target="_blank" rel="noopener noreferrer" >{postObj.link} </a>
             }
         );
@@ -83,17 +68,17 @@ export function displayPostsFb (filteredPost, keyword, sortedColumn) {
           { title: keyword('twittersna_result_username'), field: 'screen_name'},
           { title: keyword('twittersna_result_tweet'), field: 'post'/*, render: getPostWithClickableLink*/ },
           { title: keyword('twittersna_result_like_nb'), field: "nbLikes", defaultSort: "desc" },
-          { title: keyword('twittersna_result_retweet_nb'), field: 'shareNb'},
-          { title: keyword('elastic_url'), field: 'link'}
+          { title: keyword('twittersna_result_retweet_nb'), field: 'shares'},
+          { title: keyword('csv_sna_total_interactions'), field: 'total_interactions'},
       ];
-  } else if (sortedColumn === "shareNb") {
+  } else if (sortedColumn === "total_interactions") {
       columns = [
           { title: keyword('twittersna_result_date'), field: 'date'},
           { title: keyword('twittersna_result_username'), field: 'screen_name'},
           { title: keyword('twittersna_result_tweet'), field: 'post'/*, render: getPostWithClickableLink*/ },
           { title: keyword('twittersna_result_like_nb'), field: "nbLikes"},
-          { title: keyword('twittersna_result_retweet_nb'), field: 'shareNb', defaultSort: "desc" },
-          { title: keyword('elastic_url'), field: 'link'}
+          { title: keyword('twittersna_result_retweet_nb'), field: 'shares'},
+          { title: keyword('csv_sna_total_interactions'), field: 'total_interactions', defaultSort: "desc" },
       ];
   } else {
       columns = [
@@ -101,8 +86,9 @@ export function displayPostsFb (filteredPost, keyword, sortedColumn) {
           { title: keyword('twittersna_result_username'), field: 'screen_name'},
           { title: keyword('twittersna_result_tweet'), field: 'post'/*, render: getPostWithClickableLink*/ },
           { title: keyword('twittersna_result_like_nb'), field: "nbLikes"},
-          { title: keyword('twittersna_result_retweet_nb'), field: 'shareNb'},
-          { title: keyword('elastic_url'), field: 'link'}
+          { title: keyword('twittersna_result_retweet_nb'), field: 'shares'},
+          { title: keyword('csv_sna_total_interactions'), field: 'total_interactions'},
+          
       ];
   }
 
@@ -110,8 +96,8 @@ export function displayPostsFb (filteredPost, keyword, sortedColumn) {
               + keyword("twittersna_result_username") + ',' 
               + keyword("twittersna_result_tweet") + ',' 
               + keyword('twittersna_result_like_nb') + ',' 
-              + keyword("twittersna_result_retweet_nb") + ',' 
-              + keyword("elastic_url") +'\n';
+              + keyword("csv_sna_total_interactions") + ',' 
+              + keyword("twittersna_result_retweet_nb") +'\n';
   
   let resData = [];
   filteredPost.forEach(postObj => {
@@ -121,8 +107,9 @@ export function displayPostsFb (filteredPost, keyword, sortedColumn) {
               screen_name: <a href={"https://facebook.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
               post: postObj.description,
               nbLikes: postObj.likes,
-              shareNb: postObj.total_interactions,
-              link: <a href={postObj.link} target="_blank" rel="noopener noreferrer">{postObj.link}</a>,
+              total_interactions: postObj.total_interactions,
+              shares: postObj.shares,
+              link:<a href={postObj.link} target="_blank" rel="noopener noreferrer">{postObj.link}</a>
           }
       );
       
@@ -153,12 +140,14 @@ export function removeUnusedFields(posts, fields){
     return newPosts;
   }
 
-  export function lowercaseFieldInTweets(posts, field = 'hashtags') {
+  export function lowercaseFieldInTweets(posts, field = 'description') {
+    console.log("POSTS ",posts)
     let newPosts = posts.map((post) => {
       let postObj = JSON.parse(JSON.stringify(post));
-      if (postObj._source[field] !== undefined && postObj._source[field] !== null) {
-        if (Array.isArray(postObj._source[field])) {
-          let newArr = postObj._source[field].map((element) => {
+      //console.log("PostOBj ",postObj[field])
+      if (postObj[field] !== undefined && postObj[field] !== null) {
+        if (Array.isArray(postObj[field])) {
+          let newArr = postObj[field].map((element) => {
             if(field === "user_mentions") {
               element.screen_name = element.screen_name.toLowerCase();
               element.name = element.name.toLowerCase();
@@ -167,9 +156,9 @@ export function removeUnusedFields(posts, fields){
               return element.toLowerCase();
             }
           });
-          postObj._source[field] = [...new Set(newArr)];
+          postObj[field] = [...new Set(newArr)];
         } else {
-          postObj._source[field] = postObj._source[field].toLowerCase();
+          postObj[field] = postObj[field].toLowerCase();
         }
       }
       return postObj;

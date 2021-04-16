@@ -5,12 +5,18 @@ function getUniqValuesOfField(tweets, field) {
     let nodeIds = tweets.filter(tweet => tweet._source[field] !== undefined)
                         .map((tweet) => { return tweet._source[field] })
                         .flat();
+    console.log("nodeIds ", nodeIds)
+
     let uniqNodeIds = _.uniqWith(nodeIds, _.isEqual);
+    console.log("uniqNodeIds ", uniqNodeIds)
+
     return uniqNodeIds;
 }
   
 function getNodesAsHashtag(tweets) {
     let nodes = getUniqValuesOfField(tweets, "hashtags").map((val) => { return { id: val, label: val } });
+    console.log("nodes ", nodes)
+
     return nodes;
 }
 
@@ -19,12 +25,16 @@ function getSizeOfField(tweets, field) {
                         .map((tweet) => { return tweet._source[field] })
                         .flat();
     let sizeObj = _.countBy(valueArr);
+    console.log("sizeObjSSSSSS ",sizeObj)
     return sizeObj;
 }
 
 function getEdgesCoHashtag(tweets) {
+  console.log("BEGINING ",tweets)
     let coHashtagArr = tweets.filter(tweet => tweet._source.hashtags !== undefined && tweet._source.hashtags.length > 1)
                               .map((tweet) => { return tweet._source.hashtags });
+                              
+    console.log ("coHashtagArr",coHashtagArr )                                  
     let edges = [];
     coHashtagArr.forEach(arr => {
       for (let i = 0; i < arr.length - 1; i++) {
@@ -96,13 +106,20 @@ export function createCoHashtagGraph(tweets) {
     let lcTweets = lowercaseFieldInTweets(tweets);
     let nodes = getNodesAsHashtag(lcTweets);
     let sizeObj = getSizeOfField(lcTweets, "hashtags");
+    console.log("sizeObj ", sizeObj)
     nodes.map((node) => { 
       node.size= sizeObj[node.id];
+      console.log("node.size ", node.size)
+
       node.label = "#" + node.label + ": " + sizeObj[node.id].toString();
+      console.log("node.label ", node.label)
+
       return node;
     });
 
     let edges = getEdgesCoHashtag(lcTweets);
+    console.log("edges ",edges)
+
     let graph = {
       nodes: nodes,
       edges: edges

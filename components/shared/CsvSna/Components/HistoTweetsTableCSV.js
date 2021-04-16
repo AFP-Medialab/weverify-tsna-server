@@ -16,7 +16,6 @@ const tsv = "/components/CsvFb.tsv";
 export default function HistoTweetsTable(props) {
   
   const dispatch = useDispatch();
-  const request = useSelector((state) => state.twitterSna.request);
   const snatype = useSelector((state) => state.csvSna.result.snaType);
   const keyword = useLoadLanguage(snatype.tsv);
   const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
@@ -29,7 +28,7 @@ export default function HistoTweetsTable(props) {
        icon: InstagramIcon,
         tooltip: keyword("twittersna_result_go_to_tweet"),
         onClick: (event, rowData) => {
-          window.open("https://www.instagram.com/", "_blank");
+          window.open(rowData.link.props.href, "_blank");
         },
       },
     ];
@@ -40,7 +39,7 @@ export default function HistoTweetsTable(props) {
        icon: FacebookIcon,
         tooltip: keyword("twittersna_result_go_to_tweet"),
         onClick: (event, rowData) => {
-          window.open("https://facebook.com/", "_blank");
+         window.open(rowData.link.props.href, "_blank");
         },
       },
     ];

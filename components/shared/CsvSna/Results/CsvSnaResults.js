@@ -13,6 +13,13 @@ const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {
   ssr: false,
 });
+const HeatMap = dynamic(import("../Components/HeatMap"), {ssr: false});
+const BubbleChart = dynamic(import("../Components/BubbleChartCSV"), {ssr: false});
+const HashtagGraph = dynamic(import("../Components/HashtagGraph"), {ssr: false});
+import UrlList from "../Components/UrlList";
+import Box from "@material-ui/core/Box";
+
+
 
 export default function CsvSnaResults(props) {
   const classes = useMyStyles();
@@ -38,7 +45,26 @@ export default function CsvSnaResults(props) {
           result={props.result}
          // onClickInfoLabel={"fb_sna_tweetnb_tip"}
         />
-      )}     
+      )}
+      {           
+         props.result && props.result.tweetCount &&
+         <BubbleChart result={props.result}/>
+                }
+      {
+         props.result.heatMap &&           
+         <HeatMap result={props.result}/>
+        }  
+        {
+          props.result.coHashtagGraph &&
+          <HashtagGraph result={props.result}/>
+                }   
+
+          <Box m={3} />
+                {
+                    props.result.urls && 
+                    <UrlList result={props.result}/>
+                }             
+        
     </Paper>
   );
 }

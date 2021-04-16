@@ -8,12 +8,30 @@ import {
   CSV_PARSING_RESULT,
   CSV_HISTOVIEW_RESULT,
   CSV_PIE_CHART_RESULT,
+  CSV_BUBBLE_CHART_RESULT,
+  CSV_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE,
+  SET_CSV_SNA_HEATMAP_RESULTS,
+  SET_HEAT_MAP_RESULT,
+  SET_CSV_COHASHTAG_RESULTS,
+  SET_CSV_URLS_RESULTS,
 } from "../types/csvSnaTypes";
 
 export const cleanCsvSnaState = () => {
   return {
       type: CSV_SNA_CLEAN,
     };
+};
+export const setCoHashtagResult = (result) => {
+  return {
+      type : SET_CSV_COHASHTAG_RESULTS,
+      payload :  result
+  }
+};
+export const setUrlsResult = (result) => {
+  return {
+      type : SET_CSV_URLS_RESULTS,
+      payload :  result
+  }
 };
 
 export const setCountResult = (count) => {
@@ -57,6 +75,21 @@ export const setCSVResult = (data) => {
     payload: data,
   };
 };
+
+export const setUserProfileMostActive = (data) => {
+  return {
+      type : CSV_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE,
+      payload : data
+  }
+};
+
+export const setHeatMapResult = (result) => {
+  return {
+      type : SET_CSV_SNA_HEATMAP_RESULTS,
+      payload :  result
+  }
+};
+
 export const setCSVHistoview = (from,data) => {
   switch(from){
     case "PLOT_LINE":
@@ -86,5 +119,16 @@ export const setCSVHistoview = (from,data) => {
                 type : CSV_PIE_CHART_RESULT,
                 payload :  data != null ? null : 3
             }
+        case "PLOT_BUBBLE_CHART":
+            return {
+                type : CSV_BUBBLE_CHART_RESULT,
+                payload :  data
+          } 
+          case "PLOT_HEAT_MAP":
+            return {
+                type : SET_HEAT_MAP_RESULT,
+                payload :  data
+        }
+             
 }
 };

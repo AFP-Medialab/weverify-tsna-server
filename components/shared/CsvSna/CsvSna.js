@@ -18,7 +18,9 @@ import {countFB} from "./Components/FB/hooks/FBcount";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import timelineWorker from "workerize-loader?inline!./Components/Common/hooks/timeline";
 import pieChartsWorker from "workerize-loader?inline!./Components/Common/hooks/pieCharts";
-
+import { createHeatMap } from "./Components/Common/hooks/heatMap";
+import hashtagWorker from "workerize-loader?inline!./Components/Common/hooks/hashtagGraph";
+import { getJsonDataForURLTable } from "./Components/Common/hooks/urlList";
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -31,9 +33,10 @@ import {
   setCSVLoading,
   setCSVResult,
   setCSVHistoview,
- 
+  setHeatMapResult,
+  setCoHashtagResult,
+  setUrlsResult,
 } from "../../../redux/actions/tools/csvSnaActions";
-import {setTweetsDetailPanel} from "../../../redux/actions/tools/twitterSnaActions"
 
 import CsvSnaResults from "./Results/CsvSnaResults";
 
@@ -62,14 +65,13 @@ const useFacebookResult = (data) => {
 
 }
 
-
-
-
-
 const buildFirstFbResult = (data) => {
   buildHistogramFb(data);
   buildCountFb(data);
   buildPieCharts(data);
+  buildHeatMapFB(data);
+  buildCoHashTag(data);
+  //buildUrls(data);
   //buildUrls(responseAggs);
 }
 
@@ -106,6 +108,13 @@ const buildPieCharts = async (data) => {
   dispatch(setPieChartsResult(pieCharts));
 };
 
+//////////////////////////////////////////////////// HeatMap FB
+
+const buildHeatMapFB = async (data) => {
+  const heatMap = createHeatMap("", data, keywordFB);
+  dispatch(setHeatMapResult(heatMap));
+};
+
 //////////////////////////////////////////////////////////////////////////////////BUILD INSTA
 
 const useInstagramResult = (data) => {
@@ -122,6 +131,10 @@ const buildFirstInstaResult = (data) => {
   buildHistogramInsta(data);
   buildCountInsta(data);
   buildPieChartsInsta(data);
+  buildHeatMapInsta(data);
+  buildCoHashTag(data);
+ // buildUrls(data);
+
   //buildUrls(responseAggs);
 }
 
@@ -140,19 +153,23 @@ const buildFirstInstaResult = (data) => {
   const makeResultCsv = (data) => {
     var from =["PLOT_LINE","PLOT_PIE_CHART_0","PLOT_PIE_CHART_1","PLOT_PIE_CHART_2","PLOT_PIE_CHART_3"]
    /*
-    for(var i=0; i<=from.length;i++)
+    for(var i=0; i<from.length;i++)
 
     {
    return dispatch(setCSVHistoview(from, null)) 
     }
-    */
-   
+    
+   */
     dispatch(setCSVLoading(true, "processing"));
     dispatch(setCSVHistoview(from[0], null)) 
     dispatch(setCSVHistoview(from[1], null)) 
     dispatch(setCSVHistoview(from[2], null)) 
     dispatch(setCSVHistoview(from[3], null)) 
     dispatch(setCSVHistoview(from[4], null)) 
+    
+  
+    dispatch(setHeatMapResult(null))
+    dispatch(setCoHashtagResult(null))
 
 
 
@@ -195,6 +212,30 @@ const buildPieChartsInsta = async (data) => {
   const pieCharts = await instance.createPieCharts("",jsonPieChart,keywordTitles);
   dispatch(setPieChartsResult(pieCharts));
 };
+
+/////////////////////////////////////////////////////// HeatMap Insta
+const buildHeatMapInsta = async (data) => {
+  const heatMap = createHeatMap("", data, keywordINSTA);
+  dispatch(setHeatMapResult(heatMap));
+};
+
+/////////////////////CoHashTagResult Insta
+
+const buildCoHashTag = async (data) => {
+  const instance = hashtagWorker();
+  const coHashtagGraph = await instance.createCoHashtagGraph(data);
+  dispatch(setCoHashtagResult(coHashtagGraph));
+};
+////////////////////////// UrlList Insta
+/*
+const buildUrls = async (responseAggs) => {
+  const urls = getJsonDataForURLTable(
+    responseAggs["top_url_keyword"]["buckets"],
+    keywordINSTA
+  );
+  dispatch(setUrlsResult(urls));
+};
+*/
 
 const parseOptions = {
   header: true,
