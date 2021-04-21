@@ -1,31 +1,54 @@
 import _ from "lodash";
 import {lowercaseFieldInTweets} from "../../lib/displayPosts";
 
-function getUniqValuesOfField(data, field) {
+function getUniqValuesOfField(data, field1, field2, field3) {
   console.log("TWEETS ", data)
-  console.log("FIELD ", field)
-
-    let nodeIds1 = data.filter(tweet => tweet[field] !== undefined && tweet[field] !==0 && tweet[field] !==null)
-                        .map((tweet) => { return tweet[field] })
+  //console.log("FIELD ", field)
+    let nodeIds1 = data.filter(tweet => tweet[field1] !== undefined && tweet[field1] !==0 && tweet[field1] !==null)
+                        .map((tweet) => { return tweet[field1] })
                         .flat();
-    console.log("nodeIds1 ", nodeIds1)
+
+    let nodeIds2 = data.filter(tweet => tweet[field2] !== undefined && tweet[field2] !==0 && tweet[field2] !==null)
+                        .map((tweet) => { return tweet[field2] })
+                        .flat();
+    var nodeIds3=[]
+    if(data[0].facebook_id) {
+    let nodeIds4 = data.filter(tweet => tweet[field3] !== undefined && tweet[field3] !==0 && tweet[field3] !==null)
+                        .map((tweet) => { return tweet[field3] })
+                        .flat();
+    var nodeIds5=nodeIds1.concat(nodeIds2)                    
+    nodeIds3=nodeIds5.concat(nodeIds4)
+    console.log("nodeIds4 ", nodeIds4)
+
+    console.log("IS FACBOOK")
+    }
+    else{
+      nodeIds3=nodeIds1.concat(nodeIds2)
+      console.log("IS INSTAGRAM")
+
+    }
+   
     var nodeIds=[]
     var intermediate=[]
 
-    for(var i=0 ;i<nodeIds1.length; i++) {
-      intermediate=nodeIds1[i].match(/#\S+/g)
+    for(var i=0 ;i<nodeIds3.length; i++) {
+      intermediate=nodeIds3[i].match(/#\S+/g)
+
       if(intermediate===null){
         continue
       }
       else{
-        for(var j=0 ;j<intermediate.length; j++) {
+        console.log("intermediate : ", intermediate)
+        console.log("intermediate.length ", intermediate.length)
+        for (var j=0; j<intermediate.length; j++){
+          intermediate[j] = intermediate[j].replace(/[^#A-Za-z0-9]/g, '');
           nodeIds.push(intermediate[j])
         }
         intermediate=null;
       }
     }
 
-    console.log("nodeIds", nodeIds);
+    console.log("nodeIds fara", nodeIds);
             
     let uniqNodeIds = _.uniqWith(nodeIds, _.isEqual);
     console.log("uniqNodeIds ", uniqNodeIds)
@@ -34,17 +57,42 @@ function getUniqValuesOfField(data, field) {
 }
   
 function getNodesAsHashtag(data) {
-    let nodes = getUniqValuesOfField(data, "description").map((val) => { return { id: val, label: val } });
+    let nodes = getUniqValuesOfField(data, "description", "image_text", "message").map((val) => { return { id: val, label: val } });
     console.log("nodes ", nodes)
 
     return nodes;
 }
 
-function getSizeOfField(data, field) {
+function getSizeOfField(data, field1, field2, field3) {
   console.log("DATA", data)
-    let valueArr = data.filter(tweet => tweet[field] !== undefined && tweet[field] !==0 && tweet[field] !==null)
-                        .map((tweet) => { return tweet[field] })
+    let valueArr1 = data.filter(tweet => tweet[field1] !== undefined && tweet[field1] !==0 && tweet[field1] !==null)
+                        .map((tweet) => { return tweet[field1] })
                         .flat();
+    console.log("valueArr1 ",valueArr1 )
+                      
+    let valueArr2 = data.filter(tweet => tweet[field2] !== undefined && tweet[field2] !==0 && tweet[field2] !==null)
+                        .map((tweet) => { return tweet[field2] })
+                        .flat(); 
+    var valueArr=[]                
+    if(data[0].facebook_id) {
+    let valueArr3 = data.filter(tweet => tweet[field3] !== undefined && tweet[field3] !==0 && tweet[field3] !==null)
+                        .map((tweet) => { return tweet[field3] })
+                        .flat();
+    var valueArr4 =valueArr1.concat(valueArr2)       
+    valueArr =valueArr4.concat(valueArr3)
+    
+    console.log("valueArr-total ", valueArr)
+
+    console.log("IS FACBOOK")
+    }
+    else{
+
+      valueArr =valueArr1.concat(valueArr2)
+      console.log("IS INSTAGRAM")
+
+    }                    
+    
+
      console.log("valueArr ", valueArr)
      console.log("length ",valueArr.length)
      
@@ -60,14 +108,14 @@ function getSizeOfField(data, field) {
         continue
       }
       else {
-        for(var j=0 ;j<intermediate.length; j++) {
-          nodeIds.push(intermediate[j])
-        }
+       for (var j=0; j<intermediate.length; j++){
+        intermediate[j] = intermediate[j].replace(/[^#A-Za-z0-9]/g, '');
+        nodeIds.push(intermediate[j])
+      }
         intermediate=null;
       }
       
     }
-  
   
     
     console.log("nodeIdssss", nodeIds);                    
@@ -78,17 +126,63 @@ function getSizeOfField(data, field) {
 }
 
 function getEdgesCoHashtag(data) {
-  console.log ("coHashtagArr-DATA",data )                          
+  console.log ("coHashtagArr-DATA",data ) 
 
-    let coHashtagArr = data.filter(tweet => tweet.description !== undefined && tweet.description.length > 1 && tweet.description !==null)
+  var nodeIds=[]
+  var intermediate=[]
+  
+
+    let coHashtagArr1 = data.filter(tweet => tweet.description !== undefined && tweet.description !==null)
                               .map((tweet) => { return tweet.description });
 
+    let coHashtagArr2 = data.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
+                              .map((tweet) => { return tweet.image_text });
+    var coHashtagArr =[]                          
+    if(data[0].facebook_id) {
+
+    let coHashtagArr3 = data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
+                              .map((tweet) => { return tweet.message });
 
 
+    var coHashtagArr4=coHashtagArr1.concat(coHashtagArr2)
+    coHashtagArr= coHashtagArr4.concat(coHashtagArr3)
 
-    console.log ("coHashtagArr",coHashtagArr )                          
+    console.log("IS FACBOOK")
+    }
+    else{
+
+      coHashtagArr= coHashtagArr1.concat(coHashtagArr2)
+      console.log("IS INSTAGRAM")
+
+    }                            
+    
+
+  console.log ("coHashtagArr-length",coHashtagArr.length ) 
+  
+  for(var i=0 ;i<coHashtagArr.length; i++) {
+   // console.log("coHashtagArr-FOUND ", coHashtagArr[i].match(/#\S+/g))
+      intermediate=coHashtagArr[i].match(/#\S+/g)
+
+      if(intermediate===null || intermediate===undefined){
+        continue
+      }
+      else {
+       // intermediate = intermediate.replace(/[^#A-Za-z0-9]/g, '');
+       for (var j=0; j<intermediate.length; j++){
+        intermediate[j] = intermediate[j].replace(/[^#A-Za-z0-9]/g, '');
+      }
+        nodeIds.push(intermediate)
+        
+        intermediate=null;
+      }
+      
+      }
+   
+    console.log ("nodeIds",nodeIds ) 
+
+
     let edges = [];
-    coHashtagArr.forEach(arr => {
+    nodeIds.forEach(arr => {
       
       for (let i = 0; i < arr.length - 1; i++) {
         for (let j = i + 1; j < arr.length; j++) {
@@ -104,6 +198,7 @@ function getEdgesCoHashtag(data) {
       }
     });
     let uniqEdges = groupByThenSum(edges, 'id', [], ['size', 'weight'], ['source', 'target', 'label', 'type']);
+    console.log("uniqEdges ",uniqEdges )
     return uniqEdges;
 }
 
@@ -146,7 +241,7 @@ function groupByThenSum(arrOfObjects, key, attrToSumStr, attrToSumNum, attrToSki
       }
       if (attrToSumStr.length > 0 && attrToSumStr.length !==0) {
         attrToSumStr.forEach(attr => {
-          res[value[key]][attr] += value[attr];
+          res[value[key]][attr]  += value[attr];
         });
       }
       return res;
@@ -160,7 +255,7 @@ export function createCoHashtagGraph(data) {
     console.log("lcTweets ",lcTweets)
     let nodes = getNodesAsHashtag(lcTweets);
     console.log("nodessssss ",nodes)
-    let sizeObj = getSizeOfField(lcTweets, "description");
+    let sizeObj = getSizeOfField(lcTweets, "description", "image_text", "message");
     console.log("sizeObj ", sizeObj)
     nodes.map((node) => { 
       node.size= sizeObj[node.id];

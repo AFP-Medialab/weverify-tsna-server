@@ -20,6 +20,8 @@ import {downloadClick} from "./lib/downloadClick";
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import {createGraphWhenClickANode} from "../../lib/sigmaGraph"
+import InstagramIcon from '@material-ui/icons/Instagram';
+import FacebookIcon from '@material-ui/icons/Facebook';
 
 //possible error, same as plot
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
@@ -34,6 +36,7 @@ export default function HashtagGraph (props) {
 
     const snatype = useSelector((state) => state.csvSna.result.snaType);
     const keyword = useLoadLanguage(snatype.tsv);
+    const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
 
     const classes = useMyStyles();
 
@@ -62,15 +65,19 @@ export default function HashtagGraph (props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.request])
 
+    console.log("props.data ", props.result)
+  
 
     const onClickNodeCoHashtagGraph = (data) => {
         console.log("DATA ", data)
+
 
         let initGraph = {
             nodes: data.data.renderer.graph.nodes(),
             edges: data.data.renderer.graph.edges()
         }
         console.log("initGraph ", initGraph)
+
         setCoHashtagGraphClickNode(createGraphWhenClickANode(data));
 
         setCoHashtagGraphReset(initGraph);
@@ -78,32 +85,124 @@ export default function HashtagGraph (props) {
         let selectedHashtag = data.data.node.id;
         console.log("selectedHashtag ", selectedHashtag)
 
-        let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description.length > 0)
+        var filteredTweets4=[]
+
+
+        let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description !==null)
+        .map((tweet) => { return tweet.description.includes(selectedHashtag) });
+
+        for (var i=0; i<filteredTweets.length ;i++){
+            if (filteredTweets[i]==true){
+                filteredTweets4.push(state.result.data[i])
+            }
+        }
+        console.log("FILTER-1 ",filteredTweets4.length)
+        console.log("FILTER-1 ", filteredTweets4)
+
+        let filteredTweets2 = state.result.data.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
+        .map((tweet) => { return tweet.image_text.includes(selectedHashtag) });
+
+        for (var i=0; i<filteredTweets2.length ;i++){
+            if (filteredTweets2[i]==true){
+                if(filteredTweets4.includes(state.result.data[i])) {
+                    console.log("IT contains it-filteredtweets2")
+                    continue
+                  }
+                  else{
+                    console.log("IT does NOT contain it-filteredtweets2 ",state.result.data[i])
+                    filteredTweets4.push(state.result.data[i])
+                  }
+            }
+        }
+        console.log("FILTER-2 ",filteredTweets4.length)
+        console.log("FILTER-2 ", filteredTweets4)
+
+        console.log("TYPER ", typer)
+
+        if(typer=="FACEBOOK"){
+
+        let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
+        .map((tweet) => { return tweet.message.includes(selectedHashtag) });
+
+        for (var i=0; i<filteredTweets3.length ;i++){
+            if (filteredTweets3[i]==true){
+                if(filteredTweets4.includes(state.result.data[i])) {
+                    console.log("IT contains it-filteredtweets3")
+                    continue
+                  }
+                  else{
+                    console.log("IT does NOT contain it-filteredtweets2 ",state.result.data[i])
+                    filteredTweets4.push(state.result.data[i])
+                  }
+            }
+        }
+        console.log("FILTER-3 ",filteredTweets4.length)
+        console.log("FILTER-3 ", filteredTweets4)
+          }
+         
+       console.log("filteredTweets4 ", filteredTweets4)
+
+/*
+        for (var i=0; i<filteredTweets3.length ;i++){
+            if (filteredTweets3[i]==true){
+                filteredTweets4.push(state.result.data[i])
+            }
+        }
+
+
+        for (var i=0; i<filteredTweets.length ;i++){
+            if (filteredTweets[i]==true){
+                filteredTweets1.push(state.result.data[i])
+            }
+        }
+
+
+        let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description !== null)
             .filter(function (tweet) {
                 let hashtagArr = tweet.description.map((v) => { return v.toLowerCase();});
                 return hashtagArr.includes(selectedHashtag.toLowerCase());
             });
-        console.log("filteredTweets ", selectedHashtag)
+            */
 
-        let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
+
+        let dataToDisplay = displayPostsInsta(filteredTweets4, keyword);
         console.log("dataToDisplay ", dataToDisplay)
 
         dataToDisplay["selected"] = selectedHashtag;
         setCoHashtagGraphTweets(dataToDisplay);
     }
 
+
+
+
     const onClickStageCoHashtagGraph = (e) => {
         setCoHashtagGraphClickNode(null);
         setCoHashtagGraphTweets(null);
     }
-
-    let goToTweetAction = [{
-        icon: TwitterIcon,
-        tooltip: keyword("twittersna_result_go_to_tweet"),
-        onClick: (event, rowData) => {
-            window.open(rowData.link, '_blank');
-        }
-    }]
+    var goToAction;
+  
+    if(typer=="INSTA"){
+      goToAction = [
+        {
+         icon: InstagramIcon,
+          tooltip: keyword("twittersna_result_go_to_tweet"),
+          onClick: (event, rowData) => {
+            window.open(rowData.link.props.href, "_blank");
+          },
+        },
+      ];
+    }
+    else {
+      goToAction = [
+        {
+         icon: FacebookIcon,
+          tooltip: keyword("twittersna_result_go_to_tweet"),
+          onClick: (event, rowData) => {
+           window.open(rowData.link.props.href, "_blank");
+          },
+        },
+      ];
+    }
 
     return (
         <Accordion>
@@ -148,6 +247,7 @@ export default function HashtagGraph (props) {
                     {
                         (coHashtagGraphReset === null && coHashtagGraphClickNode === null && props.result.coHashtagGraph.data.nodes.length !== 0) &&
                         <div>
+                            
                             <Sigma graph={props.result.coHashtagGraph.data}
                                 renderer={"canvas"}
                                 style={{ textAlign: 'left', width: '100%', height: '700px' }}
@@ -169,6 +269,7 @@ export default function HashtagGraph (props) {
                                 </RandomizeNodePositions>
                             </Sigma>
                         </div>
+                        
                     }
                     {
                         (coHashtagGraphReset !== null && coHashtagGraphClickNode !== null) &&
@@ -191,8 +292,9 @@ export default function HashtagGraph (props) {
                             >
                             </Sigma>
                         </div>
+                        
                     }
-                    {
+                    { 
                         (coHashtagGraphReset !== null && coHashtagGraphClickNode === null) &&
                         <div>
                             <Sigma graph={coHashtagGraphReset}
@@ -213,6 +315,7 @@ export default function HashtagGraph (props) {
                             >
                             </Sigma>
                         </div>
+                        
                     }
                     <Box m={1} />
                     <OnClickInfo keyword={"twittersna_hashtag_graph_tip"} />
@@ -247,7 +350,7 @@ export default function HashtagGraph (props) {
                             <CustomTable title={keyword("twittersna_result_slected_tweets")}
                                 colums={coHashtagGraphTweets.columns}
                                 data={coHashtagGraphTweets.data}
-                                actions={goToTweetAction}
+                                actions={goToAction}
                             />
                         </div>
                     }
