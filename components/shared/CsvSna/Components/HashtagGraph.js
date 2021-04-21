@@ -12,9 +12,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
-import {displayTweets} from "../../TwitterSna/lib/displayTweets"
 import {displayPostsInsta} from "./lib/displayPosts"
-import TwitterIcon from '@material-ui/icons/Twitter';
+import {displayPostsFb} from "./lib/displayPosts"
 import {downloadClick} from "./lib/downloadClick";
 
 import useMyStyles from "../../styles/useMyStyles";
@@ -138,38 +137,25 @@ export default function HashtagGraph (props) {
         }
         console.log("FILTER-3 ",filteredTweets4.length)
         console.log("FILTER-3 ", filteredTweets4)
-          }
+        }
          
        console.log("filteredTweets4 ", filteredTweets4)
 
-/*
-        for (var i=0; i<filteredTweets3.length ;i++){
-            if (filteredTweets3[i]==true){
-                filteredTweets4.push(state.result.data[i])
-            }
-        }
+       if(typer=="FACEBOOK"){
+        let dataToDisplay = displayPostsFb(filteredTweets4, keyword);
+        console.log("dataToDisplay ", dataToDisplay)
 
-
-        for (var i=0; i<filteredTweets.length ;i++){
-            if (filteredTweets[i]==true){
-                filteredTweets1.push(state.result.data[i])
-            }
-        }
-
-
-        let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description !== null)
-            .filter(function (tweet) {
-                let hashtagArr = tweet.description.map((v) => { return v.toLowerCase();});
-                return hashtagArr.includes(selectedHashtag.toLowerCase());
-            });
-            */
-
-
+        dataToDisplay["selected"] = selectedHashtag;
+        setCoHashtagGraphTweets(dataToDisplay);
+       }
+       else{
         let dataToDisplay = displayPostsInsta(filteredTweets4, keyword);
         console.log("dataToDisplay ", dataToDisplay)
 
         dataToDisplay["selected"] = selectedHashtag;
         setCoHashtagGraphTweets(dataToDisplay);
+       }
+        
     }
 
 

@@ -16,6 +16,7 @@ import {
   SET_CSV_SNA_HEATMAP_RESULTS,
   SET_CSV_COHASHTAG_RESULTS,
   SET_CSV_URLS_RESULTS,
+  SET_CSV_SNA_SOCIO_GRAPH_RESULTS,
   
 
 } from "../../actions/types/csvSnaTypes";
@@ -65,7 +66,11 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
 
 
 
-
+              case SET_CSV_SNA_SOCIO_GRAPH_RESULTS:
+                return {
+                  ...state,
+                  result: { ...state.result, socioSemantic4ModeGraph: payload },
+                }; 
 
 
           case CSV_BUBBLE_CHART_RESULT: 

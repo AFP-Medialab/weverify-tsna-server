@@ -12,7 +12,9 @@
           newObj['count'] = obj['doc_count'];
           return newObj;
         })
-  
+        console.log("URL-data ",data)
+        console.log("URL-columns",columns)
+
         return {
           columns: columns,
           data: data,

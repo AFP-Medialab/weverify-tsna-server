@@ -1,5 +1,5 @@
 import _ from "lodash";
-import {lowercaseFieldInTweets} from "../lib/displayTweets";
+import {lowercaseFieldInTweets} from "../../lib/displayPosts";
 
 function getTweetAttrObjArr(tweets, topUser) {
   let topUsers = [];
@@ -10,10 +10,12 @@ function getTweetAttrObjArr(tweets, topUser) {
   }
 
     let tweetAttrObjArr = tweets.map((tweet) => {
-      let hashtags = (tweet._source.hashtags !== undefined && tweet._source.hashtags !== null)
-        ? tweet._source.hashtags.map((hashtag) => { return "#" + hashtag; })
+      let hashtags = (tweet.description !== undefined && tweet.description !== null)
+        ? tweet.description.map((hashtag) => { return hashtag; })
         : [];
-      console.log("socioSemGraph-hashtags ", hashtags)  
+        console.log("socioSemGraph-hashtags ", hashtags)  
+
+        /*
       let userIsMentioned = (tweet._source.user_mentions !== undefined && tweet._source.user_mentions !== null)
         ? tweet._source.user_mentions.map((obj) => { return "isMTed:@" + obj.screen_name; })
         : [];
@@ -34,15 +36,17 @@ function getTweetAttrObjArr(tweets, topUser) {
       let urls = (tweet._source.urls !== undefined && tweet._source.urls.length !== 0)
       ? tweet._source.urls.map((url) => { return "URL:" + getDomain(url); })
       : [];
-  
+  */
       let obj = {
         hashtags: [...new Set(hashtags)],
+        /*
         userIsMentioned: [...new Set(userIsMentioned)],
         userRTWC: userRTWC,
         userReply: userReply,
         userTopTweet: userTopTweet,
         retweetCount: retweetCount,
         urls: [...new Set(urls)]
+        */
       }
       return obj;
     });
@@ -76,6 +80,7 @@ function getTweetAttrObjArr(tweets, topUser) {
       if (obj.hashtags.length > 0) {
         coOccur.push(getCoOccurCombinationFrom1Arr(obj.hashtags));
       }
+      /*
       if (obj.userIsMentioned.length > 0) {
         coOccur.push(getCoOccurCombinationFrom1Arr(obj.userIsMentioned));
       }
@@ -131,7 +136,7 @@ function getTweetAttrObjArr(tweets, topUser) {
       if (obj.userReply.length > 0 && obj.urls.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.userReply, obj.urls));
       }
-  
+      */
       /*let coOccurGroupedBy = groupByThenSum(coOccur.flat(), 'id', [], ['count'], []);
       return coOccurGroupedBy;*/
     })
@@ -283,20 +288,23 @@ export const createSocioSemantic4ModeGraph = (tweets, topUser) => {
       
       let nodes = [];
       let freqHashtagObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.hashtags; }).flat());
+      /*
       let freqMentionObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userIsMentioned; }).flat());
       let freqRTWCObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userRTWC; }).flat());
       let freqReplyObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userReply; }).flat());
       let freqURLObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.urls; }).flat());
-      
       let freqTopRTUserObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userTopTweet; }).flat());
+      */
 
       Object.entries(freqHashtagObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Hashtag"), type: "Hashtag" }));
+      /*
       Object.entries(freqMentionObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Mention"), type: "Mention" }));
       Object.entries(freqRTWCObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("RetweetWC"), type: "RetweetWC" }));
       Object.entries(freqReplyObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Reply"), type: "Reply" }));
       Object.entries(freqURLObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("URL"), type: "URL" }));
       Object.entries(freqTopRTUserObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("TopRT"), type: "TopRT" }));
-
+      */
+     
       //console.log("6 ",new Date().valueOf());
       let topNodeGraph = getTopNodeGraph({ nodes: nodes, edges: edges}, ["size"], [20, 20, 20, 20, 20, 20], ['Hashtag', 'Mention', 'RetweetWC', 'Reply', 'URL', 'TopRT']);
       //console.log("7 ",new Date().valueOf());

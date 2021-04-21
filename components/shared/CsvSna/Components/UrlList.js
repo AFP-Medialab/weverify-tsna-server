@@ -55,15 +55,7 @@ export default function cloudChart (props) {
 
         <Paper>
                     <br></br><br></br>
-                    <Box pb={3}>
-                        <Button
-                            variant={"contained"}
-                            color={"primary"}
-                            onClick={() => downloadClick(props.request,createCSVFromURLTable(props.result.urls), "Urls", false, "")}
-                        >
-                            CSV
-                        </Button>
-                    </Box>
+                    
                     <CustomTableURL
                         title={keyword("twittersna_result_url_in_tweets")}
                         colums={props.result.urls.columns}

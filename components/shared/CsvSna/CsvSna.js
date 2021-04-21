@@ -21,6 +21,7 @@ import pieChartsWorker from "workerize-loader?inline!./Components/Common/hooks/p
 import { createHeatMap } from "./Components/Common/hooks/heatMap";
 import hashtagWorker from "workerize-loader?inline!./Components/Common/hooks/hashtagGraph";
 import { getJsonDataForURLTable } from "./Components/Common/hooks/urlList";
+import socioWorker from "workerize-loader?inline!./Components/Common/hooks/socioSemGraph";
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -36,6 +37,7 @@ import {
   setHeatMapResult,
   setCoHashtagResult,
   setUrlsResult,
+  setSocioGraphResult,
 } from "../../../redux/actions/tools/csvSnaActions";
 
 import CsvSnaResults from "./Results/CsvSnaResults";
@@ -71,9 +73,18 @@ const buildFirstFbResult = (data) => {
   buildPieCharts(data);
   buildHeatMapFB(data);
   buildCoHashTag(data);
-  //buildUrls(data);
-  //buildUrls(responseAggs);
+  //buildSocioGraph(data);
+  buildUrls(data);
+
 }
+
+/////////////////////CoHashTagResult common Insta & Facebook
+
+const buildCoHashTag = async (data) => {
+  const instance = hashtagWorker();
+  const coHashtagGraph = await instance.createCoHashtagGraph(data);
+  dispatch(setCoHashtagResult(coHashtagGraph));
+};
 
 //////////////////////////////////////////////////////COUNT FB
 const buildCountFb = async (data) => {
@@ -133,7 +144,8 @@ const buildFirstInstaResult = (data) => {
   buildPieChartsInsta(data);
   buildHeatMapInsta(data);
   buildCoHashTag(data);
- // buildUrls(data);
+ // buildSocioGraph(data);
+  buildUrls(data);
 
   //buildUrls(responseAggs);
 }
@@ -151,7 +163,7 @@ const buildFirstInstaResult = (data) => {
 
   //handle options for csv
   const makeResultCsv = (data) => {
-    var from =["PLOT_LINE","PLOT_PIE_CHART_0","PLOT_PIE_CHART_1","PLOT_PIE_CHART_2","PLOT_PIE_CHART_3"]
+    var from =["PLOT_LINE","PLOT_PIE_CHART_0","PLOT_PIE_CHART_1","PLOT_PIE_CHART_2","PLOT_PIE_CHART_3","PLOT_HASHTAG_GRAPH"]
    
     for(var i=0; i<from.length;i++)
 
@@ -161,6 +173,7 @@ const buildFirstInstaResult = (data) => {
     dispatch(setCSVLoading(true, "processing"));
     dispatch(setHeatMapResult(null))
     dispatch(setCoHashtagResult(null))
+    dispatch(setUrlsResult(null))
 
 
 
@@ -210,23 +223,27 @@ const buildHeatMapInsta = async (data) => {
   dispatch(setHeatMapResult(heatMap));
 };
 
-/////////////////////CoHashTagResult Insta
-
-const buildCoHashTag = async (data) => {
-  const instance = hashtagWorker();
-  const coHashtagGraph = await instance.createCoHashtagGraph(data);
-  dispatch(setCoHashtagResult(coHashtagGraph));
+///////////////////////////////////////////////// DocioGraph Insta
+const buildSocioGraph = async (data, topUser) => {
+  const instance = socioWorker();
+  const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(
+    data,
+    topUser
+  );
+  const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
+  dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
 };
+
 ////////////////////////// UrlList Insta
-/*
-const buildUrls = async (responseAggs) => {
+
+const buildUrls = async (data) => {
   const urls = getJsonDataForURLTable(
-    responseAggs["top_url_keyword"]["buckets"],
+    data,
     keywordINSTA
   );
   dispatch(setUrlsResult(urls));
 };
-*/
+
 
 const parseOptions = {
   header: true,

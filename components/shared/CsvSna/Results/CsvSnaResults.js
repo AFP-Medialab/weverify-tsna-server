@@ -18,6 +18,8 @@ const BubbleChart = dynamic(import("../Components/BubbleChartCSV"), {ssr: false}
 const HashtagGraph = dynamic(import("../Components/HashtagGraph"), {ssr: false});
 import UrlList from "../Components/UrlList";
 import Box from "@material-ui/core/Box";
+const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), {ssr: false});
+
 
 
 
@@ -57,7 +59,11 @@ export default function CsvSnaResults(props) {
         {
           props.result.coHashtagGraph &&
           <HashtagGraph result={props.result}/>
-                }   
+                } 
+         {
+           props.result.socioSemantic4ModeGraph &&
+           <SocioSemGraph result={result}/>
+                }               
 
           <Box m={3} />
                 {

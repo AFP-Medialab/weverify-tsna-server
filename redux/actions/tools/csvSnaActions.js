@@ -14,6 +14,8 @@ import {
   SET_HEAT_MAP_RESULT,
   SET_CSV_COHASHTAG_RESULTS,
   SET_CSV_URLS_RESULTS,
+  SET_HASHTAG_GRAPH_RESULT,
+  SET_CSV_SNA_SOCIO_GRAPH_RESULTS,
 } from "../types/csvSnaTypes";
 
 export const cleanCsvSnaState = () => {
@@ -30,6 +32,12 @@ export const setCoHashtagResult = (result) => {
 export const setUrlsResult = (result) => {
   return {
       type : SET_CSV_URLS_RESULTS,
+      payload :  result
+  }
+};
+export const setSocioGraphResult = (result) => {
+  return {
+      type : SET_CSV_SNA_SOCIO_GRAPH_RESULTS,
       payload :  result
   }
 };
@@ -129,6 +137,11 @@ export const setCSVHistoview = (from,data) => {
                 type : SET_HEAT_MAP_RESULT,
                 payload :  data
         }
+        case "PLOT_HASHTAG_GRAPH":
+            return {
+                type : SET_HASHTAG_GRAPH_RESULT,
+                payload :  data
+            }
              
 }
 };
