@@ -1,8 +1,7 @@
 import _ from "lodash";
-import {lowercaseFieldInTweets} from "../../lib/displayPosts";
 
 function getUniqValuesOfField(data, field1, field2, field3) {
-  console.log("TWEETS ", data)
+ // console.log("TWEETS ", data)
   //console.log("FIELD ", field)
     let nodeIds1 = data.filter(tweet => tweet[field1] !== undefined && tweet[field1] !==0 && tweet[field1] !==null)
                         .map((tweet) => { return tweet[field1] })
@@ -18,13 +17,13 @@ function getUniqValuesOfField(data, field1, field2, field3) {
                         .flat();
     var nodeIds5=nodeIds1.concat(nodeIds2)                    
     nodeIds3=nodeIds5.concat(nodeIds4)
-    console.log("nodeIds4 ", nodeIds4)
+    //console.log("nodeIds4 ", nodeIds4)
 
-    console.log("IS FACBOOK")
+    //console.log("IS FACBOOK")
     }
     else{
       nodeIds3=nodeIds1.concat(nodeIds2)
-      console.log("IS INSTAGRAM")
+      //.log("IS INSTAGRAM")
 
     }
    
@@ -38,8 +37,8 @@ function getUniqValuesOfField(data, field1, field2, field3) {
         continue
       }
       else{
-        console.log("intermediate : ", intermediate)
-        console.log("intermediate.length ", intermediate.length)
+        //console.log("intermediate : ", intermediate)
+       // console.log("intermediate.length ", intermediate.length)
         for (var j=0; j<intermediate.length; j++){
           intermediate[j] = intermediate[j].replace(/[^#A-Za-z0-9]/g, '');
           nodeIds.push(intermediate[j])
@@ -48,27 +47,27 @@ function getUniqValuesOfField(data, field1, field2, field3) {
       }
     }
 
-    console.log("nodeIds fara", nodeIds);
+   // console.log("nodeIds fara", nodeIds);
             
     let uniqNodeIds = _.uniqWith(nodeIds, _.isEqual);
-    console.log("uniqNodeIds ", uniqNodeIds)
+   // console.log("uniqNodeIds ", uniqNodeIds)
 
     return uniqNodeIds;
 }
   
 function getNodesAsHashtag(data) {
     let nodes = getUniqValuesOfField(data, "description", "image_text", "message").map((val) => { return { id: val, label: val } });
-    console.log("nodes ", nodes)
+   // console.log("nodes ", nodes)
 
     return nodes;
 }
 
 function getSizeOfField(data, field1, field2, field3) {
-  console.log("DATA", data)
+ // console.log("DATA", data)
     let valueArr1 = data.filter(tweet => tweet[field1] !== undefined && tweet[field1] !==0 && tweet[field1] !==null)
                         .map((tweet) => { return tweet[field1] })
                         .flat();
-    console.log("valueArr1 ",valueArr1 )
+    //console.log("valueArr1 ",valueArr1 )
                       
     let valueArr2 = data.filter(tweet => tweet[field2] !== undefined && tweet[field2] !==0 && tweet[field2] !==null)
                         .map((tweet) => { return tweet[field2] })
@@ -81,20 +80,20 @@ function getSizeOfField(data, field1, field2, field3) {
     var valueArr4 =valueArr1.concat(valueArr2)       
     valueArr =valueArr4.concat(valueArr3)
     
-    console.log("valueArr-total ", valueArr)
+    //console.log("valueArr-total ", valueArr)
 
-    console.log("IS FACBOOK")
+   // console.log("IS FACBOOK")
     }
     else{
 
       valueArr =valueArr1.concat(valueArr2)
-      console.log("IS INSTAGRAM")
+     // console.log("IS INSTAGRAM")
 
     }                    
     
 
-     console.log("valueArr ", valueArr)
-     console.log("length ",valueArr.length)
+    // console.log("valueArr ", valueArr)
+     //console.log("length ",valueArr.length)
      
     
 
@@ -118,15 +117,15 @@ function getSizeOfField(data, field1, field2, field3) {
     }
   
     
-    console.log("nodeIdssss", nodeIds);                    
+  //  console.log("nodeIdssss", nodeIds);                    
 
     let sizeObj = _.countBy(nodeIds);
-    console.log("sizeObjSSSSSS ",sizeObj)
+   // console.log("sizeObjSSSSSS ",sizeObj)
     return sizeObj;
 }
 
 function getEdgesCoHashtag(data) {
-  console.log ("coHashtagArr-DATA",data ) 
+  //console.log ("coHashtagArr-DATA",data ) 
 
   var nodeIds=[]
   var intermediate=[]
@@ -147,17 +146,17 @@ function getEdgesCoHashtag(data) {
     var coHashtagArr4=coHashtagArr1.concat(coHashtagArr2)
     coHashtagArr= coHashtagArr4.concat(coHashtagArr3)
 
-    console.log("IS FACBOOK")
+  //  console.log("IS FACBOOK")
     }
     else{
 
       coHashtagArr= coHashtagArr1.concat(coHashtagArr2)
-      console.log("IS INSTAGRAM")
+     // console.log("IS INSTAGRAM")
 
     }                            
     
 
-  console.log ("coHashtagArr-length",coHashtagArr.length ) 
+ // console.log ("coHashtagArr-length",coHashtagArr.length ) 
   
   for(var i=0 ;i<coHashtagArr.length; i++) {
    // console.log("coHashtagArr-FOUND ", coHashtagArr[i].match(/#\S+/g))
@@ -178,7 +177,7 @@ function getEdgesCoHashtag(data) {
       
       }
    
-    console.log ("nodeIds",nodeIds ) 
+   // console.log ("nodeIds",nodeIds ) 
 
 
     let edges = [];
@@ -198,7 +197,7 @@ function getEdgesCoHashtag(data) {
       }
     });
     let uniqEdges = groupByThenSum(edges, 'id', [], ['size', 'weight'], ['source', 'target', 'label', 'type']);
-    console.log("uniqEdges ",uniqEdges )
+  //  console.log("uniqEdges ",uniqEdges )
     return uniqEdges;
 }
 
@@ -251,22 +250,23 @@ function groupByThenSum(arrOfObjects, key, attrToSumStr, attrToSumNum, attrToSki
 
 
 export function createCoHashtagGraph(data) {
-    let lcTweets = lowercaseFieldInTweets(data);
-    console.log("lcTweets ",lcTweets)
+    let lcTweets = data;
+    console.log("lcTweets-DATA",data)
+   // console.log("lcTweets ",lcTweets)
     let nodes = getNodesAsHashtag(lcTweets);
-    console.log("nodessssss ",nodes)
+    //console.log("nodessssss ",nodes)
     let sizeObj = getSizeOfField(lcTweets, "description", "image_text", "message");
-    console.log("sizeObj ", sizeObj)
+   // console.log("sizeObj ", sizeObj)
     nodes.map((node) => { 
       node.size= sizeObj[node.id];
-      console.log("node.size ", node.size)
+    //  console.log("node.size ", node.size)
       node.label = /* "#" +*/ node.label + ": " + sizeObj[node.id].toString();
-      console.log("node.label ", node.label)
+   //   console.log("node.label ", node.label)
       return node;
     });
-    console.log("LAST")
+  //  console.log("LAST")
     let edges = getEdgesCoHashtag(lcTweets);
-    console.log("edges ",edges)
+   // console.log("edges ",edges)
     let graph = {
       nodes: nodes,
       edges: edges

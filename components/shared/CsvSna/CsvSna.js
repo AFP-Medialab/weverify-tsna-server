@@ -73,7 +73,7 @@ const buildFirstFbResult = (data) => {
   buildPieCharts(data);
   buildHeatMapFB(data);
   buildCoHashTag(data);
-  //buildSocioGraph(data);
+  buildSocioGraph(data);
   buildUrls(data);
 
 }
@@ -144,9 +144,8 @@ const buildFirstInstaResult = (data) => {
   buildPieChartsInsta(data);
   buildHeatMapInsta(data);
   buildCoHashTag(data);
- // buildSocioGraph(data);
+ buildSocioGraph(data);
   buildUrls(data);
-
   //buildUrls(responseAggs);
 }
 

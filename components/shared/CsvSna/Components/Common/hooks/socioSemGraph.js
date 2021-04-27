@@ -1,5 +1,4 @@
 import _ from "lodash";
-import {lowercaseFieldInTweets} from "../../lib/displayPosts";
 
 function getTweetAttrObjArr(tweets, topUser) {
   let topUsers = [];
@@ -8,17 +7,441 @@ function getTweetAttrObjArr(tweets, topUser) {
     if (user < 20){ //change here to choose the number of Top Retweeted User in the graphe
     topUsers.push(topUser[user].key.toLowerCase());}
   }
+  console.log("TWEETS ",tweets)
+    var tweetAttrObjArr=null
 
-    let tweetAttrObjArr = tweets.map((tweet) => {
-      let hashtags = (tweet.description !== undefined && tweet.description !== null)
-        ? tweet.description.map((hashtag) => { return hashtag; })
+    if(tweets[0].facebook_id){
+      console.log("FACEBOOK") /////////////////////////////////////// FB
+      tweetAttrObjArr = tweets.map((tweet) => {
+        console.log("data ", tweet)
+        /////////////////////////// HASHTAG
+        var hashtags=[]
+        if(tweet.description !=null || tweet.description !=undefined || tweet.image_text !=null || tweet.image_text !=undefined || tweet.message !=null || tweet.message !=undefined ) {
+          var hashtags1=null
+          var hashtags2=null
+          var hashtags3=null
+          
+          if(tweet.description !=null && tweet.description !=undefined ){
+            hashtags1 = tweet.description.match(/#\S+/g)
+          }
+          if(tweet.image_text !=null && tweet.image_text !=undefined ){
+            hashtags2 = tweet.image_text.match(/#\S+/g)
+          }
+          if(tweet.message !=null && tweet.message !=undefined ){
+            hashtags3 = tweet.message.match(/#\S+/g)
+          }
+          // console.log("hashtags1 ", hashtags1)
+          // console.log("hashtags2 ", hashtags2)
+         //  console.log("hashtags3 ", hashtags3)
+
+          if (hashtags1 !=null && hashtags2 !=null && hashtags3 !=null){
+            hashtags=hashtags1.concat(hashtags2).concat(hashtags3)
+          }
+          else{
+            if (hashtags1 ===null ){
+              if (hashtags2 !=null && hashtags3 !=null){
+                hashtags=hashtags2.concat(hashtags3)
+              }
+              if(hashtags2===null){
+                hashtags=hashtags3
+              }
+              if(hashtags3===null){
+                hashtags=hashtags2
+              }
+            }
+          ////////////////////////////////////
+          if (hashtags2 ===null ){
+            if (hashtags1 !=null && hashtags3 !=null){
+              hashtags=hashtags1.concat(hashtags3)
+            }
+            if(hashtags1===null){
+              hashtags=hashtags3
+            }
+            if(hashtags3===null){
+              hashtags=hashtags1
+            }
+          }
+           ////////////////////////////////////
+           if (hashtags3 ===null ){
+            if (hashtags1 !=null && hashtags2 !=null){
+              hashtags=hashtags1.concat(hashtags2)
+            }
+            if(hashtags1===null){
+              hashtags=hashtags2
+            }
+            if(hashtags2===null){
+              hashtags=hashtags1
+            }
+          }
+          }
+        //  console.log("HASH-LENGTH", hashtags)   
+  
+          //console.log("description.match ", hashtags)   
+          if (hashtags !=null && hashtags !=undefined){
+            for (var i=0; i<hashtags.length; i++){
+              hashtags[i] = hashtags[i].replace(/[^#._!?A-Za-z0-9]/g, '');
+              for(var i=0 ; i<hashtags.length;i++){
+                if( hashtags[i].endsWith('.')){
+                  hashtags[i]=hashtags[i].slice(0, -1);
+                  console.log("TRUE",hashtags[i])
+                }
+                /*
+                else{
+                  break;
+                }
+                */
+              }
+            }
+          }
+        }
+        
+  
+  
+        ///////////////////////////////     MENTIONS
+          var userIsMentioned=[]
+          if(tweet.image_text !=null || tweet.image_text !=undefined || tweet.description !=null || tweet.description !=undefined || tweet.message !=null || tweet.message !=undefined) {
+  
+            var userIsMentioned1=null
+            var userIsMentioned2=null
+            var userIsMentioned3=null
+
+  
+            if(tweet.description !=null && tweet.description !=undefined ){
+              userIsMentioned1 = tweet.description.match(/@\S+/g)
+            }
+            if(tweet.image_text !=null && tweet.image_text !=undefined ){
+              userIsMentioned2 = tweet.image_text.match(/@\S+/g)
+            }
+            if(tweet.message !=null && tweet.message !=undefined ){
+              userIsMentioned3 = tweet.message.match(/@\S+/g)
+            }
+           // console.log("userIsMentioned1 ", userIsMentioned1)
+         //   console.log("userIsMentioned2 ", userIsMentioned2)
+         //   console.log("userIsMentioned3 ", userIsMentioned2)
+
+            if (userIsMentioned1 !=null && userIsMentioned2 !=null && userIsMentioned3 !=null){
+              userIsMentioned=userIsMentioned1.concat(userIsMentioned2).concat(userIsMentioned3)
+            }
+            else{
+              if (userIsMentioned1 ===null ){
+                if (userIsMentioned2 !=null && userIsMentioned3 !=null){
+                  userIsMentioned=userIsMentioned2.concat(userIsMentioned3)
+                }
+                if(userIsMentioned2===null){
+                  userIsMentioned=userIsMentioned3
+                }
+                if(userIsMentioned3===null){
+                  userIsMentioned=userIsMentioned2
+                }
+              }
+              //////////////////////////////
+              if (userIsMentioned2 ===null ){
+                if (userIsMentioned1 !=null && userIsMentioned3 !=null){
+                  userIsMentioned=userIsMentioned1.concat(userIsMentioned3)
+                }
+                if(userIsMentioned1===null){
+                  userIsMentioned=userIsMentioned3
+                }
+                if(userIsMentioned3===null){
+                  userIsMentioned=userIsMentioned1
+                }
+              }
+              ////////////////////////////////
+              if (userIsMentioned3 ===null ){
+                if (userIsMentioned1 !=null && userIsMentioned2 !=null){
+                  userIsMentioned=userIsMentioned1.concat(userIsMentioned2)
+                }
+                if(userIsMentioned1===null){
+                  userIsMentioned=userIsMentioned2
+                }
+                if(userIsMentioned2===null){
+                  userIsMentioned=userIsMentioned1
+                }
+              }
+            }
+            //console.log("userIsMentioned1-LENGTH", userIsMentioned)   
+  
+            if(userIsMentioned != null || userIsMentioned != undefined){
+              for (var i=0; i<userIsMentioned.length; i++){
+                userIsMentioned[i] = userIsMentioned[i].replace(/[^@._A-Za-z0-9]/g, '');
+                for(var j=0 ; j<userIsMentioned[i].length;j++){
+                  if( userIsMentioned[i].endsWith('.')){
+                    userIsMentioned[i]=userIsMentioned[i].slice(0, -1);
+                    console.log("TRUE",userIsMentioned[i])
+                  }
+                 /*
+                else{
+                  break;
+                }
+                */
+                }
+
+
+              
+              }
+            }
+          }
+          console.log("userIsMentioned ",userIsMentioned)
+         
+          
+          //////////////////////////////////////////////// URL
+          var urls=[]
+          if(tweet.description !=null || tweet.description !=undefined || tweet.image_text !=null || tweet.image_text !=undefined || tweet.message !=null || tweet.message !=undefined ) {
+            var urls1=null
+            var urls2=null
+            var urls3=null
+            if(tweet.message !=null && tweet.message !=undefined ){
+              urls1 = tweet.message.match(/http\S+/g)
+            }
+            if(tweet.description !=null && tweet.description !=undefined ){
+              urls2 = tweet.description.match(/http\S+/g)
+            }
+            if(tweet.image_text !=null && tweet.image_text !=undefined ){
+              urls3 = tweet.image_text.match(/http\S+/g)
+            }
+
+            if (urls1 !=null && urls2 !=null && urls3 !=null){
+              urls=urls1.concat(urls2).concat(urls3)
+            }
+            else{
+              if (urls1 ===null ){
+                if (urls2 !=null && urls3 !=null){
+                  urls=urls2.concat(urls3)
+                }
+                if(urls2===null){
+                  urls=urls3
+                }
+                if(urls3===null){
+                  urls=urls2
+                }
+              }
+              //////////////////////////////
+              if (urls2 ===null ){
+                if (urls1 !=null && urls3 !=null){
+                  urls=urls1.concat(urls3)
+                }
+                if(urls1===null){
+                  urls=urls3
+                }
+                if(urls3===null){
+                  urls=urls1
+                }
+              }
+              ////////////////////////////////
+              if (urls3 ===null ){
+                if (urls1 !=null && urls2 !=null){
+                  urls=urls1.concat(urls2)
+                }
+                if(urls1===null){
+                  urls=urls2
+                }
+                if(urls2===null){
+                  urls=urls1
+                }
+              }
+            }
+            if (urls !=null && urls !=undefined){
+              for (var i=0; i<urls.length; i++){
+                urls[i] = "URL:"+getDomain(urls[i])
+              }
+            }
+            console.log("urls ", urls)
+
+            }
+            ////////////////////////////////////// NUMBER OF SHARES  
+            var shares=[]
+            var post=[]
+            if(tweet.shares !=null || tweet.shares !=undefined) {
+              shares=tweet.shares
+              post=tweet.url
+              }
+         
+
+          
+          /*
+       
+        let userRTWC = (tweet._source.quoted_status_id_str !== undefined && tweet._source.quoted_status_id_str !== null)
+        ? ["RT:@" + tweet._source.screen_name]
         : [];
-        console.log("socioSemGraph-hashtags ", hashtags)  
+        let userReply = (tweet._source.in_reply_to_screen_name !== undefined && tweet._source.in_reply_to_screen_name !== null)
+        ? ["Rpl:@" + tweet._source.screen_name]
+        : [];
+    
+        let userTopTweet = (tweet._source.screen_name !== undefined && tweet._source.screen_name !== null && topUsers.includes(tweet._source.screen_name))
+        ? ["TopRT:" + tweet._source.screen_name]
+        : [];
+        let retweetCount = (tweet._source.retweet_count !== undefined && tweet._source.retweet_count !== null && topUsers.includes(tweet._source.screen_name))
+        ? ["RTcount:" + tweet._source.retweet_count]
+        : [];
+  
+        let urls = (tweet._source.urls !== undefined && tweet._source.urls.length !== 0)
+        ? tweet._source.urls.map((url) => { return "URL:" + getDomain(url); })
+        : [];
+    */
+        let obj = {
+          hashtags: [...new Set(hashtags)], 
+          userIsMentioned: [...new Set(userIsMentioned)],
+          shares: shares,
+          urls: [...new Set(urls)]
 
+          /*
+          userRTWC: userRTWC,
+          userReply: userReply,
+          userTopTweet: userTopTweet,
+          urls: [...new Set(urls)]
+          */
+        }
+        return obj;
+      });
+    }
+    else{
+      console.log("INSTA")       /////////////////////////////////////// INSTA
+     tweetAttrObjArr = tweets.map((tweet) => {
+      console.log("data ", tweet)
+
+      var hashtags=[]
+      if(tweet.description !=null || tweet.description !=undefined || tweet.image_text !=null || tweet.image_text !=undefined  ) {
+        var hashtags1=null
+        var hashtags2=null
+        if(tweet.description !=null && tweet.description !=undefined ){
+          hashtags1 = tweet.description.match(/#\S+/g)
+        }
+        if(tweet.image_text !=null && tweet.image_text !=undefined ){
+          hashtags2 = tweet.image_text.match(/#\S+/g)
+        }
+         console.log("hashtags1 ", hashtags1)
+         console.log("hashtags2 ", hashtags2)
+        if (hashtags1 !=null && hashtags2 !=null){
+          hashtags=hashtags1.concat(hashtags2)
+        }
+        else{
+          if (hashtags1 ===null){
+            hashtags=hashtags2
+          }
+          if (hashtags2 ===null){
+            hashtags=hashtags1
+          }
+        }
+        console.log("HASH-LENGTH", hashtags)   
+
+        console.log("description.match ", hashtags)   
+        if (hashtags !=null || hashtags !=undefined){
+          for (var i=0; i<hashtags.length; i++){
+            hashtags[i] = hashtags[i].replace(/[^#._!?A-Za-z0-9]/g, '');
+            for(var i=0 ; i<hashtags.length;i++){
+              if( hashtags[i].endsWith('.')){
+                hashtags[i]=hashtags[i].slice(0, -1);
+                console.log("TRUE",hashtags[i])
+              }
+              /*
+              else{
+                break;
+              }
+              */
+            }
+
+              
+          }
+        }
+      }
+      
+
+
+
+        var userIsMentioned=[]
+        if(tweet.image_text !=null || tweet.image_text !=undefined || tweet.description !=null || tweet.description !=undefined ) {
+
+          var userIsMentioned1=null
+          var userIsMentioned2=null
+
+          if(tweet.description !=null && tweet.description !=undefined ){
+            userIsMentioned1 = tweet.description.match(/@\S+/g)
+          }
+          if(tweet.image_text !=null && tweet.image_text !=undefined ){
+            userIsMentioned2 = tweet.image_text.match(/@\S+/g)
+          }
+          console.log("userIsMentioned1 ", userIsMentioned1)
+          console.log("userIsMentioned2 ", userIsMentioned2)
+
+          if (userIsMentioned1 !=null && userIsMentioned2 !=null){
+            userIsMentioned=userIsMentioned1.concat(userIsMentioned2)
+          }
+          else{
+            if (userIsMentioned1 ===null){
+              userIsMentioned=userIsMentioned2
+            }
+            if (hashtags2 ===null){
+              userIsMentioned=userIsMentioned1
+            }
+          }
+          console.log("userIsMentioned1-LENGTH", userIsMentioned)   
+
+          if(userIsMentioned != null || userIsMentioned != undefined){
+            for (var i=0; i<userIsMentioned.length; i++){
+              userIsMentioned[i] = userIsMentioned[i].replace(/[^@._A-Za-z0-9]/g, '');
+              for(var j=0 ; j<userIsMentioned[i].length;j++){
+                if( userIsMentioned[i].endsWith('.')){
+                  userIsMentioned[i]=userIsMentioned[i].slice(0, -1);
+                  console.log("TRUE",userIsMentioned[i])
+                }/*
+                else{
+                  break;
+                }
+                */
+              }
+            }
+            console.log("userIsMentioned ",userIsMentioned)
+          }
+          else{
+            console.log("there is no MENTION")
+          }
+
+        }
+        else {
+          console.log("image_text is EMPTY")
+        }
+        
+        ///////////////////////////////////////////////////////// URL
+        var urls=[]
+        if(tweet.image_text !=null || tweet.image_text !=undefined || tweet.description !=null || tweet.description !=undefined ) {
+
+          var urls1=null
+          var urls2=null
+
+          if(tweet.description !=null && tweet.description !=undefined ){
+            urls1 = tweet.description.match(/http\S+/g)
+          }
+          if(tweet.image_text !=null && tweet.image_text !=undefined ){
+            urls2 = tweet.image_text.match(/http\S+/g)
+          }
+
+          if (urls1 !=null && urls2 !=null){
+            urls=urls1.concat(urls2)
+          }
+          else{
+            if (urls1 ===null){
+              urls=urls2
+            }
+            if (urls2 ===null){
+              urls=urls1
+            }
+          }
+          if (urls !=null && urls !=undefined){
+            for (var i=0; i<urls.length; i++){
+              urls[i] = "URL:"+getDomain(urls[i])
+            }
+          }
+          console.log("urls ", urls)
+        }
+        ////////////////////////////////////// NUMBER OF TOTAL INTERACTIONS  
+
+        var total_interactions=[]
+        var post=[]
+        if(tweet.total_interactions !=null || tweet.total_interactions !=undefined) {
+          total_interactions=tweet.total_interactions
+          post=tweet.url
+          }
         /*
-      let userIsMentioned = (tweet._source.user_mentions !== undefined && tweet._source.user_mentions !== null)
-        ? tweet._source.user_mentions.map((obj) => { return "isMTed:@" + obj.screen_name; })
-        : [];
       let userRTWC = (tweet._source.quoted_status_id_str !== undefined && tweet._source.quoted_status_id_str !== null)
       ? ["RT:@" + tweet._source.screen_name]
       : [];
@@ -38,9 +461,13 @@ function getTweetAttrObjArr(tweets, topUser) {
       : [];
   */
       let obj = {
-        hashtags: [...new Set(hashtags)],
-        /*
+        hashtags: [...new Set(hashtags)], 
         userIsMentioned: [...new Set(userIsMentioned)],
+        total_interactions: total_interactions,
+        urls: [...new Set(urls)],
+        post:post
+
+        /*
         userRTWC: userRTWC,
         userReply: userReply,
         userTopTweet: userTopTweet,
@@ -50,8 +477,12 @@ function getTweetAttrObjArr(tweets, topUser) {
       }
       return obj;
     });
-    return tweetAttrObjArr;
   }
+    return tweetAttrObjArr;
+
+  }
+  
+
 
   export function getDomain(url) {
     var domain;
@@ -73,6 +504,7 @@ function getTweetAttrObjArr(tweets, topUser) {
     return domain;
   }
 
+
   function getCoOccurence(tweetAttrObjArr) {
     let coOccur = [];
     tweetAttrObjArr.forEach((obj) => {
@@ -80,17 +512,26 @@ function getTweetAttrObjArr(tweets, topUser) {
       if (obj.hashtags.length > 0) {
         coOccur.push(getCoOccurCombinationFrom1Arr(obj.hashtags));
       }
-      /*
+      
       if (obj.userIsMentioned.length > 0) {
         coOccur.push(getCoOccurCombinationFrom1Arr(obj.userIsMentioned));
       }
+      
       if (obj.urls.length > 0) {
         coOccur.push(getCoOccurCombinationFrom1Arr(obj.urls));
       }
-  
       if (obj.hashtags.length > 0 && obj.userIsMentioned.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.hashtags, obj.userIsMentioned));
       }
+      if (obj.hashtags.length > 0 && obj.urls.length > 0) {
+        coOccur.push(getCombinationFrom2Arrs(obj.hashtags, obj.urls));
+      }
+      if (obj.userIsMentioned.length > 0 && obj.urls.length > 0) {
+        coOccur.push(getCombinationFrom2Arrs(obj.userIsMentioned, obj.urls));
+      }
+      /*
+  
+      
       if (obj.hashtags.length > 0 && obj.userRTWC.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.hashtags, obj.userRTWC));
       }
@@ -100,9 +541,7 @@ function getTweetAttrObjArr(tweets, topUser) {
       if (obj.hashtags.length > 0 && obj.userReply.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.hashtags, obj.userReply));
       }
-      if (obj.hashtags.length > 0 && obj.urls.length > 0) {
-        coOccur.push(getCombinationFrom2Arrs(obj.hashtags, obj.urls));
-      }
+      
   
       if (obj.userIsMentioned.length > 0 && obj.userRTWC.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.userIsMentioned, obj.userRTWC));
@@ -113,9 +552,7 @@ function getTweetAttrObjArr(tweets, topUser) {
       if (obj.userIsMentioned.length > 0 && obj.userReply.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.userIsMentioned, obj.userReply));
       }
-      if (obj.userIsMentioned.length > 0 && obj.urls.length > 0) {
-        coOccur.push(getCombinationFrom2Arrs(obj.userIsMentioned, obj.urls));
-      }
+      
   
       if (obj.userRTWC.length > 0 && obj.userReply.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.userRTWC, obj.userReply));
@@ -131,18 +568,16 @@ function getTweetAttrObjArr(tweets, topUser) {
         coOccur.push(getCombinationFrom2Arrs(obj.userTopTweet, obj.urls));
       }
 
-
-  
       if (obj.userReply.length > 0 && obj.urls.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.userReply, obj.urls));
       }
       */
-      /*let coOccurGroupedBy = groupByThenSum(coOccur.flat(), 'id', [], ['count'], []);
-      return coOccurGroupedBy;*/
+     
     })
     let coOccurGroupedBy = groupByThenSum(coOccur.flat(), 'id', [], ['count'], []);
     return coOccurGroupedBy;
   }
+
 
   function getCoOccurCombinationFrom1Arr(arr) {
     let occurences = [];
@@ -154,6 +589,7 @@ function getTweetAttrObjArr(tweets, topUser) {
     }
     return occurences;
   }
+
   
   function getCombinationFrom2Arrs(arr1, arr2) {
     let occurences = [];
@@ -200,17 +636,26 @@ function getTweetAttrObjArr(tweets, topUser) {
       let connectionType = null;
       if (first.startsWith("#") && second.startsWith("#")) {
         connectionType = "Hashtag-Hashtag";
-      } else if (first.startsWith("isMTed:@") && second.startsWith("isMTed:@")) {
+      } else if (first.startsWith("@") && second.startsWith("@")) {
         connectionType = "Mention-Mention";
-      } else if (first.startsWith("RT:@") && second.startsWith("RT:@")) {
+      } else if (first.startsWith("URL:") && second.startsWith("URL:")) {
+        connectionType = "URL-URL";
+      }
+
+/*
+      else if (first.startsWith("http") && second.startsWith("RT:@")) {
+        connectionType = "RetweetWC-RetweetWC";
+      } 
+      
+      
+        else if (first.startsWith("RT:@") && second.startsWith("RT:@")) {
         connectionType = "RetweetWC-RetweetWC";
       } else if (first.startsWith("Rpl:@") && second.startsWith("Rpl:@")) {
         connectionType = "Reply-Reply";
-      } else if (first.startsWith("URL:") && second.startsWith("URL:")) {
-        connectionType = "URL-URL";
-      } else if (first.startsWith("RetweetedUser:") && second.startsWith("RetweetedUser:")) {
+      }  else if (first.startsWith("RetweetedUser:") && second.startsWith("RetweetedUser:")) {
         connectionType = "TopRT-TopRT";
       }
+      */
        else {
         connectionType = "Else-Else";
       }
@@ -250,7 +695,7 @@ function getTweetAttrObjArr(tweets, topUser) {
     return '#35347B';
   }
 
-  function getTopNodeGraph(graph, sortByProp=["size"], topByType=[20, 20], types=["Hashtag", "Mention"]) {
+  function getTopNodeGraph(graph, sortByProp=["size"], topByType=[20, 20, 20], types=["Hashtag", "Mention", "URL"]) {
     let sortNodes = _.sortBy(graph.nodes, sortByProp).reverse();
     let topNodes = []
     if (types.length !== 0) {
@@ -273,32 +718,42 @@ function getTweetAttrObjArr(tweets, topUser) {
 
 export const createSocioSemantic4ModeGraph = (tweets, topUser) => {
   //console.log("1 ", new Date().valueOf());
-      let lcTweets = lowercaseFieldInTweets(tweets, 'hashtags');
-      lcTweets = lowercaseFieldInTweets(lcTweets, 'user_mentions');
-      lcTweets = lowercaseFieldInTweets(lcTweets, 'screen_name');
-      lcTweets = lowercaseFieldInTweets(lcTweets, 'in_reply_to_screen_name');
-      lcTweets = lowercaseFieldInTweets(lcTweets, 'urls');     
+      let lcTweets = tweets;
+
       //console.log("2 ",new Date().valueOf());
-      let tweetAttrObjArr = getTweetAttrObjArr(lcTweets, topUser);
+       let tweetAttrObjArr = getTweetAttrObjArr(lcTweets, topUser); 
+      console.log("tweetAttrObjArr ", tweetAttrObjArr)  
+
       //console.log("3 ",new Date().valueOf());
       let coOccurObjArr = getCoOccurence(tweetAttrObjArr);
+
       //console.log("4 ",new Date().valueOf());
       let edges = getEdgesFromCoOcurObjArr(coOccurObjArr);
+
       //console.log("5 ",new Date().valueOf());
       
       let nodes = [];
       let freqHashtagObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.hashtags; }).flat());
-      /*
+      console.log("freqHashtagObj ", freqHashtagObj)  
+
       let freqMentionObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userIsMentioned; }).flat());
+      let freqURLObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.urls; }).flat());
+      //let total_url = tweetAttrObjArr.map((obj) => { return obj.post +': '+obj.total_interactions; }).flat();
+     // console.log("total_url ", total_url)
+
+      /*
       let freqRTWCObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userRTWC; }).flat());
       let freqReplyObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userReply; }).flat());
-      let freqURLObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.urls; }).flat());
       let freqTopRTUserObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userTopTweet; }).flat());
       */
 
       Object.entries(freqHashtagObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Hashtag"), type: "Hashtag" }));
-      /*
       Object.entries(freqMentionObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Mention"), type: "Mention" }));
+      Object.entries(freqURLObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("URL"), type: "URL" }));
+     // Object.entries(total_url)
+      //Object.entries(total_url).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Reply"), type: "Reply" }));
+
+      /*
       Object.entries(freqRTWCObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("RetweetWC"), type: "RetweetWC" }));
       Object.entries(freqReplyObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("Reply"), type: "Reply" }));
       Object.entries(freqURLObj).forEach(arr => nodes.push({ id: arr[0], label: arr[0] + ": " + arr[1], size: arr[1], color: getColor("URL"), type: "URL" }));
@@ -306,7 +761,7 @@ export const createSocioSemantic4ModeGraph = (tweets, topUser) => {
       */
      
       //console.log("6 ",new Date().valueOf());
-      let topNodeGraph = getTopNodeGraph({ nodes: nodes, edges: edges}, ["size"], [20, 20, 20, 20, 20, 20], ['Hashtag', 'Mention', 'RetweetWC', 'Reply', 'URL', 'TopRT']);
+      let topNodeGraph = getTopNodeGraph({ nodes: nodes, edges: edges}, ["size"], [20 , 20, 20, 20/*, 20, 20*/], ['Hashtag', 'Mention', 'URL', 'Reply' /*,'RetweetWC', 'TopRT'*/]);
       //console.log("7 ",new Date().valueOf());
       return JSON.stringify({
         data: topNodeGraph

@@ -9,7 +9,7 @@
             { title: keyword("elastic_url"), field: 'url' },
             { title: keyword("csv_sna_shares"), field: 'count' },
           ];
-          console.log("FACEBOOK URL")
+        //  console.log("FACEBOOK URL")
           data = dataResponse.map((obj) => {
             let newObj = {};
             newObj['url'] = obj.url;
@@ -18,7 +18,7 @@
           })
         }
         else {
-          console.log("INSTA URL")
+         // console.log("INSTA URL")
 
            columns = [
             { title: keyword("elastic_url"), field: 'url' },
@@ -33,7 +33,7 @@
           })
         }
         
-        console.log("URL-data ",data)
+       // console.log("URL-data ",data)
 
   
         return {

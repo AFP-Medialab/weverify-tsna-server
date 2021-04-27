@@ -13,7 +13,7 @@ function getTweetAttrObjArr(tweets, topUser) {
       let hashtags = (tweet._source.hashtags !== undefined && tweet._source.hashtags !== null)
         ? tweet._source.hashtags.map((hashtag) => { return "#" + hashtag; })
         : [];
-      console.log("socioSemGraph-hashtags ", hashtags)  
+      //console.log("socioSemGraph-hashtags ", hashtags)  
       let userIsMentioned = (tweet._source.user_mentions !== undefined && tweet._source.user_mentions !== null)
         ? tweet._source.user_mentions.map((obj) => { return "isMTed:@" + obj.screen_name; })
         : [];
@@ -48,7 +48,6 @@ function getTweetAttrObjArr(tweets, topUser) {
     });
     return tweetAttrObjArr;
   }
-
   export function getDomain(url) {
     var domain;
   
@@ -275,6 +274,8 @@ export const createSocioSemantic4ModeGraph = (tweets, topUser) => {
       lcTweets = lowercaseFieldInTweets(lcTweets, 'urls');     
       //console.log("2 ",new Date().valueOf());
       let tweetAttrObjArr = getTweetAttrObjArr(lcTweets, topUser);
+      console.log("tweetAttrObjArr ", tweetAttrObjArr)
+
       //console.log("3 ",new Date().valueOf());
       let coOccurObjArr = getCoOccurence(tweetAttrObjArr);
       //console.log("4 ",new Date().valueOf());

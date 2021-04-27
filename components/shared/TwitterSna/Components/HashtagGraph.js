@@ -62,7 +62,6 @@ export default function HashtagGraph (props) {
 
 
     const onClickNodeCoHashtagGraph = (data) => {
-        console.log("DATA ", data)
 
         let initGraph = {
             nodes: data.data.renderer.graph.nodes(),
@@ -79,7 +78,6 @@ export default function HashtagGraph (props) {
                 let hashtagArr = tweet._source.hashtags.map((v) => { return v.toLowerCase();});
                 return hashtagArr.includes(selectedHashtag.toLowerCase());
             });
-        console.log("filteredTweets ", filteredTweets)
             let dataToDisplay = displayTweets(filteredTweets, keyword);
         dataToDisplay["selected"] = selectedHashtag;
         setCoHashtagGraphTweets(dataToDisplay);

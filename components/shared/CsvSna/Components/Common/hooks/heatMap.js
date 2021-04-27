@@ -204,7 +204,7 @@ function getNbTweetsByHourDay(dayArr, hourArr, bucket) {
   
     // Groupby day_hour
     let nbTweetArr = _.countBy(dayHourArr);
-    console.log("NBTWEET", nbTweetArr)
+  //  console.log("NBTWEET", nbTweetArr)
     // Convert 1D-array to 2D-array
     let nbTweetArr2D = [...Array(dayArr.length)].map(e => Array(hourArr.length).fill(0));
     //console.log("NBTWEET2D", nbTweetArr2D)

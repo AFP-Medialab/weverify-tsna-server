@@ -62,7 +62,7 @@ export default function CsvSnaResults(props) {
                 } 
          {
            props.result.socioSemantic4ModeGraph &&
-           <SocioSemGraph result={result}/>
+           <SocioSemGraph result={props.result}/>
                 }               
 
           <Box m={3} />
