@@ -20,15 +20,53 @@ function getTweetAttrObjArr(tweets, topUser) {
           var hashtags1=null
           var hashtags2=null
           var hashtags3=null
-          
+          var intermediate1=null
+          var intermediate2=null
+          var intermediate3=null
+
           if(tweet.description !=null && tweet.description !=undefined ){
-            hashtags1 = tweet.description.match(/#\S+/g)
+            hashtags1=[]
+            intermediate1 = tweet.description.match(/#\S+/g)
+            if (intermediate1 !=null && intermediate1 !=undefined){
+              for(var i=0; i<intermediate1.length ;i++){
+                if(intermediate1[i][1]!='.'){
+                  hashtags1.push(intermediate1[i])
+                }
+              }
+            }
+            else{
+              hashtags1=null
+            }
+          
           }
           if(tweet.image_text !=null && tweet.image_text !=undefined ){
-            hashtags2 = tweet.image_text.match(/#\S+/g)
+            hashtags2=[]
+            intermediate2 = tweet.image_text.match(/#\S+/g)
+            if (intermediate2 !=null && intermediate2 !=undefined){
+              for(var i=0; i<intermediate2.length ;i++){
+                if(intermediate2[i][1]!='.'){
+                  hashtags2.push(intermediate2[i])
+                }
+              }
+              
+            }
+            else{
+              hashtags2=null
+            }
           }
           if(tweet.message !=null && tweet.message !=undefined ){
-            hashtags3 = tweet.message.match(/#\S+/g)
+            hashtags3=[]
+            intermediate3 = tweet.message.match(/#\S+/g)
+            if (intermediate3 !=null && intermediate3 !=undefined){
+              for(var i=0; i<intermediate3.length ;i++){
+                if(intermediate3[i][1]!='.'){
+                  hashtags3.push(intermediate3[i])
+                }
+              }
+            }
+            else{
+              hashtags3=null
+            }
           }
           // console.log("hashtags1 ", hashtags1)
           // console.log("hashtags2 ", hashtags2)
@@ -80,11 +118,13 @@ function getTweetAttrObjArr(tweets, topUser) {
           if (hashtags !=null && hashtags !=undefined){
             for (var i=0; i<hashtags.length; i++){
               hashtags[i] = hashtags[i].replace(/[^#._!?A-Za-z0-9]/g, '');
-              for(var i=0 ; i<hashtags.length;i++){
+              console.log("HASH.LENGTH",hashtags[i].length)
+              for(var j=0 ; j<hashtags[i].length;j++){
                 if( hashtags[i].endsWith('.')){
                   hashtags[i]=hashtags[i].slice(0, -1);
                   console.log("TRUE",hashtags[i])
                 }
+                
                 /*
                 else{
                   break;
@@ -94,7 +134,7 @@ function getTweetAttrObjArr(tweets, topUser) {
             }
           }
         }
-        
+        console.log("HASHTAGS ", hashtags)
   
   
         ///////////////////////////////     MENTIONS
@@ -104,16 +144,62 @@ function getTweetAttrObjArr(tweets, topUser) {
             var userIsMentioned1=null
             var userIsMentioned2=null
             var userIsMentioned3=null
+            var intermediate1=null
+            var intermediate2=null
+            var intermediate3=null
 
-  
             if(tweet.description !=null && tweet.description !=undefined ){
-              userIsMentioned1 = tweet.description.match(/@\S+/g)
+              userIsMentioned1=[]
+              intermediate1 = tweet.description.match(/@\S+/g)
+              if (intermediate1 !=null && intermediate1 !=undefined){
+                for(var i=0; i<intermediate1.length ;i++){
+                  if(intermediate1[i][1]!='.'){
+                    userIsMentioned1.push(intermediate1[i])
+                  }
+                }
+                if(userIsMentioned1.length===0){
+                  userIsMentioned1=null
+                }
+              }
+              else{
+                userIsMentioned1=null
+              }
             }
             if(tweet.image_text !=null && tweet.image_text !=undefined ){
-              userIsMentioned2 = tweet.image_text.match(/@\S+/g)
+              userIsMentioned2=[]
+              intermediate2 = tweet.image_text.match(/@\S+/g)
+              if (intermediate2 !=null && intermediate2 !=undefined){
+                for(var i=0; i<intermediate2.length ;i++){
+                  if(intermediate2[i][1]!='.'){
+                    userIsMentioned2.push(intermediate2[i])  
+                  }
+                  
+                }
+                if(userIsMentioned2.length===0){
+                  userIsMentioned2=null
+                }
+              }
+              else{
+                userIsMentioned2=null
+              }
             }
             if(tweet.message !=null && tweet.message !=undefined ){
-              userIsMentioned3 = tweet.message.match(/@\S+/g)
+              userIsMentioned3=[]
+              intermediate3 = tweet.message.match(/@\S+/g)
+              if (intermediate3 !=null && intermediate3 !=undefined){
+                for(var i=0; i<intermediate3.length ;i++){
+                  if(intermediate3[i][1]!='.'){
+                    userIsMentioned3.push(intermediate3[i])  
+                  }
+                  
+                }
+                if(userIsMentioned3.length===0){
+                  userIsMentioned3=null
+                }
+              }
+              else{
+                userIsMentioned3=null
+              }
             }
            // console.log("userIsMentioned1 ", userIsMentioned1)
          //   console.log("userIsMentioned2 ", userIsMentioned2)
@@ -168,6 +254,9 @@ function getTweetAttrObjArr(tweets, topUser) {
                   if( userIsMentioned[i].endsWith('.')){
                     userIsMentioned[i]=userIsMentioned[i].slice(0, -1);
                     console.log("TRUE",userIsMentioned[i])
+                  }
+                  if(userIsMentioned[i][1]==='.'){
+                    userIsMentioned[i]=userIsMentioned[i].replace(userIsMentioned[i][1],"")
                   }
                  /*
                 else{
@@ -282,8 +371,8 @@ function getTweetAttrObjArr(tweets, topUser) {
           hashtags: [...new Set(hashtags)], 
           userIsMentioned: [...new Set(userIsMentioned)],
           shares: shares,
-          urls: [...new Set(urls)]
-
+          urls: [...new Set(urls)],
+          post:post
           /*
           userRTWC: userRTWC,
           userReply: userReply,
@@ -303,12 +392,39 @@ function getTweetAttrObjArr(tweets, topUser) {
       if(tweet.description !=null || tweet.description !=undefined || tweet.image_text !=null || tweet.image_text !=undefined  ) {
         var hashtags1=null
         var hashtags2=null
+        var intermediate1=null
+        var intermediate2=null
         if(tweet.description !=null && tweet.description !=undefined ){
-          hashtags1 = tweet.description.match(/#\S+/g)
+           hashtags1=[]
+          intermediate1 = tweet.description.match(/#\S+/g)
+          if (intermediate1 !=null && intermediate1 !=undefined){
+            for(var i=0; i<intermediate1.length ;i++){
+              if(intermediate1[i][1]!='.'){
+                hashtags1.push(intermediate1[i])
+              }
+            }
+          }
+          else{
+            hashtags1=null
+          }
         }
+        
         if(tweet.image_text !=null && tweet.image_text !=undefined ){
-          hashtags2 = tweet.image_text.match(/#\S+/g)
+          hashtags2=[]
+          intermediate2 = tweet.image_text.match(/#\S+/g)
+          if (intermediate2 !=null && intermediate2 !=undefined){
+            for(var i=0; i<intermediate2.length ;i++){
+              if(intermediate2[i][1]!='.'){
+                hashtags2.push(intermediate2[i])
+              }
+            }
+            
+          }
+          else{
+            hashtags2=null
+          }
         }
+        
          console.log("hashtags1 ", hashtags1)
          console.log("hashtags2 ", hashtags2)
         if (hashtags1 !=null && hashtags2 !=null){
@@ -328,11 +444,13 @@ function getTweetAttrObjArr(tweets, topUser) {
         if (hashtags !=null || hashtags !=undefined){
           for (var i=0; i<hashtags.length; i++){
             hashtags[i] = hashtags[i].replace(/[^#._!?A-Za-z0-9]/g, '');
-            for(var i=0 ; i<hashtags.length;i++){
+            for(var j=0 ; j<hashtags[i].length;j++){
               if( hashtags[i].endsWith('.')){
                 hashtags[i]=hashtags[i].slice(0, -1);
                 console.log("TRUE",hashtags[i])
               }
+               
+              
               /*
               else{
                 break;
@@ -344,33 +462,66 @@ function getTweetAttrObjArr(tweets, topUser) {
           }
         }
       }
-      
+      console.log("hashtags ",hashtags)
 
 
 
+        /////////////////////////////////////////////////////////// MENTIONS
         var userIsMentioned=[]
         if(tweet.image_text !=null || tweet.image_text !=undefined || tweet.description !=null || tweet.description !=undefined ) {
 
           var userIsMentioned1=null
           var userIsMentioned2=null
+          var intermediate1=null
+          var intermediate2=null
+          if(tweet.description !=null && tweet.description !=undefined){
+            userIsMentioned1=[]
+            intermediate1 = tweet.description.match(/@\S+/g)
+            if (intermediate1 !=null && intermediate1 !=undefined){
+              for(var i=0; i<intermediate1.length ;i++){
+                if(intermediate1[i][1]!='.'){
+                  userIsMentioned1.push(intermediate1[i])
+                }
+              }
+              if(userIsMentioned1.length===0){
+                userIsMentioned1=null
+              }
+            }
+            else{
+              userIsMentioned1=null
+            }
 
-          if(tweet.description !=null && tweet.description !=undefined ){
-            userIsMentioned1 = tweet.description.match(/@\S+/g)
-          }
-          if(tweet.image_text !=null && tweet.image_text !=undefined ){
-            userIsMentioned2 = tweet.image_text.match(/@\S+/g)
+            }
+            
+          if(tweet.image_text !=null && tweet.image_text !=undefined){
+            userIsMentioned2=[]
+            intermediate2 = tweet.image_text.match(/@\S+/g)
+            if (intermediate2 !=null && intermediate2 !=undefined){
+              for(var i=0; i<intermediate2.length ;i++){
+                if(intermediate2[i][1]!='.'){
+                  userIsMentioned2.push(intermediate2[i])  
+                }
+                
+              }
+              if(userIsMentioned2.length===0){
+                userIsMentioned2=null
+              }
+            }
+            else{
+              userIsMentioned2=null
+            }
           }
           console.log("userIsMentioned1 ", userIsMentioned1)
           console.log("userIsMentioned2 ", userIsMentioned2)
 
-          if (userIsMentioned1 !=null && userIsMentioned2 !=null){
+          if (userIsMentioned1 !=null && userIsMentioned2 !=null ){
             userIsMentioned=userIsMentioned1.concat(userIsMentioned2)
           }
           else{
             if (userIsMentioned1 ===null){
               userIsMentioned=userIsMentioned2
             }
-            if (hashtags2 ===null){
+            if (userIsMentioned2 ===null){
               userIsMentioned=userIsMentioned1
             }
           }
@@ -383,23 +534,19 @@ function getTweetAttrObjArr(tweets, topUser) {
                 if( userIsMentioned[i].endsWith('.')){
                   userIsMentioned[i]=userIsMentioned[i].slice(0, -1);
                   console.log("TRUE",userIsMentioned[i])
-                }/*
+                }
+                /*
                 else{
                   break;
                 }
                 */
               }
             }
-            console.log("userIsMentioned ",userIsMentioned)
           }
-          else{
-            console.log("there is no MENTION")
-          }
+        }
+        console.log("userIsMentioned ",userIsMentioned)
 
-        }
-        else {
-          console.log("image_text is EMPTY")
-        }
+        
         
         ///////////////////////////////////////////////////////// URL
         var urls=[]

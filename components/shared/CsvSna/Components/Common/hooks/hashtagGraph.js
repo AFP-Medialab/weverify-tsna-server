@@ -40,7 +40,20 @@ function getUniqValuesOfField(data, field1, field2, field3) {
         //console.log("intermediate : ", intermediate)
        // console.log("intermediate.length ", intermediate.length)
         for (var j=0; j<intermediate.length; j++){
-          intermediate[j] = intermediate[j].replace(/[^#A-Za-z0-9]/g, '');
+          intermediate[j] = intermediate[j].replace(/[^#._!?A-Za-z0-9]/g, '');
+          for(var k=0 ; k<intermediate[j].length ;k++){
+              if( intermediate[j].endsWith('.')){
+                intermediate[j]=intermediate[j].slice(0, -1);
+                console.log("TRUE1",intermediate[j])
+              }
+              
+              /*
+              else{
+                break;
+              }
+              */
+            }
+          
           nodeIds.push(intermediate[j])
         }
         intermediate=null;
@@ -108,7 +121,18 @@ function getSizeOfField(data, field1, field2, field3) {
       }
       else {
        for (var j=0; j<intermediate.length; j++){
-        intermediate[j] = intermediate[j].replace(/[^#A-Za-z0-9]/g, '');
+        intermediate[j] = intermediate[j].replace(/[^#._!?A-Za-z0-9]/g, '');
+        for(var k=0 ; k<intermediate[j].length ;k++){
+          if( intermediate[j].endsWith('.')){
+            intermediate[j]=intermediate[j].slice(0, -1);
+            console.log("TRUE2",intermediate[j])
+          }
+          /*
+          else{
+            break;
+          }
+          */
+        }
         nodeIds.push(intermediate[j])
       }
         intermediate=null;
@@ -168,7 +192,19 @@ function getEdgesCoHashtag(data) {
       else {
        // intermediate = intermediate.replace(/[^#A-Za-z0-9]/g, '');
        for (var j=0; j<intermediate.length; j++){
-        intermediate[j] = intermediate[j].replace(/[^#A-Za-z0-9]/g, '');
+        intermediate[j] = intermediate[j].replace(/[^#._!?A-Za-z0-9]/g, '');
+        for(var k=0 ; k<intermediate[j].length ;k++){
+          if( intermediate[j].endsWith('.')){
+            intermediate[j]=intermediate[j].slice(0, -1);
+            console.log("TRUE",intermediate[j])
+          }
+          
+          /*
+          else{
+            break;
+          }
+          */
+        }
       }
         nodeIds.push(intermediate)
         
