@@ -142,7 +142,8 @@ export function displayPostsFb (filteredTweets, keyword, sortedColumn) {
 
 
 var new_date = function(dateStr) {
-  var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CET\s*$/
+  
+  var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s(\w+)\s*$/
     , m = (""+dateStr).match(r);
   return `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`;
 };

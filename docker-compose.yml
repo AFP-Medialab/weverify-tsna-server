@@ -1,13 +1,13 @@
 version: "3.8"
 services:
   tsna-server:
-    image: tsna-server:0.18
+    image: tsna-server-csv:0.1
     restart: on-failure
     container_name: tsna-server
     networks:
       - i18n-net
     ports: 
-      - 8090:3000
+      - 8091:3000
     environment:
       REACT_APP_ELK_URL: ${REACT_APP_ELK_URL}
       REACT_APP_ES_USER_URL: ${REACT_APP_ES_USER_URL}
