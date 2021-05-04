@@ -7,13 +7,13 @@ function getTweetAttrObjArr(tweets, topUser) {
     if (user < 20){ //change here to choose the number of Top Retweeted User in the graphe
     topUsers.push(topUser[user].key.toLowerCase());}
   }
-  console.log("TWEETS ",tweets)
+ // console.log("TWEETS ",tweets)
     var tweetAttrObjArr=null
 
     if(tweets[0].facebook_id){
       console.log("FACEBOOK") /////////////////////////////////////// FB
       tweetAttrObjArr = tweets.map((tweet) => {
-        console.log("data ", tweet)
+       // console.log("data ", tweet)
         /////////////////////////// HASHTAG
         var hashtags=[]
         if(tweet.description !=null || tweet.description !=undefined || tweet.image_text !=null || tweet.image_text !=undefined || tweet.message !=null || tweet.message !=undefined ) {
@@ -118,11 +118,11 @@ function getTweetAttrObjArr(tweets, topUser) {
           if (hashtags !=null && hashtags !=undefined){
             for (var i=0; i<hashtags.length; i++){
               hashtags[i] = hashtags[i].replace(/[^#._!?A-Za-z0-9]/g, '');
-              console.log("HASH.LENGTH",hashtags[i].length)
+             // console.log("HASH.LENGTH",hashtags[i].length)
               for(var j=0 ; j<hashtags[i].length;j++){
                 if( hashtags[i].endsWith('.')){
                   hashtags[i]=hashtags[i].slice(0, -1);
-                  console.log("TRUE",hashtags[i])
+                  //console.log("TRUE",hashtags[i])
                 }
                 
                 /*
@@ -134,7 +134,7 @@ function getTweetAttrObjArr(tweets, topUser) {
             }
           }
         }
-        console.log("HASHTAGS ", hashtags)
+       // console.log("HASHTAGS ", hashtags)
   
   
         ///////////////////////////////     MENTIONS
@@ -253,7 +253,7 @@ function getTweetAttrObjArr(tweets, topUser) {
                 for(var j=0 ; j<userIsMentioned[i].length;j++){
                   if( userIsMentioned[i].endsWith('.')){
                     userIsMentioned[i]=userIsMentioned[i].slice(0, -1);
-                    console.log("TRUE",userIsMentioned[i])
+                   // console.log("TRUE",userIsMentioned[i])
                   }
                   if(userIsMentioned[i][1]==='.'){
                     userIsMentioned[i]=userIsMentioned[i].replace(userIsMentioned[i][1],"")
@@ -264,13 +264,10 @@ function getTweetAttrObjArr(tweets, topUser) {
                 }
                 */
                 }
-
-
-              
               }
             }
           }
-          console.log("userIsMentioned ",userIsMentioned)
+         // console.log("userIsMentioned ",userIsMentioned)
          
           
           //////////////////////////////////////////////// URL
@@ -334,7 +331,7 @@ function getTweetAttrObjArr(tweets, topUser) {
                 urls[i] = "URL:"+getDomain(urls[i])
               }
             }
-            console.log("urls ", urls)
+           // console.log("urls ", urls)
 
             }
             ////////////////////////////////////// NUMBER OF SHARES  
@@ -344,9 +341,6 @@ function getTweetAttrObjArr(tweets, topUser) {
               shares=tweet.shares
               post=tweet.url
               }
-         
-
-          
           /*
        
         let userRTWC = (tweet._source.quoted_status_id_str !== undefined && tweet._source.quoted_status_id_str !== null)
@@ -425,8 +419,8 @@ function getTweetAttrObjArr(tweets, topUser) {
           }
         }
         
-         console.log("hashtags1 ", hashtags1)
-         console.log("hashtags2 ", hashtags2)
+        // console.log("hashtags1 ", hashtags1)
+        // console.log("hashtags2 ", hashtags2)
         if (hashtags1 !=null && hashtags2 !=null){
           hashtags=hashtags1.concat(hashtags2)
         }
@@ -438,16 +432,16 @@ function getTweetAttrObjArr(tweets, topUser) {
             hashtags=hashtags1
           }
         }
-        console.log("HASH-LENGTH", hashtags)   
+       // console.log("HASH-LENGTH", hashtags)   
 
-        console.log("description.match ", hashtags)   
+      // console.log("description.match ", hashtags)   
         if (hashtags !=null || hashtags !=undefined){
           for (var i=0; i<hashtags.length; i++){
             hashtags[i] = hashtags[i].replace(/[^#._!?A-Za-z0-9]/g, '');
             for(var j=0 ; j<hashtags[i].length;j++){
               if( hashtags[i].endsWith('.')){
                 hashtags[i]=hashtags[i].slice(0, -1);
-                console.log("TRUE",hashtags[i])
+                //console.log("TRUE",hashtags[i])
               }
                
               
@@ -462,7 +456,7 @@ function getTweetAttrObjArr(tweets, topUser) {
           }
         }
       }
-      console.log("hashtags ",hashtags)
+      //console.log("hashtags ",hashtags)
 
 
 
@@ -511,8 +505,8 @@ function getTweetAttrObjArr(tweets, topUser) {
               userIsMentioned2=null
             }
           }
-          console.log("userIsMentioned1 ", userIsMentioned1)
-          console.log("userIsMentioned2 ", userIsMentioned2)
+          //console.log("userIsMentioned1 ", userIsMentioned1)
+          //console.log("userIsMentioned2 ", userIsMentioned2)
 
           if (userIsMentioned1 !=null && userIsMentioned2 !=null ){
             userIsMentioned=userIsMentioned1.concat(userIsMentioned2)
@@ -525,7 +519,7 @@ function getTweetAttrObjArr(tweets, topUser) {
               userIsMentioned=userIsMentioned1
             }
           }
-          console.log("userIsMentioned1-LENGTH", userIsMentioned)   
+         // console.log("userIsMentioned1-LENGTH", userIsMentioned)   
 
           if(userIsMentioned != null || userIsMentioned != undefined){
             for (var i=0; i<userIsMentioned.length; i++){
@@ -533,7 +527,7 @@ function getTweetAttrObjArr(tweets, topUser) {
               for(var j=0 ; j<userIsMentioned[i].length;j++){
                 if( userIsMentioned[i].endsWith('.')){
                   userIsMentioned[i]=userIsMentioned[i].slice(0, -1);
-                  console.log("TRUE",userIsMentioned[i])
+                  //console.log("TRUE",userIsMentioned[i])
                 }
                 /*
                 else{
@@ -544,7 +538,7 @@ function getTweetAttrObjArr(tweets, topUser) {
             }
           }
         }
-        console.log("userIsMentioned ",userIsMentioned)
+      //  console.log("userIsMentioned ",userIsMentioned)
 
         
         
@@ -578,7 +572,7 @@ function getTweetAttrObjArr(tweets, topUser) {
               urls[i] = "URL:"+getDomain(urls[i])
             }
           }
-          console.log("urls ", urls)
+         // console.log("urls ", urls)
         }
         ////////////////////////////////////// NUMBER OF TOTAL INTERACTIONS  
 
@@ -678,7 +672,6 @@ function getTweetAttrObjArr(tweets, topUser) {
       }
       /*
   
-      
       if (obj.hashtags.length > 0 && obj.userRTWC.length > 0) {
         coOccur.push(getCombinationFrom2Arrs(obj.hashtags, obj.userRTWC));
       }
@@ -885,8 +878,8 @@ export const createSocioSemantic4ModeGraph = (tweets, topUser) => {
 
       let freqMentionObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userIsMentioned; }).flat());
       let freqURLObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.urls; }).flat());
-      //let total_url = tweetAttrObjArr.map((obj) => { return obj.post +': '+obj.total_interactions; }).flat();
-     // console.log("total_url ", total_url)
+      let total_url = tweetAttrObjArr.map((obj) => { return obj.post +': '+obj.total_interactions; }).flat();
+      console.log("total_url ", total_url)
 
       /*
       let freqRTWCObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userRTWC; }).flat());

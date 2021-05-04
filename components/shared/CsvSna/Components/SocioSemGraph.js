@@ -101,7 +101,7 @@ export default function SocioSemGraph (props) {
                   }
             }
         }
-        if(typer=="FACEBOOK"){
+        if(typer==="FB"){
 
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
             .map((tweet) => { return tweet.message.includes(selectedHashtag) });
@@ -121,7 +121,7 @@ export default function SocioSemGraph (props) {
           //  console.log("FILTER-3 ",filteredTweets4.length)
          //   console.log("FILTER-3 ", filteredTweets4)
             }
-            if(typer=="FACEBOOK"){
+            if(typer==="FB"){
                 let dataToDisplay = displayPostsFb(filteredTweets4, keyword);
              //   console.log("dataToDisplay ", dataToDisplay)
         
@@ -166,7 +166,7 @@ export default function SocioSemGraph (props) {
                   }
             }
         }
-        if(typer=="FACEBOOK"){
+        if(typer==="FB"){
 
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
             .map((tweet) => { return tweet.message.includes(selectedUser) });
@@ -186,7 +186,7 @@ export default function SocioSemGraph (props) {
           //  console.log("FILTER-3 ",filteredTweets4.length)
          //   console.log("FILTER-3 ", filteredTweets4)
             }
-            if(typer=="FACEBOOK"){
+            if(typer==="FB"){
                 let dataToDisplay = displayPostsFb(filteredTweets4, keyword);
         
                 dataToDisplay["selected"] = selectedUser;
@@ -230,7 +230,7 @@ export default function SocioSemGraph (props) {
                   }
             }
         }
-        if(typer=="FACEBOOK"){
+        if(typer==="FB"){
 
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
             .map((tweet) => { return tweet.message.includes(selectedURL) });
@@ -250,7 +250,7 @@ export default function SocioSemGraph (props) {
           //  console.log("FILTER-3 ",filteredTweets4.length)
          //   console.log("FILTER-3 ", filteredTweets4)
             }
-            if(typer=="FACEBOOK"){
+            if(typer==="FB"){
                 let dataToDisplay = displayPostsFb(filteredTweets4, keyword);
              //   console.log("dataToDisplay ", dataToDisplay)
         

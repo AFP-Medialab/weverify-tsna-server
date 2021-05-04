@@ -95,7 +95,7 @@ export default function HashtagGraph (props) {
                 filteredTweets4.push(state.result.data[i])
             }
         }
-      //  console.log("FILTER-1 ",filteredTweets4.length)
+        console.log("FILTER-1 ",filteredTweets4.length)
       //  console.log("FILTER-1 ", filteredTweets4)
 
         let filteredTweets2 = state.result.data.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
@@ -113,12 +113,13 @@ export default function HashtagGraph (props) {
                   }
             }
         }
-      //  console.log("FILTER-2 ",filteredTweets4.length)
+        console.log("FILTER-2 ",filteredTweets4.length)
       //  console.log("FILTER-2 ", filteredTweets4)
 
-      //  console.log("TYPER ", typer)
+       console.log("TYPER ", typer)
 
-        if(typer=="FACEBOOK"){
+        if(typer==="FB"){ 
+        console.log("FBBBBBBB ")
 
         let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
         .map((tweet) => { return tweet.message.includes(selectedHashtag) });
@@ -133,24 +134,27 @@ export default function HashtagGraph (props) {
                //     console.log("IT does NOT contain it-filteredtweets2 ",state.result.data[i])
                     filteredTweets4.push(state.result.data[i])
                   }
+                
             }
         }
-      //  console.log("FILTER-3 ",filteredTweets4.length)
+        console.log("FILTER-3 ",filteredTweets4.length)
      //   console.log("FILTER-3 ", filteredTweets4)
         }
          
      //  console.log("filteredTweets4 ", filteredTweets4)
 
-       if(typer=="FACEBOOK"){
+       if(typer==="FB"){
+
         let dataToDisplay = displayPostsFb(filteredTweets4, keyword);
-     //   console.log("dataToDisplay ", dataToDisplay)
+        //console.log("displayFB ", dataToDisplay)
 
         dataToDisplay["selected"] = selectedHashtag;
         setCoHashtagGraphTweets(dataToDisplay);
        }
        else{
+
         let dataToDisplay = displayPostsInsta(filteredTweets4, keyword);
-      //  console.log("dataToDisplay ", dataToDisplay)
+        //console.log("displayInsta ", dataToDisplay)
 
         dataToDisplay["selected"] = selectedHashtag;
         setCoHashtagGraphTweets(dataToDisplay);

@@ -44,7 +44,7 @@ function getUniqValuesOfField(data, field1, field2, field3) {
           for(var k=0 ; k<intermediate[j].length ;k++){
               if( intermediate[j].endsWith('.')){
                 intermediate[j]=intermediate[j].slice(0, -1);
-                console.log("TRUE1",intermediate[j])
+                //console.log("TRUE1",intermediate[j])
               }
               
               /*
@@ -125,7 +125,7 @@ function getSizeOfField(data, field1, field2, field3) {
         for(var k=0 ; k<intermediate[j].length ;k++){
           if( intermediate[j].endsWith('.')){
             intermediate[j]=intermediate[j].slice(0, -1);
-            console.log("TRUE2",intermediate[j])
+            //console.log("TRUE2",intermediate[j])
           }
           /*
           else{
@@ -196,7 +196,7 @@ function getEdgesCoHashtag(data) {
         for(var k=0 ; k<intermediate[j].length ;k++){
           if( intermediate[j].endsWith('.')){
             intermediate[j]=intermediate[j].slice(0, -1);
-            console.log("TRUE",intermediate[j])
+            //console.log("TRUE",intermediate[j])
           }
           
           /*
