@@ -13,9 +13,13 @@ function getColorOfMostActiveUserBubble(value) {
 }
 
 export function createBubbleChartOfMostActiveUsers(userProfile, request, result, keyword) {
+   
+    
     let tweetCountObj = _.countBy(result.tweets.map((tweet) => {return tweet._source.screen_name.toLowerCase(); }));
     let nbDays = Math.floor(( Date.parse(request['until']) - Date.parse(request['from']) ) / 86400000);
+
     nbDays = nbDays > 1 ? nbDays : 1;
+
     let objArr = userProfile.map((obj) => {
         return {
             screen_name: obj._source.screen_name[obj._source.screen_name.length -1],
@@ -39,6 +43,8 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
         return filteredUndef[0];
         
      })
+
+
      
     let sortedObjArr = _.orderBy(closestDateObjArr, ['datetimestamp', 'screen_name'], ['asc', 'asc']);
     let x = [];
@@ -51,15 +57,23 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
     sortedObjArr.forEach((obj) => {
         let date = new Date(obj.datetimestamp * 1000);
         let dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
         let nbTweets = tweetCountObj[obj.screen_name.toLowerCase()];
+
         let avgTweetsPerDate = nbTweets/nbDays;
 
         x.push(dateStr);
+
         y.push(obj.followers_count);
+
         text.push('@' + obj.screen_name + '<br>Posted <b>' + nbTweets + '</b> tweets in ' + nbDays + ' days');
+
         color.push(getColorOfMostActiveUserBubble(avgTweetsPerDate));
+
         size.push(nbTweets);
+
         symbol.push( (obj.verified ? "diamond" : "circle") );
+
     });
 
     let data = [

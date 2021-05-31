@@ -19,6 +19,7 @@ const HashtagGraph = dynamic(import("../Components/HashtagGraph"), {ssr: false})
 import UrlList from "../Components/UrlList";
 import Box from "@material-ui/core/Box";
 const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), {ssr: false});
+const CloudChart = dynamic(import("../Components/CloudChart"), {ssr: false});
 
 
 
@@ -30,28 +31,25 @@ export default function CsvSnaResults(props) {
     <Paper className={classes.root}>
       <CloseResult onClick={() => dispatch(cleanCsvSnaState())} />
       {props.result.countSna && 
-        < Count result={props.result} 
-
-      //onClickInfoLabel={"fb_sna_tweetnb_tip"} 
+        < Count result={props.result}
       />}
 
       {props.result.histogram && (
         <PlotTimeLine
           result={props.result}
-         // onClickInfoLabel={"fb_sna_tweetnb_tip"}
         />
       )}
 
         {props.result && props.result.pieCharts && (
         <PlotPieChart
           result={props.result}
-         // onClickInfoLabel={"fb_sna_tweetnb_tip"}
         />
       )}
+      
       {           
-         props.result && props.result.tweetCount &&
+         props.result && props.result.countSna &&
          <BubbleChart result={props.result}/>
-                }
+             }
       {
          props.result.heatMap &&           
          <HeatMap result={props.result}/>
@@ -66,11 +64,17 @@ export default function CsvSnaResults(props) {
                 }               
 
           <Box m={3} />
-                {
-                    props.result.urls && 
-                    <UrlList result={props.result}/>
-                }             
-        
+          {
+            props.result.urls && 
+            <UrlList result={props.result}/>
+                }      
+                       
+          {/*
+            props.result.cloudChart && 
+            <CloudChart result={props.result}/>
+            */
+                }      
+                
     </Paper>
   );
 }

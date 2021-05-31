@@ -51,7 +51,7 @@ export default function PlotTimeLine(props){
             let selectedPoints = data.points;
            let filteredPost = state.result.data.filter(function(post) {
                 let postDate =getEpochMillis(post.created);
-
+              //  console.log("POST_DATE ",postDate)
                 return filterForTimeLine(postDate, selectedPoints);
 
             });

@@ -9,13 +9,14 @@ import {
   CSV_HISTOVIEW_RESULT,
   CSV_PIE_CHART_RESULT,
   CSV_BUBBLE_CHART_RESULT,
-  CSV_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE,
+  CSV_SNA_USER_PROFILE_MOST_ACTIVE,
   SET_CSV_SNA_HEATMAP_RESULTS,
   SET_HEAT_MAP_RESULT,
   SET_CSV_COHASHTAG_RESULTS,
   SET_CSV_URLS_RESULTS,
   SET_HASHTAG_GRAPH_RESULT,
   SET_CSV_SNA_SOCIO_GRAPH_RESULTS,
+  SET_CSV_SNA_CLOUD_WORDS_RESULTS,
 } from "../types/csvSnaTypes";
 
 export const cleanCsvSnaState = () => {
@@ -86,7 +87,7 @@ export const setCSVResult = (data) => {
 
 export const setUserProfileMostActive = (data) => {
   return {
-      type : CSV_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE,
+      type : CSV_SNA_USER_PROFILE_MOST_ACTIVE,
       payload : data
   }
 };
@@ -94,6 +95,13 @@ export const setUserProfileMostActive = (data) => {
 export const setHeatMapResult = (result) => {
   return {
       type : SET_CSV_SNA_HEATMAP_RESULTS,
+      payload :  result
+  }
+};
+
+export const setCloudWordsResult = (result) => {
+  return {
+      type : SET_CSV_SNA_CLOUD_WORDS_RESULTS,
       payload :  result
   }
 };

@@ -22,8 +22,7 @@ import { createHeatMap } from "./Components/Common/hooks/heatMap";
 import hashtagWorker from "workerize-loader?inline!./Components/Common/hooks/hashtagGraph";
 import { getJsonDataForURLTable } from "./Components/Common/hooks/urlList";
 import socioWorker from "workerize-loader?inline!./Components/Common/hooks/socioSemGraph";
-
-
+import cloudWorker from "workerize-loader?inline!./Components/Common/hooks/cloudChart";
 /////////////////////////////////////////////////////////////////////////////
 
 import {
@@ -38,6 +37,7 @@ import {
   setCoHashtagResult,
   setUrlsResult,
   setSocioGraphResult,
+  setCloudWordsResult,
 } from "../../../redux/actions/tools/csvSnaActions";
 
 import CsvSnaResults from "./Results/CsvSnaResults";
@@ -122,7 +122,7 @@ const buildPieCharts = async (data) => {
 //////////////////////////////////////////////////// HeatMap FB
 
 const buildHeatMapFB = async (data) => {
-  const heatMap = createHeatMap("", data, keywordFB);
+  const heatMap = createHeatMap(data, keywordFB);
   dispatch(setHeatMapResult(heatMap));
 };
 
@@ -144,8 +144,10 @@ const buildFirstInstaResult = (data) => {
   buildPieChartsInsta(data);
   buildHeatMapInsta(data);
   buildCoHashTag(data);
- buildSocioGraph(data);
+  buildSocioGraph(data);
   buildUrls(data);
+  wordCount(data);
+
   //buildUrls(responseAggs);
 }
 
@@ -173,7 +175,7 @@ const buildFirstInstaResult = (data) => {
     dispatch(setHeatMapResult(null))
     dispatch(setCoHashtagResult(null))
     dispatch(setUrlsResult(null))
-
+   // Plot(null)
 
 
     //facebook else instagram
@@ -193,7 +195,6 @@ const buildFirstInstaResult = (data) => {
 
   //////////////////////////////////////// HISTOGRAM Insta
   const buildHistogramInsta = async (data)=>{
-    
     const instance = timelineWorker();
     let getDataResult = await instance.getJsonDataForTimeLineChartInsta(data)
     let titleLabel = keywordINSTA("user_time_chart_title");
@@ -218,11 +219,11 @@ const buildPieChartsInsta = async (data) => {
 
 /////////////////////////////////////////////////////// HeatMap Insta
 const buildHeatMapInsta = async (data) => {
-  const heatMap = createHeatMap("", data, keywordINSTA);
+  const heatMap = createHeatMap(data, keywordINSTA);
   dispatch(setHeatMapResult(heatMap));
 };
 
-///////////////////////////////////////////////// DocioGraph Insta
+///////////////////////////////////////////////// SocioGraph Insta
 const buildSocioGraph = async (data, topUser) => {
   const instance = socioWorker();
   const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(
@@ -231,6 +232,12 @@ const buildSocioGraph = async (data, topUser) => {
   );
   const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
   dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+};
+///////////////////////////////////////////////////// Cloud Chart
+const wordCount = async (data) => {
+  const instance = cloudWorker();
+  const wordCountResponse = await instance.createWordCloud(data);
+  dispatch(setCloudWordsResult(wordCountResponse));
 };
 
 ////////////////////////// UrlList Insta

@@ -1,5 +1,9 @@
 
 
+import {getEpochMillis } from "./timeline";
+import {getJsonDataForTimeLineChartFb,getJsonDataForTimeLineChartInsta } from "./timeline"
+import{new_date} from './heatMap'
+
 function getColorOfMostActiveUserBubble(value) {
     switch (true) {
         case (value < 5):
@@ -11,21 +15,109 @@ function getColorOfMostActiveUserBubble(value) {
             return "#ff3636";
     }
 }
+export function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+export function createBubbleChartOfMostActiveUsers(props, keyword) {
+    //console.log("BUBBLEEE ", props.data)
 
-export function createBubbleChartOfMostActiveUsers(userProfile, result, keyword) {
-    let tweetCountObj = _.countBy(result.data.map((tweet) => {return tweet.user_name.toLowerCase(); }));
-   // let nbDays = Math.floor(( Date.parse(request['until']) - Date.parse(request['from']) ) / 86400000);
-   // nbDays = nbDays > 1 ? nbDays : 1;
-    let objArr = userProfile.map((obj) => {
-        return {
-            screen_name: obj.user_name[obj.user_name.length -1],
-            followers_count: obj.followers_at_posting,
-            datetimestamp: obj.created,
+    var tweetCountObj=null;
+    var getDataResult=null;
+    var nbDays=null;
+    var objArr=null;
+
+   
+    if(props.data[0].facebook_id) {
+        //console.log("YES")
+       
+        tweetCountObj = _.countBy(props.data.map((tweet) => {
             
-            verified: obj.views
-        }; 
-    });
+            if (isNumeric(tweet.page_name)===false) {
+                //console.log("isNumeric(n) ",isNumeric(tweet.page_name))
+                return tweet.page_name.toLowerCase();           
+            }
+            else{
+                return tweet.page_name.toString().toLowerCase();                
+            }
+             }));
+      //  console.log("tweetCountObj ",tweetCountObj)
+        
+        getDataResult = getJsonDataForTimeLineChartFb(props.data)
+       // console.log("getDataResultFB ",getDataResult)
+    
+        nbDays = Math.floor(( getEpochMillis(getDataResult[2]) - getEpochMillis(getDataResult[1]) ) / 86400000);
+      //  console.log("nbDays ",nbDays)
+        nbDays = nbDays > 1 ? nbDays : 1;
+        objArr = props.data.map((obj) => {
+            return {
+                screen_name: obj.page_name,
+                followers_count: obj.likes_at_posting,
+                //datetimestamp: getEpochMillis(obj.created),
+                created: obj.created
+                
+                }; 
+        });
+      //  console.log("objArr ",objArr)   
 
+    }
+    else{
+      //  console.log("FALSEEE")
+        tweetCountObj = _.countBy(props.data.map((tweet) => {
+            
+            if (isNumeric(tweet.user_name)===false) {
+                //console.log("isNumeric(n) ",isNumeric(tweet.user_name))
+                return tweet.user_name.toLowerCase();           
+            }
+            else{
+                return tweet.user_name.toString().toLowerCase();                
+            }
+            //return tweet.user_name.toLowerCase(); 
+        
+        
+        }));
+      //  console.log("tweetCountObj ",tweetCountObj)
+        
+        getDataResult = getJsonDataForTimeLineChartInsta(props.data)
+     //   console.log("getJsonDataForTimeLineChartInsta ",getJsonDataForTimeLineChartInsta)
+
+        nbDays = Math.floor(( getEpochMillis(getDataResult[2]) - getEpochMillis(getDataResult[1]) ) / 86400000);
+      //  console.log("nbDays ",nbDays)
+        nbDays = nbDays > 1 ? nbDays : 1;
+        objArr = props.data.map((obj) => {
+            return {
+                screen_name: obj.user_name,
+                followers_count: obj.followers_at_posting,
+                //datetimestamp: getEpochMillis(obj.created),
+                created: obj.created
+                
+                }; 
+        });
+       // console.log("objArr ",objArr)   
+
+    }
+
+//////////////////////////////////////////////////////////////////////
+/*
+    let tweetCountObj = _.countBy(props.data.map((tweet) => {return tweet.user_name.toLowerCase(); }));
+    console.log("tweetCountObj ",tweetCountObj)
+    
+    let getDataResult = getJsonDataForTimeLineChartInsta(props.data)
+
+    let nbDays = Math.floor(( getEpochMillis(getDataResult[2]) - getEpochMillis(getDataResult[1]) ) / 86400000);
+    console.log("nbDays ",nbDays)
+    nbDays = nbDays > 1 ? nbDays : 1;
+    let objArr = props.data.map((obj) => {
+        return {
+            screen_name: obj.user_name,
+            followers_count: obj.followers_at_posting,
+            //datetimestamp: getEpochMillis(obj.created),
+            created: obj.created
+            
+            }; 
+    });
+    console.log("objArr ",objArr)
+*/
+//////////////////////////////////////////////////////////////////////
     let groupByUserArr = objArr.reduce((r, a) => {
         r[a.screen_name] = [...r[a.screen_name] || [], a];
         return r;
@@ -39,27 +131,70 @@ export function createBubbleChartOfMostActiveUsers(userProfile, result, keyword)
         return filteredUndef[0];
         
      })
-     
-    let sortedObjArr = _.orderBy(closestDateObjArr, ['datetimestamp', 'screen_name'], ['asc', 'asc']);
+
+
+    let sortedObjArr = _.orderBy(closestDateObjArr, ['created', 'screen_name'], ['asc', 'asc']);
     let x = [];
     let y = [];
     let text = [];
     let color = []
     let size = [];
     let symbol = [];
-
+    /*
+    var new_date = function(dateStr) {
+  
+        var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s(\w+)\s*$/
+          , m = (""+dateStr).match(r);
+        return `${m[1]}-${m[2]}-${m[3]} ${m[4]}:${m[5]}:${m[6]}`;
+      };
+      */
     sortedObjArr.forEach((obj) => {
-        let date = new Date(obj.datetimestamp * 1000);
-        let dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        let nbTweets = tweetCountObj[obj.screen_name.toLowerCase()];
-        //let avgTweetsPerDate = nbTweets/nbDays;
+      //  let date1 = new Date(obj.datetimestamp * 1000);
+    
+        let date = new Date(new_date(obj.created));
+        
+       // console.log("date ", date)
+      
+        let dateStr= date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()+ " " + date.getHours();
+       // console.log("dateStr1 ", dateStr1)
+
+       // let dateStr1 = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        //console.log("dateStr ", dateStr)
+
+        var nbTweets;
+        if (isNumeric(obj.screen_name)===false) {
+            nbTweets = tweetCountObj[obj.screen_name.toLowerCase()];
+            //console.log("YES11")
+        }
+        else{
+            nbTweets = tweetCountObj[obj.screen_name.toString().toLowerCase()];
+           // console.log("NO11")
+
+        } 
+       // let nbTweets = tweetCountObj[obj.screen_name.toLowerCase()];
+      //  console.log("nbTweets ", nbTweets)
+
+        let avgTweetsPerDate = nbTweets/nbDays;
+        //console.log("avgTweetsPerDate ", avgTweetsPerDate)
 
         x.push(dateStr);
+      //  console.log("x ", x)
+
         y.push(obj.followers_count);
-        text.push('@' + obj.screen_name + '<br>Posted <b>' + nbTweets + '</b> tweets in ' + nbDays + ' days');
-        //color.push(getColorOfMostActiveUserBubble(avgTweetsPerDate));
+      //  console.log("y ", y)
+
+        text.push('@' + obj.screen_name + '<br>Posted <b>' + nbTweets + '</b> posts in ' + nbDays + ' days');
+        //console.log("text ", text)
+
+        color.push(getColorOfMostActiveUserBubble(avgTweetsPerDate));
+     //   console.log("color ", color)
+
         size.push(nbTweets);
+     //   console.log("size ", size)
+
         symbol.push( (obj.verified ? "diamond" : "circle") );
+      //  console.log("symbol ", symbol)
+
     });
 
     let data = [
@@ -80,17 +215,10 @@ export function createBubbleChartOfMostActiveUsers(userProfile, result, keyword)
             name: ""
         } 
     ]
-/*
-    let nameTitle = request.keywordList.join(", ")
-    if (nameTitle.length > 90){
-        nameTitle = nameTitle.substr(0,90) + "...";
-    }
-    */
-
 
     let layout = {
         title: {
-            text: keyword("bubble_chart_title") + "<br>" + "CSV File-" + " - ",
+            text: keyword("bubble_chart_title") + "<br>"+ getDataResult[1] + " - " +getDataResult[2],
             font: {
                 family: 'Arial, sans-serif',
                 size: 18

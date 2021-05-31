@@ -29,7 +29,7 @@ function getEdgesCoHashtag(tweets) {
     let coHashtagArr = tweets.filter(tweet => tweet._source.hashtags !== undefined && tweet._source.hashtags.length > 1)
                               .map((tweet) => { return tweet._source.hashtags });
                    
-    console.log("NodeIds ", coHashtagArr)
+    //console.log("NodeIds ", coHashtagArr)
     let edges = [];
     coHashtagArr.forEach(arr => {
       for (let i = 0; i < arr.length - 1; i++) {

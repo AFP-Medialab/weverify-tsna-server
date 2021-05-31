@@ -155,8 +155,8 @@ export default function PlotPieChart (props) {
             else {
             //    console.log("CENTER ")
                 let selectedUser = data.points[0].label;
-                console.log("DONUT ", data)
-                console.log("DATA0 ",data.points[0].label)
+               // console.log("DONUT ", data)
+               // console.log("DATA0 ",data.points[0].label)
                 
                 
     
@@ -167,7 +167,7 @@ export default function PlotPieChart (props) {
     
                     
                     let dataToDisplay = index === 0 ? displayPostsInsta(filteredTweets, keyword, "retweetNb") : (index === 1 ? displayPostsInsta(filteredTweets, keyword, "nbLikes") : displayPostsInsta(filteredTweets, keyword));
-                    console.log("DATA_DISPLAY ",dataToDisplay)
+                   // console.log("DATA_DISPLAY ",dataToDisplay)
                     
                     dataToDisplay["selected"] = selectedUser;
                     
@@ -292,10 +292,10 @@ export default function PlotPieChart (props) {
         }
         // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
         else {
-            console.log("CENTER ")
+           // console.log("CENTER ")
             let selectedUser = data.points[0].label;
-            console.log("DONUT ", data)
-            console.log("DATA0 ",data.points[0].label)
+           // console.log("DONUT ", data)
+           // console.log("DATA0 ",data.points[0].label)
             
             
 

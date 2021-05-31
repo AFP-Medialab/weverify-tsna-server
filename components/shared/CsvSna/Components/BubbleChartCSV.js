@@ -19,24 +19,27 @@ import {setCSVHistoview} from "../../../../redux/actions/tools/csvSnaActions"
 import plotly from 'plotly.js-dist';
 import {createBubbleChartOfMostActiveUsers} from "../Components/Common/hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
-import TwitterIcon from '@material-ui/icons/Twitter';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import FacebookIcon from '@material-ui/icons/Facebook';
 import {downloadClick} from "./lib/downloadClick";
-
+import {isNumeric} from "./Common/hooks/bubbleChart"
 const Plot = createPlotComponent(plotly);
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 //const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+let from = "PLOT_BUBBLE_CHART";
 
 export default function BubbleChart(props) {
     
     const dispatch = useDispatch();
     const [bubbleTweets, setBubbleTweets] = useState(null);
-    const topUserProfile = useSelector(state => state.twitterSna.topUser);
+    //const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
     const snatype = useSelector((state) => state.csvSna.result.snaType);
 
     console.log("SNATYPE ", snatype)
     const keyword = useLoadLanguage(snatype.tsv);
-    console.log("KEYWORD ", keyword)
+    //console.log("KEYWORD ", keyword)
+    const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
 
     const classes = useMyStyles();
     const request = useSelector(state => state.twitterSna.request);
@@ -61,24 +64,66 @@ export default function BubbleChart(props) {
     }, [request])
 */
     const onBubbleChartClick = (data, result) => {
-        console.log("BUBBLE_ DATA ", data)
-        console.log("BUBBLE_ DATA ", result)
+        console.log("BUBBLE_DATA ", data)
+        console.log("BUBBLE_result ", result)
+        var selectedUser;
+        var filteredTweets;
+        
+        if(result.data[0].facebook_id) {
+            //console.log("FACEEEEE")
+            selectedUser = data.points[0].text.split("<br>")[0].replace("@","");
+            filteredTweets = state.result.data.filter(function (tweetObj) {
+                if (isNumeric(tweetObj.page_name)===false) {
+                    return tweetObj.page_name.toLowerCase() === selectedUser.toLowerCase();
 
-        let selectedUser = data.points[0].text.split("<br>")[0].replace("@","");
-        let filteredTweets = state.result.data.filter(function (tweetObj) {
-            return tweetObj.user_name.toLowerCase() === selectedUser.toLowerCase();
-        });
-        setBubbleTweets(displayPostsInsta(filteredTweets, keyword));
-    
-    }
-
-    let goToTweetAction = [{
-        icon: TwitterIcon,
-        tooltip: keyword("twittersna_result_go_to_tweet"),
-        onClick: (event, rowData) => {
-            window.open(rowData.link, '_blank');
+                }
+                else{
+                    return tweetObj.page_name.toString().toLowerCase() === selectedUser.toString().toLowerCase();
+                } 
+            });
+            setBubbleTweets(displayPostsFb(filteredTweets, keyword));
         }
-    }]
+        else{
+          //  console.log("INSTAAAAAAA")
+            selectedUser = data.points[0].text.split("<br>")[0].replace("@","");
+            filteredTweets = state.result.data.filter(function (tweetObj) {
+                if (isNumeric(tweetObj.user_name)===false) {
+                    return tweetObj.user_name.toLowerCase() === selectedUser.toLowerCase();
+
+                }
+                else{
+                    return tweetObj.user_name.toString().toLowerCase() === selectedUser.toString().toLowerCase();
+                } 
+                
+            });
+            setBubbleTweets(displayPostsInsta(filteredTweets, keyword));
+        }
+
+    }
+        var goToAction;
+
+    if(typer=="INSTA"){
+        goToAction = [
+            {
+             icon: InstagramIcon,
+              tooltip: keyword("twittersna_result_go_to_tweet"),
+              onClick: (event, rowData) => {
+               window.open(rowData.link.props.href, "_blank");
+              },
+            },
+          ];
+      }
+      else {
+        goToAction = [
+          {
+           icon: FacebookIcon,
+            tooltip: keyword("twittersna_result_go_to_tweet"),
+            onClick: (event, rowData) => {
+             window.open(rowData.link.props.href, "_blank");
+            },
+          },
+        ];
+      }
 
     
 
@@ -95,10 +140,10 @@ export default function BubbleChart(props) {
             <AccordionDetails>
                 
                 {
-                    topUserProfile && topUserProfile.length !== 0 &&
+                   // topUserProfile && topUserProfile.length !== 0 &&
                     <div style={{ width: '100%', }}>
                         { 
-                            [createBubbleChartOfMostActiveUsers(topUserProfile, props.result, keyword)].map((bubbleChart) => {
+                            [createBubbleChartOfMostActiveUsers(/*topUserProfile,*/ props.result, keyword)].map((bubbleChart) => {
                                 return (
                                     <div key={Math.random()}>
                                         <Plot useResizeHandler
@@ -146,19 +191,19 @@ export default function BubbleChart(props) {
                                 <CustomTable title={keyword("twittersna_result_slected_tweets")}
                                     colums={bubbleTweets.columns}
                                     data={bubbleTweets.data}
-                                    actions={goToTweetAction}
+                                    actions={goToAction}
                                 />
                             </div>
                         }
                     </div>
                 }
-                {
-                    ((topUserProfile && topUserProfile.length === 0) || props.result.tweetCount.count === "0") &&
+                
+                {/*
+                    ((topUserProfile && topUserProfile.length === 0) || props.result.countSna.count === "0") &&
                     <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>
-                }
+                */}
                 {
-                    (!topUserProfile && props.result.tweetCount.count !== "0") &&
-                    <CircularProgress className={classes.circularProgress} />
+                    (/*!topUserProfile && */props.result.countSna.count !== "0")
                 }
             </AccordionDetails>
         </Accordion>

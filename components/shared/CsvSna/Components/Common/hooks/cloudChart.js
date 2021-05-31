@@ -3,7 +3,7 @@ const includeWordObj = (wordObj, wordsArray) => {
   console.log("wordsArray ", wordsArray)
 
   for (let i = 0; i < wordsArray.length; i++) {
-    if (wordsArray[i].word === wordObj) return i;
+    if (wordsArray[i] === wordObj) return i;
   }
   return -1;
 };
@@ -14,36 +14,62 @@ function getnMax(objArr, n) {
   return sorted.splice(0, n);
 }
 
-const getAllWordsMap = (elasticResponse, request) => {
+const getAllWordsMap = (elasticResponse/*, request*/) => {
   console.log("elasticResponse ",elasticResponse)
+
   let hits = Array.from(elasticResponse);
   console.log("hits ",hits)
 
-  let wordsMap = [];
-
-  for (let i = 0; i < hits.length; i++) {
-    let tweetWordsmap = hits[i]._source.wit;
-    if (!(tweetWordsmap === null || tweetWordsmap === undefined)) {
-      var arr = Array.from(tweetWordsmap);
-      console.log("arr ",arr)
-
-      arr.forEach((word) => {
-        let j = includeWordObj(word.word, wordsMap);
-        if (j !== -1) {
-          wordsMap[j].nbOccurences += word.nbOccurences;
-        } else {
-          wordsMap.push(word);
-        }
-        console.log("wordsMap ",wordsMap)
-
-      });
+  let wordsMap = []
+  let wordss=[]
+  let coHashtagArr1 = hits.filter(tweet => tweet.description !== undefined && tweet.description !==null)
+  .map((tweet) => { return tweet.description });
+  
+  
+  for (var i=0 ;i<coHashtagArr1.length; i++){
+    var intermediate=coHashtagArr1[i].split(' ')
+    for (var j=0; j<intermediate.length; j++){
+      intermediate[j] = intermediate[j].replace(/[^@#A-Za-z0-9]/g, '');
+      if(intermediate[j].length>0 && intermediate[j]!==" "){
+        wordss.push(intermediate[j])
+      }
     }
   }
+  var post=[]
+
+  if(hits.url !=null || hits.url !=undefined) {
+    post=hits.url
+    }
+  let obj = {
+    ceva: "ceva", 
+    userIsMentioned: '1',
+    total_interactions: hits.total_interactions,
+    post:post
+  }
+  return obj;
+
+ 
+  console.log("wordss  ",wordss)
+  
+ 
+  var arr = wordss
+  arr.forEach((word) => {
+    let j = includeWordObj(word, wordsMap);
+    if (j !== -1) {
+      wordsMap[j].nbOccurences += word.nbOccurences;
+    } else {
+      wordsMap.push(word);
+    }
+    console.log("wordsMap ",wordsMap)
+  });
+
+  /*
   let toRemove = request.keywordList.map((word) => word.replace("#", ""));
 
   toRemove.forEach((wordToRemove) => {
     wordsMap.splice(includeWordObj(wordToRemove, wordsMap), 1);
   });
+  */
   return getnMax(wordsMap, 100);
 };
 
@@ -67,17 +93,19 @@ function getColor(entity) {
   return "#35347B";
 }
 
-export const createWordCloud = (plotlyJson, request) => {
-  let mostUsedWords = getAllWordsMap(plotlyJson, request);
+export const createWordCloud = (plotlyJson/*, request*/) => {
+  let mostUsedWords = getAllWordsMap(plotlyJson/*, request*/);
+  console.log("mostUsedWords ", mostUsedWords)
   mostUsedWords = mostUsedWords.map((word) => {
-    let w = word.word.includes("@") ? word.word : word.word.replace(/_/g, " ");
+    //let w = word.includes("@") ? word : word.replace(/_/g, " ");
     return {
-      text: w,
+      text: word,
       value: word.nbOccurences,
       entity: word.entity,
       color: getColor(word.entity),
     };
   });
+  
   const options = {
     //  colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b'],
     enableTooltip: true,

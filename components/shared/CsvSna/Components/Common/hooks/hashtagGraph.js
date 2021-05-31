@@ -141,7 +141,7 @@ function getSizeOfField(data, field1, field2, field3) {
     }
   
     
-  //  console.log("nodeIdssss", nodeIds);                    
+    //console.log("nodeIdssss", nodeIds);                    
 
     let sizeObj = _.countBy(nodeIds);
    // console.log("sizeObjSSSSSS ",sizeObj)
@@ -287,7 +287,7 @@ function groupByThenSum(arrOfObjects, key, attrToSumStr, attrToSumNum, attrToSki
 
 export function createCoHashtagGraph(data) {
     let lcTweets = data;
-    console.log("lcTweets-DATA",data)
+   // console.log("lcTweets-DATA",data)
    // console.log("lcTweets ",lcTweets)
     let nodes = getNodesAsHashtag(lcTweets);
     //console.log("nodessssss ",nodes)

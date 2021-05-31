@@ -341,6 +341,7 @@ function getTweetAttrObjArr(tweets, topUser) {
               shares=tweet.shares
               post=tweet.url
               }
+              
           /*
        
         let userRTWC = (tweet._source.quoted_status_id_str !== undefined && tweet._source.quoted_status_id_str !== null)
@@ -380,7 +381,7 @@ function getTweetAttrObjArr(tweets, topUser) {
     else{
       console.log("INSTA")       /////////////////////////////////////// INSTA
      tweetAttrObjArr = tweets.map((tweet) => {
-      console.log("data ", tweet)
+     // console.log("data ", tweet)
 
       var hashtags=[]
       if(tweet.description !=null || tweet.description !=undefined || tweet.image_text !=null || tweet.image_text !=undefined  ) {
@@ -862,7 +863,7 @@ export const createSocioSemantic4ModeGraph = (tweets, topUser) => {
 
       //console.log("2 ",new Date().valueOf());
        let tweetAttrObjArr = getTweetAttrObjArr(lcTweets, topUser); 
-      console.log("tweetAttrObjArr ", tweetAttrObjArr)  
+     // console.log("tweetAttrObjArr ", tweetAttrObjArr)  
 
       //console.log("3 ",new Date().valueOf());
       let coOccurObjArr = getCoOccurence(tweetAttrObjArr);
@@ -874,12 +875,12 @@ export const createSocioSemantic4ModeGraph = (tweets, topUser) => {
       
       let nodes = [];
       let freqHashtagObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.hashtags; }).flat());
-      console.log("freqHashtagObj ", freqHashtagObj)  
+     // console.log("freqHashtagObj ", freqHashtagObj)  
 
       let freqMentionObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userIsMentioned; }).flat());
       let freqURLObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.urls; }).flat());
       let total_url = tweetAttrObjArr.map((obj) => { return obj.post +': '+obj.total_interactions; }).flat();
-      console.log("total_url ", total_url)
+     // console.log("total_url ", total_url)
 
       /*
       let freqRTWCObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userRTWC; }).flat());

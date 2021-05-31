@@ -1,6 +1,5 @@
 import {
   CSV_SNA_CLEAN,
-  CSV_SNA_SET_RESULTS,
   CSV_COUNT_SET_RESULTS,
   CSV_SNA_SET_TYPE,
   CSV_HISTOGRAM_SET_RESULTS,
@@ -10,13 +9,14 @@ import {
   CSV_HISTOVIEW_RESULT,
   CSV_PIE_CHART_RESULT,
   CSV_BUBBLE_CHART_RESULT,
-  CSV_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE,
+  CSV_SNA_USER_PROFILE_MOST_ACTIVE,
   CSV_SET_HEAP_MAP_RESULT,
-  SET_TWITTER_SNA_BUBBLE_CHART_RESULTS,
+  SET_CSV_SNA_BUBBLE_CHART_RESULTS,
   SET_CSV_SNA_HEATMAP_RESULTS,
   SET_CSV_COHASHTAG_RESULTS,
   SET_CSV_URLS_RESULTS,
   SET_CSV_SNA_SOCIO_GRAPH_RESULTS,
+  SET_CSV_SNA_CLOUD_WORDS_RESULTS,
   
 
 } from "../../actions/types/csvSnaTypes";
@@ -43,10 +43,16 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
             result: { ...state.result, histoview: payload },
           }; 
 
- 
-            case SET_CSV_URLS_RESULTS:
-          return {
-            ...state,
+
+          case SET_CSV_SNA_CLOUD_WORDS_RESULTS:
+            return {
+              ...state,
+            result: { ...state.result, cloudChart: payload },
+          }; 
+
+          case SET_CSV_URLS_RESULTS:
+            return {
+             ...state,
             result: { ...state.result, urls: payload },
           }; 
             
@@ -62,15 +68,15 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
             return {
               ...state,
               result: { ...state.result, donutIndex: payload },
-            }; 
+          }; 
 
 
 
-              case SET_CSV_SNA_SOCIO_GRAPH_RESULTS:
-                return {
-                  ...state,
-                  result: { ...state.result, socioSemantic4ModeGraph: payload },
-                }; 
+          case SET_CSV_SNA_SOCIO_GRAPH_RESULTS:
+            return {
+              ...state,
+              result: { ...state.result, socioSemantic4ModeGraph: payload },
+          }; 
 
 
           case CSV_BUBBLE_CHART_RESULT: 
@@ -85,13 +91,13 @@ const csvSnaReducer = (state = defaultState, { type, payload }) => {
             result: { ...state.result, bubbleChart: payload },
           }; 
 
-          case CSV_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE: 
+          case CSV_SNA_USER_PROFILE_MOST_ACTIVE: 
           return {
             ...state,
             result: { ...state.result, topUser: payload },
           };
           
-          case SET_TWITTER_SNA_BUBBLE_CHART_RESULTS: 
+          case SET_CSV_SNA_BUBBLE_CHART_RESULTS: 
             return {
               ...state,
               result: { ...state.result, topUser: payload },

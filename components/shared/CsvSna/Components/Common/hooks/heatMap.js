@@ -1,5 +1,6 @@
 
 
+import {getJsonDataForTimeLineChartFb,getJsonDataForTimeLineChartInsta } from "./timeline"
 
 export function displayPostsInsta (filteredTweets, keyword, sortedColumn) {
     let columns = [];
@@ -141,7 +142,7 @@ export function displayPostsFb (filteredTweets, keyword, sortedColumn) {
 
 
 
-var new_date = function(dateStr) {
+export var new_date = function(dateStr) {
   
   var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s(\w+)\s*$/
     , m = (""+dateStr).match(r);
@@ -228,8 +229,8 @@ function getNbTweetsByHourDay(dayArr, hourArr, bucket) {
   }
 
 
-export function createHeatMap(request, hits, keyword) {
-
+export function createHeatMap(hits, keyword) {
+  
     let hourAxis = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
       '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
     let dayAxis = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -251,10 +252,22 @@ export function createHeatMap(request, hits, keyword) {
       modeBarButtons: [["toImage"], ["resetScale2d"]],
       displaylogo: false,
     }
+    var getDataResult=null
+    if (hits[0].facebook_id){
+
+      getDataResult = getJsonDataForTimeLineChartInsta(hits)
+
+  }
+  else
+  {
+    getDataResult = getJsonDataForTimeLineChartFb(hits)
+
+
+  }
 
     let layout = {
       title: {
-        text: keyword("heatmap_chart_title")  /*+ "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"] */,
+        text: keyword("heatmap_chart_title") + "<br>"+ getDataResult[1] + " - " +getDataResult[2],
         font: {
           family: 'Arial, sans-serif',
           size: 18
