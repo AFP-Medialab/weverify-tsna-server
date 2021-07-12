@@ -1,3 +1,6 @@
+const unique = require('unique-words');
+
+/*
 const includeWordObj = (wordObj, wordsArray) => {
   console.log("wordObj ", wordObj)
   console.log("wordsArray ", wordsArray)
@@ -5,27 +8,89 @@ const includeWordObj = (wordObj, wordsArray) => {
   for (let i = 0; i < wordsArray.length; i++) {
     if (wordsArray[i] === wordObj) return i;
   }
+  
   return -1;
 };
+*/
+
+
+/*
+const getWords = state.result.data
+console.log("getWords ",getWords)
+let coHashtagArr1 = getWords.filter(tweet => tweet.description !== undefined && tweet.description !==null)
+.map((tweet) => { return tweet.description });
+console.log("coHashtagArr1 ",coHashtagArr1)
+let coHashtagArr2 = getWords.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
+.map((tweet) => { return tweet.image_text });
+console.log("coHashtagArr2 ",coHashtagArr2)
+
+var wordss=coHashtagArr1.join(" ")
+var wordss1=coHashtagArr2.join(" ")
+var wordss2=wordss+wordss1
+var final_count=unique.counts(wordss2)
+
+var pairs= Object.entries(final_count);
+console.log("PAIRS ",pairs)
+
+for(var i = 0; i < pairs.length; i++){
+    pairs[i].word = ceva[i]['0'];
+    pairs[i].nbOccurences = pairs[i]['1'];
+    delete pairs[i][0];
+    delete pairs[i][1];
+}
+console.log("PAIRS111 ",pairs)
+*/
+
 
 function getnMax(objArr, n) {
   let sorted = [...objArr.sort((a, b) => b.nbOccurences - a.nbOccurences)];
-  console.log(sorted)
+  console.log("sorted ",sorted)
   return sorted.splice(0, n);
 }
 
 const getAllWordsMap = (elasticResponse/*, request*/) => {
-  console.log("elasticResponse ",elasticResponse)
+  //console.log("elasticResponse ",elasticResponse)
 
   let hits = Array.from(elasticResponse);
-  console.log("hits ",hits)
+  //console.log("hits ",hits)
 
-  let wordsMap = []
-  let wordss=[]
+  var wordsMap = []
+  //var wordsArray=[]
+  
   let coHashtagArr1 = hits.filter(tweet => tweet.description !== undefined && tweet.description !==null)
-  .map((tweet) => { return tweet.description });
+  .map((tweet) => { return tweet.description.toLowerCase() });
+  //console.log("coHashtagArr1 ",coHashtagArr1)
+  let coHashtagArr2 = hits.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
+  .map((tweet) => { return tweet.image_text.toLowerCase() });
+  //console.log("coHashtagArr2 ",coHashtagArr2)
   
-  
+  var wordss=coHashtagArr1.join(" ")
+    console.log("wordss ",wordss)
+
+  var wordss1=coHashtagArr2.join(" ")
+  console.log("wordss1 ",wordss1)
+
+  var wordss2=wordss+wordss1
+  var final_count=unique.counts(wordss2)
+
+  var pairs= Object.entries(final_count);
+  //console.log("PAIRS ",pairs)
+  //console.log("PAIRS ",pairs.length)
+
+for(var i = 0; i < pairs.length; i++){
+    pairs[i].word = pairs[i]['0'];
+    pairs[i].nbOccurences = pairs[i]['1'];
+    delete pairs[i][0];
+    delete pairs[i][1];
+}
+
+//console.log("PAIRS ",pairs)
+//wordsArray=pairs
+wordsMap=pairs
+//console.log("wordsMap + wordsArray",wordsMap)
+
+
+   /*
   for (var i=0 ;i<coHashtagArr1.length; i++){
     var intermediate=coHashtagArr1[i].split(' ')
     for (var j=0; j<intermediate.length; j++){
@@ -35,23 +100,24 @@ const getAllWordsMap = (elasticResponse/*, request*/) => {
       }
     }
   }
-  var post=[]
-
-  if(hits.url !=null || hits.url !=undefined) {
-    post=hits.url
-    }
+  */
+ /*
+  for (var i=0 ;i<coHashtagArr1.length; i++){
+    wordss.push(coHashtagArr1[i])
+  }
+*/
+/*
   let obj = {
     ceva: "ceva", 
     userIsMentioned: '1',
     total_interactions: hits.total_interactions,
-    post:post
+    post:hits.link
   }
   return obj;
-
+*/
  
-  console.log("wordss  ",wordss)
   
- 
+ /*
   var arr = wordss
   arr.forEach((word) => {
     let j = includeWordObj(word, wordsMap);
@@ -63,7 +129,7 @@ const getAllWordsMap = (elasticResponse/*, request*/) => {
     console.log("wordsMap ",wordsMap)
   });
 
-  /*
+
   let toRemove = request.keywordList.map((word) => word.replace("#", ""));
 
   toRemove.forEach((wordToRemove) => {
@@ -95,16 +161,18 @@ function getColor(entity) {
 
 export const createWordCloud = (plotlyJson/*, request*/) => {
   let mostUsedWords = getAllWordsMap(plotlyJson/*, request*/);
-  console.log("mostUsedWords ", mostUsedWords)
+  //console.log("mostUsedWords ", mostUsedWords)
   mostUsedWords = mostUsedWords.map((word) => {
     //let w = word.includes("@") ? word : word.replace(/_/g, " ");
     return {
-      text: word,
+      text: word.word,
       value: word.nbOccurences,
       entity: word.entity,
       color: getColor(word.entity),
     };
   });
+  console.log("mostUsedWords ", mostUsedWords)
+
   
   const options = {
     //  colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b'],

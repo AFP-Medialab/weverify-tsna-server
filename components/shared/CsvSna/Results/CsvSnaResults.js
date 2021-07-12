@@ -62,18 +62,19 @@ export default function CsvSnaResults(props) {
            props.result.socioSemantic4ModeGraph &&
            <SocioSemGraph result={props.result}/>
                 }               
-
-          <Box m={3} />
+      
           {
-            props.result.urls && 
-            <UrlList result={props.result}/>
-                }      
-                       
-          {/*
+            
             props.result.cloudChart && 
             <CloudChart result={props.result}/>
-            */
-                }      
+
+          }
+          <Box m={3} />
+          { 
+            props.result.urls && 
+            <UrlList result={props.result}/>
+               
+          }        
                 
     </Paper>
   );

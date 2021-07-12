@@ -64,8 +64,8 @@ export default function BubbleChart(props) {
     }, [request])
 */
     const onBubbleChartClick = (data, result) => {
-        console.log("BUBBLE_DATA ", data)
-        console.log("BUBBLE_result ", result)
+        //console.log("BUBBLE_DATA ", data)
+        //console.log("BUBBLE_result ", result)
         var selectedUser;
         var filteredTweets;
         

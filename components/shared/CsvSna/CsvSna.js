@@ -75,6 +75,8 @@ const buildFirstFbResult = (data) => {
   buildCoHashTag(data);
   buildSocioGraph(data);
   buildUrls(data);
+  wordCount(data);
+
 
 }
 
@@ -131,13 +133,9 @@ const buildHeatMapFB = async (data) => {
 const useInstagramResult = (data) => {
   dispatch(setSnaType(INSTA_SNA_TYPE));
   buildFirstInstaResult(data);
- 
-
 }
 
-
 const buildFirstInstaResult = (data) => {
-  
   
   buildHistogramInsta(data);
   buildCountInsta(data);
@@ -175,6 +173,7 @@ const buildFirstInstaResult = (data) => {
     dispatch(setHeatMapResult(null))
     dispatch(setCoHashtagResult(null))
     dispatch(setUrlsResult(null))
+    dispatch(setCloudWordsResult(null))
    // Plot(null)
 
 
@@ -233,7 +232,7 @@ const buildSocioGraph = async (data, topUser) => {
   const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
   dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
 };
-///////////////////////////////////////////////////// Cloud Chart
+///////////////////////////////////////////////////// Cloud Chart 
 const wordCount = async (data) => {
   const instance = cloudWorker();
   const wordCountResponse = await instance.createWordCloud(data);

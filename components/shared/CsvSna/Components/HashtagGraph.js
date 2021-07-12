@@ -116,7 +116,7 @@ export default function HashtagGraph (props) {
        // console.log("FILTER-2 ",filteredTweets4.length)
       //  console.log("FILTER-2 ", filteredTweets4)
 
-       console.log("TYPER ", typer)
+       //console.log("TYPER ", typer)
 
         if(typer==="FB"){ 
         //console.log("FBBBBBBB ")

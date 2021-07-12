@@ -69,6 +69,7 @@ function getColor(entity) {
 
 export const createWordCloud = (plotlyJson, request) => {
   let mostUsedWords = getAllWordsMap(plotlyJson, request);
+  console.log("mostUsedWords1 ", mostUsedWords)
   mostUsedWords = mostUsedWords.map((word) => {
     let w = word.word.includes("@") ? word.word : word.word.replace(/_/g, " ");
     return {
@@ -78,6 +79,8 @@ export const createWordCloud = (plotlyJson, request) => {
       color: getColor(word.entity),
     };
   });
+  console.log("mostUsedWords ", mostUsedWords)
+
   const options = {
     //  colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b'],
     enableTooltip: true,

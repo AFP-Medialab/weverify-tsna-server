@@ -15,21 +15,28 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import ReactWordcloud from "react-wordcloud";
 import { select } from 'd3-selection';
 import {displayPostsInsta} from "./lib/displayPosts";
+import {displayPostsFb} from "./lib/displayPosts"
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 import Plotly from 'plotly.js-dist';
 import { saveSvgAsPng } from 'save-svg-as-png';
-
+import {useSelector } from "react-redux";
+import InstagramIcon from '@material-ui/icons/Instagram';
+import FacebookIcon from '@material-ui/icons/Facebook';
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function cloudChart (props) {
 
-    const keyword = useLoadLanguage(tsv);
+    //var tsv = "/components/NavItems/tools/TwitterSna.tsv";
+    //const keyword = useLoadLanguage(tsv);
+    const snatype = useSelector((state) => state.csvSna.result.snaType);
+    const keyword = useLoadLanguage(snatype.tsv);
     const classes = useMyStyles();
+    const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
+
 
     const [filesNames, setfilesNames] = useState(null);
     const [cloudTweets, setCloudTweets] = useState(null);
@@ -46,29 +53,35 @@ export default function cloudChart (props) {
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.result.cloudChart]);
-
+/*
     useEffect(() => {
         setCloudTweets(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.request])
-
+*/
     //Set the file name for wordsCloud export
     useEffect(() => {
-        setfilesNames('WordCloud_' + props.request.keywordList.join("&") + "_" + props.request.from + "_" + props.request.until);
+        setfilesNames('WordCloud_' + 'props.request.keywordList.join("&")' + "_" + 'props.request.from' + "_" + 'props.request.until');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(props.request), props.request]);
+    }, [/*JSON.stringify(props.request), props.request*/]);
 
     const CSVheaders = [{ label: keyword('twittersna_result_word'), key: "word" }, { label: keyword("twittersna_result_nb_occ"), key: "nb_occ" }, { label: keyword("twittersna_result_entity"), key: "entity" }];
 
     function getCSVData() {
         if (!props.result.cloudChart.json)
             return "";
-        let csvData = props.result.cloudChart.json.map(wordObj => { return { word: wordObj.text, nb_occ: wordObj.value, entity: wordObj.entity } });
+        let csvData = props.result.cloudChart.json.map(wordObj => { 
+            return { word: wordObj.text, nb_occ: wordObj.value, entity: wordObj.entity } });
+       // console.log("csvData ",csvData)
+        
+
         return csvData;
     };
 
     const getCallbacks = () => {
+        
         return {
+            
             getWordColor: word => word.color,
             getWordTooltip: word =>
                 tooltip(word),
@@ -79,10 +92,22 @@ export default function cloudChart (props) {
     };
 
     const tooltip = word => {
-        if (word.entity !== null)
+        if (word.entity !== null){
+           // console.log("word.entity111 ",word.entity)
+           //console.log("word.text111 ",word.text)
+           // console.log("word.value111 ",word.value)
+       
             return "The word " + word.text + " appears " + word.value + " times and is a " + word.entity + ".";
-        else
+            
+        }
+        else{
+
+       
+            //console.log("word.entity ",word.entity)
+            //console.log("word.text ",word.text)
+            //console.log("word.value ",word.value)
             return "The word " + word.text + " appears " + word.value + " times.";
+        }
     }
 
     const getCallback = useCallback((callback) => {
@@ -96,11 +121,31 @@ export default function cloudChart (props) {
                 .on("click", () => {
                     if (isActive) {
                         let selectedWord = word.text;
+                        console.log("selectedWord ",selectedWord)
                         let filteredTweets = filterTweetsGivenWord(selectedWord);
+
+                        console.log("ASDADSA ", typer)
+                        if(typer==="FB"){
+
+                            let dataToDisplay = displayPostsFb(filteredTweets, keyword);
+                            //console.log("displayFB ", dataToDisplay)
+                    
+                            dataToDisplay["selected"] = selectedWord;
+                            setCloudTweets(dataToDisplay);
+                        }
+                           else{
+                    
+                            let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
+                            //console.log("displayInsta ", dataToDisplay)
+                    
+                            dataToDisplay["selected"] = selectedWord;
+                            setCloudTweets(dataToDisplay);
+                        }
+                        /*
                         let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
                         dataToDisplay["selected"] = selectedWord;
                         setCloudTweets(dataToDisplay);
-
+                        */
                     }
                 })
                 .transition()
@@ -111,10 +156,82 @@ export default function cloudChart (props) {
     }, [props.result]);
 
     function filterTweetsGivenWord(word) {
+        var length1=props.result.data
+
+        /*
         let filteredTweets = props.result.tweets.filter(function (tweetObj) {
+            console.log("filteredTweets ",filteredTweets)
             return tweetObj._source.full_text.toLowerCase().match(new RegExp('(^|((.)*[.()0-9!?\'’‘":,/\\%><«» ^#]))' + word + '(([.()!?\'’‘":,/><«» ](.)*)|$)', "i"));
         });
-        return filteredTweets;
+        */
+        console.log("TYPER ",typer)
+
+        let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description !==null)
+        .map((tweet) => { return tweet.description.toLowerCase() });
+        
+        console.log("filteredTweets ",filteredTweets)
+
+        let filteredTweets1 = state.result.data.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
+        .map((tweet) => { return tweet.image_text.toLowerCase() });
+        console.log("filteredTweets1 ",filteredTweets1)
+        console.log("PROPS ",length1.length)
+        var filteredTweets2=[]
+
+        if(typer==="FB"){ 
+            console.log("FBBBBBBB")
+    
+            let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
+            .map((tweet) => { return tweet.message.toLowerCase() });
+            
+            for(var i=0; i<length1.length; i++){
+            
+                if(filteredTweets3[i]!==undefined && filteredTweets3[i]!==null){
+
+                    if(filteredTweets3[i].includes(word)===true || filteredTweets3[i].includes(word)===true){
+                        if(filteredTweets2.includes(state.result.data[i])===false){
+                            filteredTweets2.push(state.result.data[i])
+                        }
+                        
+                    }
+
+            }
+           
+            }
+        }
+
+        for(var i=0; i<length1.length; i++){
+
+        if(filteredTweets1[i]!==undefined && filteredTweets[i]!==undefined && filteredTweets1[i]!==null && filteredTweets[i]!==null){
+
+       
+        if(filteredTweets[i].includes(word)===true || filteredTweets1[i].includes(word)===true){
+            if(filteredTweets2.includes(state.result.data[i])===false){
+                filteredTweets2.push(state.result.data[i])
+            }
+        }
+        }
+        else{
+
+            if(filteredTweets1[i]!==undefined && filteredTweets1[i]!==null){
+                if(filteredTweets1[i].includes(word)===true ){
+                    if(filteredTweets2.includes(state.result.data[i])===false){
+                        filteredTweets2.push(state.result.data[i])
+                    }
+                }
+            }
+       
+            if(filteredTweets[i]!==undefined && filteredTweets[i]!==null){
+                if(filteredTweets[i].includes(word)===true ){
+                    if(filteredTweets2.includes(state.result.data[i])===false){
+                        filteredTweets2.push(state.result.data[i])
+                    }
+                }
+            }
+        }
+    }
+        console.log("filteredTweets2 ",filteredTweets2)
+
+        return filteredTweets2;
     }
     //createGraphWhenClickANode;
 
@@ -163,6 +280,34 @@ export default function cloudChart (props) {
 
     let call = getCallbacks();
 
+    var goToAction;
+  
+    if(typer=="INSTA"){
+      goToAction = [
+        {
+         icon: InstagramIcon,
+          tooltip: keyword("twittersna_result_go_to_tweet"),
+          onClick: (event, rowData) => {
+            window.open(rowData.link.props.href, "_blank");
+          },
+        },
+      ];
+    }
+    else {
+      goToAction = [
+        {
+         icon: FacebookIcon,
+          tooltip: keyword("twittersna_result_go_to_tweet"),
+          onClick: (event, rowData) => {
+           window.open(rowData.link.props.href, "_blank");
+          },
+        },
+      ];
+    }
+
+
+
+/*
     let goToTweetAction = [{
         icon: TwitterIcon,
         tooltip: keyword("twittersna_result_go_to_tweet"),
@@ -170,6 +315,7 @@ export default function cloudChart (props) {
             window.open(rowData.link, '_blank');
         }
     }]
+    */
 
     return (
         <Accordion>
@@ -256,7 +402,7 @@ export default function cloudChart (props) {
                                             title={keyword("twittersna_result_slected_tweets")}
                                             colums={cloudTweets.columns}
                                             data={cloudTweets.data}
-                                            actions={goToTweetAction}
+                                            actions={goToAction}
                                         />
                                     </div>
                                 }

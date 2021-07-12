@@ -115,6 +115,7 @@ export default function cloudChart (props) {
         let filteredTweets = props.result.tweets.filter(function (tweetObj) {
             return tweetObj._source.full_text.toLowerCase().match(new RegExp('(^|((.)*[.()0-9!?\'’‘":,/\\%><«» ^#]))' + word + '(([.()!?\'’‘":,/><«» ](.)*)|$)', "i"));
         });
+        console.log("filteredTweets ",filteredTweets)
         return filteredTweets;
     }
     //createGraphWhenClickANode;
