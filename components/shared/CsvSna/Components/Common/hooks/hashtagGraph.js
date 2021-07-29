@@ -54,7 +54,7 @@ function getUniqValuesOfField(data, field1, field2, field3) {
               */
             }
           
-          nodeIds.push(intermediate[j])
+          nodeIds.push(intermediate[j].toLowerCase())
         }
         intermediate=null;
       }
@@ -133,7 +133,7 @@ function getSizeOfField(data, field1, field2, field3) {
           }
           */
         }
-        nodeIds.push(intermediate[j])
+        nodeIds.push(intermediate[j].toLowerCase())
       }
         intermediate=null;
       }
@@ -184,7 +184,7 @@ function getEdgesCoHashtag(data) {
   
   for(var i=0 ;i<coHashtagArr.length; i++) {
    // console.log("coHashtagArr-FOUND ", coHashtagArr[i].match(/#\S+/g))
-      intermediate=coHashtagArr[i].match(/#\S+/g)
+      intermediate=coHashtagArr[i].toLowerCase().match(/#\S+/g)
 
       if(intermediate===null || intermediate===undefined){
         continue

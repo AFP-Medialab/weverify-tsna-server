@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React from "react";
-import Layout from "../components/layout";
+import Layout from "../components/layoutCSV";
 import CsvSna from "../components/shared/CsvSna/CsvSna";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
@@ -23,7 +23,7 @@ const Index = () => {
   const keyword = useLoadLanguage(tsv);
   return (
     <div className={classes.root}>
-    <Layout title={"Facebook & Instagram CSV analysis"}>
+    <Layout title={keyword("fbinsta_sna_title")}>
       <Head>
         <title>Csv Reader</title>
         <link rel="icon" href="/favicon.ico" />

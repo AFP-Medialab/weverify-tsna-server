@@ -174,6 +174,8 @@ const buildFirstInstaResult = (data) => {
     dispatch(setCoHashtagResult(null))
     dispatch(setUrlsResult(null))
     dispatch(setCloudWordsResult(null))
+    dispatch(setSocioGraphResult(null))
+
    // Plot(null)
 
 

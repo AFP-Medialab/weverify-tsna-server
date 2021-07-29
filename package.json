@@ -51,6 +51,7 @@
     "redux-thunk": "^2.3.0",
     "save-svg-as-png": "^1.4.17",
     "semantic-ui-react": "^2.0.3",
+    "stopword": "^1.0.7",
     "styled-components": "^5.2.1",
     "tippy.js": "^6.3.0",
     "unique-words": "^2.0.1",

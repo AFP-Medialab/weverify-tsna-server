@@ -1,6 +1,5 @@
 const includeWordObj = (wordObj, wordsArray) => {
-  console.log("wordObj ", wordObj)
-  console.log("wordsArray ", wordsArray)
+ 
 
   for (let i = 0; i < wordsArray.length; i++) {
     if (wordsArray[i].word === wordObj) return i;
@@ -10,14 +9,11 @@ const includeWordObj = (wordObj, wordsArray) => {
 
 function getnMax(objArr, n) {
   let sorted = [...objArr.sort((a, b) => b.nbOccurences - a.nbOccurences)];
-  console.log(sorted)
   return sorted.splice(0, n);
 }
 
 const getAllWordsMap = (elasticResponse, request) => {
-  console.log("elasticResponse ",elasticResponse)
   let hits = Array.from(elasticResponse);
-  console.log("hits ",hits)
 
   let wordsMap = [];
 
@@ -25,7 +21,6 @@ const getAllWordsMap = (elasticResponse, request) => {
     let tweetWordsmap = hits[i]._source.wit;
     if (!(tweetWordsmap === null || tweetWordsmap === undefined)) {
       var arr = Array.from(tweetWordsmap);
-      console.log("arr ",arr)
 
       arr.forEach((word) => {
         let j = includeWordObj(word.word, wordsMap);
@@ -34,7 +29,6 @@ const getAllWordsMap = (elasticResponse, request) => {
         } else {
           wordsMap.push(word);
         }
-        console.log("wordsMap ",wordsMap)
 
       });
     }
@@ -69,7 +63,6 @@ function getColor(entity) {
 
 export const createWordCloud = (plotlyJson, request) => {
   let mostUsedWords = getAllWordsMap(plotlyJson, request);
-  console.log("mostUsedWords1 ", mostUsedWords)
   mostUsedWords = mostUsedWords.map((word) => {
     let w = word.word.includes("@") ? word.word : word.word.replace(/_/g, " ");
     return {
@@ -79,7 +72,6 @@ export const createWordCloud = (plotlyJson, request) => {
       color: getColor(word.entity),
     };
   });
-  console.log("mostUsedWords ", mostUsedWords)
 
   const options = {
     //  colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b'],

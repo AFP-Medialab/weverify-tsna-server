@@ -121,10 +121,10 @@ export default function cloudChart (props) {
                 .on("click", () => {
                     if (isActive) {
                         let selectedWord = word.text;
-                        console.log("selectedWord ",selectedWord)
+                        //console.log("selectedWord ",selectedWord)
                         let filteredTweets = filterTweetsGivenWord(selectedWord);
 
-                        console.log("ASDADSA ", typer)
+                      //  console.log("ASDADSA ", typer)
                         if(typer==="FB"){
 
                             let dataToDisplay = displayPostsFb(filteredTweets, keyword);
@@ -164,21 +164,21 @@ export default function cloudChart (props) {
             return tweetObj._source.full_text.toLowerCase().match(new RegExp('(^|((.)*[.()0-9!?\'’‘":,/\\%><«» ^#]))' + word + '(([.()!?\'’‘":,/><«» ](.)*)|$)', "i"));
         });
         */
-        console.log("TYPER ",typer)
+      //  console.log("TYPER ",typer)
 
         let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description !==null)
         .map((tweet) => { return tweet.description.toLowerCase() });
         
-        console.log("filteredTweets ",filteredTweets)
+      //  console.log("filteredTweets ",filteredTweets)
 
         let filteredTweets1 = state.result.data.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
         .map((tweet) => { return tweet.image_text.toLowerCase() });
-        console.log("filteredTweets1 ",filteredTweets1)
-        console.log("PROPS ",length1.length)
+      //  console.log("filteredTweets1 ",filteredTweets1)
+        //console.log("PROPS ",length1.length)
         var filteredTweets2=[]
 
         if(typer==="FB"){ 
-            console.log("FBBBBBBB")
+          //  console.log("FBBBBBBB")
     
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
             .map((tweet) => { return tweet.message.toLowerCase() });
@@ -229,7 +229,7 @@ export default function cloudChart (props) {
             }
         }
     }
-        console.log("filteredTweets2 ",filteredTweets2)
+       // console.log("filteredTweets2 ",filteredTweets2)
 
         return filteredTweets2;
     }

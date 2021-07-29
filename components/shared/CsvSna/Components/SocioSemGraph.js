@@ -23,7 +23,8 @@ import {displayPostsFb} from "./lib/displayPosts"
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
 import {createGraphWhenClickANode} from "../../lib/sigmaGraph";
 import {getDomain} from "../Components/Common/hooks/socioSemGraph"
-
+import InstagramIcon from '@material-ui/icons/Instagram';
+import FacebookIcon from '@material-ui/icons/Facebook';
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function SocioSemGraph (props) {
@@ -66,10 +67,15 @@ export default function SocioSemGraph (props) {
             nodes: data.data.renderer.graph.nodes(),
             edges: data.data.renderer.graph.edges()
         }
+       // console.log("nodes ",data.data.renderer.graph.nodes())
+        //console.log("edges ",data.data.renderer.graph.edges())
+
 
         setSocioSemantic4ModeGraphClickNode(createGraphWhenClickANode(data));
 
         setSocioSemantic4ModeGraphReset(initGraph);
+
+        //console.log("HASHH ", data.data.node.type)
 
         if (data.data.node.type === "Hashtag") {
             let selectedHashtag = data.data.node.id;
@@ -79,7 +85,7 @@ export default function SocioSemGraph (props) {
 
 
         let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description !==null)
-        .map((tweet) => { return tweet.description.includes(selectedHashtag) });
+        .map((tweet) => { return tweet.description.toLowerCase().includes(selectedHashtag) });
 
         for (var i=0; i<filteredTweets.length ;i++){
             if (filteredTweets[i]==true){
@@ -87,7 +93,7 @@ export default function SocioSemGraph (props) {
             }
         }
         let filteredTweets2 = state.result.data.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
-        .map((tweet) => { return tweet.image_text.includes(selectedHashtag) });
+        .map((tweet) => { return tweet.image_text.toLowerCase().includes(selectedHashtag) });
 
         for (var i=0; i<filteredTweets2.length ;i++){
             if (filteredTweets2[i]==true){
@@ -104,7 +110,7 @@ export default function SocioSemGraph (props) {
         if(typer==="FB"){
 
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
-            .map((tweet) => { return tweet.message.includes(selectedHashtag) });
+            .map((tweet) => { return tweet.message.toLowerCase().includes(selectedHashtag) });
     
             for (var i=0; i<filteredTweets3.length ;i++){
                 if (filteredTweets3[i]==true){
@@ -139,12 +145,12 @@ export default function SocioSemGraph (props) {
         else if (data.data.node.type === "Mention") {
             let selectedUser = data.data.node.id
         //   let selectedUser = data.data.node.id
-
+            console.log("selectedUser ",selectedUser)
             var filteredTweets4=[]
 
 
         let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description !==null)
-        .map((tweet) => { return tweet.description.includes(selectedUser) });
+        .map((tweet) => { return tweet.description.toLowerCase().includes(selectedUser) });
 
         for (var i=0; i<filteredTweets.length ;i++){
             if (filteredTweets[i]==true){
@@ -152,7 +158,7 @@ export default function SocioSemGraph (props) {
             }
         }
         let filteredTweets2 = state.result.data.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
-        .map((tweet) => { return tweet.image_text.includes(selectedUser) });
+        .map((tweet) => { return tweet.image_text.toLowerCase().includes(selectedUser) });
 
         for (var i=0; i<filteredTweets2.length ;i++){
             if (filteredTweets2[i]==true){
@@ -169,7 +175,7 @@ export default function SocioSemGraph (props) {
         if(typer==="FB"){
 
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
-            .map((tweet) => { return tweet.message.includes(selectedUser) });
+            .map((tweet) => { return tweet.message.toLowerCase().includes(selectedUser) });
     
             for (var i=0; i<filteredTweets3.length ;i++){
                 if (filteredTweets3[i]==true){
@@ -297,13 +303,30 @@ export default function SocioSemGraph (props) {
         } */
     }
 
-    let goToTweetAction = [{
-        icon: TwitterIcon,
-        tooltip: keyword("twittersna_result_go_to_tweet"),
-        onClick: (event, rowData) => {
-            window.open(rowData.link, '_blank');
-        }
-    }]
+    var goToAction;
+  
+    if(typer=="INSTA"){
+      goToAction = [
+        {
+         icon: InstagramIcon,
+          tooltip: keyword("twittersna_result_go_to_tweet"),
+          onClick: (event, rowData) => {
+            window.open(rowData.link.props.href, "_blank");
+          },
+        },
+      ];
+    }
+    else {
+      goToAction = [
+        {
+         icon: FacebookIcon,
+          tooltip: keyword("twittersna_result_go_to_tweet"),
+          onClick: (event, rowData) => {
+           window.open(rowData.link.props.href, "_blank");
+          },
+        },
+      ];
+    }
 
     const onClickStageSocioSemantic4ModeGraph = (e) => {
         setSocioSemantic4ModeGraphClickNode(null);
@@ -441,7 +464,7 @@ export default function SocioSemGraph (props) {
                             <CustomTable title={keyword("twittersna_result_slected_tweets")}
                                 colums={socioSemantic4ModeGraphTweets.columns}
                                 data={socioSemantic4ModeGraphTweets.data}
-                                actions={goToTweetAction}
+                                actions={goToAction}
                             />
                         </div>
                     }

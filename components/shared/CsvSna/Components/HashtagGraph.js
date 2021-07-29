@@ -88,7 +88,7 @@ export default function HashtagGraph (props) {
 
 
         let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description !==null)
-        .map((tweet) => { return tweet.description.includes(selectedHashtag) });
+        .map((tweet) => { return tweet.description.toLowerCase().includes(selectedHashtag) });
 
         for (var i=0; i<filteredTweets.length ;i++){
             if (filteredTweets[i]==true){
@@ -99,7 +99,7 @@ export default function HashtagGraph (props) {
       //  console.log("FILTER-1 ", filteredTweets4)
 
         let filteredTweets2 = state.result.data.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
-        .map((tweet) => { return tweet.image_text.includes(selectedHashtag) });
+        .map((tweet) => { return tweet.image_text.toLowerCase().includes(selectedHashtag) });
 
         for (var i=0; i<filteredTweets2.length ;i++){
             if (filteredTweets2[i]==true){
@@ -122,7 +122,7 @@ export default function HashtagGraph (props) {
         //console.log("FBBBBBBB ")
 
         let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
-        .map((tweet) => { return tweet.message.includes(selectedHashtag) });
+        .map((tweet) => { return tweet.message.toLowerCase().includes(selectedHashtag) });
 
         for (var i=0; i<filteredTweets3.length ;i++){
             if (filteredTweets3[i]==true){

@@ -7,8 +7,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import styles from './layout.module.css';
 import useMyStyles from './shared/styles/useMyStyles';
 import getConfig from 'next/config';
-import CustomTitle from "../components/shared/CustomTitle/CustomTitle"
-import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
+import CustomTitle from "./shared/CustomTitle/CustomTitle"
+import HelpDialog from "./shared/HelpDialog/HelpDialogCSV";
 import Grid from '@material-ui/core/Grid';
 import Link from 'next/link'
 
@@ -58,9 +58,9 @@ function Layout(props) {
                     <Languages/>
                     <CustomTitle text={props.title}/>
                     <Grid>
-                {<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
-                 "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",
-                 "aboutsna_wordcloud", "aboutsna_gexf_export", "aboutsna_urls"]}
+                {<HelpDialog paragraphs={["aboutcsv_intro", "aboutcsv_count", "aboutsna_timeline", "aboutcsv_most_RT", "aboutcsv_most_liked",
+                 "aboutcsv_most_active", "aboutcsv_most_mentions", "aboutcsv_bubblegraph", "aboutcsv_heatmap", "aboutcsv_most_associated_hashtag", "aboutcsv_ssgraph",
+                 "aboutcsv_wordcloud", "aboutcsv_urls"]}
                              />
                 }
             </Grid>
