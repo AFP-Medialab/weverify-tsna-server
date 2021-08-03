@@ -223,16 +223,19 @@ export default function PlotPieChart (props) {
             }
             // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
             else {
-                console.log("CENTER ")
+                console.log("The Other 3 PieGraphs ")
                 let selectedUser = data.points[0].label;
-               // console.log("DONUT ", data)
-               // console.log("DATA0 ",data.points[0].label)
+                //console.log("DONUT ", data)
+                //console.log("SELECTED=USER ",data.points[0].label)
                 
                 
-    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     let filteredTweets = state.result.data.filter(function (tweetObj) {
-                        return tweetObj.page_name.toLowerCase() === selectedUser.toLowerCase();
+                      //  return tweetObj.page_name.toLowerCase() === selectedUser.toLowerCase();
+                      return tweetObj.page_name === selectedUser
                     });
+                   // console.log("filtered tweets  ",filteredTweets)
+
                //     console.log("filtered tweets  ",filteredTweets)
     
                     
