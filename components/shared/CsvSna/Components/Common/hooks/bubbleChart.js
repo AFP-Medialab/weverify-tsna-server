@@ -53,7 +53,7 @@ export function createBubbleChartOfMostActiveUsers(props, keyword) {
                 screen_name: obj.page_name,
                 followers_count: obj.likes_at_posting,
                 //datetimestamp: getEpochMillis(obj.created),
-                created: obj.created
+                post_created: obj.post_created
                 
                 }; 
         });
@@ -88,7 +88,7 @@ export function createBubbleChartOfMostActiveUsers(props, keyword) {
                 screen_name: obj.user_name,
                 followers_count: obj.followers_at_posting,
                 //datetimestamp: getEpochMillis(obj.created),
-                created: obj.created
+                post_created: obj.post_created
                 
                 }; 
         });
@@ -133,26 +133,25 @@ export function createBubbleChartOfMostActiveUsers(props, keyword) {
      })
 
 
-    let sortedObjArr = _.orderBy(closestDateObjArr, ['created', 'screen_name'], ['asc', 'asc']);
+    let sortedObjArr = _.orderBy(closestDateObjArr, ['post_created', 'screen_name'], ['asc', 'asc']);
     let x = [];
     let y = [];
     let text = [];
     let color = []
     let size = [];
     let symbol = [];
-    /*
-    var new_date = function(dateStr) {
+    
+    /*var new_date = function(dateStr) {
   
-        var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s(\w+)\s*$/
+        //var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s(\w+)\s*$/
+        var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CEST\s*$/
           , m = (""+dateStr).match(r);
         return `${m[1]}-${m[2]}-${m[3]} ${m[4]}:${m[5]}:${m[6]}`;
       };
       */
     sortedObjArr.forEach((obj) => {
       //  let date1 = new Date(obj.datetimestamp * 1000);
-    
-        let date = new Date(new_date(obj.created));
-        
+        let date = new Date(new_date(obj.post_created));
        // console.log("date ", date)
       
         let dateStr= date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()+ " " + date.getHours();

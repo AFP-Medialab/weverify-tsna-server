@@ -139,9 +139,9 @@ export default function PlotPieChart (props) {
     
                 
                     let selectedUser = data.points[0].label;
-                    let filteredTweets = state.result.data.filter(tweet => tweet.account !== undefined && tweet.account.length > 0)
+                    let filteredTweets = state.result.data.filter(tweet => tweet.account !== undefined /*&& tweet.account.length > 0 && tweet.account.length !== null*/)
                         .filter(function (tweet) {
-                            return tweet.account.toLowerCase() === selectedUser.toLowerCase();
+                            return tweet.account/*.toLowerCase()*/ === selectedUser/*.toLowerCase()*/;
                         });
                         console.log("filtered tweets  ",filteredTweets)
     
@@ -161,7 +161,7 @@ export default function PlotPieChart (props) {
                 
     
                     let filteredTweets = state.result.data.filter(function (tweetObj) {
-                        return tweetObj.account.toLowerCase() === selectedUser.toLowerCase();
+                        return tweetObj.account === selectedUser;
                     });
                     console.log("filtered tweets  ",filteredTweets)
     
@@ -303,7 +303,7 @@ export default function PlotPieChart (props) {
             
 
                 let filteredTweets = state.result.data.filter(function (tweetObj) {
-                    return tweetObj.account.toLowerCase() === selectedUser.toLowerCase();
+                    return tweetObj.account === selectedUser;
                 });
                 console.log("filtered tweets  ",filteredTweets)
 

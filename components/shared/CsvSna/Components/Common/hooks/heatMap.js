@@ -38,7 +38,7 @@ export function displayPostsInsta (filteredTweets, keyword, sortedColumn) {
 
     let resData = [];
     filteredTweets.forEach(postObj => {
-        const date = new Date(new_date(postObj.created));
+        const date = new Date(new_date(postObj.post_created));
 
         resData.push(
             {
@@ -109,7 +109,7 @@ export function displayPostsFb (filteredTweets, keyword, sortedColumn) {
   let resData = [];
   filteredTweets.forEach(postObj => {
       //const date = getEpochMillis(postObj.created);
-      const date = new Date(new_date(postObj.created));
+      const date = new Date(new_date(postObj.post_created));
 
       resData.push(
           {
@@ -144,8 +144,14 @@ export function displayPostsFb (filteredTweets, keyword, sortedColumn) {
 
 export var new_date = function(dateStr) {
   
-  var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s(\w+)\s*$/
+  //var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s(\w+)\s*$/
+  var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CEST\s*$/
     , m = (""+dateStr).match(r);
+    //console.log("DATE m1 ",m[1])
+    //console.log("DATE m2",m[2])
+    //console.log("DATE m3 ",m[3])
+    //console.log("DATE m4 ",m[4])
+
   return `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`;
 };
 export const onHeatMapClick = (data, result, setheatMapTweets, keyword) => {
@@ -154,7 +160,7 @@ export const onHeatMapClick = (data, result, setheatMapTweets, keyword) => {
 
     let selectedDay = data.points[0].y;
     let filteredTweets = result.data.filter(function (postObj) {
-      let date = new Date(new_date(postObj.created));
+      let date = new Date(new_date(postObj.post_created));
         let day = getDayAsString(date.getDay());
         let hour = getHourAsString(date.getHours());
         return hour === selectedHour && day === selectedDay;
@@ -198,7 +204,7 @@ function getNbTweetsByHourDay(dayArr, hourArr, bucket) {
     
     
       
-      const date = new Date(new_date(val.created));
+      const date = new Date(new_date(val.post_created));
 
 
       return `${date.getDay()}_${date.getHours()}`;

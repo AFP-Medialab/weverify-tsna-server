@@ -42,7 +42,7 @@ export function displayPostsInsta (filteredPost, keyword, sortedColumn) {
     filteredPost.forEach(postObj => {
         resData.push(
             {
-                date: postObj.created,
+                date: postObj.post_created,
                 screen_name: <a href={"https://instagram.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
                 post: postObj.description,
                 nbLikes: postObj.likes,
@@ -103,7 +103,7 @@ export function displayPostsFb (filteredPost, keyword, sortedColumn) {
   filteredPost.forEach(postObj => {
       resData.push(
           {
-              date: postObj.created,
+              date: postObj.post_created,
               screen_name: <a href={"https://facebook.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
               post: postObj.description,
               nbLikes: postObj.likes,

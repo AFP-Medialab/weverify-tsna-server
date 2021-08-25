@@ -49,11 +49,11 @@ export default function CsvSnaResults(props) {
       {           
          props.result && props.result.countSna &&
          <BubbleChart result={props.result}/>
-             }
+       }
       {
          props.result.heatMap &&           
          <HeatMap result={props.result}/>
-        }  
+      }  
         {
           props.result.coHashtagGraph &&
           <HashtagGraph result={props.result}/>

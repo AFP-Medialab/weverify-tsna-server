@@ -50,7 +50,7 @@ export default function PlotTimeLine(props){
     const onHistogramClick = (data) => {
             let selectedPoints = data.points;
            let filteredPost = state.result.data.filter(function(post) {
-                let postDate =getEpochMillis(post.created);
+                let postDate =getEpochMillis(post.post_created);
               //  console.log("POST_DATE ",postDate)
                 return filterForTimeLine(postDate, selectedPoints);
 

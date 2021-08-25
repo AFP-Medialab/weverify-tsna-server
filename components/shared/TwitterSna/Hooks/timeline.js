@@ -133,6 +133,7 @@ export const getJsonDataForTimeLineChart = (dataResponse) => {
 export function filterTweetsForTimeLine(tweetDate, selectedPoints) {
   for (let i = 0; i < selectedPoints.length; i++) {
       let pointedDate = new Date(selectedPoints[i].x);
+      console.log("DATE format ", pointedDate)
       if (selectedPoints[i].data.mode !== "lines" && isInRange(pointedDate, tweetDate, "isDays")) {
           return true;
       };

@@ -59,8 +59,9 @@ export const createTimeLineChart = (date_min, date_max, json, titleLabel, timeLa
 
 export const getEpochMillis = (dateStr) => {
     
-  var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CET\s*$/
+  var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CEST\s*$/
     , m = (""+dateStr).match(r);
+
   return (m) ? Date.UTC(m[1], m[2]-1, m[3], m[4], m[5], m[6]) : undefined;
 };
 
@@ -81,8 +82,9 @@ export const getJsonDataForTimeLineChartFb = (data) => {
   }
   var getEpochMillis = function(dateStr) {
     
-    var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CET\s*$/
+    var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CEST\s*$/
       , m = (""+dateStr).match(r);
+
     return (m) ? Date.UTC(m[1], m[2]-1, m[3], m[4], m[5], m[6]) : undefined;
   };
   datas.forEach(dateObj => {
@@ -94,16 +96,16 @@ export const getJsonDataForTimeLineChartFb = (data) => {
     else{
       tot_inte = dateObj.total_interactions;
     }
-    let date_epoch = getEpochMillis(dateObj.created);
+    let date_epoch = getEpochMillis(dateObj.post_created);
     if (date_epoch < min_epoch)
     {
       min_epoch = date_epoch;
-      min_CET = dateObj.created;
+      min_CET = dateObj.post_created;
     }
     if (date_epoch > max_epoch)
     {
       max_epoch = date_epoch;
-      max_CET = dateObj.created;
+      max_CET = dateObj.post_created;
     }
     usersGet(dateObj, infos, tot_inte, date_epoch); // pour chaque user, on recupe l'obj avec nom tot_interact date
     infos.push({
@@ -162,8 +164,7 @@ export const getJsonDataForTimeLineChartInsta = (data) => {
     return infos;
   }
   var getEpochMillis = function(dateStr) {
-    
-    var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CET\s*$/
+    var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CEST\s*$/
       , m = (""+dateStr).match(r);
     return (m) ? Date.UTC(m[1], m[2]-1, m[3], m[4], m[5], m[6]) : undefined;
   };
@@ -178,16 +179,16 @@ export const getJsonDataForTimeLineChartInsta = (data) => {
     else{
       tot_inte = dateObj.total_interactions;
     }
-    let date_epoch = getEpochMillis(dateObj.created);
+    let date_epoch = getEpochMillis(dateObj.post_created);
     if (date_epoch < min_epoch)
     {
       min_epoch = date_epoch;
-      min_CET = dateObj.created;
+      min_CET = dateObj.post_created;
     }
     if (date_epoch > max_epoch)
     {
       max_epoch = date_epoch;
-      max_CET = dateObj.created;
+      max_CET = dateObj.post_created;
     }
     usersGet(dateObj, infos, tot_inte, date_epoch); // pour chaque user, on recupe l'obj avec nom tot_interact date
     infos.push({
