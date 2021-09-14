@@ -190,7 +190,7 @@ export default function cloudChart (props) {
                                         (props.result.cloudChart.json && props.result.cloudChart.json.length === 0) &&
                                         <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>}
                                     {(props.result.cloudChart.json && props.result.cloudChart.json.length !== 0) &&
-                                        <Grid container justify="space-between" spacing={2}
+                                        <Grid container justifyContent="space-between" spacing={2}
                                             alignContent={"center"}>
                                             <Grid item>
                                                 <Button
@@ -238,7 +238,7 @@ export default function cloudChart (props) {
                                 {
                                     cloudTweets &&
                                     <div>
-                                        <Grid container justify="space-between" spacing={2}
+                                        <Grid container justifyContent="space-between" spacing={2}
                                             alignContent={"center"}>
                                             <Grid item>
                                                 <Button

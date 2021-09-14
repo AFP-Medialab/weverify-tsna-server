@@ -156,7 +156,7 @@ export default function SocioSemGraph (props) {
             props.result.socioSemantic4ModeGraph && props.result.socioSemantic4ModeGraph.data.nodes.length !== 0 &&
                 <div style={{ width: '100%' }}>
                     <Box pb={3}>
-                        <Grid container justify="space-between" spacing={2}
+                        <Grid container justifyContent="space-between" spacing={2}
                             alignContent={"center"}>
                             <Grid item>
                                 <CSVLink
@@ -255,7 +255,7 @@ export default function SocioSemGraph (props) {
                     {
                         socioSemantic4ModeGraphTweets &&
                         <div>
-                            <Grid container justify="space-between" spacing={2}
+                            <Grid container justifyContent="space-between" spacing={2}
                                 alignContent={"center"}>
                                 <Grid item>
                                     <Button

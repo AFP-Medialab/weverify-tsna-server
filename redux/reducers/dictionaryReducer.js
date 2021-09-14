@@ -6,8 +6,7 @@ const dictionaryReducer = (state = {}, action) => {
         case "SET":
             return action.payload;
         case "ADD":
-            state[action.payload.label] = action.payload.json;
-            return state;
+            return {...state, [action.payload.label]: action.payload.json};
         default:
             return state;
     }

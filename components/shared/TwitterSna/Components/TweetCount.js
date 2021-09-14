@@ -52,7 +52,7 @@ export default function TweetCount(props) {
         <Box alignItems="center" justifyContent="center" width={"100%"}>
           <Grid
             container
-            justify="space-around"
+            justifyContent="space-around"
             spacing={2}
             alignContent={"center"}
           >

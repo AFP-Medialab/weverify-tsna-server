@@ -64,7 +64,7 @@ export default function GexfExport(props) {
         <Box pb={2}>
         <Box alignItems="center" justifyContent="center" width={"100%"}>
             <div style={{margin: 20}}>
-                <Grid container justify="space-between" spacing={2}
+                <Grid container justifyContent="space-between" spacing={2}
                     alignContent={"center"}>
                     {
                         gexfExport && gexfExport.map((gexfRes, index) => {

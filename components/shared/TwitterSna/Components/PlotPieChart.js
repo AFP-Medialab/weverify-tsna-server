@@ -225,7 +225,7 @@ export default function PlotPieChart(props) {
                 ) && (
                   <Grid
                     container
-                    justify="space-between"
+                    justifyContent="space-between"
                     spacing={2}
                     alignContent={"center"}
                   >

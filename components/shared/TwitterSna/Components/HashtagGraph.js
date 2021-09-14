@@ -112,7 +112,7 @@ export default function HashtagGraph (props) {
                 props.result && props.result.coHashtagGraph && props.result.coHashtagGraph.data.nodes.length !== 0 &&
                 <div style={{ width: '100%' }}>
                     <Box pb={3}>
-                        <Grid container justify="space-between" spacing={2}
+                        <Grid container justifyContent="space-between" spacing={2}
                             alignContent={"center"}>
                             <Grid item>
                                 <CSVLink
@@ -211,7 +211,7 @@ export default function HashtagGraph (props) {
                     {
                         coHashtagGraphTweets &&
                         <div>
-                            <Grid container justify="space-between" spacing={2}
+                            <Grid container justifyContent="space-between" spacing={2}
                                 alignContent={"center"}>
                                 <Grid item>
                                     <Button

@@ -36,7 +36,7 @@ const PluginRedirect = () => {
     }
     useEffect(() => {
         // Always do navigations after the first render
-        router.push('/', undefined, { shallow: true })
+        router.push('/twitterSna', undefined, { shallow: true })
       },[]);
       return (<div>redirect</div>);      
 };

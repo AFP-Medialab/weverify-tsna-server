@@ -309,7 +309,21 @@ const useMyStyles = makeStyles(theme => ({
         width: theme.typography.h5.fontSize,
         height: theme.typography.h5.fontSize,
         marginRight: 3
-    }
-
+    },
+    toolCardStyle: {
+        width: "25%", 
+        maxWidth: "350px", 
+        minWidth: "250px",
+    },
+    toolCardStyle: {
+        width: "25%", 
+        maxWidth: "350px", 
+        minWidth: "250px",
+    },
 }));
+export const myCardStyles = makeStyles({
+    root: {
+        overflow: "visible"
+    }
+});
 export default useMyStyles;
