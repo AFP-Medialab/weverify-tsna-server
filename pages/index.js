@@ -23,6 +23,15 @@ const Index = () => {
       tsvPrefix: "twitter_sna",
       path: "twitterSna"
   },
+  {
+    title: "navbar_csv_sna",
+    description: "navbar_csv_sna_description",
+    icon: (drawerValue === 11) ? <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#51A5B2" }} title="CSV SNA"/>
+        : <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#4c4c4c" }} title="CSV SNA"/>,
+    iconColored: <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#51A5B2" }} title="CSV SNA"/>,
+    tsvPrefix: "csv_sna",
+    path: "csvSna"
+  },
   ];
   return (
     <Layout keyword={keyword}>

@@ -117,10 +117,7 @@ export class ToolCard extends Component {
                         </Grid>
                     </Box>
 
-
-
                     <Box m={1} />
-
 
                     <div style={{ minHeight: "45px" }}>
                         <span style={{ fontSize: '10px', }}>{
@@ -128,16 +125,7 @@ export class ToolCard extends Component {
                         </span>
                     </div>
 
-
-
-
-
-
                 </Box>
-
-
-
-
 
             </Box>
 

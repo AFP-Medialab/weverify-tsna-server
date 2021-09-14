@@ -7,17 +7,9 @@ import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 import {makeStyles} from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: '100vh',
-    backgroundImage: `url(${'images/background_twitter&CSV.jpg'})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-  },
-}));
 
-const Index = () => {
-  const classes = useStyles();
+const TwitterSnaIndex = () => {
+  
   const keyword = useLoadLanguage(tsv);
   
   return (
@@ -54,4 +46,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default TwitterSnaIndex;

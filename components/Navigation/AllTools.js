@@ -75,11 +75,12 @@ const AllTools = (props) => {
     
     const toolsData = [];
     const tools = props.tools;
+    console.log("tools ", tools);
     tools.forEach((value) => {
         if (value.title === "navbar_twitter_sna") {
             value.type = "lock";
-            toolsData.push(value);
         }
+        toolsData.push(value);
 
     });
     const [value, setValue] = React.useState(0);
