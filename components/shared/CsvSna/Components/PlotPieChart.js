@@ -358,7 +358,7 @@ return (
                             }
                             {
                                 obj.json !== null && !(obj.json[0].values.length === 1 && obj.json[0].values[0] === "") &&
-                                <Grid container justify="space-between" spacing={2}
+                                <Grid container justifyContent="space-between" spacing={2}
                                     alignContent={"center"}>
                                     <Grid item>
                                         <Button

@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CSVReader from "react-csv-reader";
-//import CsvSnaResults from "./Results/CsvSnaResults";
+import CsvSnaResults from "./Results/CsvSnaResults";
 import useMyStyles, {myCardStyles}  from '../styles/useMyStyles';
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import FeedBack from "../FeedBack/FeedBack";
@@ -53,7 +53,7 @@ const CsvSnaComponent = () => {
     const isloading = useSelector(state => state.csvSna.loading);
     const resultRedux = useSelector(state => state.csvSna.result);
 
-    //const keywordFB = useLoadLanguage(FB_SNA_TYPE.tsv);
+    const keywordFB = useLoadLanguage(FB_SNA_TYPE.tsv);
     const keywordINSTA = useLoadLanguage(INSTA_SNA_TYPE.tsv);
     
     ///// FB /////
@@ -106,7 +106,7 @@ const CsvSnaComponent = () => {
             keywordFB("top_users_pie_chart_title"),
             keywordFB("mention_cloud_chart_title")
         ];
-        
+        console.log("datat FB ", data);
         const instance = pieChartsWorker();
         const jsonPieChart = await instance.getJsonDataForPieCharts(data);
         const pieCharts = await instance.createPieCharts("",jsonPieChart,keywordTitles);

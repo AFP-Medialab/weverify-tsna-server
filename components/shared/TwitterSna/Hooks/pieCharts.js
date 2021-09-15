@@ -90,6 +90,7 @@ const getJsonDataForPieChart = (
   if (keys.length === 0) return null;
 
   //Initialisation
+  console.log("paramKeywordList    ", paramKeywordList);
   labels.push(paramKeywordList.join(", ").replace(/#/g, "t"));
   parents.push("");
   value.push("");

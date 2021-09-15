@@ -5,8 +5,6 @@ import Count from "../Components/Count";
 import { useDispatch, useSelector } from "react-redux";
 import { cleanCsvSnaState } from "../../../../redux/actions/tools/csvSnaActions";
 import dynamic from "next/dynamic";
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
-import CsvSna from "../CsvSnaComponent-ack";
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
   ssr: false,
 });
@@ -20,8 +18,6 @@ import UrlList from "../Components/UrlList";
 import Box from "@material-ui/core/Box";
 const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), {ssr: false});
 const CloudChart = dynamic(import("../Components/CloudChart"), {ssr: false});
-
-
 
 
 export default function CsvSnaResults(props) {
