@@ -10,6 +10,8 @@ import dynamic from "next/dynamic"
 import TweetCount from "../Components/TweetCount";
 import UrlList from "../Components/UrlList";
 import GexfExport from "../Components/GexfExport";
+import Clusters from "../Components/TweetSimilarity/Clusters";
+
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false});
@@ -86,7 +88,9 @@ export default function TwitterSnaResult(props) {
                 {
                     result.urls && 
                     <UrlList result={result} request={request}/>
-                }     
+                }  
+
+                <Clusters />   
             </Paper>
        
     );

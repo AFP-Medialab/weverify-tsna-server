@@ -23,6 +23,7 @@ import {
   getUserAccounts,
   getCloudTweets,
   getESQuery4Gexf,
+  getESQuery4TweetSimilarity,
 } from "./call-elastic";
 import { createTimeLineChart, getJsonDataForTimeLineChart } from "./timeline";
 import { createPieCharts, getJsonDataForPieCharts } from "./pieCharts";
@@ -154,6 +155,7 @@ const useTwitterSnaRequest = (request, keyword) => {
         .all([getAggregationData(entries), getTweets(entries)])
         .then((responseArrayOf9) => {
           buildGexf(entries);
+          // buildTweetSimilarity(entries);
           makeSecondResult(request, responseArrayOf9);
         })
         .catch(() => {
@@ -241,6 +243,12 @@ const useTwitterSnaRequest = (request, keyword) => {
         dispatch(setGexfExport(response[0]));
       });
     };
+
+    // const buildTweetSimilarity = async (entries) => {
+    //   axios.all([getESQuery4TweetSimilarity(entries)]).then((response) => {
+    //     // dispatch(setGexfExport(response[0]));
+    //   });
+    // };
 
     const buildSocioGraph = async (tweets, topUser) => {
       const instance = socioWorker();

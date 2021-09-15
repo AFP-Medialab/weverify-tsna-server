@@ -8,7 +8,9 @@ let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/search/getTweets`
 let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUsers`;
 let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/gexf/getGexf`;
 let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexfStatus`;
-
+let tweetSimilarityURL = "http://127.0.0.1:8000/";//process.env.REACT_APP_TWEET_SIMILARITY_URL //TODO this shold not be hard-coded.
+// console.log('tweetSimilarityURL',tweetSimilarityURL)
+// debugger;
 // Aggregation data for pie charts, timelime chart,...
 export function getAggregationData(param) {
     let must = constructMatchPhrase(param);
@@ -547,7 +549,6 @@ function buildQueryMultipleMatchPhrase (field, arr) {
 
       // Export gexf file
     export function getESQuery4Gexf(param) {
-
         let must = constructMatchPhrase(param);
         let mustNot = constructMatchNotPhrase(param);
         // let aggs = constructAggs("urls");
@@ -563,7 +564,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
             "flow":false,
             "esQuery":buildQuery4Gexf(must, mustNot,size)
         }).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
-        // console.log("gexfParams:"+gexfParams);
+        console.log("gexfParams:"+gexfParams);
 
         const userAction = async () => {
             const response = await fetch(gexfGen_url, { // start gex gen process
@@ -640,4 +641,40 @@ function buildQueryMultipleMatchPhrase (field, arr) {
     function timer(ms) {
         return new Promise(res => setTimeout(res, ms));
     }
+
+
+    /*
+    TODO: for now we call the server from the Cluster Component which need so be solved!
+    export function getESQuery4TweetSimilarity(param) {
+        let must = constructMatchPhrase(param);
+        let mustNot = constructMatchNotPhrase(param);
+        // let aggs = constructAggs("urls");
+
+        let size=1000;
+        // let esQuery = JSON.stringify(buildQuery4Gexf(must, mustNot,size)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
+        let similarityParams=JSON.stringify({
+            "esQuery":buildQuery4Gexf(must, mustNot,size)
+        }).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
+        // console.log("gexfParams:"+gexfParams);
+
+        console.log("tweetSimilarityURL", tweetSimilarityURL+"similarity/");
+
+
+        const userAction = async () => {
+            const response = await fetch((tweetSimilarityURL+"similarity/"), { // start gex gen process
+                method: 'POST',
+                // mode: 'no-cors',
+                body:similarityParams,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            var gexfResponse = await response.json();
+            console.log("gexfResponse",gexfResponse);
+            // // console.log("Status", gexfStatus.status,
+        };
+        return userAction();
+    }
+    */
+
         
