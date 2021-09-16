@@ -238,7 +238,7 @@ const buildPieChartsInsta = async (data) => {
         transformHeader: header => header.toLowerCase().replace(/\W/g, "_"),
         complete: completeCsvParse,
       };
-
+      
     return (
     <div className={classes.all}>
         <Grid

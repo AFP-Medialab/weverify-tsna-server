@@ -30,13 +30,12 @@ export function createBubbleChartOfMostActiveUsers(props, keyword) {
        
         itemCountObj = _.countBy(props.data.map((item) => {
             
-            if (isNumeric(item.group_name)===false) {
-                console.log("item....", item);
+            if (isNumeric(item.page_name)===false) {
                 //console.log("isNumeric(n) ",isNumeric(tweet.page_name))
-                return item.group_name.toLowerCase();           
+                return item.page_name.toLowerCase();           
             }
             else{
-                return item.group_name.toString().toLowerCase();                
+                return item.page_name.toString().toLowerCase();                
             }
              }));
       //  console.log("itemCountObj ",itemCountObj)
@@ -133,7 +132,7 @@ export function createBubbleChartOfMostActiveUsers(props, keyword) {
 
 
     let sortedObjArr = _.orderBy(closestDateObjArr, ['post_created', 'screen_name'], ['asc', 'asc']);
-    console.log("sortedObjArr   ", sortedObjArr);
+    
     let x = [];
     let y = [];
     let text = [];

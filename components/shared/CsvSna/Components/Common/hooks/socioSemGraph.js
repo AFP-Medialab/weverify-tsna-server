@@ -895,7 +895,6 @@ export const createSocioSemantic4ModeGraph = (tweets/*, topUser*/) => {
 
       //console.log("2 ",new Date().valueOf());
        let tweetAttrObjArr = getTweetAttrObjArr(lcTweets/*, topUser*/); 
-      console.log("tweetAttrObjArr ", tweetAttrObjArr)  
 
       //console.log("3 ",new Date().valueOf());
       let coOccurObjArr = getCoOccurence(tweetAttrObjArr);
