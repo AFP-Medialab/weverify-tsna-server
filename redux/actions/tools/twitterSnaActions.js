@@ -121,6 +121,13 @@ export const setGexfExport = (gexfData) => {
     }
 };
 
+export const setTweetSimilarityClusters = (tweetSimilarityClusters) => {
+    return {
+        type : "SET_TWEET_SIMILARITY_RESULT",
+        payload : tweetSimilarityClusters
+    }
+};
+
 
 export const setTweetsDetailPanel = (from, data) => {    
     console.log("from " + from)

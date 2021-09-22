@@ -11,6 +11,12 @@ import TextField from "@material-ui/core/TextField";
 import WordTree from "./WordTree";
 import { Box } from "@material-ui/core";
 
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+
+let tweetSimTweetsURL = `${publicRuntimeConfig.baseFolder}/api/similarity/getTweets`;
+
+
 const DraggableDialog = (props) => {
   const { cluster_id, contentRootWord, open } = props;
 
@@ -19,13 +25,17 @@ const DraggableDialog = (props) => {
 
   console.log("DraggableDialog cluster_id", cluster_id);
   useEffect(() => {
-    console.log("Use effect called cluster_id", cluster_id);
-    fetch(`http://localhost:8000/tweets?cluster_id=${cluster_id}`)
+    fetch(tweetSimTweetsURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: `{"cluster_id":"${cluster_id}"}`,
+    })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        setTweets(data);
+        setTweets(data.tweets);
       });
   }, [cluster_id]);
 

@@ -25,6 +25,7 @@ export async function userPostAction(res, url, body, headers) {
   
   const response = await fetch(url, {
     method: "POST",
+    credentials: "include",
     headers: headers,
     body: body,
   });

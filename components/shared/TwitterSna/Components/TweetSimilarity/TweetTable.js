@@ -16,18 +16,28 @@ import OverFlownRow from "./OverFlownRow";
 import Consts from "./Constants";
 import parse from "html-react-parser";
 
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+
+let tweetSimTweetsURL = `${publicRuntimeConfig.baseFolder}/api/similarity/getTweets`;
+
 const splitter = ", ";
 
 const TweetTable = ({ cluster_id, open }) => {
   const [tweets, setTweets] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/tweets?cluster_id=${cluster_id}`)
+    fetch(tweetSimTweetsURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: `{"cluster_id":"${cluster_id}"}`,
+    })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        setTweets(data);
+        setTweets(data.tweets);
       });
   }, [cluster_id]);
 
@@ -58,7 +68,7 @@ const TweetTable = ({ cluster_id, open }) => {
     var res = "";
     // BU asagidaki map i iterate edip dogru durust sort edilmis sekilde div icinde gostermek istiyoruz.
     // debugger;
-    for(let item in screen_name_indices.entries()){
+    for (let item in screen_name_indices.entries()) {
       res += "<div>";
       const sn = item[0];
       const indices = item[1];
@@ -78,7 +88,7 @@ const TweetTable = ({ cluster_id, open }) => {
   function showUserNames(screen_names) {
     const freqs = getFreq(screen_names.split(", "));
     const res = freqs.map((item) => (
-      <div>
+      <div key={item[0]}>
         <a
           href={Consts.USER_LINK + item[0]}
           target="_blank"
@@ -135,9 +145,9 @@ const TweetTable = ({ cluster_id, open }) => {
                       <TableRow key={tweet.id_str}>
                         <OverFlownRow content={tweet.full_text_cleaned} />
                         <OverFlownRow content={tweet.tweet_count} />
-                        <OverFlownRow
+                        <OverFlownRow key={"ovr"+ tweet.id_str}
                           content={tweet.id_str.split(", ").map((tweet_id) => (
-                            <div>
+                            <div key={tweet_id}>
                               <a
                                 href={Consts.STATUS_LINK + tweet_id}
                                 target="_blank"

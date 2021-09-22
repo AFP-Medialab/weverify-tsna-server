@@ -16,6 +16,7 @@ import {
   setUrlsResult,
   setCoHashtagResult,
   setGexfExport,
+  setTweetSimilarityClusters,
 } from "../../../../redux/actions/tools/twitterSnaActions";
 import {
   getAggregationData,
@@ -155,7 +156,7 @@ const useTwitterSnaRequest = (request, keyword) => {
         .all([getAggregationData(entries), getTweets(entries)])
         .then((responseArrayOf9) => {
           buildGexf(entries);
-          // buildTweetSimilarity(entries);
+          buildTweetSimilarity(entries);
           makeSecondResult(request, responseArrayOf9);
         })
         .catch(() => {
@@ -244,11 +245,11 @@ const useTwitterSnaRequest = (request, keyword) => {
       });
     };
 
-    // const buildTweetSimilarity = async (entries) => {
-    //   axios.all([getESQuery4TweetSimilarity(entries)]).then((response) => {
-    //     // dispatch(setGexfExport(response[0]));
-    //   });
-    // };
+    const buildTweetSimilarity = async (entries) => {
+      axios.all([getESQuery4TweetSimilarity(entries)]).then((response) => {
+        dispatch(setTweetSimilarityClusters(response[0]));
+      });
+    };
 
     const buildSocioGraph = async (tweets, topUser) => {
       const instance = socioWorker();
