@@ -23,7 +23,6 @@ const DraggableDialog = (props) => {
   const [tweets, setTweets] = useState([]);
   const [rootWord, setRootWord] = useState(contentRootWord);
 
-  console.log("DraggableDialog cluster_id", cluster_id);
   useEffect(() => {
     fetch(tweetSimTweetsURL, {
       method: "POST",

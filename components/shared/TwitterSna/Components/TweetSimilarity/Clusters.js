@@ -27,9 +27,14 @@ const Clusters = (props) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {tweetSimilarityClusters && (
-          <ClusterTable clusters={tweetSimilarityClusters.clusters} />
+        {tweetSimilarityClusters && tweetSimilarityClusters.clusters.length!==0 && (
+          <ClusterTable clusters={tweetSimilarityClusters.clusters} style={{ width: "100%" }}/>
         )}
+        {(tweetSimilarityClusters && tweetSimilarityClusters.clusters.length===0) &&
+               ( <Typography className={classes.heading}>
+                {"No similar tweets to form clusters!"}
+              </Typography>)
+        }
         {!tweetSimilarityClusters &&
           props.result.tweetCount &&
           props.result.tweetCount.count !== "0" && (

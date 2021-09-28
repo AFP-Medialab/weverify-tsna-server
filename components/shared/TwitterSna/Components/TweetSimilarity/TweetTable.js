@@ -12,9 +12,11 @@ import Collapse from "@material-ui/core/Collapse";
 import { useEffect, useState } from "react";
 import TablePagination from "@material-ui/core/TablePagination";
 import TablePaginationActions from "./TablePaginationActions";
-import OverFlownRow from "./OverFlownRow";
-import Consts from "./Constants";
+import OverFlownCell from "./OverFlownRow";
 import parse from "html-react-parser";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import useMyStyles from "../../../styles/useMyStyles";
+import { addLinkToEachItem, Consts } from "./Constants";
 
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
@@ -25,6 +27,7 @@ const splitter = ", ";
 
 const TweetTable = ({ cluster_id, open }) => {
   const [tweets, setTweets] = useState([]);
+  const classes = useMyStyles();
 
   useEffect(() => {
     fetch(tweetSimTweetsURL, {
@@ -41,15 +44,8 @@ const TweetTable = ({ cluster_id, open }) => {
       });
   }, [cluster_id]);
 
-  function getFreq(arr) {
-    const map = arr.reduce(
-      (acc, e) => acc.set(e, (acc.get(e) || 0) + 1),
-      new Map()
-    );
-    return [...map.entries()].sort((a, b) => b[1] - a[1]);
-  }
-
   function userHandleStats(tweet) {
+    //TODO this is not being used.
     const { id_str, user_id_str, screen_name, tweet_count } = tweet;
 
     let screen_name_indices = new Map(); // a map of screen_name with key holding the indices of the same screen_name
@@ -85,22 +81,6 @@ const TweetTable = ({ cluster_id, open }) => {
     return parse(res);
   }
 
-  function showUserNames(screen_names) {
-    const freqs = getFreq(screen_names.split(", "));
-    const res = freqs.map((item) => (
-      <div key={item[0]}>
-        <a
-          href={Consts.USER_LINK + item[0]}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {item[0] + "(" + item[1] + "), "}
-        </a>
-      </div>
-    ));
-    return res;
-  }
-
   //Paginations
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -115,88 +95,98 @@ const TweetTable = ({ cluster_id, open }) => {
   };
 
   return (
-    <TableRow>
-      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <Box>
-            <Typography variant="h6" gutterBottom component="div">
-              Tweets
-            </Typography>
-            <Paper>
-              <TableContainer component={Paper} style={{ maxHeight: 500 }}>
-                <Table size="small" aria-label="tweets" stickyHeader>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Text</TableCell>
-                      <TableCell>#Tweet(s)</TableCell>
-                      <TableCell>TweetID(s)</TableCell>
-                      <TableCell>UserID(s)</TableCell>
-                      <TableCell>Handle(s)</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {(rowsPerPage > 0
-                      ? tweets.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
-                        )
-                      : tweets
-                    ).map((tweet) => (
-                      <TableRow key={tweet.id_str}>
-                        <OverFlownRow content={tweet.full_text_cleaned} />
-                        <OverFlownRow content={tweet.tweet_count} />
-                        <OverFlownRow key={"ovr"+ tweet.id_str}
-                          content={tweet.id_str.split(", ").map((tweet_id) => (
-                            <div key={tweet_id}>
-                              <a
-                                href={Consts.STATUS_LINK + tweet_id}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {tweet_id}
-                              </a>
-                            </div>
-                          ))}
-                        />
-                        <OverFlownRow content={userHandleStats(tweet)} />
-                        {/* tweet.user_id_str */}
-                        <OverFlownRow
-                          content={showUserNames(tweet.screen_name)}
-                        />
-                      </TableRow>
-                    ))}
-                    {emptyRows > 0 && (
-                      <TableRow style={{ height: 53 * emptyRows }}>
-                        <TableCell colSpan={5} />
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                colSpan={6}
-                component="div"
-                count={tweets.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { "aria-label": "rows per page" },
-                  native: true,
-                }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </Paper>
-          </Box>
-        </Collapse>
-      </TableCell>
-    </TableRow>
+    <React.Fragment>
+      <TableRow sx={{ "& > *": { borderTop: "unset" } }}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
+                Tweets
+              </Typography>
+              {tweets.length > 0 && (
+                <Paper>
+                  <TableContainer component={Paper}>
+                    <Table size="small" aria-label="tweets" stickyHeader>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Text</TableCell>
+                          <TableCell>#Tweet(s)</TableCell>
+                          <TableCell>TweetID(s)</TableCell>
+                          {/* <TableCell>UserID(s)</TableCell> */}
+                          <TableCell>Handle(s)</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {(rowsPerPage > 0
+                          ? tweets.slice(
+                              page * rowsPerPage,
+                              page * rowsPerPage + rowsPerPage
+                            )
+                          : tweets
+                        ).map((tweet) => (
+                          <TableRow key={tweet.id_str}>
+                            <TableCell>{tweet.full_text_cleaned}</TableCell>
+                            <OverFlownCell content={tweet.tweet_count} />
+                            <OverFlownCell
+                              content={addLinkToEachItem(
+                                tweet.id_str,
+                                Consts.STATUS_LINK
+                              )}
+                            />
+                            {/* <OverFlownCell content={userHandleStats(tweet)} /> */}
+                            {/* tweet.user_id_str */}
+                            <OverFlownCell
+                              content={addLinkToEachItem(
+                                tweet.screen_name,
+                                Consts.USER_LINK
+                              )}
+                            />
+                          </TableRow>
+                        ))}
+                        {emptyRows > 0 && (
+                          <TableRow>
+                            <TableCell colSpan={4} />
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  <TablePagination
+                    rowsPerPageOptions={[
+                      5,
+                      10,
+                      25,
+                      { label: "All", value: -1 },
+                    ]}
+                    colSpan={4}
+                    component={Paper}
+                    count={tweets.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: { "aria-label": "rows per page" },
+                      native: true,
+                    }}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </Paper>
+              )}{" "}
+              {
+                // console.log("tweets", tweets)
+                tweets.length === 0 && (
+                  <CircularProgress className={classes.circularProgress} />
+                )
+              }
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
   );
 };
 
-// linkleri yerlestir
 // bu user_id ve screen_nameler icin de count filan koymak lazim, hatta guzel tooltips
 // vs de olabilir.
 

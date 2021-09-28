@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
@@ -20,7 +19,9 @@ import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 
 import DraggableDialog from "./DraggableDialog";
 import TweetTable from "./TweetTable";
-import OverFlownRow from "./OverFlownRow";
+import OverFlownCell from "./OverFlownRow";
+import useMyStyles from "../../../styles/useMyStyles";
+import {addLinkToEachItem,getFreqInDiv, Consts} from "./Constants"
 
 const ClusterDescriptionCell = (props) => {
   const { cluster_id, content } = props;
@@ -32,7 +33,7 @@ const ClusterDescriptionCell = (props) => {
 
   return (
     <React.Fragment>
-      <Box style={{ maxHeight: 100, overflow: "auto", padding: 0 }}>
+      <Box style={{ maxHeight: 100, overflow: "auto", padding: 0}}>
         {content}
       </Box>
       <Tooltip title="Explore tweets wordtree">
@@ -42,7 +43,7 @@ const ClusterDescriptionCell = (props) => {
           size="small"
           endIcon={<OpenInNewIcon />}
           onClick={handleClickOpen}
-          style={{ paddingBottom: 0 }}
+          style={{ paddingBottom: 0, marginTop:25}}
         >
           Explore
         </Button>
@@ -65,8 +66,8 @@ const Row = (props) => {
 
   return (
     <React.Fragment>
-      <TableRow>
-        <TableCell component="th" scope="row">
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableCell>
           <Tooltip title="Show cluster tweets">
             <IconButton
               aria-label="expand row"
@@ -77,43 +78,22 @@ const Row = (props) => {
             </IconButton>
           </Tooltip>
         </TableCell>
-        <TableCell>
+        <TableCell component="th" scope="row">
           <ClusterDescriptionCell
             cluster_id={cluster.cluster_id}
             content={cluster.description}
           />
         </TableCell>
-
-        {/* TODO:Should be overflown cells */}
-        <OverFlownRow content={cluster.tweet_count} />
-        <OverFlownRow content={cluster.screen_name} />
-        <OverFlownRow content={cluster.hashtags} />
-        <OverFlownRow content={cluster.user_mentions} />
+        <OverFlownCell content={cluster.tweet_count} />
+        <OverFlownCell content={addLinkToEachItem(cluster.screen_name, Consts.USER_LINK)} />
+        <OverFlownCell content={getFreqInDiv(cluster.hashtags)} />
+        <OverFlownCell content={addLinkToEachItem(cluster.user_mentions, Consts.USER_LINK)} />
       </TableRow>
 
       {open && <TweetTable open={open} cluster_id={cluster.cluster_id} />}
     </React.Fragment>
   );
 };
-
-// Row.propTypes = {
-//   cluster: PropTypes.shape({
-//     tweet_count: PropTypes.number.isRequired,
-//     hashtags: PropTypes.string.isRequired,
-//     senders: PropTypes.string.isRequired,
-//     // tweets: PropTypes.arrayOf(
-//     //   PropTypes.shape({
-//     //     text: PropTypes.string.isRequired,
-//     //     screen_name: PropTypes.string.isRequired,
-//     //     timestamp: PropTypes.string.isRequired,
-//     //     tweetId:PropTypes.string.isRequired,
-//     //   }),
-//     // ).isRequired,
-//     description: PropTypes.string.isRequired,
-//     // price: PropTypes.number.isRequired,
-//     mentions: PropTypes.string.isRequired,
-//   }).isRequired,
-// };
 
 const ClusterTable = ({ clusters }) => {
   //Paginations
@@ -129,18 +109,21 @@ const ClusterTable = ({ clusters }) => {
     setPage(0);
   };
 
+const classes = useMyStyles();
+
+
   return (
-    <Paper>
-      <TableContainer component={Paper} style={{ maxHeight: 600 }}>
-        <Table stickyHeader aria-label="clusters">
+    <Paper style={{ width: "100%" }}>
+      <TableContainer component={Paper}>
+        <Table stickyHeader aria-label="clusters" >
           <TableHead>
-            <TableRow>
+            <TableRow >
               <TableCell />
-              <TableCell>Cluster Description</TableCell>
-              <TableCell>#Tweets</TableCell>
-              <TableCell>Senders</TableCell>
-              <TableCell>Hashtags</TableCell>
-              <TableCell>Mentions</TableCell>
+              <TableCell  style={{fontWeight:"bold"}}>Cluster Description</TableCell>
+              <TableCell  style={{fontWeight:"bold"}}>#Tweets</TableCell>
+              <TableCell  style={{fontWeight:"bold"}}>Senders</TableCell>
+              <TableCell  style={{fontWeight:"bold"}}>Hashtags</TableCell>
+              <TableCell  style={{fontWeight:"bold"}}>Mentions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
