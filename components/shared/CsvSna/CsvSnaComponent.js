@@ -162,6 +162,7 @@ const buildPieChartsInsta = async (data) => {
     const instance = pieChartsWorker();
     const jsonPieChart = await instance.getJsonDataForPieChartsInsta(data);
     const pieCharts = await instance.createPieCharts("",jsonPieChart,keywordTitles);
+    console.log(pieCharts);
     dispatch(setPieChartsResult(pieCharts));
   };
   
