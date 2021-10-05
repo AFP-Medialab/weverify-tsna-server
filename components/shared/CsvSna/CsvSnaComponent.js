@@ -142,6 +142,7 @@ const CsvSnaComponent = () => {
         let titleLabel = keywordINSTA("user_time_chart_title");
         let timeLabel = keywordINSTA('twitter_local_time');
         const histogram = await instance.createTimeLineChart(getDataResult[1], getDataResult[2], getDataResult[0], titleLabel, timeLabel);
+        console.log(histogram);
         dispatch(setHistogramResult(histogram));
     };
     /////////////////////////////////////////////////////COUNT INSTA
