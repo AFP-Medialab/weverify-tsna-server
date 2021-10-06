@@ -33,9 +33,9 @@ export default function HashtagGraph (props) {
 
     const dispatch = useDispatch();
 
-    const snatype = useSelector((state) => state.csvSna.result.snaType);
+    const snatype = useSelector((state) => state.ctSna.result.snaType);
     const keyword = useLoadLanguage(snatype.tsv);
-    const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
+    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
 
     const classes = useMyStyles();
 

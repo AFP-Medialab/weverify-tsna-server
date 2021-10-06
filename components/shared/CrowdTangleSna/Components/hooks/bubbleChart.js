@@ -1,5 +1,5 @@
 import {getEpochMillis } from "./timeline";
-import {getJsonDataForTimeLineChartFb,getJsonDataForTimeLineChartInsta } from "./timeline"
+import {getJsonDataForTimeLineChart } from "./timeline"
 import{new_date} from './heatMap'
 
 function getColorOfMostActiveUserBubble(value) {
@@ -40,7 +40,7 @@ export function createBubbleChartOfMostActiveUsers(props, keyword) {
              }));
       //  console.log("itemCountObj ",itemCountObj)
         
-        getDataResult = getJsonDataForTimeLineChartFb(props.data)
+        getDataResult = getJsonDataForTimeLineChart(props.data)
        // console.log("getDataResultFB ",getDataResult)
     
         nbDays = Math.floor(( getEpochMillis(getDataResult[2]) - getEpochMillis(getDataResult[1]) ) / 86400000);
@@ -75,7 +75,7 @@ export function createBubbleChartOfMostActiveUsers(props, keyword) {
         }));
       //  console.log("itemCountObj ",itemCountObj)
         
-        getDataResult = getJsonDataForTimeLineChartInsta(props.data)
+        getDataResult = getJsonDataForTimeLineChart(props.data)
      //   console.log("getJsonDataForTimeLineChartInsta ",getJsonDataForTimeLineChartInsta)
 
         nbDays = Math.floor(( getEpochMillis(getDataResult[2]) - getEpochMillis(getDataResult[1]) ) / 86400000);

@@ -3,7 +3,7 @@ import CloseResult from "../../CloseResult/CloseResult";
 import useMyStyles from "../../styles/useMyStyles";
 import Count from "../Components/Count";
 import { useDispatch} from "react-redux";
-import {cleanCsvSnaState} from "../../../../redux/actions/tools/csvSnaActions"
+import {cleanCsvSnaState} from "../../../../redux/actions/tools/crowdTangleSnaActions"
 import dynamic from "next/dynamic"
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false});

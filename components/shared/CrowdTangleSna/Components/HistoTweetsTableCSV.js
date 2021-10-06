@@ -8,7 +8,7 @@ import CustomTable from "../../CustomTable/CustomTable";
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
-import {setCSVHistoview} from "../../../../redux/actions/tools/csvSnaActions";
+import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 const tsv = "/components/CsvFb.tsv";
@@ -16,9 +16,9 @@ const tsv = "/components/CsvFb.tsv";
 export default function HistoTweetsTable(props) {
   
   const dispatch = useDispatch();
-  const snatype = useSelector((state) => state.csvSna.result.snaType);
+  const snatype = useSelector((state) => state.ctSna.result.snaType);
   const keyword = useLoadLanguage(snatype.tsv);
-  const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
+  const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
 
   var goToAction;
 

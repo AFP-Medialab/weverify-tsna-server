@@ -23,7 +23,6 @@ import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
 
 const Plot = createPlotComponent(plotly);
-let from = "PLOT_HEAT_MAP";
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 

@@ -13,11 +13,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import createPlotComponent from 'react-plotly.js/factory';
-import {onHeatMapClick} from "./Common/hooks/heatMap"
+import {onHeatMapClick} from "./hooks/heatMap"
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
-
-import TwitterIcon from '@material-ui/icons/Twitter';
 
 import useMyStyles from "../../styles/useMyStyles";
 import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
@@ -26,10 +24,10 @@ const Plot = createPlotComponent(plotly);
 
 export default function HeatMap (props) { 
     const dispatch = useDispatch();
-    const snatype = useSelector((state) => state.csvSna.result.snaType);
+    const snatype = useSelector((state) => state.ctSna.result.snaType);
     const keyword = useLoadLanguage(snatype.tsv);
     const classes = useMyStyles();
-    const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
+    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
   
     var goToAction;
     if(typer=="INSTA"){

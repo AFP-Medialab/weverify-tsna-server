@@ -1,6 +1,6 @@
 
 
-import {getJsonDataForTimeLineChartFb,getJsonDataForTimeLineChartInsta } from "./timeline"
+import {getJsonDataForTimeLineChart } from "./timeline"
 
 export function displayPostsInsta (filteredTweets, keyword, sortedColumn) {
     let columns = [];
@@ -259,17 +259,9 @@ export function createHeatMap(hits, keyword) {
       displaylogo: false,
     }
     var getDataResult=null
-    if (hits[0].facebook_id){
 
-      getDataResult = getJsonDataForTimeLineChartInsta(hits)
-
-  }
-  else
-  {
-    getDataResult = getJsonDataForTimeLineChartFb(hits)
-
-
-  }
+    getDataResult = getJsonDataForTimeLineChart(hits)
+   
 
     let layout = {
       title: {

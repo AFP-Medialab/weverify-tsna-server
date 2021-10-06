@@ -14,8 +14,8 @@ import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
-import { filterForTimeLine,getEpochMillis } from "./Common/hooks/timeline";
-import {setCSVHistoview} from "../../../../redux/actions/tools/csvSnaActions";
+import { filterForTimeLine,getEpochMillis } from "./hooks/timeline";
+import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
 
 
 const Plot = createPlotComponent(plotly);
@@ -23,13 +23,13 @@ let from = "PLOT_LINE";
 
 
 export default function PlotTimeLine(props){
-  const snatype = useSelector((state) => state.csvSna.result.snaType);
+  const snatype = useSelector((state) => state.ctSna.result.snaType);
 
     const keyword = useLoadLanguage(snatype.tsv);
     const dispatch = useDispatch();
     //HISTOGRAM
     const [histoVisible, setHistoVisible] = useState(true);
-    const histoPosts = useSelector((state) => state.csvSna.result.histoview);
+    const histoPosts = useSelector((state) => state.ctSna.result.histoview);
     const classes = useMyStyles();
 
 

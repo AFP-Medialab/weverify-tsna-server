@@ -7,7 +7,7 @@ import useLoadLanguage from "../../hooks/useRemoteLoadLanguage"
 import Button from "@material-ui/core/Button";
 import CustomTableURL from "../../CustomTable/CustomTableURL";
 import OnClickInfo from '../../OnClickInfo/OnClickInfoFB';
-import {downloadClick} from "../Components/lib/downloadClick";
+import {downloadClick} from "./lib/downloadClick";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
@@ -15,7 +15,7 @@ const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 export default function cloudChart (props) {
 
     const dispatch = useDispatch();
-    const snatype = useSelector((state) => state.csvSna.result.snaType);
+    const snatype = useSelector((state) => state.ctSna.result.snaType);
 
     const keyword = useLoadLanguage(snatype.tsv);
     const classes = useMyStyles();

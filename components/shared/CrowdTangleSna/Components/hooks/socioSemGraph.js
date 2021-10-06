@@ -890,7 +890,7 @@ function getTweetAttrObjArr(tweets /*,topUser*/) {
 
 
 export const createSocioSemantic4ModeGraph = (tweets/*, topUser*/) => {
-  //console.log("1 ", new Date().valueOf());
+    console.log("1 ", new Date().valueOf());
       let lcTweets = tweets;
 
       //console.log("2 ",new Date().valueOf());

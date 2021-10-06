@@ -8,7 +8,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import OnClickInfo from '../../OnClickInfo/OnClickInfoFB';
-import HistoTweetsTable from "../Components/HistoTweetsTableCSV";
+import HistoTweetsTable from "./HistoTweetsTableCSV";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
@@ -16,7 +16,7 @@ import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaAc
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {displayTweets} from "../../TwitterSna/lib/displayTweets";
-import {setCSVHistoview} from "../../../../redux/actions/tools/csvSnaActions";
+import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
 
 
@@ -25,7 +25,7 @@ let from = "PLOT_PIE_CHART";
 
 
 export default function PlotPieChart (props) { 
-    const snatype = useSelector((state) => state.csvSna.result.snaType);
+    const snatype = useSelector((state) => state.ctSna.result.snaType);
     const keyword = useLoadLanguage(snatype.tsv);
     const dispatch = useDispatch();  
     
@@ -37,7 +37,7 @@ export default function PlotPieChart (props) {
     const [pieCharts3, setPieCharts3] = useState(null);
     //const charts = useSelector(state => state.twitterSna.pieCharts);
     const charts = [pieCharts0, pieCharts1, pieCharts2, pieCharts3];
-    const donutIndex = useSelector(state => state.csvSna.result.donutIndex);
+    const donutIndex = useSelector(state => state.ctSna.result.donutIndex);
     const classes = useMyStyles();
 
     const [filesNames, setfilesNames] = useState(null);
@@ -121,7 +121,7 @@ export default function PlotPieChart (props) {
             );
         }
     }
-    const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
+    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
       //   console.log("PROPS ",typer)
     
     var onDonutsClick=(null,null);

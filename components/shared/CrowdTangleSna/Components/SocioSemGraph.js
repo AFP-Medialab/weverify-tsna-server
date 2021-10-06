@@ -22,16 +22,16 @@ import {displayPostsFb} from "./lib/displayPosts"
 
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
 import {createGraphWhenClickANode} from "../../lib/sigmaGraph";
-import {getDomain} from "../Components/Common/hooks/socioSemGraph"
+import {getDomain} from "./hooks/socioSemGraph"
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function SocioSemGraph (props) {
     
-    const snatype = useSelector((state) => state.csvSna.result.snaType);
+    const snatype = useSelector((state) => state.ctSna.result.snaType);
     const keyword = useLoadLanguage(snatype.tsv);
-    const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
+    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
 
     const classes = useMyStyles();
 

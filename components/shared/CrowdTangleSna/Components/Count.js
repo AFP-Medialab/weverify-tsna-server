@@ -16,7 +16,7 @@ import {useSelector} from "react-redux";
 
 export default function Count({ result, onClickInfoLabel}) {
   onClickInfoLabel="twittersna_timeline_tip";
-  const snatype = useSelector((state) => state.csvSna.result.snaType);
+  const snatype = useSelector((state) => state.ctSna.result.snaType);
   const keyword = useLoadLanguage(snatype.tsv);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);

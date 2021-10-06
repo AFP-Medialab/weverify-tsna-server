@@ -15,14 +15,14 @@ import useMyStyles from "../../styles/useMyStyles";
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
-import {setCSVHistoview} from "../../../../redux/actions/tools/csvSnaActions"
+import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions"
 import plotly from 'plotly.js-dist';
-import {createBubbleChartOfMostActiveUsers} from "../Components/Common/hooks/bubbleChart"
+import {createBubbleChartOfMostActiveUsers} from "./hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import {downloadClick} from "./lib/downloadClick";
-import {isNumeric} from "./Common/hooks/bubbleChart"
+import {isNumeric} from "./hooks/bubbleChart"
 const Plot = createPlotComponent(plotly);
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 //const tsv = "/components/NavItems/tools/TwitterSna.tsv";
@@ -34,12 +34,12 @@ export default function BubbleChart(props) {
     const [bubbleTweets, setBubbleTweets] = useState(null);
     //const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
-    const snatype = useSelector((state) => state.csvSna.result.snaType);
+    const snatype = useSelector((state) => state.ctSna.result.snaType);
 
     console.log("SNATYPE ", snatype)
     const keyword = useLoadLanguage(snatype.tsv);
     //console.log("KEYWORD ", keyword)
-    const typer =useSelector((state) => state.csvSna.result.snaType.snaType)
+    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
 
     const classes = useMyStyles();
     const request = useSelector(state => state.twitterSna.request);
