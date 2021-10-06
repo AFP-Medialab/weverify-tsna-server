@@ -1,7 +1,6 @@
 pipeline {
     
     environment {
-        gitVars = ""
         version = ""
         registry = "registry-medialab.afp.com"
         registryCredential = "Medialab_Docker_Registry"
@@ -10,29 +9,31 @@ pipeline {
         buidImage =""
         
     }
-    agent any
+    agent {
+        docker {
+            image 'node:14.18.0-slim'
+        }
+    }
     //tools {nodejs "Node"}
     stages {
-        /*stage('Cloning our Git') {
-            steps {
-                script {
-                gitVars = git branch: 'pre-master', credentialsId: 'Jenkings-Medialab', url: gitRepository
-                println "GIT_COMMIT: '${gitVars.GIT_COMMIT}'"
-                version = "${env.BUILD_ID}-${gitVars.GIT_COMMIT}"
-                dockerImage = "registry-medialab.afp.com/tsna-server-csv:${version}"
-                }
-            }
-        }*/
         stage ('Build Node') {
+             when {
+                branch 'pre-master'
+            }
             steps {
-                println "commit ${GIT_COMMIT}-${env.BUILD_ID}"
-                //sh "npm ci --only=production"
-                //sh "npx next telemetry disable"
-                //sh "npm run build"
-                //sh "npm prune --production"
+                version = "${env.BUILD_ID}-${GIT_COMMIT}"
+                println "version ${version}"
+                dockerImage = "registry-medialab.afp.com/tsna-server-csv:${version}"
+                sh "npm ci --only=production"
+                sh "npx next telemetry disable"
+                sh "npm run build"
+                sh "npm prune --production"
             }
         }
-       /* stage('Building Docker Image') {
+       stage('Building Docker Image') {
+            when {
+                branch 'pre-master'
+            }
             steps {
                 script {
                     buidImage = docker.build dockerImage
@@ -40,6 +41,9 @@ pipeline {
             }
         }
         stage('Deploying Docker Image to Dockerhub') {
+            when {
+                branch 'pre-master'
+            }
             steps {
                 script {
                     docker.withRegistry('https://'+registry, registryCredential) {
@@ -50,9 +54,12 @@ pipeline {
             }
         }
         stage('Cleaning Up') {
+            when {
+                branch 'pre-master'
+            }
             steps{
                 sh "docker rmi --force $dockerImage"
             }
-        }*/
+        }
     }
 }
