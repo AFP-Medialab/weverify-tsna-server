@@ -13,7 +13,7 @@ pipeline {
     agent any
     //tools {nodejs "Node"}
     stages {
-        stage('Cloning our Git') {
+        /*stage('Cloning our Git') {
             steps {
                 script {
                 gitVars = git branch: 'pre-master', credentialsId: 'Jenkings-Medialab', url: gitRepository
@@ -22,16 +22,17 @@ pipeline {
                 dockerImage = "registry-medialab.afp.com/tsna-server-csv:${version}"
                 }
             }
-        }
-        /*stage ('Build Node') {
-            steps {
-                sh "npm ci --only=production"
-                sh "npx next telemetry disable"
-                sh "npm run build"
-                sh "npm prune --production"
-            }
         }*/
-        stage('Building Docker Image') {
+        stage ('Build Node') {
+            steps {
+                println "commit ${GIT_COMMIT}"
+                //sh "npm ci --only=production"
+                //sh "npx next telemetry disable"
+                //sh "npm run build"
+                //sh "npm prune --production"
+            }
+        }
+       /* stage('Building Docker Image') {
             steps {
                 script {
                     buidImage = docker.build dockerImage
@@ -52,6 +53,6 @@ pipeline {
             steps{
                 sh "docker rmi --force $dockerImage"
             }
-        }
+        }*/
     }
 }
