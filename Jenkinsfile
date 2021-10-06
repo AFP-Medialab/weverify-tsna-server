@@ -25,7 +25,7 @@ pipeline {
         }*/
         stage ('Build Node') {
             steps {
-                println "commit ${GIT_COMMIT}"
+                println "commit ${GIT_COMMIT}-${env.BUILD_ID}"
                 //sh "npm ci --only=production"
                 //sh "npx next telemetry disable"
                 //sh "npm run build"
