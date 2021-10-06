@@ -1,10 +1,10 @@
 pipeline {
     
-    agent {
+    /*agent {
         docker {
             image 'node:14.18.0-slim'
         }
-    }
+    }*/
     environment {
         version = ""
         registry = "registry-medialab.afp.com"
@@ -14,6 +14,7 @@ pipeline {
         buidImage =""
         
     }
+    agent any
     //tools {nodejs "Node"}
     stages {
         stage ('Build Node') {
@@ -25,10 +26,10 @@ pipeline {
                     version = "${env.BUILD_ID}-${GIT_COMMIT}"
                     println "version ${version}"
                     dockerImage = "registry-medialab.afp.com/tsna-server-csv:${version}"
-                    sh "npm ci --only=production"
+                    /*sh "npm ci --only=production"
                     sh "npx next telemetry disable"
                     sh "npm run build"
-                    sh "npm prune --production"
+                    sh "npm prune --production"*/
                 }
             }
         }
