@@ -10,8 +10,7 @@ pipeline {
         registry = "registry-medialab.afp.com"
         registryCredential = "Medialab_Docker_Registry"
         dockerImage = ""
-        gitRepository = "https://github.com/AFP-Medialab/weverify-tsna-server.git"
-        buidImage =""
+        buidImage = ""
         
     }
     agent any
@@ -25,7 +24,7 @@ pipeline {
                 script {
                     version = "${env.BUILD_ID}-${GIT_COMMIT}"
                     println "version ${version}"
-                    dockerImage = "registry-medialab.afp.com/tsna-server-csv:${version}"
+                    dockerImage = "registry-medialab.afp.com/tsna-server:${version}"
                     /*sh "npm ci --only=production"
                     sh "npx next telemetry disable"
                     sh "npm run build"
