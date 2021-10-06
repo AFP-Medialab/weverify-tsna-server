@@ -32,26 +32,26 @@ pipeline {
             }
         }*/
         stage('Building Docker Image') {
-                steps {
-                    script {
-                        buidImage = docker.build dockerImage
-                    }
+            steps {
+                script {
+                    buidImage = docker.build dockerImage
                 }
             }
+        }
         stage('Deploying Docker Image to Dockerhub') {
-                steps {
-                    script {
-                        docker.withRegistry('https://'+registry, registryCredential) {
-                        buidImage.push()
-                        buidImage.push('latest')
-                        }
+            steps {
+                script {
+                    docker.withRegistry('https://'+registry, registryCredential) {
+                    buidImage.push()
+                    buidImage.push('latest')
                     }
                 }
             }
+        }
         stage('Cleaning Up') {
-                steps{
-                  sh "docker rmi --force $dockerImage"
-                }
+            steps{
+                sh "docker rmi --force $dockerImage"
             }
+        }
     }
 }
