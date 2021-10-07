@@ -26,7 +26,7 @@ import {
 } from "./call-elastic";
 import { createTimeLineChart, getJsonDataForTimeLineChart } from "./timeline";
 import { createPieCharts, getJsonDataForPieCharts } from "./pieCharts";
-import { removeUnusedFields } from "../lib/displayTweets";
+import {removeUnusedFields} from "../../../SNA/lib/displayTweets"
 import socioWorker from "workerize-loader?inline!./socioSemGraph";
 import cloudWorker from "workerize-loader?inline!./cloudChart";
 import hashtagWorker from "workerize-loader?inline!./hashtagGraph";

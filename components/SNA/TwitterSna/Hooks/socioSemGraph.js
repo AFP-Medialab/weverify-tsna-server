@@ -1,5 +1,5 @@
 import _ from "lodash";
-import {lowercaseFieldInTweets} from "../lib/displayTweets";
+import {lowercaseFieldInTweets} from "../../../SNA/lib/displayTweets"
 
 function getTweetAttrObjArr(tweets, topUser) {
   let topUsers = [];

@@ -12,7 +12,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
-import {displayTweets} from "../lib/displayTweets"
+import {displayPosts} from "../../../SNA/lib/displayTweets"
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {downloadClick} from "../lib/downloadClick";
 
@@ -80,7 +80,7 @@ export default function HashtagGraph (props) {
                 let hashtagArr = tweet._source.hashtags.map((v) => { return v.toLowerCase();});
                 return hashtagArr.includes(selectedHashtag.toLowerCase());
             });
-        let dataToDisplay = displayTweets(filteredTweets, keyword);
+        let dataToDisplay = displayPosts(filteredTweets, keyword);
         dataToDisplay["selected"] = selectedHashtag;
         setCoHashtagGraphTweets(dataToDisplay);
     }

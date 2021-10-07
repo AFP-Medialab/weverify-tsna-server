@@ -9,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {displayTweets} from "../lib/displayTweets"
+import { displayPosts } from "../../lib/displayTweets";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, {useEffect, useState} from 'react';
@@ -57,7 +57,7 @@ export default function BubbleChart(props) {
         let filteredTweets = result.tweets.filter(function (tweetObj) {
             return tweetObj._source.screen_name.toLowerCase() === selectedUser.toLowerCase();
         });
-        setBubbleTweets(displayTweets(filteredTweets, keyword));
+        setBubbleTweets(displayPosts(filteredTweets, keyword));
     
     }
 

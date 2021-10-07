@@ -1,5 +1,5 @@
 import _ from "lodash";
-import {lowercaseFieldInTweets} from "../lib/displayTweets";
+import {lowercaseFieldInTweets} from "../../../SNA/lib/displayTweets"
 
 function getUniqValuesOfField(tweets, field) {
     let nodeIds = tweets.filter(tweet => tweet._source[field] !== undefined)

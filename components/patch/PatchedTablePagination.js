@@ -1,7 +1,6 @@
-import MaterialTable, { MaterialTableProps } from 'material-table';
-import { TablePagination, TablePaginationProps } from '@material-ui/core';
+import { TablePagination } from '@material-ui/core';
 
-function PatchedPagination(props) {
+export const PatchedPagination =(props) => {
   const {
     ActionsComponent,
     onChangePage,

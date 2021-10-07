@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import plotly from "plotly.js-dist";
 import createPlotComponent from "react-plotly.js/factory";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import { displayTweets } from "../lib/displayTweets";
+import {displayPosts} from "../../../SNA/lib/displayTweets"
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
@@ -51,7 +51,7 @@ export default function PlotTimeLine(props) {
         return filterTweetsForTimeLine(tweetDate, selectedPoints);
       });
       dispatch(
-        setTweetsDetailPanel(from, displayTweets(filteredTweets, keyword))
+        setTweetsDetailPanel(from, displayPosts(filteredTweets, keyword))
       );
     }
   };

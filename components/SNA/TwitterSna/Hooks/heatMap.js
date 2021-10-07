@@ -82,7 +82,6 @@ export const onHeatMapClick = (data, result, setheatMapTweets, keyword) => {
         let hour = getHourAsString(date.getHours());
         return hour === selectedHour && day === selectedDay;
     });
-    let res = displayTweets(filteredTweets, keyword);
     setheatMapTweets(displayTweets(filteredTweets, keyword));
 }
 

@@ -18,7 +18,7 @@ import {downloadClick} from "../lib/downloadClick";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 
-import {displayTweets} from "../lib/displayTweets";
+import {displayPosts} from "../../../SNA/lib/displayTweets"
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
 import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import {getDomain} from "../Hooks/socioSemGraph"
@@ -74,7 +74,7 @@ export default function SocioSemGraph (props) {
                     let hashtagArr = tweet._source.hashtags.map((v) => { return v.toLowerCase(); });
                     return hashtagArr.includes(selectedHashtag.toLowerCase());
                 });
-            let dataToDisplay = displayTweets(filteredTweets, keyword);
+            let dataToDisplay = displayPosts(filteredTweets, keyword);
             dataToDisplay["selected"] = data.data.node.id;
             setSocioSemantic4ModeGraphTweets(dataToDisplay);
         } else if (data.data.node.type === "Mention") {
@@ -84,7 +84,7 @@ export default function SocioSemGraph (props) {
                     let lcMentionArr = tweet._source.user_mentions.map(v => v.screen_name.toLowerCase());
                     return lcMentionArr.includes(selectedUser.toLowerCase());
                 });
-            let dataToDisplay = displayTweets(filteredTweets, keyword);
+            let dataToDisplay = displayPosts(filteredTweets, keyword);
             dataToDisplay["selected"] = data.data.node.id;
             setSocioSemantic4ModeGraphTweets(dataToDisplay);
         } else if (data.data.node.type === "RetweetWC") {
@@ -93,7 +93,7 @@ export default function SocioSemGraph (props) {
                 tweet._source.quoted_status_id_str !== undefined 
                 && tweet._source.quoted_status_id_str !== null
                 && tweet._source.screen_name.toLowerCase() === selectedUser);
-            let dataToDisplay = displayTweets(filteredTweets, keyword);
+            let dataToDisplay = displayPosts(filteredTweets, keyword);
             dataToDisplay["selected"] = data.data.node.id;
             setSocioSemantic4ModeGraphTweets(dataToDisplay);
         } else if (data.data.node.type === "TopRT") {
@@ -102,7 +102,7 @@ export default function SocioSemGraph (props) {
                 tweet._source.screen_name !== undefined 
                 && tweet._source.screen_name !== null
                 && tweet._source.screen_name.toLowerCase() === selectedUser);
-            let dataToDisplay = displayTweets(filteredTweets, keyword);
+            let dataToDisplay = displayPosts(filteredTweets, keyword);
             dataToDisplay["selected"] = data.data.node.id;
             setSocioSemantic4ModeGraphTweets(dataToDisplay);
         } else if (data.data.node.type === "Reply") {
@@ -111,7 +111,7 @@ export default function SocioSemGraph (props) {
                 tweet._source.in_reply_to_screen_name !== undefined 
                 && tweet._source.in_reply_to_screen_name !== null
                 && tweet._source.screen_name.toLowerCase() === selectedUser);
-            let dataToDisplay = displayTweets(filteredTweets, keyword);
+            let dataToDisplay = displayPosts(filteredTweets, keyword);
             dataToDisplay["selected"] = data.data.node.id;
             setSocioSemantic4ModeGraphTweets(dataToDisplay);
         } else if (data.data.node.type === "URL") {
@@ -123,7 +123,7 @@ export default function SocioSemGraph (props) {
                     });
                     return urlArr.includes(selectedURL.toLowerCase());
                 });
-            let dataToDisplay = displayTweets(filteredTweets, keyword);
+            let dataToDisplay = displayPosts(filteredTweets, keyword);
             dataToDisplay["selected"] = data.data.node.id;
             setSocioSemantic4ModeGraphTweets(dataToDisplay);
         }

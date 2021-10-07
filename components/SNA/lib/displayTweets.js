@@ -10,7 +10,7 @@ const getTweetWithClickableLink = (cellData) => {
     return element;
 };
 
-export function displayTweets (filteredTweets, keyword, sortedColumn) {
+export function displayPosts (filteredTweets, keyword, sortedColumn) {
     let columns = [];
     if (sortedColumn === "nbLikes") {
         columns = [

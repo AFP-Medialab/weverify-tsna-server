@@ -16,7 +16,7 @@ import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSna
 import { createCSVFromPieChart } from "../Hooks/pieCharts";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { displayTweets } from "../lib/displayTweets";
+import {displayPosts} from "../../../SNA/lib/displayTweets"
 import { downloadClick } from "../lib/downloadClick";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
@@ -153,7 +153,7 @@ export default function PlotPieChart(props) {
             );
             return lcMentionArr.includes(selectedUser.toLowerCase());
           });
-        let dataToDisplay = displayTweets(filteredTweets, keyword);
+        let dataToDisplay = displayPosts(filteredTweets, keyword);
         dataToDisplay["selected"] = selectedUser;
         setPieCharts3(dataToDisplay);
         dispatch(setTweetsDetailPanel(from + "_" + index, "dataToDisplay"));
@@ -171,10 +171,10 @@ export default function PlotPieChart(props) {
         });
         let dataToDisplay =
           index === 0
-            ? displayTweets(filteredTweets, keyword, "retweetNb")
+            ? displayPosts(filteredTweets, keyword, "retweetNb")
             : index === 1
-            ? displayTweets(filteredTweets, keyword, "nbLikes")
-            : displayTweets(filteredTweets, keyword);
+            ? displayPosts(filteredTweets, keyword, "nbLikes")
+            : displayPosts(filteredTweets, keyword);
 
         dataToDisplay["selected"] = selectedUser;
         switch (index) {

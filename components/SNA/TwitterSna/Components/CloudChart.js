@@ -14,7 +14,7 @@ import { CSVLink } from "react-csv";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import ReactWordcloud from "react-wordcloud";
 import { select } from 'd3-selection';
-import {displayTweets} from "../lib/displayTweets";
+import {displayPosts} from "../../../SNA/lib/displayTweets"
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {downloadClick, downloadAsPNG} from "../lib/downloadClick";
@@ -98,7 +98,7 @@ export default function cloudChart (props) {
                     if (isActive) {
                         let selectedWord = word.text;
                         let filteredTweets = filterTweetsGivenWord(selectedWord);
-                        let dataToDisplay = displayTweets(filteredTweets, keyword);
+                        let dataToDisplay = displayPosts(filteredTweets, keyword);
                         dataToDisplay["selected"] = selectedWord;
                         setCloudTweets(dataToDisplay);
 

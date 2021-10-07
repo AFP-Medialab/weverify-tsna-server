@@ -15,7 +15,6 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import {displayTweets} from "../../TwitterSna/lib/displayTweets";
 import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
 
