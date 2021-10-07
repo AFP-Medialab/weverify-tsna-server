@@ -1,4 +1,4 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import {makeStyles} from "@material-ui/core/styles";
 import {green} from "@material-ui/core/colors";
 
 const drawerWidth = 200;
@@ -13,6 +13,16 @@ const useMyStyles = makeStyles(theme => ({
         textAlign: "center",
        
     },
+
+    rootNoCenter: {
+        padding: theme.spacing(2),
+    },
+
+    noMargin: {
+        marginLeft: "0px!important",
+        marginRight: "0px!important"
+    },
+
     circularProgress: {
         margin: "auto",
         width: "100%"
@@ -57,6 +67,8 @@ const useMyStyles = makeStyles(theme => ({
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
+        height: "83px",
+        backgroundColor: "#ffffff"
     },
     drawer: {
         width: drawerWidth,
@@ -86,7 +98,11 @@ const useMyStyles = makeStyles(theme => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+        paddingTop: "50px",
+        backgroundColor: "#fafafa",
+        minHeight: "97vh"
     },
     logoLeft: {
         cursor: "pointer",
@@ -95,7 +111,7 @@ const useMyStyles = makeStyles(theme => ({
     },
     logoRight: {
         cursor: "pointer",
-        marginLeft: 2, //theme.spacing(2)
+        marginLeft: theme.spacing(2),
         maxHeight: "70px",
     },
     selectedApp: {
@@ -249,12 +265,21 @@ const useMyStyles = makeStyles(theme => ({
     },
     paper: {
         backgroundColor: "#151515",
-       // width: window.innerWidth * 0.9,
+        width: window.innerWidth * 0.9,
     },
     modalButton: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    AboutMedia: {
+        height: "auto",
+        width: "auto",
+        maxWidth: "60%",
+    },
+    InteractiveMedia: {
+        maxWidth: "80%",
+        maxHeight: window.innerHeight / 2,
     },
     customTitle: {
         background: theme.palette.primary.main,
@@ -300,26 +325,76 @@ const useMyStyles = makeStyles(theme => ({
         [theme.breakpoints.up('sm')]: {
             fontSize: theme.typography.pxToRem(13),
             minWidth: 100,
+            color: "#4c4c4c"
         },
-    },    
-    twitterIcon: {
-        color: theme.palette.secondary.main,
+    },
+    toolTipIcon: {
+        color: theme.palette.secondary,
+        position: "relative",
+        opacity: 0.7,
+        top: theme.spacing(1),
+        width: theme.typography.h5.fontSize,
+        height: theme.typography.h5.fontSize,
+        marginRight: 3,
+        marginLeft: 5
+    },
+    svgIcon: {
+        fill: theme.palette.primary,
+        position: "relative",
+        top: theme.spacing(1),
+        width: theme.typography.h3.fontSize,
+        height: theme.typography.h3.fontSize,
+        marginRight: 7,
+        marginLeft: 5,
+    },
+    toolTipWarning: {
+        color: "red",
         position: "relative",
         top: theme.spacing(1),
         width: theme.typography.h5.fontSize,
         height: theme.typography.h5.fontSize,
-        marginRight: 3
+        marginRight: 3,
+        marginLeft: 5
     },
+    customAllToolsButton: {
+        padding: 0,
+        minHeight:0,
+        minWidth: 0,
+        backgroundColor: 'transparent',
+        fontSize: 40
+    },
+    customAllToolsIconDeselected: {
+        fontSize: "inherit",
+        color: "#9A9A9A"
+    },
+    customAllToolsIconSelected: {
+        fontSize: "inherit",
+        color: theme.palette.primary.main
+    },
+
+    
+    height100: {
+        height: "100%",
+    },
+
+    root2: {
+        textAlign: "center",
+        padding: theme.spacing(3),
+
+    },
+
     toolCardStyle: {
         width: "25%", 
         maxWidth: "350px", 
         minWidth: "250px",
     },
-    toolCardStyle: {
-        width: "25%", 
-        maxWidth: "350px", 
-        minWidth: "250px",
+
+    dialogTitleWithButton: {
+        display: "flex",
+        justifyContent: "space - between",
+        alignItems: "center",
     },
+
 }));
 export const myCardStyles = makeStyles({
     root: {
@@ -327,3 +402,4 @@ export const myCardStyles = makeStyles({
     }
 });
 export default useMyStyles;
+
