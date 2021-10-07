@@ -4,19 +4,19 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CSVReader from "react-csv-reader";
 import CrowdTangleSnaResults from "./Results/CrowdTangleSnaResults";
-import useMyStyles, {myCardStyles}  from '../styles/useMyStyles';
-import FeedBack from "../FeedBack/FeedBack";
+import useMyStyles, {myCardStyles}  from '../shared/styles/useMyStyles';
+import FeedBack from "../shared/FeedBack/FeedBack";
 import Grid from "@material-ui/core/Grid";
-import HeaderTool from '../HeaderTool/HeaderTool';
-import TwitterSNAIcon from "../../../images/SVG/DataAnalysis/Twitter_sna.svg"
+import HeaderTool from '../shared/HeaderTool/HeaderTool';
+import TwitterSNAIcon from "../../images/SVG/DataAnalysis/Twitter_sna.svg"
 import Typography from "@material-ui/core/Typography";
-import MyErrorbar from "../ErrorBar/ErrorBar";
+import MyErrorbar from "../shared/ErrorBar/ErrorBar";
 import { StylesProvider } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import {cleanError} from "../../../redux/actions/errorActions"
+import {cleanError} from "../../redux/actions/errorActions"
 import {useFacebookResult} from './Components/hooks/buildFBResult'
 import {useInstagramResult} from './Components/hooks/buildInstaResult'
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage"
+import useLoadLanguage from "../shared/hooks/useRemoteLoadLanguage"
 
 import {
     setCSVLoading,
@@ -28,7 +28,7 @@ import {
     setSocioGraphResult,
     setCloudWordsResult,
     cleanCsvSnaState
-  } from "../../../redux/actions/tools/crowdTangleSnaActions";
+  } from "../../redux/actions/tools/crowdTangleSnaActions";
   
 
 const CrowdTangleSnaComponent = () => {

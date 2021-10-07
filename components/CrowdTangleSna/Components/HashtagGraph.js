@@ -4,10 +4,10 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import OnClickInfo from '../../OnClickInfo/OnClickInfoFB';
+import OnClickInfo from '../../shared/OnClickInfo/OnClickInfoFB';
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import CustomTable from "../../CustomTable/CustomTable";
+import CustomTable from "../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
@@ -16,9 +16,9 @@ import {displayPostsInsta} from "./lib/displayPosts"
 import {displayPostsFb} from "./lib/displayPosts"
 import {downloadClick} from "./lib/downloadClick";
 
-import useMyStyles from "../../styles/useMyStyles";
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
-import {createGraphWhenClickANode} from "../../lib/sigmaGraph"
+import useMyStyles from "../../shared/styles/useMyStyles";
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
+import {createGraphWhenClickANode} from "../../shared/lib/sigmaGraph"
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 

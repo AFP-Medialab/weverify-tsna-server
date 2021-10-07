@@ -5,10 +5,10 @@ import Box from "@material-ui/core/Box";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import plotly from 'plotly.js-dist';
-import OnClickInfo from '../../OnClickInfo/OnClickInfoFB';
+import OnClickInfo from '../../shared/OnClickInfo/OnClickInfoFB';
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import CustomTable from "../../CustomTable/CustomTable";
+import CustomTable from "../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +17,8 @@ import {onHeatMapClick} from "./hooks/heatMap"
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
-import useMyStyles from "../../styles/useMyStyles";
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../shared/styles/useMyStyles";
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 
 const Plot = createPlotComponent(plotly);
 

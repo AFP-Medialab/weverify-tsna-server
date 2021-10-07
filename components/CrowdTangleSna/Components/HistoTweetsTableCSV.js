@@ -1,14 +1,14 @@
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import CustomTable from "../../CustomTable/CustomTable";
+import CustomTable from "../../shared/CustomTable/CustomTable";
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
-import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
+import { setTweetsDetailPanel } from "../../../redux/actions/tools/twitterSnaActions";
+import {setCSVHistoview} from "../../../redux/actions/tools/crowdTangleSnaActions";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 const tsv = "/components/CsvFb.tsv";

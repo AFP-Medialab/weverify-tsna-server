@@ -14,8 +14,8 @@ import {
     setHeatMapResult,
     setPieChartsResult,
     setHistogramResult
-  } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
-import { INSTA_SNA_TYPE } from "../../../hooks/SnaTypes";
+  } from "../../../../redux/actions/tools/crowdTangleSnaActions";
+import { INSTA_SNA_TYPE } from "../../../shared/hooks/SnaTypes";
 
 export const buildCoHashTag = async (data, dispatch) => {
     const instance = hashtagWorker();

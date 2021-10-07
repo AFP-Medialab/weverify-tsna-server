@@ -4,18 +4,18 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from '../../OnClickInfo/OnClickInfoFB';
+import OnClickInfo from '../../shared/OnClickInfo/OnClickInfoFB';
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import CustomTable from "../../CustomTable/CustomTable";
+import CustomTable from "../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {displayPostsInsta,displayPostsFb} from "./lib/displayPosts"
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
-import useMyStyles from "../../styles/useMyStyles";
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../shared/styles/useMyStyles";
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
-import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions"
+import {setTweetsDetailPanel} from "../../../redux/actions/tools/twitterSnaActions";
+import {setCSVHistoview} from "../../../redux/actions/tools/crowdTangleSnaActions"
 import plotly from 'plotly.js-dist';
 import {createBubbleChartOfMostActiveUsers} from "./hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';

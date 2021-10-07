@@ -6,10 +6,10 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import useMyStyles from "../../styles/useMyStyles";
+import useMyStyles from "../../shared/styles/useMyStyles";
 import React, { useEffect, useState } from "react";
-import OnClickInfo from "../../OnClickInfo/OnClickInfoFB";
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
+import OnClickInfo from "../../shared/OnClickInfo/OnClickInfoFB";
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import {useSelector} from "react-redux";
 
 

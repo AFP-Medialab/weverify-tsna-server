@@ -1,9 +1,9 @@
 import { Paper } from "@material-ui/core";
-import CloseResult from "../../CloseResult/CloseResult";
-import useMyStyles from "../../styles/useMyStyles";
+import CloseResult from "../../shared/CloseResult/CloseResult";
+import useMyStyles from "../../shared/styles/useMyStyles";
 import Count from "../Components/Count";
 import { useDispatch, useSelector } from "react-redux";
-import { cleanCsvSnaState } from "../../../../redux/actions/tools/crowdTangleSnaActions";
+import { cleanCsvSnaState } from "../../../redux/actions/tools/crowdTangleSnaActions";
 import dynamic from "next/dynamic";
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
   ssr: false,
