@@ -4,10 +4,10 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import OnClickInfo from '../../OnClickInfo/OnClickInfo';
+import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import CustomTable from "../../CustomTable/CustomTable";
+import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
@@ -16,12 +16,14 @@ import {displayTweets} from "../lib/displayTweets"
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {downloadClick} from "../lib/downloadClick";
 
-import useMyStyles from "../../styles/useMyStyles";
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
-import {createGraphWhenClickANode} from "../../lib/sigmaGraph"
+import useMyStyles from "../../../shared/styles/useMyStyles";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
+
 
 //possible error, same as plot
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
+//import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfoFB";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";

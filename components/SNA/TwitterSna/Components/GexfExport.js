@@ -1,14 +1,14 @@
 import { Paper } from "@material-ui/core";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
-import useMyStyles from "../../styles/useMyStyles";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../../shared/styles/useMyStyles";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import OnClickInfo from '../../OnClickInfo/OnClickInfo';
+import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
 import React, {useEffect, useState} from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';

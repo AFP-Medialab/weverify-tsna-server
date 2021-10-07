@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import plotly from "plotly.js-dist";
 import createPlotComponent from "react-plotly.js/factory";
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { displayTweets } from "../lib/displayTweets";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from "../../OnClickInfo/OnClickInfo";
+import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
 import HistoTweetsTable from "../Components/HistoTweetsTable";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useMyStyles from "../../styles/useMyStyles";
+import useMyStyles from "../../../shared/styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 import { filterTweetsForTimeLine } from "../Hooks/timeline";
@@ -43,6 +43,7 @@ export default function PlotTimeLine(props) {
   }, [props.result.histogram]);
 
   const onHistogramClick = (data) => {
+    console.log("click ....", data, state.result.tweets)
     if (state.result.tweets !== undefined) {
       let selectedPoints = data.points;
       let filteredTweets = state.result.tweets.filter(function (tweet) {

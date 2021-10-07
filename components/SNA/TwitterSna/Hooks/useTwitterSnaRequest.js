@@ -35,7 +35,8 @@ import { createHeatMap } from "./heatMap";
 
 import { getJsonDataForURLTable } from "./urlList";
 
-import useAuthenticatedRequest from "../../AuthenticationCard/useAuthenticatedRequest";
+import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthenticatedRequest"
+
 import { setError } from "../../../../redux/actions/errorActions";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();

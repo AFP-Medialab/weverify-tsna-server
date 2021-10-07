@@ -1,11 +1,11 @@
 
-import useMyStyles, {myCardStyles} from "../styles/useMyStyles";
+import useMyStyles, {myCardStyles} from "../../shared/styles/useMyStyles";
 import { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import "../../../redux/actions/tools/twitterSnaActions";
 import { useDispatch, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import DateTimePicker from "../DateTimePicker/DateTimePicker";
+import DateTimePicker from "../../shared/DateTimePicker/DateTimePicker"
 import FormControl from "@material-ui/core/FormControl";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -23,7 +23,7 @@ import Typography from "@material-ui/core/Typography";
 import useTwitterSnaRequest from "./Hooks/useTwitterSnaRequest";
 import TwitterSnaResult from "./Results/TwitterSnaResult";
 import _ from "lodash";
-import { replaceAll, stringToList } from "../lib/StringUtil";
+import { replaceAll, stringToList } from "../../shared/lib/StringUtil"
 import dateFormat from "dateformat";
 
 import { setError } from "../../../redux/actions/errorActions";
@@ -31,15 +31,15 @@ import {
   cleanTwitterSnaState,
   setTwitterSnaNewRequest,
 } from "../../../redux/actions/tools/twitterSnaActions";
-import convertToGMT from "../DateTimePicker/convertToGMT";
-import MyErrorbar from "../ErrorBar/ErrorBar";
+import convertToGMT from "../../shared/DateTimePicker/convertToGMT";
+import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
 import { cleanError } from "../../../redux/actions/errorActions";
-import OnClickInfo from "../OnClickInfo/OnClickInfo";
-import OnWarningInfo from "../OnClickInfo/OnWarningInfo";
-import FeedBack from "../FeedBack/FeedBack";
+import OnClickInfo from "../../shared/OnClickInfo/OnClickInfo";
+import OnWarningInfo from "../../shared/OnClickInfo/OnWarningInfo";
+import FeedBack from "../../shared/FeedBack/FeedBack";
 import { changeLanguage } from "../../../redux/actions";
 
-import HeaderTool from "../HeaderTool/HeaderTool";
+import HeaderTool from "../../shared/HeaderTool/HeaderTool";
 import { StylesProvider } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";

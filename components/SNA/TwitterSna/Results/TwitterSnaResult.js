@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import CloseResult from "../../CloseResult/CloseResult"
+import CloseResult from "../../../shared/CloseResult/CloseResult";
 import { cleanTwitterSnaState } from "../../../../redux/actions/tools/twitterSnaActions";
 import { Paper } from "@material-ui/core";
-import useMyStyles from "../../styles/useMyStyles";
+import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, { useEffect, useState, useCallback } from "react";
 import Box from "@material-ui/core/Box";
 

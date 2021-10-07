@@ -4,17 +4,16 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from '../../OnClickInfo/OnClickInfo';
+import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import CustomTable from "../../CustomTable/CustomTable";
+import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {displayTweets} from "../lib/displayTweets"
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
-import useMyStyles from "../../styles/useMyStyles";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
 import plotly from 'plotly.js-dist';
 import {createBubbleChartOfMostActiveUsers} from "../Hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
@@ -22,7 +21,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import {downloadClick} from "../lib/downloadClick";
 
 const Plot = createPlotComponent(plotly);
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
+
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function BubbleChart(props) {

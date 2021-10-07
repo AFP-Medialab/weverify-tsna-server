@@ -3,11 +3,11 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from "../../OnClickInfo/OnClickInfo";
+import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
 import React, { useEffect, useState } from "react";
-import useLoadLanguage from "../../hooks/useRemoteLoadLanguage";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useMyStyles from "../../styles/useMyStyles";
+import useMyStyles from "../../../shared/styles/useMyStyles";
 import Grid from "@material-ui/core/Grid";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
