@@ -15,7 +15,7 @@ import {
     setPieChartsResult,
     setHistogramResult
   } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
-
+import { INSTA_SNA_TYPE } from "../../../hooks/SnaTypes";
 
 export const buildCoHashTag = async (data, dispatch) => {
     const instance = hashtagWorker();
@@ -54,8 +54,7 @@ export const buildSocioGraph = async (data, dispatch) => {
 export const buildPieCharts = async (data, keywordTitles, dispatch, type) => {
     const instance = pieChartsWorker();
     let jsonPieChart = null;
-    console.log("type ", type)
-    if(type === "INSTA"){
+    if(type === INSTA_SNA_TYPE){
       jsonPieChart = await instance.getJsonDataForPieChartsInsta(data);
     }
     else {

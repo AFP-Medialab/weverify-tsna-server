@@ -1,6 +1,7 @@
 import {
     setCountResult,
     setSnaType,
+    setMaxProcessStage,
   } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
 
   import {
@@ -12,17 +13,19 @@ import {
     buildPieCharts, 
     buildHistogram
   } from './commonBuildResult'
+import { INSTA_SNA_TYPE } from "../../../hooks/SnaTypes";
 
-  const INSTA_SNA_TYPE= {snaType:"INSTA",tsv:"/components/CsvInsta.tsv" }
- export const useInstagramResult = (data, keyword, dispatch) => {
-    dispatch(setSnaType(INSTA_SNA_TYPE));
+const INSTA_SNA= {snaType:INSTA_SNA_TYPE, tsv:"/components/CsvInsta.tsv" }
+export const useInstagramResult = (data, keyword, dispatch) => {
+    dispatch(setSnaType(INSTA_SNA));
     buildFirstInstaResult(data, dispatch, keyword);
 }
 
 const buildFirstInstaResult = (data, dispatch, keyword) => {
+  dispatch(setMaxProcessStage(13));
   let titleLabel = keyword("user_time_chart_title");
-  let timeLabel = keyword('twitter_local_time', timeLabel);
-  buildHistogram(data, dispatch, titleLabel);
+  let timeLabel = keyword('twitter_local_time');
+  buildHistogram(data, dispatch, titleLabel, timeLabel);
   buildCountInsta(data, dispatch);
   buildPieChartsInsta(data, dispatch, keyword);
   buildHeatMap(data, dispatch, keyword);
@@ -39,7 +42,7 @@ const buildPieChartsInsta = async (data, dispatch, keyword) => {
     keyword("top_users_pie_chart_title"),
     keyword("mention_cloud_chart_title")
   ];
-  buildPieCharts(data, keywordTitles, dispatch, INSTA_SNA_TYPE.snaType);
+  buildPieCharts(data, keywordTitles, dispatch, INSTA_SNA_TYPE);
 };
 
 /////////////////////////////////////////////////////COUNT INSTA

@@ -100,7 +100,7 @@ export default function BubbleChart(props) {
         }
 
     }
-        var goToAction;
+    var goToAction;
 
     if(typer=="INSTA"){
         goToAction = [
@@ -138,7 +138,6 @@ export default function BubbleChart(props) {
                 <Typography className={classes.heading}>{keyword("bubble_chart_title")}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                
                 {
                    // topUserProfile && topUserProfile.length !== 0 &&
                     <div style={{ width: '100%', }}>
@@ -196,14 +195,6 @@ export default function BubbleChart(props) {
                             </div>
                         }
                     </div>
-                }
-                
-                {/*
-                    ((topUserProfile && topUserProfile.length === 0) || props.result.countSna.count === "0") &&
-                    <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>
-                */}
-                {
-                    (/*!topUserProfile && */props.result.countSna.count !== "0")
                 }
             </AccordionDetails>
         </Accordion>

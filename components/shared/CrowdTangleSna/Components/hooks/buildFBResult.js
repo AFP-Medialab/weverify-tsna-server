@@ -1,20 +1,31 @@
 import {
     setCountResult,
-    setSnaType,
-    setHistogramResult,   
+    setSnaType, 
+    setMaxProcessStage
   } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
 
-import {buildCoHashTag, buildSocioGraph, buildUrls, wordCount, buildHeatMap, buildPieCharts, buildHistogram} from './commonBuildResult'
+import {
+  buildCoHashTag, 
+  buildSocioGraph, 
+  buildUrls, 
+  wordCount, 
+  buildHeatMap, 
+  buildPieCharts, 
+  buildHistogram
+} from './commonBuildResult'
+import{FB_SNA_TYPE} from "../../../hooks/SnaTypes"
 
-const FB_SNA_TYPE= {snaType:"FB",tsv:"/components/CsvFb.tsv" }
+const FB_SNA= {snaType:FB_SNA_TYPE,tsv:"/components/CsvFb.tsv" }
 export const useFacebookResult = (data, keyword, dispatch) => {
-    dispatch(setSnaType(FB_SNA_TYPE));
+    dispatch(setSnaType(FB_SNA));
     buildFirstFbResult(data, dispatch, keyword);
 };
 
 const buildFirstFbResult = (data, dispatch, keyword) => {
+    dispatch(setMaxProcessStage(13));
     let titleLabel = keyword("user_time_chart_title");
-    let timeLabel = keyword('twitter_local_time', timeLabel);
+    let timeLabel = keyword('twitter_local_time');
+    console.log("tititle ", titleLabel);
     buildHistogram(data, dispatch, titleLabel, timeLabel);
     buildCountFb(data, dispatch);
     buildPieChartsFB(data, dispatch, keyword);
@@ -30,15 +41,6 @@ const buildFirstFbResult = (data, dispatch, keyword) => {
     dispatch(setCountResult(countFb));
 };
 
-const buildHistogramFb = async (data, dispatch)=>{
-    const instance = timelineWorker();
-    let getDataResult = await instance.getJsonDataForTimeLineChart(data)
-    let titleLabel = keywordFB("user_time_chart_title");
-    let timeLabel = keywordFB('twitter_local_time');
-    const histogram = await instance.createTimeLineChart(getDataResult[1], getDataResult[2], getDataResult[0], titleLabel, timeLabel);
-    dispatch(setHistogramResult(histogram));
-};
-
 const buildPieChartsFB = async (data, dispatch, keyword) => {
     const keywordTitles = [
       keyword("retweets_cloud_chart_title"),
@@ -46,7 +48,7 @@ const buildPieChartsFB = async (data, dispatch, keyword) => {
       keyword("top_users_pie_chart_title"),
       keyword("mention_cloud_chart_title")
     ];
-    buildPieCharts(data, keywordTitles, dispatch, FB_SNA_TYPE.snaType);
+    buildPieCharts(data, keywordTitles, dispatch, FB_SNA_TYPE);
 };
 
 function countFB(data) {

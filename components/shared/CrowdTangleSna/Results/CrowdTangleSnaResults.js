@@ -27,7 +27,7 @@ export default function CrowdTangleSnaResults(props) {
     <Paper className={classes.root}>
       <CloseResult onClick={() => dispatch(cleanCsvSnaState())} />
       {props.result.countSna && 
-        < Count result={props.result}
+        <Count result={props.result}
       />}
 
       {props.result.histogram && (
@@ -43,7 +43,7 @@ export default function CrowdTangleSnaResults(props) {
       )}
       
       {           
-         props.result && props.result.countSna &&
+         props.result && props.result.bubbleChart &&
          <BubbleChart result={props.result}/>
        }
       {

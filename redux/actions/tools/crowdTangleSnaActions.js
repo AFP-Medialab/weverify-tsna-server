@@ -9,7 +9,6 @@ import {
   CT_HISTOVIEW_RESULT,
   CT_PIE_CHART_RESULT,
   CT_BUBBLE_CHART_RESULT,
-  CT_SNA_USER_PROFILE_MOST_ACTIVE,
   SET_CT_SNA_HEATMAP_RESULTS,
   SET_HEAT_MAP_RESULT,
   SET_CT_COHASHTAG_RESULTS,
@@ -17,6 +16,8 @@ import {
   SET_HASHTAG_GRAPH_RESULT,
   SET_CT_SNA_SOCIO_GRAPH_RESULTS,
   SET_CT_SNA_CLOUD_WORDS_RESULTS,
+  CT_PROCESS_MAX_STAGE,
+  CT_PROCESS_STAGE
 } from "../types/crowdTangleSnaTypes";
 
 export const cleanCsvSnaState = () => {
@@ -85,13 +86,6 @@ export const setCSVResult = (data) => {
   };
 };
 
-export const setUserProfileMostActive = (data) => {
-  return {
-      type : CT_SNA_USER_PROFILE_MOST_ACTIVE,
-      payload : data
-  }
-};
-
 export const setHeatMapResult = (result) => {
   return {
       type : SET_CT_SNA_HEATMAP_RESULTS,
@@ -149,7 +143,20 @@ export const setCSVHistoview = (from,data) => {
             return {
                 type : SET_HASHTAG_GRAPH_RESULT,
                 payload :  data
-            }
-             
-}
+            }           
+  }
+};
+
+export const setMaxProcessStage = (stage_max) => {
+  return {
+    type : CT_PROCESS_MAX_STAGE,
+    payload : stage_max
+  }
+};
+
+export const setProcessStage = (stage) => {
+  return {
+    type :  CT_PROCESS_STAGE,
+    payload : stage
+  }
 };

@@ -27,33 +27,32 @@ import {
     setUrlsResult,
     setSocioGraphResult,
     setCloudWordsResult,
+    cleanCsvSnaState
   } from "../../../redux/actions/tools/crowdTangleSnaActions";
   
 
 const CrowdTangleSnaComponent = () => {
-    const FB_SNA_TYPE= {snaType:"FB",tsv:"/components/CsvFb.tsv" }
-    const keywordFB = useLoadLanguage(FB_SNA_TYPE.tsv);
-    const INSTA_SNA_TYPE= {snaType:"INSTA",tsv:"/components/CsvInsta.tsv" }
-    const keywordINSTA = useLoadLanguage(INSTA_SNA_TYPE.tsv);
+    const FB_SNA_TSV = "/components/CsvFb.tsv";
+    const keywordFB = useLoadLanguage(FB_SNA_TSV);
+    const INSTA_SNA_TSV = "/components/CsvInsta.tsv";
+    const keywordINSTA = useLoadLanguage(INSTA_SNA_TSV);
 
     const dispatch = useDispatch();
     const classes = useMyStyles();
     const cardClasses = myCardStyles();
     const error = useSelector(state => state.error);
     const loadingMessage = useSelector(state => state.ctSna.loadingMessage);
-    const isloading = useSelector(state => state.ctSna.loading);
+    const maxStage = useSelector(state => state.ctSna.maxStage);
+    const stage = useSelector(state => state.ctSna.stage)
     const resultRedux = useSelector(state => state.ctSna.result);
 
     
-  
-  //// COMMON ////
     const makeResultCsv = (data) => {
         var from =["PLOT_LINE","PLOT_PIE_CHART_0","PLOT_PIE_CHART_1","PLOT_PIE_CHART_2","PLOT_PIE_CHART_3","PLOT_HASHTAG_GRAPH"]
    
         for(var i=0; i<from.length;i++)
-
         {
-        dispatch(setCSVHistoview(from[i], null)) 
+            dispatch(setCSVHistoview(from[i], null)) 
         }
         dispatch(setCSVLoading(true, "processing"));
         dispatch(setHeatMapResult(null))
@@ -61,8 +60,6 @@ const CrowdTangleSnaComponent = () => {
         dispatch(setUrlsResult(null))
         dispatch(setCloudWordsResult(null))
         dispatch(setSocioGraphResult(null))
-
-    // Plot(null)
 
         //facebook else instagram
         if(data[0].facebook_id) {
@@ -72,10 +69,10 @@ const CrowdTangleSnaComponent = () => {
         else{
             useInstagramResult(data, keywordINSTA, dispatch);
         }
-
     };
 
     const completeCsvParse = (results, file) => {
+        dispatch(cleanCsvSnaState());
         console.log("Parsing complete:", results, file);
         dispatch(setCSVResult(results.data));
       }
@@ -85,6 +82,7 @@ const CrowdTangleSnaComponent = () => {
         skipEmptyLines: true,
         transformHeader: header => header.toLowerCase().replace(/\W/g, "_"),
         complete: completeCsvParse,
+        escapeFormulae : true
       };
       
     return (
@@ -118,9 +116,11 @@ const CrowdTangleSnaComponent = () => {
                     <MyErrorbar variant="error" message={error} onClick={() => dispatch(cleanError())}/>
                     }
                     <Box m={2} />
-                    <Typography>{loadingMessage}</Typography>
-                    {isloading &&   
-                    <CircularProgress className={classes.circularProgress} />
+                    
+                    {maxStage !== stage &&  <> 
+                        <Typography>{loadingMessage}</Typography>
+                        <CircularProgress className={classes.circularProgress} />
+                    </>
                     }
                 </div>
             </Card>
