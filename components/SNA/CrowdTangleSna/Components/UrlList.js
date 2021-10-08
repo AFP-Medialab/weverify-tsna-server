@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Paper } from "@material-ui/core";
-import useMyStyles from "../../shared/styles/useMyStyles";
+import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, { useEffect, useState, useCallback } from "react";
 import Box from "@material-ui/core/Box";
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage"
-import Button from "@material-ui/core/Button";
-import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
-import OnClickInfo from '../../shared/OnClickInfo/OnClickInfoFB';
-import {downloadClick} from "./lib/downloadClick";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage"
+
+import CustomTableURL from "../../../shared/CustomTable/CustomTableURL";
+import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
+
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";

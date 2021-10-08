@@ -2,20 +2,20 @@ import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import plotly from 'plotly.js-dist';
 import createPlotComponent from 'react-plotly.js/factory';
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from '../../shared/OnClickInfo/OnClickInfoFB';
+import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
 import HistoTweetsTable from "./HistoTweetsTableCSV";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useMyStyles from "../../shared/styles/useMyStyles";
+import useMyStyles from "../../../shared/styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
 import { filterForTimeLine,getEpochMillis } from "./hooks/timeline";
-import {setCSVHistoview} from "../../../redux/actions/tools/crowdTangleSnaActions";
+import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
 
 
 const Plot = createPlotComponent(plotly);

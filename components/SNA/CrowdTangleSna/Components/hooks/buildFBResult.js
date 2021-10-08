@@ -2,7 +2,7 @@ import {
     setCountResult,
     setSnaType, 
     setMaxProcessStage
-  } from "../../../../redux/actions/tools/crowdTangleSnaActions";
+  } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
 
 import {
   buildCoHashTag, 
@@ -13,7 +13,7 @@ import {
   buildPieCharts, 
   buildHistogram
 } from './commonBuildResult'
-import{FB_SNA_TYPE} from "../../../shared/hooks/SnaTypes"
+import{FB_SNA_TYPE} from "../../../../shared/hooks/SnaTypes"
 
 const FB_SNA= {snaType:FB_SNA_TYPE,tsv:"/components/CsvFb.tsv" }
 export const useFacebookResult = (data, keyword, dispatch) => {

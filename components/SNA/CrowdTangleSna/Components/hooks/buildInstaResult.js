@@ -2,7 +2,7 @@ import {
     setCountResult,
     setSnaType,
     setMaxProcessStage,
-  } from "../../../../redux/actions/tools/crowdTangleSnaActions";
+  } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
 
   import {
     buildCoHashTag, 
@@ -13,7 +13,7 @@ import {
     buildPieCharts, 
     buildHistogram
   } from './commonBuildResult'
-import { INSTA_SNA_TYPE } from "../../../shared/hooks/SnaTypes";
+import { INSTA_SNA_TYPE } from "../../../../shared/hooks/SnaTypes";
 
 const INSTA_SNA= {snaType:INSTA_SNA_TYPE, tsv:"/components/CsvInsta.tsv" }
 export const useInstagramResult = (data, keyword, dispatch) => {
