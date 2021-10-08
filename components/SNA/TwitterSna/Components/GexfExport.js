@@ -29,15 +29,6 @@ export default function GexfExport(props) {
             result: props.result        
         }
     );
-   /* useEffect(() => {
-        setState({
-            ...state,
-            result: props.result,
-        })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);*/
-    
-
     return (
     
     props.request.userList.length === 0 && props.result &&

@@ -18,7 +18,7 @@ import plotly from 'plotly.js-dist';
 import {createBubbleChartOfMostActiveUsers} from "../Hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import {downloadClick} from "../lib/downloadClick";
+import {downloadClick} from "../../lib/downloadClick";
 
 const Plot = createPlotComponent(plotly);
 

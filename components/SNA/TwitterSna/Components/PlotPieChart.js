@@ -17,7 +17,7 @@ import { createCSVFromPieChart } from "../Hooks/pieCharts";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {displayPosts} from "../../../SNA/lib/displayTweets"
-import { downloadClick } from "../lib/downloadClick";
+import { downloadClick } from "../../lib/downloadClick";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";

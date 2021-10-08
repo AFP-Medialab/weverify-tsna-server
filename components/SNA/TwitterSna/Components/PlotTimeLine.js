@@ -14,7 +14,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
-import { filterTweetsForTimeLine } from "../Hooks/timeline";
+import { filterForTimeLine } from "../../Hooks/timeline";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const Plot = createPlotComponent(plotly);
@@ -43,12 +43,11 @@ export default function PlotTimeLine(props) {
   }, [props.result.histogram]);
 
   const onHistogramClick = (data) => {
-    console.log("click ....", data, state.result.tweets)
     if (state.result.tweets !== undefined) {
       let selectedPoints = data.points;
       let filteredTweets = state.result.tweets.filter(function (tweet) {
         let tweetDate = new Date(tweet._source.datetimestamp * 1000);
-        return filterTweetsForTimeLine(tweetDate, selectedPoints);
+        return filterForTimeLine(tweetDate, selectedPoints);
       });
       dispatch(
         setTweetsDetailPanel(from, displayPosts(filteredTweets, keyword))

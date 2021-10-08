@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import createPlotComponent from 'react-plotly.js/factory';
 import {onHeatMapClick} from "../Hooks/heatMap"
 import TwitterIcon from '@material-ui/icons/Twitter';
-import {downloadClick} from "../lib/downloadClick";
+import {downloadClick} from "../../lib/downloadClick";
 
 import {getDayAsString} from "../Hooks/heatMap"
 import useMyStyles from "../../../shared/styles/useMyStyles";

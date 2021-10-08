@@ -6,7 +6,7 @@ import Box from "@material-ui/core/Box";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import Button from "@material-ui/core/Button";
 import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
-import {downloadClick} from "../lib/downloadClick";
+import {downloadClick} from "../../lib/downloadClick";
 import CustomTableURL from "../../../shared/CustomTable/CustomTableURL";
 
 

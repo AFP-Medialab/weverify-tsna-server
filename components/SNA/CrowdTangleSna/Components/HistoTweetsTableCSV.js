@@ -9,15 +9,12 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
 
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/CsvFb.tsv";
-
 export default function HistoTweetsTable(props) {
   
   const dispatch = useDispatch();
   const snatype = useSelector((state) => state.ctSna.result.snaType);
   const keyword = useLoadLanguage(snatype.tsv);
-  const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
+  const typer = useSelector((state) => state.ctSna.result.snaType.snaType)
 
   var goToAction;
 
@@ -55,20 +52,12 @@ export default function HistoTweetsTable(props) {
       >
         <Grid item>
           <Button
-          
             variant={"contained"}
             color={"secondary"}
-            
-            onClick={() => 
-              
-                //dispatch(setTweetsDetailPanel(props.from, null)) ,
-              dispatch(
-                setCSVHistoview(
-                  props.from, null
-                  )) 
+            onClick={() =>  
+              dispatch(setCSVHistoview(props.from, null)) 
             }
-            
-          >
+            >
             {keyword("twittersna_result_hide")}
           </Button>
         </Grid>

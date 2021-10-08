@@ -1,6 +1,6 @@
 
 
-import {getJsonDataForTimeLineChart } from "./timeline"
+import {getJsonDataForTimeLineChart } from "./timelineCT"
 
 export function displayPostsInsta (filteredTweets, keyword, sortedColumn) {
     let columns = [];

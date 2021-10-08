@@ -2,7 +2,7 @@ import cloudWorker from "workerize-loader?inline!./cloudChart";
 import socioWorker from "workerize-loader?inline!./socioSemGraph";
 import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
 import pieChartsWorker from "workerize-loader?inline!./pieCharts";
-import timelineWorker from "workerize-loader?inline!./timeline";
+import timelineWorker from "workerize-loader?inline!./timelineCT";
 import { getJsonDataForURLTable } from "./urlList";
 
 import { createHeatMap } from "./heatMap";
@@ -67,7 +67,10 @@ export const buildPieCharts = async (data, keywordTitles, dispatch, type) => {
 export const buildHistogram = async (data, dispatch, titleLabel, timeLabel)=>{
     const instance = timelineWorker();
     let getDataResult = await instance.getJsonDataForTimeLineChart(data)
-    const histogram = await instance.createTimeLineChart(getDataResult[1], getDataResult[2], getDataResult[0], titleLabel, timeLabel);
+    var date_min = getDataResult[1];
+    var date_max = getDataResult[2];
+    var full_filename = "FACEBOOK CSV NAME" + "_" + date_min + "_" + date_max + "_Timeline"
+    const histogram = await instance.createTimeLineChart4CT(date_min, date_max , getDataResult[0], titleLabel, timeLabel, full_filename);
     dispatch(setHistogramResult(histogram));
   };
   

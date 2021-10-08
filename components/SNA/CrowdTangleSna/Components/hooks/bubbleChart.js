@@ -1,5 +1,5 @@
-import {getEpochMillis } from "./timeline";
-import {getJsonDataForTimeLineChart } from "./timeline"
+import {getEpochMillis } from "./timelineCT";
+import {getJsonDataForTimeLineChart } from "./timelineCT"
 import{new_date} from './heatMap'
 
 function getColorOfMostActiveUserBubble(value) {

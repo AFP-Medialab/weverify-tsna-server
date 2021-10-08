@@ -17,7 +17,7 @@ import { select } from 'd3-selection';
 import {displayPosts} from "../../../SNA/lib/displayTweets"
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import {downloadClick, downloadAsPNG} from "../lib/downloadClick";
+import {downloadClick, downloadAsPNG} from "../../lib/downloadClick";
 import Plotly from 'plotly.js-dist';
 import { saveSvgAsPng } from 'save-svg-as-png';
 

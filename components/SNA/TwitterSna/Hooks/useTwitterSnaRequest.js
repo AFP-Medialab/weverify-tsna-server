@@ -24,7 +24,8 @@ import {
   getCloudTweets,
   getESQuery4Gexf,
 } from "./call-elastic";
-import { createTimeLineChart, getJsonDataForTimeLineChart } from "./timeline";
+import { getJsonDataForTimeLineChart } from "./timelineTW";
+import { createTimeLineChart } from "../../Hooks/timeline";
 import { createPieCharts, getJsonDataForPieCharts } from "./pieCharts";
 import {removeUnusedFields} from "../../../SNA/lib/displayTweets"
 import socioWorker from "workerize-loader?inline!./socioSemGraph";
@@ -269,10 +270,12 @@ const useTwitterSnaRequest = (request, keyword) => {
     };
 
     const buildHistogram = async (request, responseAggs) => {
+      var title = keyword("user_time_chart_title") + "<br>" + request.keywordList.join(", ") + " - " + request.from + " - " + request.until;
+      var full_fileName = request.keywordList.join("&") + "_" + request["from"] + "_" + request["until"] + "_Timeline";
       const histogram = createTimeLineChart(
-        request,
+        request.from, request.until,
         getJsonDataForTimeLineChart(responseAggs["date_histo"]["buckets"]),
-        keyword
+        title, full_fileName
       );
       dispatch(setHistogramResult(histogram));
     };

@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
 import {displayPosts} from "../../../SNA/lib/displayTweets"
 import TwitterIcon from '@material-ui/icons/Twitter';
-import {downloadClick} from "../lib/downloadClick";
+import {downloadClick} from "../../lib/downloadClick";
 
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
