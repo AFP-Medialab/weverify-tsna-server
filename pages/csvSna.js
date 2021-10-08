@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import Layout from "../components/layoutCSV";
-import CsvSnaComponent from "../components/shared/CsvSna/CsvSnaComponent";
+import CrowdTangleSnaComponent from "../components/SNA/CrowdTangleSna/CrowdTangleSnaComponent"
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
@@ -16,7 +16,7 @@ const CsvSnaIndex = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-       <CsvSnaComponent />
+       <CrowdTangleSnaComponent />
       </main>
       <footer>
         <Footer />

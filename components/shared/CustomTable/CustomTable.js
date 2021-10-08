@@ -20,6 +20,8 @@ import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
 
+import { PatchedPagination } from '../../patch/PatchedTablePagination';
+
 const tableIcons = {
     Add: AddBox,
     Check: Check,
@@ -61,6 +63,7 @@ export default function CustomTable(props) {
 
     return (
         <MaterialTable
+            components={{Pagination: PatchedPagination}}
             //more custom info at https://material-table.com/#/docs/features/localization
             localization={{
                 pagination: {
