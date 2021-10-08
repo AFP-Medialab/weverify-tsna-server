@@ -69,7 +69,7 @@ export function filterForTimeLine(postDate, selectedPoints) {
           return obj;
       })
       return {
-          title: "user_time_chart_title",
+          title: "ct_user_time_chart_title",
           json: json,
           layout: layout,
           config: config,

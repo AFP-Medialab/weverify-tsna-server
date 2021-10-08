@@ -11,13 +11,13 @@ import React, { useEffect, useState } from "react";
 import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfoFB";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {useSelector} from "react-redux";
+import { CT_TSV } from "../../lib/CrowdTangleConstant";
 
 
 
 export default function Count({ result, onClickInfoLabel}) {
-  onClickInfoLabel="twittersna_timeline_tip";
   const snatype = useSelector((state) => state.ctSna.result.snaType);
-  const keyword = useLoadLanguage(snatype.tsv);
+  const keyword = useLoadLanguage(CT_TSV);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   const [state, setState] = useState({
@@ -44,7 +44,7 @@ export default function Count({ result, onClickInfoLabel}) {
       >
         <Typography className={classes.heading}>
           {
-            keyword("tweetCounter_title")
+            keyword("ct_counter_title")
           }
           
         </Typography>
@@ -59,26 +59,26 @@ export default function Count({ result, onClickInfoLabel}) {
             alignContent={"center"}
           >
             <Grid item>
-              <Typography variant={"h6"}>{keyword("csv_sna_publications")}</Typography>
+              <Typography variant={"h6"}>{keyword("ct_sna_publications")}</Typography>
               <Typography variant={"h2"}>{result.countSna.count}</Typography>
             </Grid>
             <Grid item>
-              <Typography variant={"h6"}>{keyword("csv_sna_total_interactions")}</Typography>
+              <Typography variant={"h6"}>{keyword("ct_sna_total_interactions")}</Typography>
               <Typography variant={"h2"}>
                 {result.countSna.total_interactions}
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant={"h6"}>{keyword("csv_sna_likes")}</Typography>
+              <Typography variant={"h6"}>{keyword("ct_sna_likes")}</Typography>
               <Typography variant={"h2"}>{result.countSna.likes}</Typography>
             </Grid>
             <Grid item>
-              <Typography variant={"h6"}>{keyword("csv_sna_comments")}</Typography>
+              <Typography variant={"h6"}>{keyword("ct_sna_comments")}</Typography>
               <Typography variant={"h2"}>{result.countSna.comments}</Typography>
             </Grid>
             {result.countSna.shares && (
               <Grid item>
-                <Typography variant={"h6"}>{keyword("csv_sna_shares")}</Typography>
+                <Typography variant={"h6"}>{keyword("ct_sna_shares")}</Typography>
                 <Typography variant={"h2"}>{result.countSna.shares}</Typography>
               </Grid>
             )}

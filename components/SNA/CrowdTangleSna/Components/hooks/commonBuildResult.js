@@ -46,8 +46,8 @@ export const buildSocioGraph = async (data, dispatch) => {
     dispatch(setUrlsResult(urls));
   };
 
- export const buildHeatMap = async (data, dispatch, keyword) => {
-    const heatMap = createHeatMap(data, keyword);
+ export const buildHeatMap = async (data, dispatch, heatMapTitle) => {
+    const heatMap = createHeatMap(data, heatMapTitle);
     dispatch(setHeatMapResult(heatMap));
 };
 

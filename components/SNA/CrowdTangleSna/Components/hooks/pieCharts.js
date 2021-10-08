@@ -1,5 +1,3 @@
-
-
 export const createPieCharts = (request, jsonPieCharts,keywordTitles) => {
   let layout = {
       title: {
@@ -34,13 +32,12 @@ export const createPieCharts = (request, jsonPieCharts,keywordTitles) => {
       displaylogo: false
     };
 
-    
 
     const tips = [
-      "twittersna_most_retweet_tip",
-      "twittersna_most_likes_tip",
-      "twittersna_most_active_tip",
-      "twittersna_most_mentions_tip"
+      "ct_sna_most_retweet_tip",
+      "ct_sna_most_likes_tip",
+      "ct_sna_most_active_tip",
+      "ct_sna_most_mentions_tip"
     ]
     
 

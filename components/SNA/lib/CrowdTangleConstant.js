@@ -1,0 +1,1 @@
+export const CT_TSV = "/components/tools/CrowdTangle.tsv"

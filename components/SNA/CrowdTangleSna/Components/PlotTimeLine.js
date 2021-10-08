@@ -17,7 +17,7 @@ import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
 import {getEpochMillis } from "./hooks/timelineCT";
 import { filterForTimeLine } from '../../Hooks/timeline';
 import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
-
+import { CT_TSV } from '../../lib/CrowdTangleConstant';
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
@@ -26,7 +26,7 @@ let from = "PLOT_LINE";
 export default function PlotTimeLine(props){
   const snatype = useSelector((state) => state.ctSna.result.snaType);
 
-    const keyword = useLoadLanguage(snatype.tsv);
+    const keyword = useLoadLanguage(CT_TSV);
     const dispatch = useDispatch();
     //HISTOGRAM
     const [histoVisible, setHistoVisible] = useState(true);
@@ -51,7 +51,7 @@ export default function PlotTimeLine(props){
     const onHistogramClick = (data) => {
             let selectedPoints = data.points;
            let filteredPost = state.result.data.filter(function(post) {
-                let postDate =getEpochMillis(post.post_created);
+                let postDate = getEpochMillis(post.post_created);
               //  console.log("POST_DATE ",postDate)
                 return filterForTimeLine(postDate, selectedPoints);
 
@@ -92,7 +92,7 @@ export default function PlotTimeLine(props){
                 {
                 <div style={{ width: '100%', }}>
                     {(state.result.histogram.json && (state.result.histogram.json.length === 0) &&
-                        <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>)}
+                        <Typography variant={"body2"}>{keyword("ct_sna_no_data")}</Typography>)}
                     {(state.result.histogram.json && state.result.histogram.json.length !== 0) &&
                     <Plot useResizeHandler
                         style={{ width: '100%', height: "450px" }}
@@ -105,7 +105,7 @@ export default function PlotTimeLine(props){
                     />
                     }
                     <Box m={1} />
-                    <OnClickInfo keyword={"twittersna_timeline_tip"}/>
+                    <OnClickInfo keyword={"ct_sna_timeline_tip"}/>
                     <Box m={2} />
                     
                     {

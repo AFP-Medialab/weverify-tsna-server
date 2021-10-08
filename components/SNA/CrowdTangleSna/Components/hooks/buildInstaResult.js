@@ -23,12 +23,13 @@ export const useInstagramResult = (data, keyword, dispatch) => {
 
 const buildFirstInstaResult = (data, dispatch, keyword) => {
   dispatch(setMaxProcessStage(13));
-  let titleLabel = keyword("user_time_chart_title");
-  let timeLabel = keyword('twitter_local_time');
+  let titleLabel = keyword("sna_time_chart_title");
+  let timeLabel = keyword('sna_local_time');
+  let heatMapTitle = keyword("ct_heatmap_chart_title")
   buildHistogram(data, dispatch, titleLabel, timeLabel);
   buildCountInsta(data, dispatch);
   buildPieChartsInsta(data, dispatch, keyword);
-  buildHeatMap(data, dispatch, keyword);
+  buildHeatMap(data, dispatch, heatMapTitle);
   buildCoHashTag(data, dispatch);
   buildSocioGraph(data, dispatch);
   buildUrls(data, keyword, dispatch);
@@ -37,7 +38,7 @@ const buildFirstInstaResult = (data, dispatch, keyword) => {
 
 const buildPieChartsInsta = async (data, dispatch, keyword) => {
   const keywordTitles = [
-    keyword("retweets_cloud_chart_title"),
+    keyword("shared_cloud_chart_title"),
     keyword("likes_cloud_chart_title"),
     keyword("top_users_pie_chart_title"),
     keyword("mention_cloud_chart_title")

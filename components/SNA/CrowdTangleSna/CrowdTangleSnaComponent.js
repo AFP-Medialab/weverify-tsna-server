@@ -32,11 +32,7 @@ import {
   
 
 const CrowdTangleSnaComponent = () => {
-    const FB_SNA_TSV = "/components/CsvFb.tsv";
-    const keywordFB = useLoadLanguage(FB_SNA_TSV);
-    const INSTA_SNA_TSV = "/components/CsvInsta.tsv";
-    const keywordINSTA = useLoadLanguage(INSTA_SNA_TSV);
-
+    const keyword = useLoadLanguage("/components/tools/CrowdTangle.tsv")
     const dispatch = useDispatch();
     const classes = useMyStyles();
     const cardClasses = myCardStyles();
@@ -64,10 +60,10 @@ const CrowdTangleSnaComponent = () => {
         //facebook else instagram
         if(data[0].facebook_id) {
             
-            useFacebookResult(data, keywordFB, dispatch);
+            useFacebookResult(data, keyword, dispatch);
         }
         else{
-            useInstagramResult(data, keywordINSTA, dispatch);
+            useInstagramResult(data, keyword, dispatch);
         }
     };
 
@@ -93,13 +89,13 @@ const CrowdTangleSnaComponent = () => {
         justifyContent="space-between"
         alignItems="center">
           <Grid item xs>
-              <HeaderTool name={"navbar_csv_sna"} description={"navbar_csv_sna_description"} icon={<TwitterSNAIcon style={{ fill: "#51A5B2" }} />} />
+              <HeaderTool name={"navbar_ct_sna"} description={"navbar_ct_sna_description"} icon={<TwitterSNAIcon style={{ fill: "#51A5B2" }} />} />
           </Grid>
         </Grid>
         <StylesProvider injectFirst>
             <Card className={cardClasses.root}>
                 <CardHeader
-                title={"cardheader_csv_parameters"}
+                title={"cardheader_ct_parameters"}
                 className={classes.headerUpladedImage}/>
                  <div className={classes.root2}>
                     <CSVReader
