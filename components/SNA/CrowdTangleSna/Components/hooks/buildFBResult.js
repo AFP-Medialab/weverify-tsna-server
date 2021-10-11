@@ -15,7 +15,8 @@ import {
 } from './commonBuildResult'
 import{FB_SNA_TYPE} from "../../../../shared/hooks/SnaTypes"
 
-const FB_SNA= {snaType:FB_SNA_TYPE, tsv:"/components/CsvFb.tsv" }
+const FB_SNA = {type:FB_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv" }
+
 export const useFacebookResult = (data, keyword, dispatch) => {
     dispatch(setSnaType(FB_SNA));
     buildFirstFbResult(data, dispatch, keyword);

@@ -2,39 +2,39 @@
 
 import {getJsonDataForTimeLineChart } from "./timelineCT"
 
-export function displayPostsInsta (filteredTweets, keyword, sortedColumn) {
+export function displayPostsInsta (filteredTweets, sortedColumn) {
     let columns = [];
     if (sortedColumn === "nbLikes") {
         columns = [
-            { title: keyword('twittersna_result_date'), field: 'date'},
-            { title: keyword('twittersna_result_username'), field: 'screen_name'},
-            { title: keyword('twittersna_result_tweet'), field: 'post'},
-            { title: keyword('twittersna_result_like_nb'), field: "nbLikes", defaultSort: "desc" },
-            { title: keyword('csv_sna_total_interactions'), field: 'total_interactions'},
+            { title: 'ct_sna_result_date', field: 'date'},
+            { title: 'ct_sna_result_username', field: 'screen_name'},
+            { title: 'ct_sna_result_post', field: 'post'},
+            { title: 'ct_sna_likes', field: "nbLikes", defaultSort: "desc" },
+            { title: 'ct_sna_total_interactions', field: 'total_interactions'},
         ];
     } else if (sortedColumn === "total_interactions") {
         columns = [
-            { title: keyword('twittersna_result_date'), field: 'date'},
-            { title: keyword('twittersna_result_username'), field: 'screen_name'},
-            { title: keyword('twittersna_result_tweet'), field: 'post'},
-            { title: keyword('twittersna_result_like_nb'), field: "nbLikes"},
-            { title: keyword('csv_sna_total_interactions'), field: 'total_interactions', defaultSort: "desc" },
+            { title: 'ct_sna_result_date', field: 'date'},
+            { title: 'ct_sna_result_username', field: 'screen_name'},
+            { title: 'ct_sna_result_post', field: 'post'},
+            { title: 'ct_sna_likes', field: "nbLikes"},
+            { title: 'ct_sna_total_interactions', field: 'total_interactions', defaultSort: "desc" },
         ];
     } else {
         columns = [
-            { title: keyword('twittersna_result_date'), field: 'date', defaultSort: "asc" },
-            { title: keyword('twittersna_result_username'), field: 'screen_name'},
-            { title: keyword('twittersna_result_tweet'), field: 'post'},
-            { title: keyword('twittersna_result_like_nb'), field: "nbLikes"},
-            { title: keyword('csv_sna_total_interactions'), field: 'total_interactions'},
+            { title: 'ct_sna_result_date', field: 'date', defaultSort: "asc" },
+            { title: 'ct_sna_result_username', field: 'screen_name'},
+            { title: 'ct_sna_result_post', field: 'post'},
+            { title: 'ct_sna_likes', field: "nbLikes"},
+            { title: 'ct_sna_total_interactions', field: 'total_interactions'},
         ];
     }
 
-    let csvArr = keyword("twittersna_result_date") + ',' 
-                + keyword("twittersna_result_username") + ',' 
-                + keyword("twittersna_result_tweet") + ',' 
-                + keyword('twittersna_result_like_nb') + ',' 
-                + keyword("csv_sna_total_interactions") + ',' 
+    let csvArr = "ct_sna_result_date" + ',' 
+                + "ct_sna_result_username" + ',' 
+                + "ct_sna_result_post" + ',' 
+                + 'ct_sna_likes' + ',' 
+                + "ct_sna_total_interactions" + ',' 
 
     let resData = [];
     filteredTweets.forEach(postObj => {
@@ -67,44 +67,44 @@ export function displayPostsInsta (filteredTweets, keyword, sortedColumn) {
 
 
 
-export function displayPostsFb (filteredTweets, keyword, sortedColumn) {
+export function displayPostsFb (filteredTweets, sortedColumn) {
   let columns = [];
   if (sortedColumn === "nbLikes") {
     columns = [
-      { title: keyword('twittersna_result_date'), field: 'date'},
-      { title: keyword('twittersna_result_username'), field: 'screen_name'},
-      { title: keyword('twittersna_result_tweet'), field: 'post'/*, render: getPostWithClickableLink*/ },
-      { title: keyword('twittersna_result_like_nb'), field: "nbLikes", defaultSort: "desc" },
-      { title: keyword('twittersna_result_retweet_nb'), field: 'shares'},
-      { title: keyword('csv_sna_total_interactions'), field: 'total_interactions'},
+      { title: 'ct_sna_result_date', field: 'date'},
+      { title: 'ct_sna_result_username', field: 'screen_name'},
+      { title: 'ct_sna_result_post', field: 'post'/*, render: getPostWithClickableLink*/ },
+      { title: 'ct_sna_likes', field: "nbLikes", defaultSort: "desc" },
+      { title: 'ct_sna_shares', field: 'shares'},
+      { title: 'ct_sna_total_interactions', field: 'total_interactions'},
   ];
-  } else if (sortedColumn === "retweetNb") {
+  } else if (sortedColumn === "total_interactions") {
     columns = [
-      { title: keyword('twittersna_result_date'), field: 'date'},
-      { title: keyword('twittersna_result_username'), field: 'screen_name'},
-      { title: keyword('twittersna_result_tweet'), field: 'post'/*, render: getPostWithClickableLink*/ },
-      { title: keyword('twittersna_result_like_nb'), field: "nbLikes"},
-      { title: keyword('twittersna_result_retweet_nb'), field: 'shares'},
-      { title: keyword('csv_sna_total_interactions'), field: 'total_interactions', defaultSort: "desc" },
+      { title: 'ct_sna_result_date', field: 'date'},
+      { title: 'ct_sna_result_username', field: 'screen_name'},
+      { title: 'ct_sna_result_post', field: 'post'/*, render: getPostWithClickableLink*/ },
+      { title: 'ct_sna_likes', field: "nbLikes"},
+      { title: 'ct_sna_shares', field: 'shares'},
+      { title: 'ct_sna_total_interactions', field: 'total_interactions', defaultSort: "desc" },
   ];
   } else {
     columns = [
-      { title: keyword('twittersna_result_date'), field: 'date', defaultSort: "asc" },
-      { title: keyword('twittersna_result_username'), field: 'screen_name'},
-      { title: keyword('twittersna_result_tweet'), field: 'post'/*, render: getPostWithClickableLink*/ },
-      { title: keyword('twittersna_result_like_nb'), field: "nbLikes"},
-      { title: keyword('twittersna_result_retweet_nb'), field: 'shares'},
-      { title: keyword('csv_sna_total_interactions'), field: 'total_interactions'},
+      { title: 'ct_sna_result_date', field: 'date', defaultSort: "asc" },
+      { title: 'ct_sna_result_username', field: 'screen_name'},
+      { title: 'ct_sna_result_post', field: 'post'/*, render: getPostWithClickableLink*/ },
+      { title: 'ct_sna_likes', field: "nbLikes"},
+      { title: 'ct_sna_shares', field: 'shares'},
+      { title: 'ct_sna_total_interactions', field: 'total_interactions'},
       
   ];
   }
 
-  let csvArr = keyword("twittersna_result_date") + ',' 
-              + keyword("twittersna_result_username") + ',' 
-              + keyword("twittersna_result_tweet") + ',' 
-              + keyword('twittersna_result_like_nb') + ',' 
-              + keyword("csv_sna_total_interactions") + ',' 
-              + keyword("twittersna_result_retweet_nb") +'\n';
+  let csvArr = "ct_sna_result_date" + ',' 
+              + "ct_sna_result_username" + ',' 
+              + "ct_sna_result_post" + ',' 
+              + 'ct_sna_likes' + ',' 
+              + "ct_sna_total_interactions" + ',' 
+              + "ct_sna_shares" +'\n';
 
   let resData = [];
   filteredTweets.forEach(postObj => {
@@ -138,48 +138,37 @@ export function displayPostsFb (filteredTweets, keyword, sortedColumn) {
 };
 
 
-
-
-
-
 export var new_date = function(dateStr) {
   
   //var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s(\w+)\s*$/
   var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CEST\s*$/
     , m = (""+dateStr).match(r);
-    //console.log("DATE m1 ",m[1])
-    //console.log("DATE m2",m[2])
-    //console.log("DATE m3 ",m[3])
-    //console.log("DATE m4 ",m[4])
 
   return `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`;
 };
-export const onHeatMapClick = (data, result, setheatMapTweets, keyword) => {
 
+export const onHeatMapClick = (data, result, setHeatMapData) => {
+    console.log("onclick .... ", result);
     let selectedHour = data.points[0].x;
 
     let selectedDay = data.points[0].y;
-    let filteredTweets = result.data.filter(function (postObj) {
+    let filteredPosts = result.data.filter(function (postObj) {
       let date = new Date(new_date(postObj.post_created));
         let day = getDayAsString(date.getDay());
         let hour = getHourAsString(date.getHours());
         return hour === selectedHour && day === selectedDay;
     });
+    console.log("onclick .... ", filteredPosts);
     var res =null;
-    if (result.data[0].facebook_id){
-      console.log("FACEBOOK")
-     
-      res = displayPostsFb(filteredTweets, keyword);
-
+  if (result.data[0].facebook_id){
+      res = displayPostsFb(filteredPosts);
   }
   else
   {
-      console.log("INSTA")
-      res = displayPostsInsta(filteredTweets, keyword);
-
+      res = displayPostsInsta(filteredPosts);
   }
-
-    setheatMapTweets(res);
+  console.log("data onclick", res)
+  setHeatMapData(res);
 }
 
 export function getDayAsString(dayInt) {
@@ -201,12 +190,8 @@ function getDayAsInt(dayString) {
 function getNbTweetsByHourDay(dayArr, hourArr, bucket) {
     // 1D-array with elements as day_hour 
     let dayHourArr = bucket.map(function (val, ind) {
-    
-    
-      
+  
       const date = new Date(new_date(val.post_created));
-
-
       return `${date.getDay()}_${date.getHours()}`;
     });
   

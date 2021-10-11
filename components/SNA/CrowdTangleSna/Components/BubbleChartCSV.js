@@ -5,10 +5,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import CustomTable from "../../../shared/CustomTable/CustomTable";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import {displayPostsInsta,displayPostsFb} from "./lib/displayPosts"
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
@@ -17,10 +13,8 @@ import { useSelector, useDispatch } from "react-redux";
 import plotly from 'plotly.js-dist';
 import {createBubbleChartOfMostActiveUsers} from "./hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import {downloadClick} from "../../lib/downloadClick";
 import {isNumeric} from "./hooks/bubbleChart"
+import PostViewTable from "../../Components/PostViewTable";
 const Plot = createPlotComponent(plotly);
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 //const tsv = "/components/NavItems/tools/TwitterSna.tsv";
@@ -32,20 +26,17 @@ export default function BubbleChart(props) {
     const [bubbleTweets, setBubbleTweets] = useState(null);
     //const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
-    const snatype = useSelector((state) => state.ctSna.result.snaType);
+    const sna = useSelector((state) => state.sna);
 
-    console.log("SNATYPE ", snatype)
-    const keyword = useLoadLanguage(snatype.tsv);
-    //console.log("KEYWORD ", keyword)
-    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
+    console.log("SNATYPE ", sna)
+    const keyword = useLoadLanguage(sna.tsv);
 
     const classes = useMyStyles();
-    const request = useSelector(state => state.twitterSna.request);
 
     const [state, setState] = useState(
-        {
-            result: props.result        
-        }
+    {
+        result: props.result        
+    }
     );
     useEffect(() => {
         setState({
@@ -55,20 +46,11 @@ export default function BubbleChart(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.result.bubbleChart]);
 
-    /*
-    useEffect(() => {
-        setBubbleTweets(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [request])
-*/
-    const onBubbleChartClick = (data, result) => {
-        //console.log("BUBBLE_DATA ", data)
-        //console.log("BUBBLE_result ", result)
+    const onBubbleChartClick = (data, result) => {       
         var selectedUser;
         var filteredTweets;
         
         if(result.data[0].facebook_id) {
-            //console.log("FACEEEEE")
             selectedUser = data.points[0].text.split("<br>")[0].replace("@","");
             filteredTweets = state.result.data.filter(function (tweetObj) {
                 if (isNumeric(tweetObj.page_name)===false) {
@@ -79,7 +61,7 @@ export default function BubbleChart(props) {
                     return tweetObj.page_name.toString().toLowerCase() === selectedUser.toString().toLowerCase();
                 } 
             });
-            setBubbleTweets(displayPostsFb(filteredTweets, keyword));
+            setBubbleTweets(displayPostsFb(filteredTweets));
         }
         else{
           //  console.log("INSTAAAAAAA")
@@ -94,36 +76,11 @@ export default function BubbleChart(props) {
                 } 
                 
             });
-            setBubbleTweets(displayPostsInsta(filteredTweets, keyword));
+            setBubbleTweets(displayPostsInsta(filteredTweets));
         }
 
     }
-    var goToAction;
 
-    if(typer=="INSTA"){
-        goToAction = [
-            {
-             icon: InstagramIcon,
-              tooltip: keyword("twittersna_result_go_to_tweet"),
-              onClick: (event, rowData) => {
-               window.open(rowData.link.props.href, "_blank");
-              },
-            },
-          ];
-      }
-      else {
-        goToAction = [
-          {
-           icon: FacebookIcon,
-            tooltip: keyword("twittersna_result_go_to_tweet"),
-            onClick: (event, rowData) => {
-             window.open(rowData.link.props.href, "_blank");
-            },
-          },
-        ];
-      }
-
-    
 
     return (
 
@@ -133,7 +90,7 @@ export default function BubbleChart(props) {
                 aria-controls={"panel0a-content"}
                 id={"panel0a-header"}
             >
-                <Typography className={classes.heading}>{keyword("bubble_chart_title")}</Typography>
+                <Typography className={classes.heading}>{keyword("ct_bubble_chart_title")}</Typography>
             </AccordionSummary>
             <AccordionDetails>
                 {
@@ -160,37 +117,7 @@ export default function BubbleChart(props) {
                         }
                         {
                             bubbleTweets &&
-                            <div>
-                                <Grid container justifyContent="space-between" spacing={2}
-                                    alignContent={"center"}>
-                                    <Grid item>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"secondary"}
-                                            onClick={() => setBubbleTweets(null)}>
-                                            {
-                                                keyword('twittersna_result_hide')
-                                            }
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"primary"}
-                                            onClick={() => downloadClick(request, bubbleTweets.csvArr, bubbleTweets.selected)}>
-                                            {
-                                                keyword('twittersna_result_download')
-                                            }
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                                <Box m={2} />
-                                <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                    colums={bubbleTweets.columns}
-                                    data={bubbleTweets.data}
-                                    actions={goToAction}
-                                />
-                            </div>
+                            <PostViewTable snatype={sna} setTypeValue={setBubbleTweets} data={bubbleTweets} downloadEnable={false} />
                         }
                     </div>
                 }

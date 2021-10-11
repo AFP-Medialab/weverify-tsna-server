@@ -6,21 +6,16 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
 import {displayPostsInsta} from "./lib/displayPosts"
 import {displayPostsFb} from "./lib/displayPosts"
-import {downloadClick} from "../../lib/downloadClick";
-
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {createGraphWhenClickANode} from "../../../shared/lib/sigmaGraph"
-import InstagramIcon from '@material-ui/icons/Instagram';
-import FacebookIcon from '@material-ui/icons/Facebook';
+import PostViewTable  from "../../Components/PostViewTable";
 
 //possible error, same as plot
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
@@ -33,9 +28,9 @@ export default function HashtagGraph (props) {
 
     const dispatch = useDispatch();
 
-    const snatype = useSelector((state) => state.ctSna.result.snaType);
-    const keyword = useLoadLanguage(snatype.tsv);
-    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
+    const sna = useSelector((state) => state.sna);
+    const keyword = useLoadLanguage(sna.tsv);
+    const type = sna.type;
 
     const classes = useMyStyles();
 
@@ -118,7 +113,7 @@ export default function HashtagGraph (props) {
 
        //console.log("TYPER ", typer)
 
-        if(typer==="FB"){ 
+        if(type==="FB"){ 
         //console.log("FBBBBBBB ")
 
         let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
@@ -143,7 +138,7 @@ export default function HashtagGraph (props) {
          
      //  console.log("filteredTweets4 ", filteredTweets4)
 
-       if(typer==="FB"){
+       if(type==="FB"){
 
         let dataToDisplay = displayPostsFb(filteredTweets4, keyword);
         //console.log("displayFB ", dataToDisplay)
@@ -169,37 +164,14 @@ export default function HashtagGraph (props) {
         setCoHashtagGraphClickNode(null);
         setCoHashtagGraphTweets(null);
     }
-    var goToAction;
-  
-    if(typer=="INSTA"){
-      goToAction = [
-        {
-         icon: InstagramIcon,
-          tooltip: keyword("twittersna_result_go_to_tweet"),
-          onClick: (event, rowData) => {
-            window.open(rowData.link.props.href, "_blank");
-          },
-        },
-      ];
-    }
-    else {
-      goToAction = [
-        {
-         icon: FacebookIcon,
-          tooltip: keyword("twittersna_result_go_to_tweet"),
-          onClick: (event, rowData) => {
-           window.open(rowData.link.props.href, "_blank");
-          },
-        },
-      ];
-    }
+    
 
     return (
         <Accordion>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
             >
-                <Typography className={classes.heading}>{keyword("hashtag_graph_title")}</Typography>
+                <Typography className={classes.heading}>{keyword("ct_hashtag_graph_title")}</Typography>
             </AccordionSummary>
             <AccordionDetails>
             {
@@ -215,7 +187,7 @@ export default function HashtagGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.coHashtagGraph.data.nodes}
-                                    filename={"Nodes_" + keyword("hashtag_graph_title")+ ".csv"}
+                                    filename={"Nodes_" + keyword("ct_hashtag_graph_title")+ ".csv"}
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Nodes"
@@ -225,7 +197,7 @@ export default function HashtagGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.coHashtagGraph.data.edges}
-                                    filename={"Edges_" + keyword("hashtag_graph_title") + ".csv"}
+                                    filename={"Edges_" + keyword("ct_hashtag_graph_title") + ".csv"}
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Edges"
@@ -312,37 +284,7 @@ export default function HashtagGraph (props) {
                     <Box m={2} />
                     {
                         coHashtagGraphTweets &&
-                        <div>
-                            <Grid container justifyContent="space-between" spacing={2}
-                                alignContent={"center"}>
-                                <Grid item>
-                                    <Button
-                                        variant={"contained"}
-                                        color={"secondary"}
-                                        onClick={() => setCoHashtagGraphTweets(null)}>
-                                        {
-                                            keyword('twittersna_result_hide')
-                                        }
-                                    </Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        variant={"contained"}
-                                        color={"primary"}
-                                        onClick={() => downloadClick(props.request, coHashtagGraphTweets.csvArr, "#" + coHashtagGraphTweets.selected)}>
-                                        {
-                                            keyword('twittersna_result_download')
-                                        }
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                            <Box m={2} />
-                            <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                colums={coHashtagGraphTweets.columns}
-                                data={coHashtagGraphTweets.data}
-                                actions={goToAction}
-                            />
-                        </div>
+                        <PostViewTable snatype={sna} setTypeValue={setCoHashtagGraphTweets} data={coHashtagGraphTweets} downloadEnable={false} />
                     }
                 </div>
             }

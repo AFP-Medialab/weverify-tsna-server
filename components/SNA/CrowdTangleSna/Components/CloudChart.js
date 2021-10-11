@@ -7,7 +7,6 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState, useCallback} from 'react';
 import { CSVLink } from "react-csv";
@@ -20,8 +19,8 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import Plotly from 'plotly.js-dist';
 import { saveSvgAsPng } from 'save-svg-as-png';
 import {useSelector } from "react-redux";
-import InstagramIcon from '@material-ui/icons/Instagram';
-import FacebookIcon from '@material-ui/icons/Facebook';
+import PostViewTable  from "../../Components/PostViewTable";
+
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
@@ -31,14 +30,14 @@ export default function cloudChart (props) {
 
     //var tsv = "/components/NavItems/tools/TwitterSna.tsv";
     //const keyword = useLoadLanguage(tsv);
-    const snatype = useSelector((state) => state.ctSna.result.snaType);
+    const snatype = useSelector((state) => state.sna);
     const keyword = useLoadLanguage(snatype.tsv);
     const classes = useMyStyles();
-    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
+    const type = snatype.type;
 
 
     const [filesNames, setfilesNames] = useState(null);
-    const [cloudTweets, setCloudTweets] = useState(null);
+    const [cloudPosts, setcloudPosts] = useState(null);
 
     const [state, setState] = useState(
         {
@@ -52,19 +51,13 @@ export default function cloudChart (props) {
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.result.cloudChart]);
-/*
-    useEffect(() => {
-        setCloudTweets(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.request])
-*/
     //Set the file name for wordsCloud export
     useEffect(() => {
         setfilesNames('WordCloud_' + 'props.request.keywordList.join("&")' + "_" + 'props.request.from' + "_" + 'props.request.until');
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [/*JSON.stringify(props.request), props.request*/]);
 
-    const CSVheaders = [{ label: keyword('twittersna_result_word'), key: "word" }, { label: keyword("twittersna_result_nb_occ"), key: "nb_occ" }, { label: keyword("twittersna_result_entity"), key: "entity" }];
+    const CSVheaders = [{ label: keyword('ct_sna_result_word'), key: "word" }, { label: keyword("ct_sna_result_nb_occ"), key: "nb_occ" }, { label: keyword("ct_sna_result_entity"), key: "entity" }];
 
     function getCSVData() {
         if (!props.result.cloudChart.json)
@@ -124,13 +117,13 @@ export default function cloudChart (props) {
                         let filteredTweets = filterTweetsGivenWord(selectedWord);
 
                       //  console.log("ASDADSA ", typer)
-                        if(typer==="FB"){
+                        if(type==="FB"){
 
                             let dataToDisplay = displayPostsFb(filteredTweets, keyword);
                             //console.log("displayFB ", dataToDisplay)
                     
                             dataToDisplay["selected"] = selectedWord;
-                            setCloudTweets(dataToDisplay);
+                            setcloudPosts(dataToDisplay);
                         }
                            else{
                     
@@ -138,13 +131,8 @@ export default function cloudChart (props) {
                             //console.log("displayInsta ", dataToDisplay)
                     
                             dataToDisplay["selected"] = selectedWord;
-                            setCloudTweets(dataToDisplay);
+                            setcloudPosts(dataToDisplay);
                         }
-                        /*
-                        let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
-                        dataToDisplay["selected"] = selectedWord;
-                        setCloudTweets(dataToDisplay);
-                        */
                     }
                 })
                 .transition()
@@ -157,14 +145,6 @@ export default function cloudChart (props) {
     function filterTweetsGivenWord(word) {
         var length1=props.result.data
 
-        /*
-        let filteredTweets = props.result.tweets.filter(function (tweetObj) {
-            console.log("filteredTweets ",filteredTweets)
-            return tweetObj._source.full_text.toLowerCase().match(new RegExp('(^|((.)*[.()0-9!?\'’‘":,/\\%><«» ^#]))' + word + '(([.()!?\'’‘":,/><«» ](.)*)|$)', "i"));
-        });
-        */
-      //  console.log("TYPER ",typer)
-
         let filteredTweets = state.result.data.filter(tweet => tweet.description !== undefined && tweet.description !==null)
         .map((tweet) => { return tweet.description.toLowerCase() });
         
@@ -176,7 +156,7 @@ export default function cloudChart (props) {
         //console.log("PROPS ",length1.length)
         var filteredTweets2=[]
 
-        if(typer==="FB"){ 
+        if(type==="FB"){ 
           //  console.log("FBBBBBBB")
     
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
@@ -278,44 +258,6 @@ export default function cloudChart (props) {
     }
 
     let call = getCallbacks();
-
-    var goToAction;
-  
-    if(typer=="INSTA"){
-      goToAction = [
-        {
-         icon: InstagramIcon,
-          tooltip: keyword("twittersna_result_go_to_tweet"),
-          onClick: (event, rowData) => {
-            window.open(rowData.link.props.href, "_blank");
-          },
-        },
-      ];
-    }
-    else {
-      goToAction = [
-        {
-         icon: FacebookIcon,
-          tooltip: keyword("twittersna_result_go_to_tweet"),
-          onClick: (event, rowData) => {
-           window.open(rowData.link.props.href, "_blank");
-          },
-        },
-      ];
-    }
-
-
-
-/*
-    let goToTweetAction = [{
-        icon: TwitterIcon,
-        tooltip: keyword("twittersna_result_go_to_tweet"),
-        onClick: (event, rowData) => {
-            window.open(rowData.link, '_blank');
-        }
-    }]
-    */
-
     return (
         <Accordion>
                     <AccordionSummary
@@ -323,7 +265,7 @@ export default function cloudChart (props) {
                         aria-controls={"panel0a-content"}
                         id={"panel0a-header"}
                     >
-                        <Typography className={classes.heading}>{keyword("top_words_cloud_chart_title")}</Typography>
+                        <Typography className={classes.heading}>{keyword("ct_top_words_cloud_chart_title")}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         {
@@ -342,7 +284,7 @@ export default function cloudChart (props) {
                                                     color={"primary"}
                                                     onClick={() => downloadAsPNG("top_words_cloud_chart", keyword, filesNames)}>
                                                     {
-                                                        keyword('twittersna_result_download_png')
+                                                        keyword('ct_sna_result_download_png')
                                                     }
                                                 </Button>
                                             </Grid>
@@ -361,7 +303,7 @@ export default function cloudChart (props) {
                                                     color={"primary"}
                                                     onClick={() => downloadAsSVG("top_words_cloud_chart",  keyword, filesNames)}>
                                                     {
-                                                        keyword('twittersna_result_download_svg')
+                                                        keyword('ct_sna_result_download_svg')
                                                     }
                                                 </Button>
                                             </Grid>
@@ -380,30 +322,8 @@ export default function cloudChart (props) {
 
                                 }
                                 {
-                                    cloudTweets &&
-                                    <div>
-                                        <Grid container justifyContent="space-between" spacing={2}
-                                            alignContent={"center"}>
-                                            <Grid item>
-                                                <Button
-                                                    variant={"contained"}
-                                                    color={"secondary"}
-                                                    onClick={() => setCloudTweets(null)}
-                                                >
-                                                    {
-                                                        keyword('twittersna_result_hide')
-                                                    }
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                        <Box m={2} />
-                                        <CustomTable
-                                            title={keyword("twittersna_result_slected_tweets")}
-                                            colums={cloudTweets.columns}
-                                            data={cloudTweets.data}
-                                            actions={goToAction}
-                                        />
-                                    </div>
+                                    cloudPosts &&
+                                    <PostViewTable snatype={snatype} setTypeValue={setcloudPosts} data={cloudPosts} downloadEnable={false} />
                                 }
                             </Box>
                         }

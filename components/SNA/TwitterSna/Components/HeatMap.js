@@ -20,6 +20,7 @@ import {downloadClick} from "../../lib/downloadClick";
 import {getDayAsString} from "../Hooks/heatMap"
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import PostViewTable from "../../Components/PostViewTable";
 
 const Plot = createPlotComponent(plotly);
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";

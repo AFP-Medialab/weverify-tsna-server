@@ -29,10 +29,10 @@ import {
     setCloudWordsResult,
     cleanCsvSnaState
   } from "../../../redux/actions/tools/crowdTangleSnaActions";
-  
+import { CT_TSV } from "../lib/CrowdTangleConstant";  
 
 const CrowdTangleSnaComponent = () => {
-    const keyword = useLoadLanguage("/components/tools/CrowdTangle.tsv")
+    const keyword = useLoadLanguage(CT_TSV)
     const dispatch = useDispatch();
     const classes = useMyStyles();
     const cardClasses = myCardStyles();
@@ -89,13 +89,13 @@ const CrowdTangleSnaComponent = () => {
         justifyContent="space-between"
         alignItems="center">
           <Grid item xs>
-              <HeaderTool name={"navbar_ct_sna"} description={"navbar_ct_sna_description"} icon={<TwitterSNAIcon style={{ fill: "#51A5B2" }} />} />
+              <HeaderTool name={keyword("navbar_ct_sna")} description={keyword("navbar_ct_sna_description")} icon={<TwitterSNAIcon style={{ fill: "#51A5B2" }} />} />
           </Grid>
         </Grid>
         <StylesProvider injectFirst>
             <Card className={cardClasses.root}>
                 <CardHeader
-                title={"cardheader_ct_parameters"}
+                title={keyword("cardheader_ct_parameters")}
                 className={classes.headerUpladedImage}/>
                  <div className={classes.root2}>
                     <CSVReader

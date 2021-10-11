@@ -1,41 +1,36 @@
-
-
-export function displayPostsInsta (filteredPost, keyword, sortedColumn) {
+export function displayPostsInsta (filteredPost, sortedColumn) {
     let columns = [];
     if (sortedColumn === "nbLikes") {
         columns = [
-            { title: keyword('ct_sna_result_date'), field: 'date'},
-            { title: keyword('ct_sna_result_username'), field: 'screen_name'},
-            { title: keyword('ct_sna_result_post'), field: 'post'},
-            { title: keyword('ct_sna_likes'), field: "nbLikes", defaultSort: "desc" },
-            { title: keyword('ct_sna_total_interactions'), field: 'total_interactions'},
+            { title: 'ct_sna_result_date', field: 'date'},
+            { title: 'ct_sna_result_username', field: 'screen_name'},
+            { title: 'ct_sna_result_post', field: 'post'},
+            { title: 'ct_sna_likes', field: "nbLikes", defaultSort: "desc" },
+            { title: 'ct_sna_total_interactions', field: 'total_interactions'},
         ];
     } else if (sortedColumn === "total_interactions") {
         columns = [
-            { title: keyword('ct_sna_result_date'), field: 'date'},
-            { title: keyword('ct_sna_result_username'), field: 'screen_name'},
-            { title: keyword('ct_sna_result_post'), field: 'post'},
-            { title: keyword('ct_sna_likes'), field: "nbLikes"},
-            { title: keyword('ct_sna_total_interactions'), field: 'total_interactions', defaultSort: "desc" },
+            { title: 'ct_sna_result_date', field: 'date'},
+            { title: 'ct_sna_result_username', field: 'screen_name'},
+            { title: 'ct_sna_result_post', field: 'post'},
+            { title: 'ct_sna_likes', field: "nbLikes"},
+            { title: 'ct_sna_total_interactions', field: 'total_interactions', defaultSort: "desc" },
         ];
     } else {
         columns = [
-            { title: keyword('ct_sna_result_date'), field: 'date', defaultSort: "asc" },
-            { title: keyword('ct_sna_result_username'), field: 'screen_name'},
-            { title: keyword('ct_sna_result_post'), field: 'post'},
-            { title: keyword('ct_sna_likes'), field: "nbLikes"},
-            { title: keyword('ct_sna_total_interactions'), field: 'total_interactions'},
-            
-            
-            
+            { title: 'ct_sna_result_date', field: 'date', defaultSort: "asc" },
+            { title: 'ct_sna_result_username', field: 'screen_name'},
+            { title: 'ct_sna_result_post', field: 'post'},
+            { title: 'ct_sna_likes', field: "nbLikes"},
+            { title: 'ct_sna_total_interactions', field: 'total_interactions'}, 
         ];
     }
 
-    let csvArr = keyword("ct_sna_result_date") + ',' 
-                + keyword("ct_sna_result_username") + ',' 
-                + keyword("ct_sna_result_post") + ',' 
-                + keyword('ct_sna_likes') + ',' 
-                + keyword("ct_sna_total_interactions") + ',' 
+    let csvArr = "ct_sna_result_date" + ',' 
+                + "ct_sna_result_username" + ',' 
+                + "ct_sna_result_post" + ',' 
+                + 'ct_sna_likes' + ',' 
+                + "ct_sna_total_interactions" + ',' 
                
     
     let resData = [];
@@ -52,7 +47,6 @@ export function displayPostsInsta (filteredPost, keyword, sortedColumn) {
         );
         
     });
-    
 
     return {
         data: resData,
@@ -60,44 +54,45 @@ export function displayPostsInsta (filteredPost, keyword, sortedColumn) {
         csvArr: csvArr,
     };
 };
-export function displayPostsFb (filteredPost, keyword, sortedColumn) {
+
+export function displayPostsFb (filteredPost, sortedColumn) {
   let columns = [];
   if (sortedColumn === "nbLikes") {
       columns = [
-          { title: keyword('ct_sna_result_date'), field: 'date'},
-          { title: keyword('ct_sna_result_username'), field: 'screen_name'},
-          { title: keyword('ct_sna_result_post'), field: 'post'/*, render: getPostWithClickableLink*/ },
-          { title: keyword('ct_sna_likes'), field: "nbLikes", defaultSort: "desc" },
-          { title: keyword('ct_sna_shares'), field: 'shares'},
-          { title: keyword('ct_sna_total_interactions'), field: 'total_interactions'},
+          { title: 'ct_sna_result_date', field: 'date'},
+          { title: 'ct_sna_result_username', field: 'screen_name'},
+          { title: 'ct_sna_result_post', field: 'post'/*, render: getPostWithClickableLink*/ },
+          { title: 'ct_sna_likes', field: "nbLikes", defaultSort: "desc" },
+          { title: 'ct_sna_shares', field: 'shares'},
+          { title: 'ct_sna_total_interactions', field: 'total_interactions'},
       ];
   } else if (sortedColumn === "total_interactions") {
       columns = [
-          { title: keyword('ct_sna_result_date'), field: 'date'},
-          { title: keyword('ct_sna_result_username'), field: 'screen_name'},
-          { title: keyword('ct_sna_result_post'), field: 'post'/*, render: getPostWithClickableLink*/ },
-          { title: keyword('ct_sna_likes'), field: "nbLikes"},
-          { title: keyword('ct_sna_shares'), field: 'shares'},
-          { title: keyword('ct_sna_total_interactions'), field: 'total_interactions', defaultSort: "desc" },
+          { title: 'ct_sna_result_date', field: 'date'},
+          { title: 'ct_sna_result_username', field: 'screen_name'},
+          { title: 'ct_sna_result_post', field: 'post'/*, render: getPostWithClickableLink*/ },
+          { title: 'ct_sna_likes', field: "nbLikes"},
+          { title: 'ct_sna_shares', field: 'shares'},
+          { title: 'ct_sna_total_interactions', field: 'total_interactions', defaultSort: "desc" },
       ];
   } else {
       columns = [
-          { title: keyword('ct_sna_result_date'), field: 'date', defaultSort: "asc" },
-          { title: keyword('ct_sna_result_username'), field: 'screen_name'},
-          { title: keyword('ct_sna_result_post'), field: 'post'/*, render: getPostWithClickableLink*/ },
-          { title: keyword('ct_sna_likes'), field: "nbLikes"},
-          { title: keyword('ct_sna_shares'), field: 'shares'},
-          { title: keyword('ct_sna_total_interactions'), field: 'total_interactions'},
+          { title: 'ct_sna_result_date', field: 'date', defaultSort: "asc" },
+          { title: 'ct_sna_result_username', field: 'screen_name'},
+          { title: 'ct_sna_result_post', field: 'post'/*, render: getPostWithClickableLink*/ },
+          { title: 'ct_sna_likes', field: "nbLikes"},
+          { title: 'ct_sna_shares', field: 'shares'},
+          { title: 'ct_sna_total_interactions', field: 'total_interactions'},
           
       ];
   }
 
-  let csvArr = keyword("ct_sna_result_date") + ',' 
-              + keyword("ct_sna_result_username") + ',' 
-              + keyword("ct_sna_result_post") + ',' 
-              + keyword('ct_sna_likes') + ',' 
-              + keyword("ct_sna_total_interactions") + ',' 
-              + keyword("ct_sna_shares") +'\n';
+  let csvArr = "ct_sna_result_date" + ',' 
+              + "ct_sna_result_username" + ',' 
+              + "ct_sna_result_post" + ',' 
+              + 'ct_sna_likes' + ',' 
+              + "ct_sna_total_interactions" + ',' 
+              + "ct_sna_shares" +'\n';
   
   let resData = [];
   filteredPost.forEach(postObj => {

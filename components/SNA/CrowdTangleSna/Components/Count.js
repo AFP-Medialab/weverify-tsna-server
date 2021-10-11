@@ -11,13 +11,10 @@ import React, { useEffect, useState } from "react";
 import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfoFB";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {useSelector} from "react-redux";
-import { CT_TSV } from "../../lib/CrowdTangleConstant";
-
-
 
 export default function Count({ result, onClickInfoLabel}) {
-  const snatype = useSelector((state) => state.ctSna.result.snaType);
-  const keyword = useLoadLanguage(CT_TSV);
+  const snatsv = useSelector((state) => state.sna.tsv);
+  const keyword = useLoadLanguage(snatsv);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   const [state, setState] = useState({

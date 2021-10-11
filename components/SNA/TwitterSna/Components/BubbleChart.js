@@ -13,7 +13,7 @@ import { displayPosts } from "../../lib/displayTweets";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import plotly from 'plotly.js-dist';
 import {createBubbleChartOfMostActiveUsers} from "../Hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
@@ -26,7 +26,6 @@ const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function BubbleChart(props) {
     
-    const dispatch = useDispatch();
     const [bubbleTweets, setBubbleTweets] = useState(null);
     const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
