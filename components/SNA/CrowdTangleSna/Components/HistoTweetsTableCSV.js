@@ -8,39 +8,34 @@ import CustomTable from "../../../shared/CustomTable/CustomTable";
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
+import { CT_TSV } from "../../lib/CrowdTangleConstant";
+
+
+function getLabelsColumns(keyword, columns){
+  
+  const labeledColumns = columns.map((obj,index ) => {
+      return {...obj, title: keyword(obj.title)};
+  });
+  return labeledColumns;
+}
 
 export default function HistoTweetsTable(props) {
   
   const dispatch = useDispatch();
-  const snatype = useSelector((state) => state.ctSna.result.snaType);
-  const keyword = useLoadLanguage(snatype.tsv);
-  const typer = useSelector((state) => state.ctSna.result.snaType.snaType)
-
-  var goToAction;
-
-  if(typer=="INSTA"){
-    goToAction = [
-      {
-       icon: InstagramIcon,
-        tooltip: keyword("twittersna_result_go_to_tweet"),
-        onClick: (event, rowData) => {
-          window.open(rowData.link.props.href, "_blank");
-        },
+  const keyword = useLoadLanguage(CT_TSV);
+  const type = useSelector((state) => state.ctSna.result.snaType.snaType)
+ 
+  var goToAction = [
+    {
+      icon: (type === "INSTA" ? InstagramIcon: FacebookIcon),
+      tooltip: keyword("ct_result_go_to_tweet"),
+      onClick: (event, rowData) => {
+        window.open(rowData.link.props.href, "_blank");
       },
-    ];
-  }
-  else {
-    goToAction = [
-      {
-       icon: FacebookIcon,
-        tooltip: keyword("twittersna_result_go_to_tweet"),
-        onClick: (event, rowData) => {
-         window.open(rowData.link.props.href, "_blank");
-        },
-      },
-    ];
-  }
+    },
+  ];
 
+  var columns = getLabelsColumns(keyword, props.data.columns);
 
   return (
     <div>
@@ -58,15 +53,15 @@ export default function HistoTweetsTable(props) {
               dispatch(setCSVHistoview(props.from, null)) 
             }
             >
-            {keyword("twittersna_result_hide")}
+            {keyword("sna_result_hide")}
           </Button>
         </Grid>
        
       </Grid>
       <Box m={2} />
       <CustomTable
-        title={keyword("twittersna_result_slected_tweets")}
-        colums={props.data.columns}
+        title={keyword("ct_result_selected_posts")}
+        columns={columns}
         data={props.data.data}
         actions={goToAction}
       />

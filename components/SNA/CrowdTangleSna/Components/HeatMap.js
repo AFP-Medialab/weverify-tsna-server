@@ -6,60 +6,23 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import plotly from 'plotly.js-dist';
 import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import createPlotComponent from 'react-plotly.js/factory';
 import {onHeatMapClick} from "./hooks/heatMap"
-import InstagramIcon from '@material-ui/icons/Instagram';
-import FacebookIcon from '@material-ui/icons/Facebook';
-
+import PostViewTable  from "../../Components/PostViewTable";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 
 const Plot = createPlotComponent(plotly);
 
 export default function HeatMap (props) { 
-    const dispatch = useDispatch();
     const snatype = useSelector((state) => state.ctSna.result.snaType);
     const keyword = useLoadLanguage(snatype.tsv);
     const classes = useMyStyles();
-    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
-  
-    var goToAction;
-    if(typer=="INSTA"){
-      goToAction = [
-        {
-         icon: InstagramIcon,
-          tooltip: keyword("twittersna_result_go_to_tweet"),
-          onClick: (event, rowData) => {
-            window.open(rowData.link.props.href, "_blank");
-
-          },
-        },
-      ];
-    }
-    else {
-      goToAction = [
-        {
-         icon: FacebookIcon,
-          tooltip: keyword("twittersna_result_go_to_tweet"),
-          onClick: (event, rowData) => {
-            window.open(rowData.link.props.href, "_blank");
-
-          },
-        },
-      ];
-    }
-
-
-
-
-
-    const [heatMapTweets, setheatMapTweets] = useState(null);
+   
+    const [heatMapTweets, setHeatMapTweets] = useState(null);
 
     const [state, setState] = useState(
         {
@@ -75,17 +38,17 @@ export default function HeatMap (props) {
     }, [props.result.heatMap]);
 
     useEffect(() => {
-        setheatMapTweets(null);
+        setHeatMapTweets(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.request])
-
+    console.log("heat ", heatMapTweets)
 
     return (
         <Accordion>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
             >
-                <Typography className={classes.heading}>{keyword("heatmap_chart_title")}</Typography>
+                <Typography className={classes.heading}>{keyword("ct_heatmap_chart_title")}</Typography>
             </AccordionSummary>
             <AccordionDetails>
                 {
@@ -93,14 +56,14 @@ export default function HeatMap (props) {
                     <Box alignItems="center" justifyContent="center" width={"100%"}>
                         {
                             ((props.result.heatMap.isAllnul) &&
-                                <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>) ||
+                                <Typography variant={"body2"}>{keyword("ct_sna_no_data")}</Typography>) ||
                             <div>
                                 <Plot
                                     style={{ width: '100%', height: "450px" }}
                                     data={props.result.heatMap.plot}
                                     config={props.result.heatMap.config}
                                     layout={props.result.heatMap.layout}
-                                    onClick={(e) => onHeatMapClick(e, props.result, setheatMapTweets, keyword)}
+                                    onClick={(e) => onHeatMapClick(e, props.result, setHeatMapTweets)}
                                 />
                                 <Box m={1}/>
                                 <OnClickInfo keyword={"twittersna_heatmap_tip"}/>
@@ -108,28 +71,7 @@ export default function HeatMap (props) {
                         }
                         {
                             heatMapTweets &&
-                            <div>
-                                <Grid container justifyContent="space-between" spacing={2}
-                                    alignContent={"center"}>
-                                    <Grid item>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"secondary"}
-                                            onClick={() => setheatMapTweets(null)}>
-                                            {
-                                                keyword('twittersna_result_hide')
-                                            }
-                                        </Button>
-                                    </Grid>
-                                    
-                                </Grid>
-                                <Box m={2} />
-                                <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                    colums={heatMapTweets.columns}
-                                    data={heatMapTweets.data}
-                                    actions={goToAction}
-                                />
-                            </div>
+                            <PostViewTable snatype={snatype} setTypeValue={setHeatMapTweets} data={heatMapTweets} downloadEnable={false} />
                         }
                     </Box>
                 }

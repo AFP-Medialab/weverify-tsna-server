@@ -57,7 +57,7 @@ export default function cloudChart (props) {
                     <br></br><br></br>
                     
                     <CustomTableURL
-                        title={keyword("twittersna_result_url_in_tweets")}
+                        title={keyword("ct_sna_result_url_in_posts")}
                         colums={props.result.urls.columns}
                         data={props.result.urls.data}
                         actions={[
@@ -68,7 +68,7 @@ export default function cloudChart (props) {
                                                                 MuiButton-containedPrimary"
                                                     >
                                                     {
-                                                        keyword('twittersna_result_submit_twitter_sna')
+                                                        (snatype.snaType=="INSTA"? keyword('ct_sna_result_submit_insta_sna') : keyword('ct_sna_result_submit_fb_sna'))
                                                     }
                                                     </span>),
                                 tooltip: keyword("twittersna_result_submit_twitter_sna"),

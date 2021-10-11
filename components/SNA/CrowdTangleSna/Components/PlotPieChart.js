@@ -365,7 +365,7 @@ return (
                                             color={"primary"}
                                             onClick={() => downloadAsPNG(obj.title, keyword, filesNames)}>
                                             {
-                                                keyword('twittersna_result_download_png')
+                                                keyword('ct_sna_result_download_png')
                                             }
                                         </Button>
 
@@ -377,7 +377,7 @@ return (
                                             color={"primary"}
                                             onClick={() => downloadAsSVG(obj.title, keyword, filesNames)}>
                                             {
-                                                keyword('twittersna_result_download_svg')
+                                                keyword('ct_sna_result_download_svg')
                                             }
                                         </Button>
                                     </Grid>
@@ -405,38 +405,6 @@ return (
                                     data={charts[index]} 
                                     from={from+ "_"+ index} 
                                 />
-                                /*
-                                <div>
-                                    <Grid container justify="space-between" spacing={2}
-                                        alignContent={"center"}>
-                                        <Grid item>
-                                            <Button
-                                                variant={"contained"}
-                                                color={"secondary"}
-                                                onClick={() => hideTweetsView(index)}>
-                                                {
-                                                    keyword('twittersna_result_hide')
-                                                }
-                                            </Button>
-                                        </Grid>
-                                        <Grid item>
-                                            <Button
-                                                variant={"contained"}
-                                                color={"primary"}
-                                                onClick={() => downloadClick(pieCharts[index].csvArr, (index === 3) ? "mentioned_" + pieCharts[index].selected : pieCharts[index].selected)}>
-                                                {
-                                                    keyword('twittersna_result_download')
-                                                }
-                                            </Button>
-                                        </Grid>
-                                    </Grid>
-                                    <Box m={2} />
-                                    <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                        colums={pieCharts[index].columns}
-                                        data={pieCharts[index].data}
-                                        actions={goToTweetAction}
-                                    />
-                                </div>*/
                             }
                         </Box>
                     </AccordionDetails>

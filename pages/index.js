@@ -34,7 +34,7 @@ const Index = () => {
   },
   ];
   return (
-    <Layout keyword={keyword}>
+    <Layout title={"SOCIAL NETWORK ANALYSIS"}>
       <Head>
         <title>WeVerify Twitter SNA</title>
         <link rel="icon" href="/favicon.ico" />

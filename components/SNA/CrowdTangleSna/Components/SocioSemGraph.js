@@ -6,36 +6,31 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
-
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-
 import {displayPostsInsta} from "./lib/displayPosts"
 import {displayPostsFb} from "./lib/displayPosts"
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
 import {createGraphWhenClickANode} from "../../../shared/lib/sigmaGraph";
-import InstagramIcon from '@material-ui/icons/Instagram';
-import FacebookIcon from '@material-ui/icons/Facebook';
+
+import PostViewTable  from "../../Components/PostViewTable";
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function SocioSemGraph (props) {
     
     const snatype = useSelector((state) => state.ctSna.result.snaType);
     const keyword = useLoadLanguage(snatype.tsv);
-    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
+    const type =useSelector((state) => state.ctSna.result.snaType.snaType)
 
     const classes = useMyStyles();
 
     const [socioSemantic4ModeGraphTweets, setSocioSemantic4ModeGraphTweets] = useState(null);
     const [socioSemantic4ModeGraphReset, setSocioSemantic4ModeGraphReset] = useState(null);
     const [socioSemantic4ModeGraphClickNode, setSocioSemantic4ModeGraphClickNode] = useState(null);
-   // const request = useSelector(state => state.twitterSna.request);
 
     const [state, setState] = useState(
         {
@@ -50,29 +45,17 @@ export default function SocioSemGraph (props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.result.socioSemantic4ModeGraph]);
 
-    /*
-    useEffect(() => {
-        setSocioSemantic4ModeGraphTweets(null);
-        setSocioSemantic4ModeGraphReset(null);
-        setSocioSemantic4ModeGraphClickNode(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [request])
-*/
     const onClickNodeSocioSemantic4ModeGraph = (data) => {
 
         let initGraph = {
             nodes: data.data.renderer.graph.nodes(),
             edges: data.data.renderer.graph.edges()
         }
-       // console.log("nodes ",data.data.renderer.graph.nodes())
-        //console.log("edges ",data.data.renderer.graph.edges())
-
-
+      
         setSocioSemantic4ModeGraphClickNode(createGraphWhenClickANode(data));
 
         setSocioSemantic4ModeGraphReset(initGraph);
 
-        //console.log("HASHH ", data.data.node.type)
 
         if (data.data.node.type === "Hashtag") {
             let selectedHashtag = data.data.node.id;
@@ -104,7 +87,7 @@ export default function SocioSemGraph (props) {
                   }
             }
         }
-        if(typer==="FB"){
+        if(type==="FB"){
 
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
             .map((tweet) => { return tweet.message.toLowerCase().includes(selectedHashtag) });
@@ -124,15 +107,15 @@ export default function SocioSemGraph (props) {
           //  console.log("FILTER-3 ",filteredTweets4.length)
          //   console.log("FILTER-3 ", filteredTweets4)
             }
-            if(typer==="FB"){
-                let dataToDisplay = displayPostsFb(filteredTweets4, keyword);
+            if(type==="FB"){
+                let dataToDisplay = displayPostsFb(filteredTweets4);
              //   console.log("dataToDisplay ", dataToDisplay)
         
                 dataToDisplay["selected"] = selectedHashtag;
                 setSocioSemantic4ModeGraphTweets(dataToDisplay);
                }
                else{
-                let dataToDisplay = displayPostsInsta(filteredTweets4, keyword);
+                let dataToDisplay = displayPostsInsta(filteredTweets4);
               //  console.log("dataToDisplay ", dataToDisplay)
         
                 dataToDisplay["selected"] = selectedHashtag;
@@ -169,7 +152,7 @@ export default function SocioSemGraph (props) {
                   }
             }
         }
-        if(typer==="FB"){
+        if(type==="FB"){
 
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
             .map((tweet) => { return tweet.message.toLowerCase().includes(selectedUser) });
@@ -189,14 +172,14 @@ export default function SocioSemGraph (props) {
           //  console.log("FILTER-3 ",filteredTweets4.length)
          //   console.log("FILTER-3 ", filteredTweets4)
             }
-            if(typer==="FB"){
-                let dataToDisplay = displayPostsFb(filteredTweets4, keyword);
+            if(type==="FB"){
+                let dataToDisplay = displayPostsFb(filteredTweets4);
         
                 dataToDisplay["selected"] = selectedUser;
                 setSocioSemantic4ModeGraphTweets(dataToDisplay);
                }
                else{
-                let dataToDisplay = displayPostsInsta(filteredTweets4, keyword);
+                let dataToDisplay = displayPostsInsta(filteredTweets4);
               //  console.log("dataToDisplay ", dataToDisplay)
         
                 dataToDisplay["selected"] = selectedUser;
@@ -233,7 +216,7 @@ export default function SocioSemGraph (props) {
                   }
             }
         }
-        if(typer==="FB"){
+        if(type==="FB"){
 
             let filteredTweets3 = state.result.data.filter(tweet => tweet.message !== undefined && tweet.message !==null)
             .map((tweet) => { return tweet.message.includes(selectedURL) });
@@ -253,15 +236,15 @@ export default function SocioSemGraph (props) {
           //  console.log("FILTER-3 ",filteredTweets4.length)
          //   console.log("FILTER-3 ", filteredTweets4)
             }
-            if(typer==="FB"){
-                let dataToDisplay = displayPostsFb(filteredTweets4, keyword);
+            if(type==="FB"){
+                let dataToDisplay = displayPostsFb(filteredTweets4);
              //   console.log("dataToDisplay ", dataToDisplay)
         
                 dataToDisplay["selected"] = selectedURL;
                 setSocioSemantic4ModeGraphTweets(dataToDisplay);
                }
                else{
-                let dataToDisplay = displayPostsInsta(filteredTweets4, keyword);
+                let dataToDisplay = displayPostsInsta(filteredTweets4);
               //  console.log("dataToDisplay ", dataToDisplay)
         
                 dataToDisplay["selected"] = selectedURL;
@@ -269,60 +252,7 @@ export default function SocioSemGraph (props) {
                }
             
         }
-        /*
-        else if (data.data.node.type === "RetweetWC") {
-            let selectedUser = data.data.node.id.replace("RT:@", "");
-            let filteredTweets = props.result.tweets.filter(tweet => 
-                tweet._source.quoted_status_id_str !== undefined 
-                && tweet._source.quoted_status_id_str !== null
-                && tweet._source.screen_name.toLowerCase() === selectedUser);
-            let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
-            dataToDisplay["selected"] = data.data.node.id;
-            setSocioSemantic4ModeGraphTweets(dataToDisplay);
-        } else if (data.data.node.type === "TopRT") {
-            let selectedUser = data.data.node.id.replace("TopRT:", "");
-            let filteredTweets = props.result.tweets.filter(tweet => 
-                tweet._source.screen_name !== undefined 
-                && tweet._source.screen_name !== null
-                && tweet._source.screen_name.toLowerCase() === selectedUser);
-            let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
-            dataToDisplay["selected"] = data.data.node.id;
-            setSocioSemantic4ModeGraphTweets(dataToDisplay);
-        } else if (data.data.node.type === "Reply") {
-            let selectedUser = data.data.node.id.replace("Rpl:@", "");
-            let filteredTweets = props.result.tweets.filter(tweet => 
-                tweet._source.in_reply_to_screen_name !== undefined 
-                && tweet._source.in_reply_to_screen_name !== null
-                && tweet._source.screen_name.toLowerCase() === selectedUser);
-            let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
-            dataToDisplay["selected"] = data.data.node.id;
-            setSocioSemantic4ModeGraphTweets(dataToDisplay);
-        } */
-    }
-
-    var goToAction;
-  
-    if(typer=="INSTA"){
-      goToAction = [
-        {
-         icon: InstagramIcon,
-          tooltip: keyword("twittersna_result_go_to_tweet"),
-          onClick: (event, rowData) => {
-            window.open(rowData.link.props.href, "_blank");
-          },
-        },
-      ];
-    }
-    else {
-      goToAction = [
-        {
-         icon: FacebookIcon,
-          tooltip: keyword("twittersna_result_go_to_tweet"),
-          onClick: (event, rowData) => {
-           window.open(rowData.link.props.href, "_blank");
-          },
-        },
-      ];
+      
     }
 
     const onClickStageSocioSemantic4ModeGraph = (e) => {
@@ -337,7 +267,7 @@ export default function SocioSemGraph (props) {
         <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
         >
-            <Typography className={classes.heading}>{keyword("sosem_4mode_graph_title")}</Typography>
+            <Typography className={classes.heading}>{keyword("ct_sosem_4mode_graph_title")}</Typography>
         </AccordionSummary>
         <AccordionDetails>
         {
@@ -349,7 +279,7 @@ export default function SocioSemGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.socioSemantic4ModeGraph.data.nodes}
-                                    filename={"Nodes_" + keyword("sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
+                                    filename={"Nodes_" + keyword("ct_sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Nodes"
@@ -359,7 +289,7 @@ export default function SocioSemGraph (props) {
                             <Grid item>
                                 <CSVLink
                                     data={props.result.socioSemantic4ModeGraph.data.edges}
-                                    filename={"Edges_" + keyword("sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
+                                    filename={"Edges_" + keyword("ct_sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                                     {
                                         "CSV Edges"
@@ -442,34 +372,13 @@ export default function SocioSemGraph (props) {
                     <Box m={2}/>
                     {
                         socioSemantic4ModeGraphTweets &&
-                        <div>
-                            <Grid container justifyContent="space-between" spacing={2}
-                                alignContent={"center"}>
-                                <Grid item>
-                                    <Button
-                                        variant={"contained"}
-                                        color={"secondary"}
-                                        onClick={() => setSocioSemantic4ModeGraphTweets(null)}>
-                                        {
-                                            keyword('twittersna_result_hide')
-                                        }
-                                    </Button>
-                                </Grid>
-                                
-                            </Grid>
-                            <Box m={2} />
-                            <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                colums={socioSemantic4ModeGraphTweets.columns}
-                                data={socioSemantic4ModeGraphTweets.data}
-                                actions={goToAction}
-                            />
-                        </div>
+                        <PostViewTable snatype={snatype} setTypeValue={setSocioSemantic4ModeGraphTweets} data={socioSemantic4ModeGraphTweets} downloadEnable={false} />
                     }
                 </div>
             }
             {
                 props.result.socioSemantic4ModeGraph && props.result.socioSemantic4ModeGraph.data.nodes.length === 0 &&
-                <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>
+                <Typography variant={"body2"}>{keyword("ct_sna_no_data")}</Typography>
             }
             {
                 props.result.socioSemantic4ModeGraph === undefined &&

@@ -13,7 +13,7 @@ const TwitterSnaIndex = () => {
   const keyword = useLoadLanguage(tsv);
   
   return (
-    <Layout keyword={keyword}>
+    <Layout title={keyword("twitter_sna_title")}>
     <Head>
       <title>WeVerify Twitter SNA</title>
       <link rel="icon" href="/favicon.ico" />
