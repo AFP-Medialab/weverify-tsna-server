@@ -1,7 +1,6 @@
 import {
   CT_SNA_CLEAN,
   CT_COUNT_SET_RESULTS,
-  CT_SNA_SET_TYPE,
   CT_HISTOGRAM_SET_RESULTS,
   CT_PIECHART_SET_RESULTS,
   CT_IS_LOADING,
@@ -9,9 +8,6 @@ import {
   CT_HISTOVIEW_RESULT,
   CT_PIE_CHART_RESULT,
   CT_BUBBLE_CHART_RESULT,
-  CT_SNA_USER_PROFILE_MOST_ACTIVE,
-  CT_SET_HEAP_MAP_RESULT,
-  SET_CT_SNA_BUBBLE_CHART_RESULTS,
   SET_CT_SNA_HEATMAP_RESULTS,
   SET_CT_COHASHTAG_RESULTS,
   SET_CT_URLS_RESULTS,
@@ -99,11 +95,6 @@ const crowdTangleSnaReducer = (state = defaultState, { type, payload }) => {
           loading: payload.loading,
           loadingMessage: payload.loadingMessage
       }
-    case CT_SNA_SET_TYPE:
-      return {
-        ...state,
-        result: { ...state.result, snaType: payload },
-      };
       //OK
     case CT_COUNT_SET_RESULTS:
       return {

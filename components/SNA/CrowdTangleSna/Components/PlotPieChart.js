@@ -24,8 +24,8 @@ let from = "PLOT_PIE_CHART";
 
 
 export default function PlotPieChart (props) { 
-    const snatype = useSelector((state) => state.ctSna.result.snaType);
-    const keyword = useLoadLanguage(snatype.tsv);
+    const sna = useSelector((state) => state.sna);
+    const keyword = useLoadLanguage(sna.tsv);
     const dispatch = useDispatch();  
     
 
@@ -120,7 +120,7 @@ export default function PlotPieChart (props) {
             );
         }
     }
-    const typer =useSelector((state) => state.ctSna.result.snaType.snaType)
+    const typer = sna.type;
       //   console.log("PROPS ",typer)
     
     var onDonutsClick=(null,null);

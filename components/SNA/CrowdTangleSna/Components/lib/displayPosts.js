@@ -22,10 +22,7 @@ export function displayPostsInsta (filteredPost, sortedColumn) {
             { title: 'ct_sna_result_username', field: 'screen_name'},
             { title: 'ct_sna_result_post', field: 'post'},
             { title: 'ct_sna_likes', field: "nbLikes"},
-            { title: 'ct_sna_total_interactions', field: 'total_interactions'},
-            
-            
-            
+            { title: 'ct_sna_total_interactions', field: 'total_interactions'}, 
         ];
     }
 

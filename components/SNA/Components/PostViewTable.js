@@ -34,7 +34,7 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
     const keyword = useLoadLanguage(snatype.tsv);
     var goToAction = [
         {
-          icon: getIcon(snatype.snaType),
+          icon: getIcon(snatype.type),
           tooltip: keyword("sna_result_go_to_post"),
           onClick: (event, rowData) => {
             window.open(rowData.link.props.href, "_blank");

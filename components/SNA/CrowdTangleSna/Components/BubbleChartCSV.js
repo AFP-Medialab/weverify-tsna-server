@@ -26,10 +26,10 @@ export default function BubbleChart(props) {
     const [bubbleTweets, setBubbleTweets] = useState(null);
     //const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
-    const snatype = useSelector((state) => state.ctSna.result.snaType);
+    const sna = useSelector((state) => state.sna);
 
-    console.log("SNATYPE ", snatype)
-    const keyword = useLoadLanguage(snatype.tsv);
+    console.log("SNATYPE ", sna)
+    const keyword = useLoadLanguage(sna.tsv);
 
     const classes = useMyStyles();
 
@@ -117,7 +117,7 @@ export default function BubbleChart(props) {
                         }
                         {
                             bubbleTweets &&
-                            <PostViewTable snatype={snatype} setTypeValue={setBubbleTweets} data={bubbleTweets} downloadEnable={false} />
+                            <PostViewTable snatype={sna} setTypeValue={setBubbleTweets} data={bubbleTweets} downloadEnable={false} />
                         }
                     </div>
                 }

@@ -18,8 +18,8 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 const Plot = createPlotComponent(plotly);
 
 export default function HeatMap (props) { 
-    const snatype = useSelector((state) => state.ctSna.result.snaType);
-    const keyword = useLoadLanguage(snatype.tsv);
+    const sna = useSelector((state) => state.sna);
+    const keyword = useLoadLanguage(sna.tsv);
     const classes = useMyStyles();
    
     const [heatMapTweets, setHeatMapTweets] = useState(null);
@@ -71,7 +71,7 @@ export default function HeatMap (props) {
                         }
                         {
                             heatMapTweets &&
-                            <PostViewTable snatype={snatype} setTypeValue={setHeatMapTweets} data={heatMapTweets} downloadEnable={false} />
+                            <PostViewTable snatype={sna} setTypeValue={setHeatMapTweets} data={heatMapTweets} downloadEnable={false} />
                         }
                     </Box>
                 }

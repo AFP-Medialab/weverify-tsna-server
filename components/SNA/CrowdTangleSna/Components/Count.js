@@ -13,8 +13,8 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {useSelector} from "react-redux";
 
 export default function Count({ result, onClickInfoLabel}) {
-  const snatype = useSelector((state) => state.ctSna.result.snaType.tsv);
-  const keyword = useLoadLanguage(snatype);
+  const snatsv = useSelector((state) => state.sna.tsv);
+  const keyword = useLoadLanguage(snatsv);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   const [state, setState] = useState({

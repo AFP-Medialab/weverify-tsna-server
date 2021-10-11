@@ -15,7 +15,7 @@ import {
   } from './commonBuildResult'
 import { INSTA_SNA_TYPE } from "../../../../shared/hooks/SnaTypes";
 
-const INSTA_SNA= {snaType:INSTA_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv" }
+const INSTA_SNA = {type:INSTA_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv" }
 export const useInstagramResult = (data, keyword, dispatch) => {
     dispatch(setSnaType(INSTA_SNA));
     buildFirstInstaResult(data, dispatch, keyword);

@@ -22,9 +22,9 @@ import PostViewTable  from "../../Components/PostViewTable";
 
 export default function SocioSemGraph (props) {
     
-    const snatype = useSelector((state) => state.ctSna.result.snaType);
-    const keyword = useLoadLanguage(snatype.tsv);
-    const type =useSelector((state) => state.ctSna.result.snaType.snaType)
+    const sna = useSelector((state) => state.sna);
+    const keyword = useLoadLanguage(sna.tsv);
+    const type = sna.type;
 
     const classes = useMyStyles();
 
@@ -372,7 +372,7 @@ export default function SocioSemGraph (props) {
                     <Box m={2}/>
                     {
                         socioSemantic4ModeGraphTweets &&
-                        <PostViewTable snatype={snatype} setTypeValue={setSocioSemantic4ModeGraphTweets} data={socioSemantic4ModeGraphTweets} downloadEnable={false} />
+                        <PostViewTable snatype={sna} setTypeValue={setSocioSemantic4ModeGraphTweets} data={socioSemantic4ModeGraphTweets} downloadEnable={false} />
                     }
                 </div>
             }

@@ -28,9 +28,9 @@ export default function HashtagGraph (props) {
 
     const dispatch = useDispatch();
 
-    const snatype = useSelector((state) => state.ctSna.result.snaType);
-    const keyword = useLoadLanguage(snatype.tsv);
-    const type =useSelector((state) => state.ctSna.result.snaType.snaType)
+    const sna = useSelector((state) => state.sna);
+    const keyword = useLoadLanguage(sna.tsv);
+    const type = sna.type;
 
     const classes = useMyStyles();
 
@@ -284,7 +284,7 @@ export default function HashtagGraph (props) {
                     <Box m={2} />
                     {
                         coHashtagGraphTweets &&
-                        <PostViewTable snatype={snatype} setTypeValue={setCoHashtagGraphTweets} data={coHashtagGraphTweets} downloadEnable={false} />
+                        <PostViewTable snatype={sna} setTypeValue={setCoHashtagGraphTweets} data={coHashtagGraphTweets} downloadEnable={false} />
                     }
                 </div>
             }

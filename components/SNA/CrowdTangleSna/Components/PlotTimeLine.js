@@ -24,9 +24,9 @@ let from = "PLOT_LINE";
 
 
 export default function PlotTimeLine(props){
-  const snatype = useSelector((state) => state.ctSna.result.snaType);
+  const sna = useSelector((state) => state.sna);
 
-    const keyword = useLoadLanguage(CT_TSV);
+    const keyword = useLoadLanguage(sna.tsv);
     const dispatch = useDispatch();
     //HISTOGRAM
     const [histoVisible, setHistoVisible] = useState(true);
@@ -62,14 +62,14 @@ export default function PlotTimeLine(props){
             if (filteredPost[0].facebook_id){
                 console.log("FACEBOOK")
                 dispatch(
-                    setCSVHistoview(from, displayPostsFb(filteredPost, keyword)));
+                    setCSVHistoview(from, displayPostsFb(filteredPost)));
 
             }
             else
             {
                 console.log("INSTA")
                 dispatch(
-                    setCSVHistoview(from, displayPostsInsta(filteredPost, keyword)));
+                    setCSVHistoview(from, displayPostsInsta(filteredPost)));
 
  
             }

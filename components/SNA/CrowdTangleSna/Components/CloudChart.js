@@ -30,10 +30,10 @@ export default function cloudChart (props) {
 
     //var tsv = "/components/NavItems/tools/TwitterSna.tsv";
     //const keyword = useLoadLanguage(tsv);
-    const snatype = useSelector((state) => state.ctSna.result.snaType);
+    const snatype = useSelector((state) => state.sna);
     const keyword = useLoadLanguage(snatype.tsv);
     const classes = useMyStyles();
-    const type =useSelector((state) => state.ctSna.result.snaType.snaType)
+    const type = snatype.type;
 
 
     const [filesNames, setfilesNames] = useState(null);

@@ -8,7 +8,6 @@ import CustomTable from "../../../shared/CustomTable/CustomTable";
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
-import { CT_TSV } from "../../lib/CrowdTangleConstant";
 
 
 function getLabelsColumns(keyword, columns){
@@ -22,8 +21,9 @@ function getLabelsColumns(keyword, columns){
 export default function HistoTweetsTable(props) {
   
   const dispatch = useDispatch();
-  const keyword = useLoadLanguage(CT_TSV);
-  const type = useSelector((state) => state.ctSna.result.snaType.snaType)
+  const type = useSelector((state) => state.sna.type)
+  const tsv = useSelector((state) => state.sna.tsv)
+  const keyword = useLoadLanguage(tsv);
  
   var goToAction = [
     {

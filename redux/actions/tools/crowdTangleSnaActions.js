@@ -1,7 +1,6 @@
 import {
   CT_SNA_CLEAN,
   CT_COUNT_SET_RESULTS,
-  CT_SNA_SET_TYPE,
   CT_HISTOGRAM_SET_RESULTS,
   CT_PIECHART_SET_RESULTS,
   CT_IS_LOADING,
@@ -19,6 +18,8 @@ import {
   CT_PROCESS_MAX_STAGE,
   CT_PROCESS_STAGE
 } from "../types/crowdTangleSnaTypes";
+
+import { SNA_SET_TYPE } from "../types/snaCommunTypes";
 
 export const cleanCsvSnaState = () => {
   return {
@@ -50,13 +51,6 @@ export const setCountResult = (count) => {
       payload : count,
   };
 };
-export const setSnaType = (type) => {
-  return {
-      type : CT_SNA_SET_TYPE,
-      payload : type,
-  };
-  
-};
 
 export const setHistogramResult = (result) => {
   return {
@@ -73,6 +67,12 @@ export const setPieChartsResult = (result) => {
   
 };
 
+export const setSnaType = (snaType) => {
+  return {
+      type : SNA_SET_TYPE,
+      payload : snaType,
+  };
+};
 export const setCSVLoading = (bool, message) => {
   return {
     type: CT_IS_LOADING,
