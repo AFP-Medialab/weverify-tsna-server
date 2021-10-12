@@ -43,7 +43,7 @@ import HeaderTool from "../HeaderTool/HeaderTool";
 import { StylesProvider } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import TwitterSNAIcon from '../../../images/SVG/DataAnalysis/Twitter_sna.svg';
+import TwitterSNAIcon from '../../../images/SVG/DataAnalysis/Twitter_sna_big.svg';
 import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
 
 //keyword from /components/NavItems/tools/TwitterSna.tsv
@@ -386,6 +386,7 @@ const TwitterSna = ({keyword}) => {
                   value={since}
                   handleChange={handleSinceDateChange}
                   error={sinceError}
+                  
                 />
               </Grid>
               <Grid item>

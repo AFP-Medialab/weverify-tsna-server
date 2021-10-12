@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   tsna-server:
-    image: tsna-server:0.18
+    image: tsna-server-csv:0.2
     restart: on-failure
     container_name: tsna-server
     networks:

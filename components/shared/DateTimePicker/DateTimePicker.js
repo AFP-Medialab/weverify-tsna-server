@@ -36,6 +36,7 @@ const DateTimePicker = (props) => {
             {...props}
             onChange={checkIfDate}
             renderInput={renderInput}
+            inline
         />
     )
 };
