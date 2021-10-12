@@ -52,7 +52,7 @@ import { TW_SNA_TYPE } from "../../shared/hooks/SnaTypes";
 //keyword from /components/NavItems/tools/TwitterSna.tsv
 const TwitterSna = () => {
   const dispatch = useDispatch();
-  const sna = {type : TW_SNA_TYPE, tsv : "/components/NavItems/tools/TwitterSna.tsv"};
+  const sna = {type : TW_SNA_TYPE, tsv : "/components/NavItems/tools/TwitterSna.tsv", tsvInfo : "/components/Shared/OnClickInfo.tsv"};
   const keyword = useLoadLanguage(sna.tsv)
   const classes = useMyStyles();
   const cardClasses = myCardStyles();
@@ -568,7 +568,7 @@ const TwitterSna = () => {
             <Typography>{loadingMessage}</Typography>
             <LinearProgress hidden={!isLoading} />
             {userAuthenticated && (
-              <OnClickInfo keyword={"twittersna_explication"} />
+              <OnClickInfo keyword={"twittersna_explication"} tsvInfo={sna.tsvInfo}/>
             )}
             {!userAuthenticated && <OnWarningInfo keyword={"warning_sna"} />}
           </div>

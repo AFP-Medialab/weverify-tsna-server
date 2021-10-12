@@ -4,13 +4,17 @@ import Typography from "@material-ui/core/Typography";
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Linkify from 'react-linkify';
-
-//const tsv = "/localDictionary/components/Shared/OnClickInfo.tsv";
-const tsv = "/components/Shared/OnClickInfo.tsv";
+import { useSelector } from "react-redux";
 
 const OnClickInfo = (props) => {
+    var keyword;
+    if(props.tsvInfo !== undefined){
+        keyword = useLoadLanguage(props.tsvInfo);
+    }else{
+        const sna = useSelector((state) => state.sna )
+        keyword = useLoadLanguage(sna.tsvInfo);
+    }
     const classes = useMyStyles();
-    const keyword = useLoadLanguage(tsv);
 
     const [checked, setChecked] = useState(false);
 

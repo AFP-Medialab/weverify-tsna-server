@@ -4,7 +4,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
+import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfo';
 import {displayPostsInsta,displayPostsFb} from "./lib/displayPosts"
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";

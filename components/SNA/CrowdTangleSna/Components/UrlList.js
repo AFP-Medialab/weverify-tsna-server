@@ -5,7 +5,7 @@ import Box from "@material-ui/core/Box";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage"
 
 import CustomTableURL from "../../../shared/CustomTable/CustomTableURL";
-import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
+import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfo';
 
 
 export default function cloudChart (props) {
