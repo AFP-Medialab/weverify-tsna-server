@@ -11,3 +11,12 @@ export function stringToList(string) {
       return el !== "";
 });
 }
+
+export function getLabelsColumns(keyword, columns){
+  
+    const labeledColumns = columns.map((obj,index ) => {
+        return {...obj, title: keyword(obj.title)};
+    });
+    return labeledColumns;
+  }
+  
