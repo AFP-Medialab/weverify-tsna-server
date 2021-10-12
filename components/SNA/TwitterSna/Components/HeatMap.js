@@ -6,16 +6,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import plotly from 'plotly.js-dist';
 import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import createPlotComponent from 'react-plotly.js/factory';
 import {onHeatMapClick} from "../Hooks/heatMap"
-import TwitterIcon from '@material-ui/icons/Twitter';
-import {downloadClick} from "../../lib/downloadClick";
 
 import {getDayAsString} from "../Hooks/heatMap"
 import useMyStyles from "../../../shared/styles/useMyStyles";
@@ -23,12 +18,11 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import PostViewTable from "../../Components/PostViewTable";
 
 const Plot = createPlotComponent(plotly);
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function HeatMap (props) { 
-    const dispatch = useDispatch();
 
-    const keyword = useLoadLanguage(tsv);
+    const sna = useSelector(state => state.sna)
+    const keyword = useLoadLanguage(sna.tsv);
     const classes = useMyStyles();
 
     const [heatMapTweets, setheatMapTweets] = useState(null);
@@ -50,15 +44,15 @@ export default function HeatMap (props) {
         setheatMapTweets(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.request])
-
-
-    let goToTweetAction = [{
-        icon: TwitterIcon,
-        tooltip: keyword("twittersna_result_go_to_tweet"),
-        onClick: (event, rowData) => {
-            window.open(rowData.link, '_blank');
+    var dayHourStr = "";
+    useEffect (()=> {
+        if(heatMapTweets)
+        {
+            let date = new Date(heatMapTweets.data[0].date);
+            dayHourStr = getDayAsString(date.getDay()) + date.getHours() + "h_";
         }
-    }]
+    }, [heatMapTweets])
+
 
     return (
         <Accordion>
@@ -87,42 +81,15 @@ export default function HeatMap (props) {
                             </div>
                         }
                         {
-                            heatMapTweets &&
-                            <div>
-                                <Grid container justifyContent="space-between" spacing={2}
-                                    alignContent={"center"}>
-                                    <Grid item>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"secondary"}
-                                            onClick={() => setheatMapTweets(null)}>
-                                            {
-                                                keyword('twittersna_result_hide')
-                                            }
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"primary"}
-                                            onClick={() => {
-                                                let date = new Date(heatMapTweets.data[0].date);
-                                                let dayHourStr = getDayAsString(date.getDay()) + date.getHours() + "h_";
-                                                downloadClick(props.request, heatMapTweets.csvArr, dayHourStr, false);
-                                            }}>
-                                            {
-                                                keyword('twittersna_result_download')
-                                            }
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                                <Box m={2} />
-                                <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                    colums={heatMapTweets.columns}
-                                    data={heatMapTweets.data}
-                                    actions={goToTweetAction}
-                                />
-                            </div>
+                            heatMapTweets &&                   
+                                <PostViewTable 
+                                    snatype={sna} 
+                                    setTypeValue={setheatMapTweets} 
+                                    data={heatMapTweets} 
+                                    downloadEnable={true} 
+                                    request={props.request}
+                                    csvArr={heatMapTweets.csvArr} 
+                                    selected={dayHourStr}/>
                         }
                     </Box>
                 }

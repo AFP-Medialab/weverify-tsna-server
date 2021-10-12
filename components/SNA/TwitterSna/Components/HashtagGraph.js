@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
 import {displayPosts} from "../../../SNA/lib/displayTweets"
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -19,22 +19,17 @@ import {downloadClick} from "../../lib/downloadClick";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
-
+import PostViewTable from "../../Components/PostViewTable";
 
 //possible error, same as plot
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
-//import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfoFB";
-
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 let from = "PLOT_HASHTAG_GRAPH";
 
 export default function HashtagGraph (props) {
 
-    const dispatch = useDispatch();
-
-    const keyword = useLoadLanguage(tsv);
+    const sna = useSelector(state => state.sna)
+    const keyword = useLoadLanguage(sna.tsv);
     const classes = useMyStyles();
 
     const [coHashtagGraphTweets, setCoHashtagGraphTweets] = useState(null);
@@ -212,37 +207,15 @@ export default function HashtagGraph (props) {
                     <Box m={2} />
                     {
                         coHashtagGraphTweets &&
-                        <div>
-                            <Grid container justifyContent="space-between" spacing={2}
-                                alignContent={"center"}>
-                                <Grid item>
-                                    <Button
-                                        variant={"contained"}
-                                        color={"secondary"}
-                                        onClick={() => setCoHashtagGraphTweets(null)}>
-                                        {
-                                            keyword('twittersna_result_hide')
-                                        }
-                                    </Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        variant={"contained"}
-                                        color={"primary"}
-                                        onClick={() => downloadClick(props.request, coHashtagGraphTweets.csvArr, "#" + coHashtagGraphTweets.selected)}>
-                                        {
-                                            keyword('twittersna_result_download')
-                                        }
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                            <Box m={2} />
-                            <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                colums={coHashtagGraphTweets.columns}
-                                data={coHashtagGraphTweets.data}
-                                actions={goToTweetAction}
-                            />
-                        </div>
+                        <PostViewTable 
+                            snatype={sna} 
+                            setTypeValue={setCoHashtagGraphTweets} 
+                            data={coHashtagGraphTweets} 
+                            downloadEnable={true} 
+                            request={props.request}
+                            csvArr={coHashtagGraphTweets.csvArr} 
+                            selected={"#" + coHashtagGraphTweets.selected}/>
+    
                     }
                 </div>
             }

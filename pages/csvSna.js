@@ -4,13 +4,13 @@ import Layout from "../components/layoutCSV";
 import CrowdTangleSnaComponent from "../components/SNA/CrowdTangleSna/CrowdTangleSnaComponent"
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/SNA.tsv";
 
 
 const CsvSnaIndex = () => {
   const keyword = useLoadLanguage(tsv);
   return (
-    <Layout title={keyword("fbinsta_sna_title")}>
+    <Layout title={keyword("ct_sna_title")}>
       <Head>
         <title>Csv Reader</title>
         <link rel="icon" href="/favicon.ico" />

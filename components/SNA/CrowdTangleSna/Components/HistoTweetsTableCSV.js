@@ -24,6 +24,7 @@ export default function HistoTweetsTable(props) {
   const type = useSelector((state) => state.sna.type)
   const tsv = useSelector((state) => state.sna.tsv)
   const keyword = useLoadLanguage(tsv);
+  const keywordSNA = useLoadLanguage("/components/NavItems/tools/SNA.tsv");
  
   var goToAction = [
     {
@@ -53,7 +54,7 @@ export default function HistoTweetsTable(props) {
               dispatch(setCSVHistoview(props.from, null)) 
             }
             >
-            {keyword("sna_result_hide")}
+            {keywordSNA("sna_result_hide")}
           </Button>
         </Grid>
        

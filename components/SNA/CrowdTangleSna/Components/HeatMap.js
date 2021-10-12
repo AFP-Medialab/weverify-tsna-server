@@ -5,7 +5,7 @@ import Box from "@material-ui/core/Box";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import plotly from 'plotly.js-dist';
-import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfoFB';
+import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfo';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import {useSelector } from "react-redux";

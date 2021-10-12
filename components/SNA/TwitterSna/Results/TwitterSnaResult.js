@@ -8,7 +8,7 @@ import Box from "@material-ui/core/Box";
 
 import dynamic from "next/dynamic"
 import TweetCount from "../Components/TweetCount";
-import UrlList from "../Components/UrlList";
+import UrlList from "../../Components/UrlList";
 import GexfExport from "../Components/GexfExport";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
@@ -85,7 +85,8 @@ export default function TwitterSnaResult(props) {
                 <Box m={3} />
                 {
                     result.urls && 
-                    <UrlList result={result} request={request}/>
+                    <UrlList result={result} request={request} title_message={'twittersna_result_url_in_tweets'} 
+                        tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true}/>
                 }     
             </Paper>
        

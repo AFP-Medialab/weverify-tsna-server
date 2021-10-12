@@ -8,13 +8,10 @@ import CustomTable from "../../../shared/CustomTable/CustomTable";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-
-
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
-  const keyword = useLoadLanguage(tsv);
+  const sna = useSelector(state => state.sna)
+  const keyword = useLoadLanguage(sna.tsv);
   const request = useSelector((state) => state.twitterSna.request);
 
   function downloadClick(csvArr, name, histo, type = "Tweets_") {
@@ -82,7 +79,7 @@ export default function HistoTweetsTable(props) {
       <Box m={2} />
       <CustomTable
         title={keyword("twittersna_result_slected_tweets")}
-        colums={props.data.columns}
+        columns={props.data.columns}
         data={props.data.data}
         actions={goToTweetAction}
       />
