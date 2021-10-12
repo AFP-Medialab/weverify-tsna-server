@@ -31,39 +31,32 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
                 "request" : payload.request, "result" : null, "pieCharts" : [null,null,null,null], 
                 "donutIndex" : null, "topUser" : null, "gexfExport" : null}
         case "SET_TWITTER_SNA_RESULT":
-            state.notification = payload.notification;
-            state.loading = payload.loading;
-            state.request = payload.request;
-            state.result = payload.result;
-            return state;
+            return {...state, 
+                notification : payload.notification, 
+                loading : payload.loading, 
+                request : payload.request, 
+                result : payload.result
+            }            
         case "SET_TWITTER_SNA_LOADING":
             return {...state, "loading" : payload, "loadingMessage" : ((payload)? state.loadingMessage:"")};
         case "SET_TWITTER_SNA_LOADING_MSG":
-            state.loadingMessage = payload;
-            return state;
+            return {...state, loadingMessage : payload}        
         case "TWITTER_SNA_CLEAN_STATE":
             return state = defaultState;
-        case "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE":           
-            state.topUser = payload;
-            return state;
+        case "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE":
+            return {...state, topUser : payload}           
         case "SET_TWITTER_SNA_GEXF_EXPORT":
-            state.gexfExport = payload;
-            return state;
+            return {...state, gexfExport : payload}
         case "SET_HISTOGRAM_RESULT":
-            state.histoview = payload;
-            return state;
-        case "SET_PIE_CHART_RESULT":            
-            state.donutIndex = payload;
-            return state;
+            return {...state, histoview : payload}
+        case "SET_PIE_CHART_RESULT":
+            return {...state, donutIndex : payload}            
         case "SET_BUBBLE_CHART_RESULT":
-            state.bubbleChart = payload;
-            return state;
+            return {...state, bubbleChart : payload} 
         case "SET_HEAP_MAP_RESULT":
-            state.bubbleChart = payload;
-            return state;
+            return {...state, bubbleChart : payload} 
         case "SET_TWITTER_SNA_REDIRECT_REQUEST":
-            state.request = payload;           
-            return state;
+            return {...state, request : payload};
         case "SET_TWITTER_SNA_RESET":            
             return {...state, "request" : payload, "result" : null, "loadingMessage" : null};
         case "SET_TWITTER_SNA_HISTOGRAM_RESULTS":

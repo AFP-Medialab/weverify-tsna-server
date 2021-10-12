@@ -20,6 +20,8 @@ import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
 
+import { PatchedPagination } from '../../patch/PatchedTablePagination';
+
 const tableIcons = {
     Add: AddBox,
     Check: Check,
@@ -44,7 +46,7 @@ export default function CustomTable(props) {
     const [state, setState] = useState(
         {
             title: props.title,
-            columns: props.colums,
+            columns: props.columns,
             data: props.data,
             actions: props.actions
         }
@@ -58,9 +60,10 @@ export default function CustomTable(props) {
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.data)]);
-
+    console.log("columns ", state.columns);
     return (
         <MaterialTable
+            components={{Pagination: PatchedPagination}}
             //more custom info at https://material-table.com/#/docs/features/localization
             localization={{
                 pagination: {

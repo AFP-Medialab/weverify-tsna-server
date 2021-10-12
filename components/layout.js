@@ -15,8 +15,7 @@ export const siteTitle = 'Weverify'
 
 function Layout(props) {
     const classes = useMyStyles();
-    //keyword from /components/NavItems/tools/TwitterSna.tsv
-    const keyword = props.keyword;
+    //keyword from /components/NavItems/tools/TwitterSna.ts
 
     const handleClick = event => {
         window.open("https://weverify.eu/about/", "_blank");
@@ -51,7 +50,7 @@ function Layout(props) {
                         />
                     </Box>
                     <Languages/>
-                    <CustomTitle text={keyword("twitter_sna_title")}/>
+                    <CustomTitle text={props.title}/>
                     <Grid>
                 {<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
                  "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",

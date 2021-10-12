@@ -1,3 +1,4 @@
+import { SNA_SET_TYPE } from "../types/snaCommunTypes";
 export const setTwitterSnaResult = (request, result, notification, loading) => {
     return {
         type : "SET_TWITTER_SNA_RESULT",
@@ -120,7 +121,12 @@ export const setGexfExport = (gexfData) => {
         payload : gexfData
     }
 };
-
+export const setSnaType = (snaType) => {
+    return {
+        type : SNA_SET_TYPE,
+        payload : snaType,
+    };
+  };
 
 export const setTweetsDetailPanel = (from, data) => {    
     console.log("from " + from)

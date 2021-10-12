@@ -1,25 +1,21 @@
 import Head from "next/head";
 import React from "react";
 import Layout from "../components/layout";
-import TwitterSna from "../components/shared/TwitterSna/TwitterSna";
+import TwitterSna from "../components/SNA/TwitterSna/TwitterSna";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-import {makeStyles} from '@material-ui/core/styles';
-
+const tsv = "/components/NavItems/tools/SNA.tsv";
 
 const TwitterSnaIndex = () => {
-  
   const keyword = useLoadLanguage(tsv);
-  
   return (
-    <Layout keyword={keyword}>
+    <Layout title={keyword("twitter_sna_title")}>
     <Head>
       <title>WeVerify Twitter SNA</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <main>        
-      <TwitterSna keyword={keyword} />
+      <TwitterSna />
     </main>
     <footer>
       <Footer />
