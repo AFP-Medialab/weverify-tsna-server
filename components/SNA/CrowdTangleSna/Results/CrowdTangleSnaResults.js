@@ -14,13 +14,14 @@ const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {
 const HeatMap = dynamic(import("../Components/HeatMap"), {ssr: false});
 const BubbleChart = dynamic(import("../Components/BubbleChartCSV"), {ssr: false});
 const HashtagGraph = dynamic(import("../Components/HashtagGraph"), {ssr: false});
-import UrlList from "../Components/UrlList";
+import UrlList from "../../Components/UrlList"
 import Box from "@material-ui/core/Box";
 const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), {ssr: false});
 const CloudChart = dynamic(import("../Components/CloudChart"), {ssr: false});
 
 
 export default function CrowdTangleSnaResults(props) {
+  const sna = useSelector((state) => state.sna);
   const classes = useMyStyles();
   const dispatch = useDispatch();
   return (
@@ -68,7 +69,8 @@ export default function CrowdTangleSnaResults(props) {
           <Box m={3} />
           { 
             props.result.urls && 
-            <UrlList result={props.result}/>
+            <UrlList result={props.result} title_message={'ct_sna_result_url_in_posts'} 
+              tooltip_message={sna.type=="INSTA"? 'ct_sna_result_submit_insta_sna':'ct_sna_result_submit_fb_sna'} downloadable={false}/>
                
           }        
                 
