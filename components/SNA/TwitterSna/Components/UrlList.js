@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import { Paper } from "@material-ui/core";
-import useMyStyles from "../../../shared/styles/useMyStyles";
 import React  from "react";
 import Box from "@material-ui/core/Box";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
@@ -10,18 +9,13 @@ import {downloadClick} from "../../lib/downloadClick";
 import CustomTableURL from "../../../shared/CustomTable/CustomTableURL";
 
 
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function cloudChart (props) {
 
-    const dispatch = useDispatch();
-
-    const keyword = useLoadLanguage(tsv);
-    const classes = useMyStyles();
-    //to redirect
+    const sna = useSelector(state => state.sna)
+    const keyword = useLoadLanguage(sna.tsv);    
+    
     const userLogined = useSelector(state => state.userSession && state.userSession.user);
-    const userToken = useSelector(state => state.userSession && state.userSession.accessToken);
 
     const userData = encodeURIComponent(JSON.stringify(userLogined));
 

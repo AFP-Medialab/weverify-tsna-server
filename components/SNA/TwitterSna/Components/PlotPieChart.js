@@ -20,13 +20,13 @@ import {displayPosts} from "../../../SNA/lib/displayTweets"
 import { downloadClick } from "../../lib/downloadClick";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+
 
 
 export default function PlotPieChart(props) {
   const dispatch = useDispatch();
-  const keyword = useLoadLanguage(tsv);
+  const sna = useSelector(state => state.sna)
+  const keyword = useLoadLanguage(sna.tsv);
   const request = useSelector((state) => state.twitterSna.request);
   const [pieCharts0, setPieCharts0] = useState(null);
   const [pieCharts1, setPieCharts1] = useState(null);
@@ -296,38 +296,6 @@ export default function PlotPieChart(props) {
                     from={from + "_" + index}
                   />
                 )
-                /*
-                                <div>
-                                    <Grid container justifyContent="space-between" spacing={2}
-                                        alignContent={"center"}>
-                                        <Grid item>
-                                            <Button
-                                                variant={"contained"}
-                                                color={"secondary"}
-                                                onClick={() => hideTweetsView(index)}>
-                                                {
-                                                    keyword('twittersna_result_hide')
-                                                }
-                                            </Button>
-                                        </Grid>
-                                        <Grid item>
-                                            <Button
-                                                variant={"contained"}
-                                                color={"primary"}
-                                                onClick={() => downloadClick(pieCharts[index].csvArr, (index === 3) ? "mentioned_" + pieCharts[index].selected : pieCharts[index].selected)}>
-                                                {
-                                                    keyword('twittersna_result_download')
-                                                }
-                                            </Button>
-                                        </Grid>
-                                    </Grid>
-                                    <Box m={2} />
-                                    <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                        colums={pieCharts[index].columns}
-                                        data={pieCharts[index].data}
-                                        actions={goToTweetAction}
-                                    />
-                                </div>*/
               }
             </Box>
           </AccordionDetails>

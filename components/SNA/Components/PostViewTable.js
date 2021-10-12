@@ -29,9 +29,10 @@ function getLabelsColumns(keyword, columns){
     return labeledColumns;
 }
 
-export default function PostViewTable ({snatype, setTypeValue, data, downloadEnable, request}){
+export default function PostViewTable ({snatype, setTypeValue, data, downloadEnable, request, csvArr, selected}){
     console.log("data POSTED", downloadEnable);
     const keyword = useLoadLanguage(snatype.tsv);
+    const keywordSNA = useLoadLanguage("/components/NavItems/tools/SNA.tsv");
     var goToAction = [
         {
           icon: getIcon(snatype.type),
@@ -54,7 +55,7 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
                         color={"secondary"}
                         onClick={() => setTypeValue(null)}>
                         {
-                            keyword('sna_result_hide')
+                            keywordSNA('sna_result_hide')
                         }
                     </Button>
                 </Grid>
@@ -64,9 +65,9 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
                         <Button
                             variant={"contained"}
                             color={"primary"}
-                            onClick={() => downloadClick(request, data.csvArr, data.selected)}>
+                            onClick={() => downloadClick(request, csvArr, selected)}>
                             {
-                                keyword('sna_result_download')
+                                keywordSNA('sna_result_download')
                             }
                         </Button>
                     </Grid>

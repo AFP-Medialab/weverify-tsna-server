@@ -19,16 +19,14 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function PlotTimeLine(props) {
   const dispatch = useDispatch();
   //HISTOGRAM
   const [histoVisible, setHistoVisible] = useState(true);
   const histoTweets = useSelector((state) => state.twitterSna.histoview);
-
-  const keyword = useLoadLanguage(tsv);
+  const sna = useSelector(state => state.sna)
+  const keyword = useLoadLanguage(sna.tsv);
   const classes = useMyStyles();
 
   const [state, setState] = useState({

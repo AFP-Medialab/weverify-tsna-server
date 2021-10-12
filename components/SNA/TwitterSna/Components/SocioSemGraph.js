@@ -22,13 +22,14 @@ import {displayPosts} from "../../../SNA/lib/displayTweets"
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
 import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import {getDomain} from "../Hooks/socioSemGraph"
+import PostViewTable from "../../Components/PostViewTable";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function SocioSemGraph (props) {
     
-    const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-    const keyword = useLoadLanguage(tsv);
+    const sna = useSelector(state => state.sna)
+    const keyword = useLoadLanguage(sna.tsv);
     const classes = useMyStyles();
 
     const [socioSemantic4ModeGraphTweets, setSocioSemantic4ModeGraphTweets] = useState(null);
@@ -128,14 +129,6 @@ export default function SocioSemGraph (props) {
             setSocioSemantic4ModeGraphTweets(dataToDisplay);
         }
     }
-
-    let goToTweetAction = [{
-        icon: TwitterIcon,
-        tooltip: keyword("twittersna_result_go_to_tweet"),
-        onClick: (event, rowData) => {
-            window.open(rowData.link, '_blank');
-        }
-    }]
 
     const onClickStageSocioSemantic4ModeGraph = (e) => {
         setSocioSemantic4ModeGraphClickNode(null);
@@ -254,37 +247,14 @@ export default function SocioSemGraph (props) {
                     <Box m={2}/>
                     {
                         socioSemantic4ModeGraphTweets &&
-                        <div>
-                            <Grid container justifyContent="space-between" spacing={2}
-                                alignContent={"center"}>
-                                <Grid item>
-                                    <Button
-                                        variant={"contained"}
-                                        color={"secondary"}
-                                        onClick={() => setSocioSemantic4ModeGraphTweets(null)}>
-                                        {
-                                            keyword('twittersna_result_hide')
-                                        }
-                                    </Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        variant={"contained"}
-                                        color={"primary"}
-                                        onClick={() => downloadClick(request, socioSemantic4ModeGraphTweets.csvArr, socioSemantic4ModeGraphTweets.selected)}>
-                                        {
-                                            keyword('twittersna_result_download')
-                                        }
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                            <Box m={2} />
-                            <CustomTable title={keyword("twittersna_result_slected_tweets")}
-                                colums={socioSemantic4ModeGraphTweets.columns}
-                                data={socioSemantic4ModeGraphTweets.data}
-                                actions={goToTweetAction}
-                            />
-                        </div>
+                        <PostViewTable 
+                            snatype={sna} 
+                            setTypeValue={setSocioSemantic4ModeGraphTweets} 
+                            data={socioSemantic4ModeGraphTweets} 
+                            downloadEnable={true} 
+                            request={request}
+                            csvArr={socioSemantic4ModeGraphTweets.csvArr} 
+                            selected={socioSemantic4ModeGraphTweets.selected}/>
                     }
                 </div>
             }

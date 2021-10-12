@@ -30,6 +30,7 @@ import { setError } from "../../../redux/actions/errorActions";
 import {
   cleanTwitterSnaState,
   setTwitterSnaNewRequest,
+  setSnaType
 } from "../../../redux/actions/tools/twitterSnaActions";
 import convertToGMT from "../../shared/DateTimePicker/convertToGMT";
 import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
@@ -45,10 +46,14 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import TwitterSNAIcon from '../../../images/SVG/DataAnalysis/Twitter_sna.svg';
 import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
+import { TW_SNA_TYPE } from "../../shared/hooks/SnaTypes";
 
 //keyword from /components/NavItems/tools/TwitterSna.tsv
-const TwitterSna = ({keyword}) => {
+const TwitterSna = () => {
   const dispatch = useDispatch();
+  const sna = {type : TW_SNA_TYPE, tsv : "/components/NavItems/tools/TwitterSna.tsv"};
+  const keyword = useLoadLanguage(sna.tsv)
   const classes = useMyStyles();
   const cardClasses = myCardStyles();
   const request = useSelector((state) => state.twitterSna.request);
@@ -264,6 +269,7 @@ const TwitterSna = ({keyword}) => {
       }
       setSubmittedRequest(newRequest);
       dispatch(setTwitterSnaNewRequest(newRequest));
+      dispatch(setSnaType(sna));
     }
   };
 

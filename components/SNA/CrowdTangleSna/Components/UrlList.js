@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import { Paper } from "@material-ui/core";
-import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, { useEffect, useState, useCallback } from "react";
 import Box from "@material-ui/core/Box";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage"

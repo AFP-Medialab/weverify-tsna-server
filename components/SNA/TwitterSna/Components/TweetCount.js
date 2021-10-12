@@ -9,12 +9,12 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import Grid from "@material-ui/core/Grid";
+import { useSelector } from "react-redux";
 
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function TweetCount(props) {
-  const keyword = useLoadLanguage(tsv);
+  const sna = useSelector(state => state.sna)
+  const keyword = useLoadLanguage(sna.tsv);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   const [tweetCount, setTweetCount] = useState({
