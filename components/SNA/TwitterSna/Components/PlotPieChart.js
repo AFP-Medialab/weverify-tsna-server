@@ -21,8 +21,6 @@ import { downloadClick } from "../../lib/downloadClick";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 
-
-
 export default function PlotPieChart(props) {
   const dispatch = useDispatch();
   const sna = useSelector(state => state.sna)
@@ -290,7 +288,8 @@ export default function PlotPieChart(props) {
                   </div>
                 )}
               {
-                charts[index] && (
+                charts[index] && 
+                (
                   <HistoTweetsTable
                     data={charts[index]}
                     from={from + "_" + index}

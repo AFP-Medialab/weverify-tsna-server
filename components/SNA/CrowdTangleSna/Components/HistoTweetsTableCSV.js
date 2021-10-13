@@ -8,15 +8,7 @@ import CustomTable from "../../../shared/CustomTable/CustomTable";
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
-
-
-function getLabelsColumns(keyword, columns){
-  
-  const labeledColumns = columns.map((obj,index ) => {
-      return {...obj, title: keyword(obj.title)};
-  });
-  return labeledColumns;
-}
+import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 
 export default function HistoTweetsTable(props) {
   
