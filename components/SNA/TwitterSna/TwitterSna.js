@@ -18,7 +18,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import SearchIcon from "@material-ui/icons/Search";
 import Typography from "@material-ui/core/Typography";
 import useTwitterSnaRequest from "./Hooks/useTwitterSnaRequest";
 import TwitterSnaResult from "./Results/TwitterSnaResult";
@@ -48,9 +47,67 @@ import TwitterSNAIcon from '../../../images/SVG/DataAnalysis/Twitter_sna_big.svg
 import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
 import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import { TW_SNA_TYPE } from "../../shared/hooks/SnaTypes";
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+import SearchIcon from '@material-ui/icons/Search';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import GlobeIcon from '@material-ui/icons/Public';
+import ExcludeIcon from '@material-ui/icons/HighlightOff';
+import TranslateIcon from '@material-ui/icons/Translate';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import DoneIcon from '@material-ui/icons/Done';
+import PermMediaIcon from '@material-ui/icons/PermMedia';
+import LaptopIcon from '@material-ui/icons/Laptop';
+
+import Divider from '@material-ui/core/Divider';
+
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 //keyword from /components/NavItems/tools/TwitterSna.tsv
 const TwitterSna = () => {
+
+
+  const theme = createTheme({
+    overrides: {
+
+      MuiCardHeader: {
+        root: {
+          backgroundColor: "#05A9B4",
+        },
+        title: {
+          color: 'white',
+          fontSize: 20,
+          fontweight: 500,
+        }
+      },
+
+      MuiTab: {
+        wrapper: {
+          fontSize: 12,
+
+        },
+        root: {
+          minWidth: "25%!important",
+        }
+      },
+
+    },
+
+    palette: {
+      primary: {
+        light: '#5cdbe6',
+        main: '#05a9b4',
+        dark: '#007984',
+        contrastText: '#fff',
+      },
+    },
+
+  });
+
+
   const dispatch = useDispatch();
   const sna = {type : TW_SNA_TYPE, tsv : "/components/NavItems/tools/TwitterSna.tsv"};
   const keyword = useLoadLanguage(sna.tsv)
@@ -306,8 +363,11 @@ const TwitterSna = () => {
     return false;
   }
 
+
   return (
     <div className={classes.all}>
+      <ThemeProvider theme={theme}>
+
       <Grid
         container
         direction="row"
@@ -324,230 +384,473 @@ const TwitterSna = () => {
       <StylesProvider injectFirst>
         <Card className={cardClasses.root}>
           <CardHeader
-            title={keyword("cardheader_parameters")}
+            title="Search parameters"
             className={classes.headerUpladedImage}
           />
           <div className={classes.root2}>
-            <TextField
-              disabled={searchFormDisabled}
-              error={keyWordsError}
-              value={keyWords}
-              onChange={(e) => {
-                setKeywords(e.target.value);
-                setKeyWordsError(false);
-              }}
-              id="standard-full-width"
-              label={"*  " + keyword("twitter_sna_search")}
-              className={classes.neededField}
-              style={{
-                marginTop: 0,
-                marginBottom: 0,
-                marginLeft: 8,
-                marginRight: 8,
-              }}
-              placeholder={"#example"}
-              fullWidth
-            />
-            <TextField
-              disabled={searchFormDisabled}
-              value={bannedWords}
-              onChange={(e) => setBannedWords(e.target.value)}
-              id="standard-full-width"
-              label={keyword("twitter_sna_not")}
-              style={{
-                marginTop: 0,
-                marginBottom: 0,
-                marginLeft: 8,
-                marginRight: 8,
-              }}
-              placeholder={"word word2"}
-              fullWidth
-            />
-            <TextField
-              disabled={searchFormDisabled}
-              value={usersInput}
-              onChange={(e) => setUsersInput(e.target.value)}
-              id="standard-full-width"
-              label={keyword("twitter_sna_user")}
-              style={{
-                marginTop: 0,
-                marginBottom: 0,
-                marginLeft: 8,
-                marginRight: 8,
-              }}
-              placeholder={keyword("user_placeholder")}
-              fullWidth
-            />
-            <Grid container justifyContent={"center"} spacing={4} className={classes.grow}>
-              <Grid item>
-                <DateTimePicker
-                  id="standard-full-width-since"
-                  disabled={searchFormDisabled}
-                  input={true}
-                  isValidDate={sinceDateIsValid}
-                  label={"*  " + keyword("twitter_sna_from_date")}
-                  className={classes.neededField}
-                  dateFormat={"YYYY-MM-DD"}
-                  timeFormat={"HH:mm:ss"}
-                  value={since}
-                  handleChange={handleSinceDateChange}
-                  error={sinceError}
-                  
-                />
-              </Grid>
-              <Grid item>
-                <DateTimePicker
-                  id="standard-full-width-until"
-                  disabled={searchFormDisabled}
-                  input={true}
-                  isValidDate={untilDateIsValid}
-                  label={"*  " + keyword("twitter_sna_until_date")}
-                  className={classes.neededField}
-                  dateFormat={"YYYY-MM-DD"}
-                  timeFormat={"HH:mm:ss"}
-                  value={until}
-                  handleChange={handleUntilDateChange}
-                  error={untilError}
-                />
-              </Grid>
-            </Grid>
-            <FormControl component="fieldset" disabled={searchFormDisabled}>
-              <RadioGroup
-                aria-label="position"
-                name="position"
-                value={localTime}
-                onChange={(e) => setLocalTime(e.target.value)}
-                row
-              >
-                <FormControlLabel
-                  value={"true"}
-                  control={<Radio color="primary" />}
-                  label={keyword("twitter_local_time")}
-                  labelPlacement="end"
-                />
-                <FormControlLabel
-                  value={"false"}
-                  control={<Radio color="primary" />}
-                  label={keyword("twitter_sna_gmt")}
-                  labelPlacement="end"
-                />
-              </RadioGroup>
-            </FormControl>
-            <Box m={2} />
-            <Box m={2} />
-            <Grid container justifyContent={"space-around"} spacing={5}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    disabled={searchFormDisabled}
-                    checked={mediaImage}
-                    onChange={imageChange}
-                    value="checkedBox"
-                    color="primary"
-                  />
-                }
-                label={keyword("twitterStats_media_images")}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    disabled={searchFormDisabled}
-                    checked={mediaVideo}
-                    onChange={videoChange}
-                    value="checkedBox"
-                    color="primary"
-                  />
-                }
-                label={keyword("twitterStats_media_videos")}
-              />
-              <Grid item>
-                <FormControl component="fieldset" disabled={searchFormDisabled}>
-                  <FormLabel component="legend">
-                    {keyword("twitter_sna_verified")}
-                  </FormLabel>
-                  <RadioGroup
-                    aria-label="position"
-                    name="position"
-                    value={verifiedUsers}
-                    onChange={handleVerifiedUsersChange}
-                    row
-                  >
-                    <FormControlLabel
-                      value={"false"}
-                      control={<Radio color="primary" />}
-                      label={keyword("twitterStats_verified_no")}
-                      labelPlacement="end"
+
+            {/*<Grid container direction="column">*/}
+
+              <Grid container spacing={4} alignItems="center">
+                <Grid item xs={8}>
+                    <TextField
+                      disabled={searchFormDisabled}
+                      error={keyWordsError}
+                      value={keyWords}
+                      onChange={(e) => {
+                        setKeywords(e.target.value);
+                        setKeyWordsError(false);
+                      }}
+                      id="standard-full-width"
+                      label={"*  " + keyword("twitter_sna_search")}
+                      className={classes.neededField}
+                      style={{
+                        marginTop: 0,
+                        marginBottom: 0,
+                        marginLeft: 8,
+                        marginRight: 8,
+                      }}
+                      placeholder={"#example"}
+                      fullWidth
+                      variant="outlined"
                     />
+                </Grid>
+
+                  <Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+                    <Grid item>
+                      <SearchIcon style={{color: "#757575"}}/>
+                    </Grid>
+                    <Grid>
+                      <Box m={1} />
+                    </Grid>
+                    <Grid item xs>
+                      <Typography variant="body2" align="left" style={{ color: "#757575" }}>
+                        Specify words that you don’t want to analyze in the search results
+                      </Typography>
+                    </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid container spacing={4} alignItems="center">
+                <Grid item xs={4}>
+                  <DateTimePicker
+                    id="standard-full-width-since"
+                    disabled={searchFormDisabled}
+                    input={true}
+                    isValidDate={sinceDateIsValid}
+                    label={"*  " + keyword("twitter_sna_from_date")}
+                    className={classes.neededField}
+                    dateFormat={"YYYY-MM-DD"}
+                    timeFormat={"HH:mm:ss"}
+                    value={since}
+                    handleChange={handleSinceDateChange}
+                    error={sinceError}
+
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <DateTimePicker
+                    id="standard-full-width-until"
+                    disabled={searchFormDisabled}
+                    input={true}
+                    isValidDate={untilDateIsValid}
+                    label={"*  " + keyword("twitter_sna_until_date")}
+                    className={classes.neededField}
+                    dateFormat={"YYYY-MM-DD"}
+                    timeFormat={"HH:mm:ss"}
+                    value={until}
+                    handleChange={handleUntilDateChange}
+                    error={untilError}
+                  />
+                </Grid>
+
+                <Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+                  <Grid item>
+                    <CalendarTodayIcon style={{ color: "#757575" }} />
+                  </Grid>
+                  <Grid>
+                    <Box m={1} />
+                  </Grid>
+                  <Grid item xs>
+                    <Typography variant="body2" align="left" style={{ color: "#757575" }}>
+                      Dates between the tweets were analyzed for the search term indicated
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+
+				<Grid container spacing={4} alignItems="center">
+					<Grid item xs={8}>
+						<Typography variant="h6" align="left">
+							Time zone of the dates
+						</Typography>
+					</Grid>
+
+					<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+						<Grid item>
+							<GlobeIcon style={{ color: "#757575" }} />
+						</Grid>
+						<Grid>
+							<Box m={1} />
+						</Grid>
+						<Grid item xs>
+							<Typography variant="body2" align="left" style={{ color: "#757575" }}>
+										  Specify the time zone of the dates introduced before
+							</Typography>
+						</Grid>
+					</Grid>
+				</Grid>
+
+			  <Box m={1} />
+
+			<FormControl component="fieldset" disabled={searchFormDisabled} style={{width: "100%", marginLeft: "30px"}}>
+				<RadioGroup
+				aria-label="position"
+				name="position"
+				value={localTime}
+				onChange={(e) => setLocalTime(e.target.value)}
+				row
+				>
+				<Grid container direction="column" justifyContent="flex-start" alignItems="flex-start">
                     <FormControlLabel
                       value={"true"}
                       control={<Radio color="primary" />}
-                      label={keyword("twitterStats_verified_yes")}
+                      label={keyword("twitter_local_time")}
                       labelPlacement="end"
                     />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-              <Grid item>
-                <FormControl
-                  className={classes.formControl}
-                  disabled={searchFormDisabled}
-                >
-                  <InputLabel id="demo-controlled-open-select-label">
-                    {keyword("lang_choices")}
-                  </InputLabel>
-                  <Select
-                    labelid="demo-controlled-open-select-label"
-                    id="demo-controlled-open-select"
-                    open={openLangInput}
-                    onClose={() => setLangInputOpen(false)}
-                    onOpen={() => setLangInputOpen(true)}
-                    value={langInput}
-                    onChange={(e) => setLangInput(e.target.value)}
-                  >
-                    <MenuItem value={"lang_all"}>{keyword("lang_all")}</MenuItem>
-                    <MenuItem value={"lang_fr"}>{keyword("lang_fr")}</MenuItem>
-                    <MenuItem value={"lang_en"}>{keyword("lang_en")}</MenuItem>
-                    <MenuItem value={"lang_es"}>{keyword("lang_es")}</MenuItem>
-                    <MenuItem value={"lang_ar"}>{keyword("lang_ar")}</MenuItem>
-                    <MenuItem value={"lang_de"}>{keyword("lang_de")}</MenuItem>
-                    <MenuItem value={"lang_it"}>{keyword("lang_it")}</MenuItem>
-                    <MenuItem value={"lang_id"}>{keyword("lang_id")}</MenuItem>
-                    <MenuItem value={"lang_pt"}>{keyword("lang_pt")}</MenuItem>
-                    <MenuItem value={"lang_ko"}>{keyword("lang_ko")}</MenuItem>
-                    <MenuItem value={"lang_tr"}>{keyword("lang_tr")}</MenuItem>
-                    <MenuItem value={"lang_ru"}>{keyword("lang_ru")}</MenuItem>
-                    <MenuItem value={"lang_nl"}>{keyword("lang_nl")}</MenuItem>
-                    <MenuItem value={"lang_hi"}>{keyword("lang_hi")}</MenuItem>
-                    <MenuItem value={"lang_no"}>{keyword("lang_no")}</MenuItem>
-                    <MenuItem value={"lang_sv"}>{keyword("lang_sv")}</MenuItem>
-                    <MenuItem value={"lang_fi"}>{keyword("lang_fi")}</MenuItem>
-                    <MenuItem value={"lang_da"}>{keyword("lang_da")}</MenuItem>
-                    <MenuItem value={"lang_pl"}>{keyword("lang_pl")}</MenuItem>
-                    <MenuItem value={"lang_hu"}>{keyword("lang_hu")}</MenuItem>
-                    <MenuItem value={"lang_fa"}>{keyword("lang_fa")}</MenuItem>
-                    <MenuItem value={"lang_he"}>{keyword("lang_he")}</MenuItem>
-                    <MenuItem value={"lang_ur"}>{keyword("lang_ur")}</MenuItem>
-                    <MenuItem value={"lang_th"}>{keyword("lang_th")}</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              {cacheCheck() && (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      disabled={searchFormDisabled}
-                      checked={cache}
-                      onChange={cacheChange}
-                      value="checkedBox"
-                      color="primary"
+					<Box m={1} />
+                    <FormControlLabel
+                      value={"false"}
+                      control={<Radio color="primary" />}
+                      label={keyword("twitter_sna_gmt")}
+                      labelPlacement="end"
                     />
-                  }
-                  label={keyword("disable_cache")}
-                />
-              )}
-            </Grid>
+                  </Grid>
+				</RadioGroup>
+			</FormControl>
+              
+			<Box m={3} />
+						
+			<Divider />
+
+			{/*
+		
+			<Accordion style={{borderShadow: "none"}}>
+				<AccordionSummary
+					expandIcon={<ExpandMoreIcon />}
+					aria-controls="panel1a-content"
+					id="panel1a-header"
+				>
+					<Typography className={classes.heading}>Accordion 1</Typography>
+				</AccordionSummary>
+				<AccordionDetails>
+					<Typography>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+						sit amet blandit leo lobortis eget.
+					</Typography>
+				</AccordionDetails>
+			</Accordion>
+
+			*/}
+			<Box m={3} />
+
+			<Typography variant="h5" align="left">
+				Optional parameters
+			</Typography>
+			
+			<Box m={3} />
+
+						  <Typography variant="h6" align="left">
+							  Words
+						  </Typography>
+						  <Box m={1} />
+
+			<Grid container spacing={4} alignItems="center">
+				<Grid item xs={8}>
+					<TextField
+						disabled={searchFormDisabled}
+						value={bannedWords}
+						onChange={(e) => setBannedWords(e.target.value)}
+						id="standard-full-width"
+						label={keyword("twitter_sna_not")}
+						style={{
+							marginTop: 0,
+							marginBottom: 0,
+							marginLeft: 8,
+							marginRight: 8,
+						}}
+						placeholder={"word word2"}
+						fullWidth
+						variant="outlined"
+					/>
+				</Grid>
+
+				<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+					<Grid item>
+						<ExcludeIcon style={{ color: "#757575" }} />
+					</Grid>
+					<Grid>
+						<Box m={1} />
+					</Grid>
+					<Grid item xs>
+						<Typography variant="body2" align="left" style={{ color: "#757575" }}>
+										  Specify words that you don’t want to analyze in the search results
+						</Typography>
+					</Grid>
+				</Grid>
+			</Grid>
+
+			<Grid container spacing={4} alignItems="center">
+				<Grid item xs={8}>
+								  <FormControl
+									  className={classes.formControl}
+									  disabled={searchFormDisabled}
+								  >
+									  <InputLabel id="demo-controlled-open-select-label">
+										  {keyword("lang_choices")}
+									  </InputLabel>
+									  <Select
+										  labelid="demo-controlled-open-select-label"
+										  id="demo-controlled-open-select"
+										  open={openLangInput}
+										  onClose={() => setLangInputOpen(false)}
+										  onOpen={() => setLangInputOpen(true)}
+										  value={langInput}
+										  onChange={(e) => setLangInput(e.target.value)}
+									  >
+										  <MenuItem value={"lang_all"}>{keyword("lang_all")}</MenuItem>
+										  <MenuItem value={"lang_fr"}>{keyword("lang_fr")}</MenuItem>
+										  <MenuItem value={"lang_en"}>{keyword("lang_en")}</MenuItem>
+										  <MenuItem value={"lang_es"}>{keyword("lang_es")}</MenuItem>
+										  <MenuItem value={"lang_ar"}>{keyword("lang_ar")}</MenuItem>
+										  <MenuItem value={"lang_de"}>{keyword("lang_de")}</MenuItem>
+										  <MenuItem value={"lang_it"}>{keyword("lang_it")}</MenuItem>
+										  <MenuItem value={"lang_id"}>{keyword("lang_id")}</MenuItem>
+										  <MenuItem value={"lang_pt"}>{keyword("lang_pt")}</MenuItem>
+										  <MenuItem value={"lang_ko"}>{keyword("lang_ko")}</MenuItem>
+										  <MenuItem value={"lang_tr"}>{keyword("lang_tr")}</MenuItem>
+										  <MenuItem value={"lang_ru"}>{keyword("lang_ru")}</MenuItem>
+										  <MenuItem value={"lang_nl"}>{keyword("lang_nl")}</MenuItem>
+										  <MenuItem value={"lang_hi"}>{keyword("lang_hi")}</MenuItem>
+										  <MenuItem value={"lang_no"}>{keyword("lang_no")}</MenuItem>
+										  <MenuItem value={"lang_sv"}>{keyword("lang_sv")}</MenuItem>
+										  <MenuItem value={"lang_fi"}>{keyword("lang_fi")}</MenuItem>
+										  <MenuItem value={"lang_da"}>{keyword("lang_da")}</MenuItem>
+										  <MenuItem value={"lang_pl"}>{keyword("lang_pl")}</MenuItem>
+										  <MenuItem value={"lang_hu"}>{keyword("lang_hu")}</MenuItem>
+										  <MenuItem value={"lang_fa"}>{keyword("lang_fa")}</MenuItem>
+										  <MenuItem value={"lang_he"}>{keyword("lang_he")}</MenuItem>
+										  <MenuItem value={"lang_ur"}>{keyword("lang_ur")}</MenuItem>
+										  <MenuItem value={"lang_th"}>{keyword("lang_th")}</MenuItem>
+									  </Select>
+								  </FormControl>
+				</Grid>
+
+				<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+					<Grid item>
+						<TranslateIcon style={{ color: "#757575" }} />
+					</Grid>
+					<Grid>
+						<Box m={1} />
+					</Grid>
+					<Grid item xs>
+						<Typography variant="body2" align="left" style={{ color: "#757575" }}>
+							Specify the language in which the tweets are going to be analyzed
+						</Typography>
+					</Grid>
+				</Grid>
+			</Grid>
+						  <Box m={3} />
+						  <Typography variant="h6" align="left">
+							  Accounts
+						  </Typography>
+						  <Box m={1} />
+
+
+			<Grid container spacing={4} alignItems="center">
+				<Grid item xs={8}>
+					<TextField
+						disabled={searchFormDisabled}
+						value={usersInput}
+						onChange={(e) => setUsersInput(e.target.value)}
+						id="standard-full-width"
+						label={keyword("twitter_sna_user")}
+						style={{
+							marginTop: 0,
+							marginBottom: 0,
+							marginLeft: 8,
+							marginRight: 8,
+						}}
+						placeholder={keyword("user_placeholder")}
+						fullWidth
+						variant="outlined"
+					/>
+				</Grid>
+
+				<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+					<Grid item>
+						<PersonOutlineIcon style={{ color: "#757575" }} />
+					</Grid>
+					<Grid>
+						<Box m={1} />
+					</Grid>
+					<Grid item xs>
+						<Typography variant="body2" align="left" style={{ color: "#757575" }}>
+										  Specify the twitter account whose tweets are going to be analyzed
+						</Typography>
+					</Grid>
+				</Grid>
+			</Grid>
+
+			<Grid container spacing={4} alignItems="center">
+				<Grid item xs={8}>
+								  <Grid item >
+									  <FormControl component="fieldset" disabled={searchFormDisabled}>
+										  <FormLabel component="legend">
+											  {keyword("twitter_sna_verified")}
+										  </FormLabel>
+										  <RadioGroup
+											  aria-label="position"
+											  name="position"
+											  value={verifiedUsers}
+											  onChange={handleVerifiedUsersChange}
+											  row
+										  >
+											  <FormControlLabel
+												  value={"false"}
+												  control={<Radio color="primary" />}
+												  label={keyword("twitterStats_verified_no")}
+												  labelPlacement="end"
+											  />
+											  <FormControlLabel
+												  value={"true"}
+												  control={<Radio color="primary" />}
+												  label={keyword("twitterStats_verified_yes")}
+												  labelPlacement="end"
+											  />
+										  </RadioGroup>
+									  </FormControl>
+								  </Grid>
+				</Grid>
+
+				<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+					<Grid item>
+						<DoneIcon style={{ color: "#757575" }} />
+					</Grid>
+					<Grid>
+						<Box m={1} />
+					</Grid>
+					<Grid item xs>
+						<Typography variant="body2" align="left" style={{ color: "#757575" }}>
+										  Specify if you only want to analyze tweets of verified accounts
+						</Typography>
+					</Grid>
+				</Grid>
+			</Grid>
+						  <Grid container spacing={4} alignItems="center">
+							  <Grid item xs={8}>
+								  <Typography variant="h6" align="left">
+									  Media
+								  </Typography>
+							  </Grid>
+
+							  <Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+								  <Grid item>
+									  <PermMediaIcon style={{ color: "#757575" }} />
+								  </Grid>
+								  <Grid>
+									  <Box m={1} />
+								  </Grid>
+								  <Grid item xs>
+									  <Typography variant="body2" align="left" style={{ color: "#757575" }}>
+										  Specify the media elements that you want to analyze
+									  </Typography>
+								  </Grid>
+							  </Grid>
+						  </Grid>
+
+						  <Box m={3} />
+						  
+						  <FormControlLabel
+							  control={
+								  <Checkbox
+									  disabled={searchFormDisabled}
+									  checked={mediaImage}
+									  onChange={imageChange}
+									  value="checkedBox"
+									  color="primary"
+								  />
+							  }
+							  label={keyword("twitterStats_media_images")}
+						  />
+						  <FormControlLabel
+							  control={
+								  <Checkbox
+									  disabled={searchFormDisabled}
+									  checked={mediaVideo}
+									  onChange={videoChange}
+									  value="checkedBox"
+									  color="primary"
+								  />
+							  }
+							  label={keyword("twitterStats_media_videos")}
+						  />
+
+						  <Grid container spacing={4} alignItems="center">
+							  <Grid item xs={8}>
+								  <Typography variant="h6" align="left">
+									  Advanced tools
+								  </Typography>
+							  </Grid>
+
+							  <Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+								  <Grid item>
+									  <LaptopIcon style={{ color: "#757575" }} />
+								  </Grid>
+								  <Grid>
+									  <Box m={1} />
+								  </Grid>
+								  <Grid item xs>
+									  <Typography variant="body2" align="left" style={{ color: "#757575" }}>
+										  Explanation
+									  </Typography>
+								  </Grid>
+							  </Grid>
+						  </Grid>
+
+						  {cacheCheck() && (
+							  <FormControlLabel
+								  control={
+									  <Checkbox
+										  disabled={searchFormDisabled}
+										  checked={cache}
+										  onChange={cacheChange}
+										  value="checkedBox"
+										  color="primary"
+									  />
+								  }
+								  label={keyword("disable_cache")}
+							  />
+						  )}
+
+
+
+            {/*</Grid> */}
+
+
+
+
+
+            
+            
+            
+            
+
+         
             <Box m={2} />
             <Button
+			fullWidth
               variant="contained"
               color="primary"
               startIcon={<SearchIcon />}
@@ -579,6 +882,8 @@ const TwitterSna = () => {
         <TwitterSnaResult result={reduxResult} request={request} />
       )}
       <FeedBack />
+
+      </ThemeProvider>
     </div>
   );
 };

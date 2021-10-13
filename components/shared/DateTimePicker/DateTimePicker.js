@@ -26,6 +26,7 @@ const DateTimePicker = (props) => {
                     autoComplete='off'
                     error={props.error}
                     disabled={props.disabled}
+                    variant= "outlined"
                 />
             </div>
         )
