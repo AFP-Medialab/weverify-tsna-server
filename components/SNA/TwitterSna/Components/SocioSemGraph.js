@@ -6,14 +6,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import CustomTable from "../../../shared/CustomTable/CustomTable";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
-import TwitterIcon from '@material-ui/icons/Twitter';
-import {downloadClick} from "../../lib/downloadClick";
+
 
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";

@@ -47,7 +47,7 @@ export default function CustomTableURL(props) {
     const [state, setState] = useState(
         {
             title: props.title,
-            columns: props.colums,
+            columns: props.columns,
             data: props.data,
             actions: props.actions
         }
@@ -61,6 +61,7 @@ export default function CustomTableURL(props) {
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.data)]);
+    console.log("columns ", state.columns);
 
     return (
         <MaterialTable

@@ -8,11 +8,11 @@ import Typography from "@material-ui/core/Typography";
 
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, { useEffect, useState } from "react";
-import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfoFB";
+import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {useSelector} from "react-redux";
 
-export default function Count({ result, onClickInfoLabel}) {
+export default function Count({ result}) {
   const snatsv = useSelector((state) => state.sna.tsv);
   const keyword = useLoadLanguage(snatsv);
   const classes = useMyStyles();
@@ -82,7 +82,7 @@ export default function Count({ result, onClickInfoLabel}) {
 
             </Grid>
             
-            <OnClickInfo keyword={onClickInfoLabel} />
+            <OnClickInfo keyword={"ct_sna_timeline_tip"} />
         </Box>
         
 

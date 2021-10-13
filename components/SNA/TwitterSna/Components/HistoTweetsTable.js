@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box";
 import CustomTable from "../../../shared/CustomTable/CustomTable";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
+import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ export default function HistoTweetsTable(props) {
       <Box m={2} />
       <CustomTable
         title={keyword("twittersna_result_slected_tweets")}
-        columns={props.data.columns}
+        columns={getLabelsColumns(keyword, props.data.columns)}
         data={props.data.data}
         actions={goToTweetAction}
       />

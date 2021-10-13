@@ -8,6 +8,7 @@ import CustomTable from '../../shared/CustomTable/CustomTable';
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import {getLabelsColumns} from "../../shared/lib/StringUtil";
 
 function getIcon(snaType){
     switch (snaType){
@@ -20,13 +21,6 @@ function getIcon(snaType){
         default:
             return null;
     }
-}
-
-function getLabelsColumns(keyword, columns){
-    const labeledColumns = columns.map((obj,index ) => {
-        return {...obj, title: keyword(obj.title)};
-    });
-    return labeledColumns;
 }
 
 export default function PostViewTable ({snatype, setTypeValue, data, downloadEnable, request, csvArr, selected}){
