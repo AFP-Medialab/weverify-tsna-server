@@ -5,13 +5,12 @@ const drawerWidth = 200;
 
 const useMyStyles = makeStyles(theme => ({
     all: {
-        width: "80%"
+        width: "90%",
     },
     root: {
         padding: theme.spacing(3, 2),
         marginTop: 5,
         textAlign: "center",
-       
     },
 
     rootNoCenter: {
@@ -182,8 +181,8 @@ const useMyStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
     },
     formControl: {
-        margin: theme.spacing(1),
         minWidth: 200,
+        width:"100%"
     },
     histogram: {
         width: "100%",
@@ -398,7 +397,7 @@ const useMyStyles = makeStyles(theme => ({
 }));
 export const myCardStyles = makeStyles({
     root: {
-        overflow: "visible"
+        overflow: "hidden",
     }
 });
 export default useMyStyles;
