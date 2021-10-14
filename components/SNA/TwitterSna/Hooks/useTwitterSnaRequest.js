@@ -300,7 +300,7 @@ const useTwitterSnaRequest = (request, keyword) => {
     };
 
     const buildUrls = async (responseAggs) => {
-      const urls = getJsonDataForURLTable(
+      const urls = await getJsonDataForURLTable(
         responseAggs["top_url_keyword"]["buckets"],
         keyword
       );

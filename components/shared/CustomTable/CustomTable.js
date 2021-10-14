@@ -60,7 +60,7 @@ export default function CustomTable(props) {
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.data)]);
-    console.log("columns ", state.columns);
+    
     return (
         <MaterialTable
             components={{Pagination: PatchedPagination}}

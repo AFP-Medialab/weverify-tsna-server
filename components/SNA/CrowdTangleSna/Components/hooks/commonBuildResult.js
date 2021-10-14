@@ -39,7 +39,7 @@ export const buildSocioGraph = async (data, dispatch) => {
 };
 
  export const buildUrls = async (data, keyword, dispatch) => {
-    const urls = getJsonDataForURLTable(
+    const urls = await getJsonDataForURLTable(
       data,
       keyword
     );

@@ -1,4 +1,4 @@
-    export const getJsonDataForURLTable = (dataResponse, keyword) => {
+    export const getJsonDataForURLTable = async (dataResponse, keyword) => {
         var columns=null;
         var data=null;
         if(dataResponse[0].facebook_id){
