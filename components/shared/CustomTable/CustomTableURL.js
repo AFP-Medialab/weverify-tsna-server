@@ -19,6 +19,14 @@ import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { Paper } from "@material-ui/core";
 import { PatchedPagination } from '../../patch/PatchedTablePagination';
 import Link from "@material-ui/core/Link";
+import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
+import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Box from '@material-ui/core/Box';
+import Typography from "@material-ui/core/Typography";
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
@@ -44,6 +52,8 @@ const tableIcons = {
 };
 
 export default function CustomTableURL(props) {
+    const [open, setOpen] = useState(false);
+    const [selectedURL, setSelectedURL] = useState([]);
     const [state, setState] = useState(
         {
             title: props.title,
@@ -55,16 +65,27 @@ export default function CustomTableURL(props) {
     const keyword = useLoadLanguage(tsv);
 
     useEffect(() => {
+        console.log("use effect");
         setState({
             ...state,
             data: props.data,
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.data)]);
-    console.log("columns ", state.columns);
+    
+    const handleClick = (data) => {
+        console.log("onclick ", data);
+        setSelectedURL(data)
+        setOpen(true);
+    }
+    const handleClose = () => {
+        setOpen(false);
+        setSelectedURL([]);
+    };
 
     return (
-        <MaterialTable
+        <div>
+            <MaterialTable
             components={{Container: props => <Paper {...props} elevation={0}/>, Pagination: PatchedPagination}}
             //more custom info at https://material-table.com/#/docs/features/localization
             localization={{
@@ -101,6 +122,14 @@ export default function CustomTableURL(props) {
                             field: obj.field,
                             render: rowData => <Link target="_blank" href={rowData.url}>{rowData.url}</Link>
                         }
+                    } else if (obj.field === "credibility"){
+                        return {
+                            title: obj.title,
+                            field: obj.field,
+                            render: rowData => rowData.credibility === 'OK' ? 
+                                <FactCheckerIcon/> :rowData.credibility === 'KO' ?
+                                    <DesinformationIcon onClick={() => handleClick(rowData.credibility_details)} style={{ cursor: 'pointer'}}/> : ''
+                        }
                     } else {
                         return obj;
                     }
@@ -112,9 +141,43 @@ export default function CustomTableURL(props) {
                 emptyRowsWhenPaging: false,
                 pageSizeOptions:[5, 10, 15, 20, 25],
                 search: true,
-                selection: true
+                selection: true,
+                sorting: true
             }}
         />
+        <Dialog
+                fullWidth
+                maxWidth={'xs'}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="max-width-dialog-title"
+            >
+            <Box p={2}>
+            {selectedURL[0] && <>
+                <DialogTitle id="max-width-dialog-title">
+                    <Typography gutterBottom style={{ color: "#51A5B2", fontSize: "24px" }}>
+                        {"title"}
+                    </Typography>
+                </DialogTitle>
+                <DialogContent style={{ height: '300px' }}>
+                <Typography variant="body2">
+                    {"resolved-url : "}{selectedURL[0].string}
+                </Typography>
+                <Box m={4} />
+                <Typography variant="body2">
+                    {selectedURL[0].description}
+                </Typography>
+                <Box m={4} />
+                <Typography variant="body2" style={{ color: "#51A5B2" }}>
+                    {selectedURL[0].debunks}
+                </Typography>
+                <Box m={2} />
+                </DialogContent>
+                </>
+                }
+            </Box>
+        </Dialog>
+        </div>
         
     );
 }
