@@ -11,12 +11,14 @@ export const mergeUrlsAndourceCredibilityResults = (urls, originalResult, keys) 
     })
     sourceCredibility = uniqWith(sourceCredibility, isEqual)
     sourceCredibility = sourceCredibility.map((item) => {
-        if(item.debunks){
+        if(item.debunks !== undefined){
             let debunkArr = item.debunks.slice(0, -1).substring(1).split(",")
             return {...item, debunks: debunkArr}
+        }else {
+            return item
         }
     })
-
+    
     let data = urls.map((obj, index) => {
         let newObj = {};
         newObj['id'] = index;
@@ -27,7 +29,7 @@ export const mergeUrlsAndourceCredibilityResults = (urls, originalResult, keys) 
         });
         if(scresult.length > 0){
             newObj['credibility_details'] = scresult;
-            if(scresult["type"] === "fact checker"){
+            if(scresult[0].type === "fact checker"){
                 newObj['credibility'] = 'OK';
             }
             else{

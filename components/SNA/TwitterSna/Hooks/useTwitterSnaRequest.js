@@ -64,7 +64,7 @@ const useTwitterSnaRequest = (request, keyword) => {
       );
       //generateFirstGraph(request);
       (generateSecondGraph(request) && generateThirdGraph(request)).then(() => {
-        dispatch(setTwitterSnaLoading(false));
+        //dispatch(setTwitterSnaLoading(false));
       });
     };
 
@@ -82,7 +82,7 @@ const useTwitterSnaRequest = (request, keyword) => {
               generateSecondGraph(request);
             }
             generateThirdGraph(request);
-            dispatch(setTwitterSnaLoading(false));
+            //dispatch(setTwitterSnaLoading(false));
           } else if (response.data.status === "CountingWords") {
             if (lastStep === "Running") {
               //flag
@@ -335,7 +335,7 @@ const useTwitterSnaRequest = (request, keyword) => {
       dispatch(setTwitterSnaResult(request, null, false, false));
       return;
     }
-    dispatch(setTwitterSnaLoading(true));
+    dispatch(setTwitterSnaLoading(true, 5));
     dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_start")));
     //TODO premier message à mettre ici
 

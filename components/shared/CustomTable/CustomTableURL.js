@@ -53,8 +53,11 @@ const tableIcons = {
 };
 
 export default function CustomTableURL(props) {
+    var desinfo = "desinfo";
+    var factcheck = "factchecker"
     const [open, setOpen] = useState(false);
     const [selectedURL, setSelectedURL] = useState([]);
+    const [creditType, setCreditType] = useState();
     const [state, setState] = useState(
         {
             title: props.title,
@@ -74,9 +77,10 @@ export default function CustomTableURL(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.data)]);
     
-    const handleClick = (index, data) => {
+    const handleClick = (data, type) => {
         console.log("onclick ", data);
         setSelectedURL(data)
+        setCreditType(type);
         setOpen(true);
     }
     const handleClose = () => {
@@ -123,8 +127,8 @@ export default function CustomTableURL(props) {
                             title: obj.title,
                             field: obj.field,
                             render: rowData => rowData.credibility === 'OK' ? 
-                                <FactCheckerIcon/> :rowData.credibility === 'KO' ?
-                                    <DesinformationIcon onClick={() => handleClick(rowData.id, rowData.credibility_details)} style={{ cursor: 'pointer'}}/> : ''
+                                <FactCheckerIcon  onClick={() => handleClick(rowData.credibility_details, factcheck)} style={{ cursor: 'pointer'}}/> :rowData.credibility === 'KO' ?
+                                    <DesinformationIcon onClick={() => handleClick(rowData.credibility_details, desinfo)} style={{ cursor: 'pointer'}}/> : ''
                         }
                     } else {
                         return obj;
@@ -152,7 +156,7 @@ export default function CustomTableURL(props) {
             {selectedURL[0] && <>
                 <DialogTitle id="max-width-dialog-title">
                     <Typography gutterBottom style={{ color: "#51A5B2", fontSize: "24px" }}>
-                        {keyword("credibility_title")}
+                        {creditType === desinfo ? keyword("credibility_desinfo_title"): keyword("credibility_fct_title")}
                     </Typography>
                 </DialogTitle>
                 <DialogContent style={{ height: '300px' }}>
@@ -166,11 +170,11 @@ export default function CustomTableURL(props) {
                 {selectedURL[0].debunks &&<>
                 <Box m={4} />
                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                    {selectedURL[0].debunks.map((debunk, index) => (
+                    {creditType === desinfo ? selectedURL[0].debunks.map((debunk, index) => (
                         <ListItem key={index} component="a" href={debunk.trim()} target="_blank">
                             <ListItemText primary={debunk.trim()} />
                         </ListItem>
-                    ))}
+                    )) : <Typography variant="body2">selectedURL[0].description</Typography>}
                 </List>
                 </>}
                 <Box m={2} />
