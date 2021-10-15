@@ -30,7 +30,8 @@ import { setError } from "../../../redux/actions/errorActions";
 import {
   cleanTwitterSnaState,
   setTwitterSnaNewRequest,
-  setSnaType
+  setSnaType,
+  setTwitterSnaLoading
 } from "../../../redux/actions/tools/twitterSnaActions";
 import convertToGMT from "../../shared/DateTimePicker/convertToGMT";
 import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
@@ -58,8 +59,10 @@ const TwitterSna = () => {
   const cardClasses = myCardStyles();
   const request = useSelector((state) => state.twitterSna.request);
   const error = useSelector((state) => state.error);
-
+  const [loading, setLoading] = useState(false); 
   const isLoading = useSelector((state) => state.twitterSna.loading);
+  const stage = useSelector((state) => state.twitterSna.stage);
+  const maxStage = useSelector((state) => state.twitterSna.maxStage);
   const loadingMessage = useSelector(
     (state) => state.twitterSna.loadingMessage
   );
@@ -287,7 +290,16 @@ const TwitterSna = () => {
     }
     return mystring;
   }
-
+  useEffect(()=> {
+      if(isLoading){
+        setLoading(isLoading);
+      }
+      if(stage === maxStage){
+        setLoading(false);
+        //dispatch(setTwitterSnaLoadingMessage(null))
+        dispatch(setTwitterSnaLoading(false))
+      }
+  }, [isLoading, stage]);
   // Reset form & result when user login
   useEffect(() => {
     //console.log("use effect TNSA ... ")
@@ -566,7 +578,7 @@ const TwitterSna = () => {
             )}
             <Box m={2} />
             <Typography>{loadingMessage}</Typography>
-            <LinearProgress hidden={!isLoading} />
+            <LinearProgress hidden={!loading} />
             {userAuthenticated && (
               <OnClickInfo keyword={"twittersna_explication"} tsvInfo={sna.tsvInfo}/>
             )}

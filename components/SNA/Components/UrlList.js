@@ -37,7 +37,7 @@ export default function UrlList (props) {
                 }
             }
         ]
-    console.log("cho " , props);
+
     function goToTwitterSnaWithUrlSearch(event, rowData) {
 
         let newReq = props.request;

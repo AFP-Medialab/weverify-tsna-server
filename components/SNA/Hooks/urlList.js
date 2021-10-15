@@ -18,10 +18,9 @@ const { publicRuntimeConfig } = getConfig();
       newObj['url'] = obj[keys.url];
       return newObj;
     });
-    console.log('key', keys);
-    console.log('urls', urls);
+    
     let query = urls.map((obj) => obj['url']).join("\n");
-    console.log('query', query);
+    //console.log('query', query);
     let data = {};
     try{
       const response = await fetch(credibility_url, {
