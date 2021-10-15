@@ -86,7 +86,7 @@ export default function TwitterSnaResult(props) {
                 {
                     result.urls && 
                     <UrlList result={result} request={request} title_message={'twittersna_result_url_in_tweets'} 
-                        tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true}/>
+                        tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true}/>
                 }     
             </Paper>
        

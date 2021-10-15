@@ -2,18 +2,19 @@ import {
     setCountResult,
     setSnaType,
     setMaxProcessStage,
+    setUrlsResult
   } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
 
   import {
     buildCoHashTag, 
     buildSocioGraph, 
-    buildUrls, 
     wordCount, 
     buildHeatMap, 
     buildPieCharts, 
     buildHistogram
   } from './commonBuildResult'
 import { INSTA_SNA_TYPE } from "../../../../shared/hooks/SnaTypes";
+import { getJsonDataForURLTable } from "../../../Hooks/urlList";
 
 const INSTA_SNA = {type:INSTA_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv" , tsvInfo : "/components/insta/OnClickInfo.tsv"}
 export const useInstagramResult = (data, keyword, dispatch) => {
@@ -51,7 +52,26 @@ const buildPieChartsInsta = async (data, dispatch, keyword) => {
 const buildCountInsta = (data, dispatch) => {
   const instaCount = countInsta(data)
   dispatch(setCountResult(instaCount));
-}
+};
+
+const buildUrls = async (data, keyword, dispatch) => {
+  //const sortProperty = data.total_interactions;
+  const sorted = [...data].sort((a, b) => b.total_interactions - a.total_interactions);
+  const sortedData = sorted.slice(0, 25);
+  const urls = await getJsonDataForURLTable(
+    sortedData,
+    {
+      "url" : keyword("ct_url"),
+      "count": keyword("ct_sna_total_interactions"), 
+      "credibility" : keyword("sna_credibility")
+    },
+    {
+      "url": "url", 
+      "count" :"total_interactions"
+    }
+  );
+  dispatch(setUrlsResult(urls));
+};
 
 function countInsta(data) {
   let tot_interactions = 0;

@@ -1,19 +1,20 @@
 import {
     setCountResult,
     setSnaType, 
-    setMaxProcessStage
+    setMaxProcessStage,
+    setUrlsResult
   } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
 
 import {
   buildCoHashTag, 
   buildSocioGraph, 
-  buildUrls, 
   wordCount, 
   buildHeatMap, 
   buildPieCharts, 
   buildHistogram
 } from './commonBuildResult'
 import{FB_SNA_TYPE} from "../../../../shared/hooks/SnaTypes"
+import { getJsonDataForURLTable } from "../../../Hooks/urlList";
 
 const FB_SNA = {type:FB_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv", tsvInfo : "/components/fb/OnClickInfo.tsv" }
 
@@ -53,6 +54,24 @@ const buildPieChartsFB = async (data, dispatch, keyword) => {
       keyword("mention_cloud_chart_title")
     ];
     buildPieCharts(data, keywordTitles, dispatch, FB_SNA_TYPE);
+};
+
+const buildUrls = async (data, keyword, dispatch) => {
+  const sorted = [...data].sort((a, b) => b.shares - a.shares);
+  const sortedData = sorted.slice(0, 25);
+  const urls = await getJsonDataForURLTable(
+    sortedData,
+    {
+      "url" : keyword("ct_url"),
+      "count": keyword("ct_sna_shares"), 
+      "credibility" : keyword("sna_credibility")
+    },
+    {
+      "url": "url", 
+      "count" :"shares"
+    }
+  );
+  dispatch(setUrlsResult(urls));
 };
 
 function countFB(data) {

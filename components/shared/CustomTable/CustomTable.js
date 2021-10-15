@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import MaterialTable  from 'material-table';
+import MaterialTable  from '@material-table/core';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';
@@ -63,7 +63,7 @@ export default function CustomTable(props) {
     
     return (
         <MaterialTable
-            components={{Pagination: PatchedPagination}}
+            //components={{Pagination: PatchedPagination}}
             //more custom info at https://material-table.com/#/docs/features/localization
             localization={{
                 pagination: {

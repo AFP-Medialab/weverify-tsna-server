@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import MaterialTable  from 'material-table';
+import MaterialTable  from '@material-table/core';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';
@@ -17,8 +17,6 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { Paper } from "@material-ui/core";
-import { PatchedPagination } from '../../patch/PatchedTablePagination';
-import Link from "@material-ui/core/Link";
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
 import Dialog from '@material-ui/core/Dialog';
@@ -27,6 +25,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Box from '@material-ui/core/Box';
 import Typography from "@material-ui/core/Typography";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
@@ -73,7 +74,7 @@ export default function CustomTableURL(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.data)]);
     
-    const handleClick = (data) => {
+    const handleClick = (index, data) => {
         console.log("onclick ", data);
         setSelectedURL(data)
         setOpen(true);
@@ -86,7 +87,8 @@ export default function CustomTableURL(props) {
     return (
         <div>
             <MaterialTable
-            components={{Container: props => <Paper {...props} elevation={0}/>, Pagination: PatchedPagination}}
+           // components={{Container: props => <Paper {...props} elevation={0}/>, Pagination: PatchedPagination}}
+           components={{Container: props => <Paper {...props} elevation={0}/>}}
             //more custom info at https://material-table.com/#/docs/features/localization
             localization={{
                 pagination: {
@@ -116,19 +118,13 @@ export default function CustomTableURL(props) {
             title={state.title}
             columns={
                 state.columns.map((obj) => {
-                    if (obj.field === "url") {
-                        return {
-                            title: obj.title,
-                            field: obj.field,
-                            render: rowData => <Link target="_blank" href={rowData.url}>{rowData.url}</Link>
-                        }
-                    } else if (obj.field === "credibility"){
+                    if (obj.field === "credibility"){
                         return {
                             title: obj.title,
                             field: obj.field,
                             render: rowData => rowData.credibility === 'OK' ? 
                                 <FactCheckerIcon/> :rowData.credibility === 'KO' ?
-                                    <DesinformationIcon onClick={() => handleClick(rowData.credibility_details)} style={{ cursor: 'pointer'}}/> : ''
+                                    <DesinformationIcon onClick={() => handleClick(rowData.id, rowData.credibility_details)} style={{ cursor: 'pointer'}}/> : ''
                         }
                     } else {
                         return obj;
@@ -156,7 +152,7 @@ export default function CustomTableURL(props) {
             {selectedURL[0] && <>
                 <DialogTitle id="max-width-dialog-title">
                     <Typography gutterBottom style={{ color: "#51A5B2", fontSize: "24px" }}>
-                        {"title"}
+                        {keyword("credibility_title")}
                     </Typography>
                 </DialogTitle>
                 <DialogContent style={{ height: '300px' }}>
@@ -167,10 +163,16 @@ export default function CustomTableURL(props) {
                 <Typography variant="body2">
                     {selectedURL[0].description}
                 </Typography>
+                {selectedURL[0].debunks &&<>
                 <Box m={4} />
-                <Typography variant="body2" style={{ color: "#51A5B2" }}>
-                    {selectedURL[0].debunks}
-                </Typography>
+                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    {selectedURL[0].debunks.map((debunk, index) => (
+                        <ListItem key={index} component="a" href={debunk.trim()} target="_blank">
+                            <ListItemText primary={debunk.trim()} />
+                        </ListItem>
+                    ))}
+                </List>
+                </>}
                 <Box m={2} />
                 </DialogContent>
                 </>

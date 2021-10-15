@@ -34,7 +34,7 @@ import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
 
 import { createHeatMap } from "./heatMap";
 
-import { getJsonDataForURLTable } from "./urlList";
+import { getJsonDataForURLTable } from "../../Hooks/urlList";
 
 import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthenticatedRequest"
 
@@ -203,13 +203,14 @@ const useTwitterSnaRequest = (request, keyword) => {
         responseArrayOf9[0]["aggregations"].top_user_retweet.buckets
       );
       buidTopUsers(lcTweets);
+      buildUrls(responseArrayOf9[0]["aggregations"]);
     };
 
     const buildFirstResult = (request, responseAggs) => {
       buildHistogram(request, responseAggs);
       buildTweetCount(responseAggs);
       buildPieCharts(request, responseAggs);
-      buildUrls(responseAggs);
+      
     };
 
     const makeThirdResult = (request, responseArrayOf9) => {
@@ -302,7 +303,12 @@ const useTwitterSnaRequest = (request, keyword) => {
     const buildUrls = async (responseAggs) => {
       const urls = await getJsonDataForURLTable(
         responseAggs["top_url_keyword"]["buckets"],
-        keyword
+        {
+          "url" : keyword("elastic_url"),
+          "count": keyword("elastic_count"), 
+          "credibility" : keyword("sna_credibility")
+        },
+        {"url": "key", "count" :"doc_count"}
       );
       dispatch(setUrlsResult(urls));
     };
