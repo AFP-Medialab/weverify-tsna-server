@@ -1,21 +1,29 @@
 import uniqWith from "lodash/uniqWith";
 import isEqual from "lodash/isEqual";
 
-export const mergeUrlsAndourceCredibilityResults = (urls, originalResult) => {
+export const mergeUrlsAndourceCredibilityResults = (urls, originalResult, keys) => {
     let sourceCredibility = [];
     if(originalResult.entities.SourceCredibility)
         sourceCredibility = originalResult.entities.SourceCredibility
    
     sourceCredibility.forEach(dc => {
-        delete dc["indices"]
+        delete dc["indices"];
     })
     sourceCredibility = uniqWith(sourceCredibility, isEqual)
-    let data = urls.map((obj) => {
+    sourceCredibility = sourceCredibility.map((item) => {
+        if(item.debunks){
+            let debunkArr = item.debunks.slice(0, -1).substring(1).split(",")
+            return {...item, debunks: debunkArr}
+        }
+    })
+
+    let data = urls.map((obj, index) => {
         let newObj = {};
-          newObj['url'] = obj['key'];
-          newObj['count'] = obj['doc_count'];
+        newObj['id'] = index;
+        newObj['url'] = obj[keys.url];
+        newObj['count'] = obj[keys.count];
         let scresult = sourceCredibility.filter((ft) =>{
-            return ft["string"] === obj["key"];
+            return ft["string"] === obj[keys.url];
         });
         if(scresult.length > 0){
             newObj['credibility_details'] = scresult;

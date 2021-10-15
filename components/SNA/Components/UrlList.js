@@ -9,13 +9,34 @@ import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
 import {downloadClick} from "../lib/downloadClick";
 
 
-export default function UrsList (props) {
+export default function UrlList (props) {
 
     const sna = useSelector(state => state.sna)
     const keyword = useLoadLanguage(sna.tsv);    
     
     const userLogined = useSelector(state => state.userSession && state.userSession.user);
     const userData = encodeURIComponent(JSON.stringify(userLogined));
+    var actions = [];
+    if(props.action)
+        actions = [
+            {
+                icon: () => (<span className="MuiButtonBase-root 
+                                                MuiButton-root 
+                                                MuiButton-contained 
+                                                MuiButton-containedPrimary"
+                                    >
+                                    {
+                                        //keyword('twittersna_result_submit_twitter_sna')
+                                        keyword(props.tooltip_message)
+                                    }
+                                    </span>),
+                tooltip: keyword("twittersna_result_submit_twitter_sna"),
+                //tooltip: keyword(props.submit_message),
+                onClick: (event, rowData) => {
+                    goToTwitterSnaWithUrlSearch(event, rowData)
+                }
+            }
+        ]
     console.log("cho " , props);
     function goToTwitterSnaWithUrlSearch(event, rowData) {
 
@@ -61,25 +82,7 @@ export default function UrsList (props) {
                 title={keyword(props.title_message)}
                 columns={props.result.urls.columns}
                 data={props.result.urls.data}
-                actions={[
-                    {
-                        icon: () => (<span className="MuiButtonBase-root 
-                                                        MuiButton-root 
-                                                        MuiButton-contained 
-                                                        MuiButton-containedPrimary"
-                                            >
-                                            {
-                                                //keyword('twittersna_result_submit_twitter_sna')
-                                                keyword(props.tooltip_message)
-                                            }
-                                            </span>),
-                        tooltip: keyword("twittersna_result_submit_twitter_sna"),
-                        //tooltip: keyword(props.submit_message),
-                        onClick: (event, rowData) => {
-                            goToTwitterSnaWithUrlSearch(event, rowData)
-                        }
-                    }
-                ]}
+                actions={actions}
             />
             <Box m={1}/>
             <OnClickInfo keyword={"twittersna_urls_tip"}/>

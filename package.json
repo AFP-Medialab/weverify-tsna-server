@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-table/core": "^4.3.5",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
@@ -25,7 +26,6 @@
     "isomorphic-unfetch": "^3.1.0",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^3.0.0",
-    "material-table": "^1.69.3",
     "moment": "^2.29.0",
     "next": "^10.2.3",
     "next-cookie": "^2.4.2",

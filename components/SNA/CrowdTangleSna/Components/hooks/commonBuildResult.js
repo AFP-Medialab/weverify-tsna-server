@@ -3,14 +3,12 @@ import socioWorker from "workerize-loader?inline!./socioSemGraph";
 import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
 import pieChartsWorker from "workerize-loader?inline!./pieCharts";
 import timelineWorker from "workerize-loader?inline!./timelineCT";
-import { getJsonDataForURLTable } from "./urlList";
 
 import { createHeatMap } from "./heatMap";
 import {
     setCoHashtagResult,
     setCloudWordsResult,
     setSocioGraphResult,
-    setUrlsResult,
     setHeatMapResult,
     setPieChartsResult,
     setHistogramResult
@@ -37,14 +35,6 @@ export const buildSocioGraph = async (data, dispatch) => {
     const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
     dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
 };
-
- export const buildUrls = async (data, keyword, dispatch) => {
-    const urls = await getJsonDataForURLTable(
-      data,
-      keyword
-    );
-    dispatch(setUrlsResult(urls));
-  };
 
  export const buildHeatMap = async (data, dispatch, heatMapTitle) => {
     const heatMap = createHeatMap(data, heatMapTitle);
