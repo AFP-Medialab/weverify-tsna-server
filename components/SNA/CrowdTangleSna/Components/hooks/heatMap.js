@@ -37,11 +37,13 @@ export function displayPostsInsta (filteredTweets, sortedColumn) {
                 + "ct_sna_total_interactions" + ',' 
 
     let resData = [];
+    let index = 0;
     filteredTweets.forEach(postObj => {
         const date = new Date(new_date(postObj.post_created));
 
         resData.push(
             {
+                id : index ++,
                 date: date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes(),
                 screen_name: <a href={"https://instagram.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
                 post: postObj.description,
@@ -107,12 +109,14 @@ export function displayPostsFb (filteredTweets, sortedColumn) {
               + "ct_sna_shares" +'\n';
 
   let resData = [];
+  let index = 0;
   filteredTweets.forEach(postObj => {
       //const date = getEpochMillis(postObj.created);
       const date = new Date(new_date(postObj.post_created));
 
       resData.push(
           {
+              id : index ++,
               date: date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes(),
               screen_name: <a href={"https://facebook.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
               tweet: postObj.description,
@@ -158,7 +162,6 @@ export const onHeatMapClick = (data, result, setHeatMapData) => {
         let hour = getHourAsString(date.getHours());
         return hour === selectedHour && day === selectedDay;
     });
-    console.log("onclick .... ", filteredPosts);
     var res =null;
   if (result.data[0].facebook_id){
       res = displayPostsFb(filteredPosts);
@@ -167,7 +170,6 @@ export const onHeatMapClick = (data, result, setHeatMapData) => {
   {
       res = displayPostsInsta(filteredPosts);
   }
-  console.log("data onclick", res)
   setHeatMapData(res);
 }
 

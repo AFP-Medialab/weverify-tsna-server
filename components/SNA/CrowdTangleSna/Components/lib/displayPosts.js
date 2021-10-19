@@ -34,9 +34,11 @@ export function displayPostsInsta (filteredPost, sortedColumn) {
                
     
     let resData = [];
+    let index = 0;
     filteredPost.forEach(postObj => {
         resData.push(
             {
+                id : index ++,
                 date: postObj.post_created,
                 screen_name: <a href={"https://instagram.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
                 post: postObj.description,
@@ -95,9 +97,11 @@ export function displayPostsFb (filteredPost, sortedColumn) {
               + "ct_sna_shares" +'\n';
   
   let resData = [];
+  let index = 0;
   filteredPost.forEach(postObj => {
       resData.push(
           {
+              id : index ++,
               date: postObj.post_created,
               screen_name: <a href={"https://facebook.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
               post: postObj.description,

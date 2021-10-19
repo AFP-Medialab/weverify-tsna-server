@@ -1,16 +1,16 @@
 import {HYDRATE} from 'next-redux-wrapper';
-const defaultResult = {
-    cloudChart: { title: "top_words_cloud_chart_title" },
-    coHashtagGraph: null,
-    heatMap: null,
-    histogram: null,
-    pieCharts: [null,null,null,null], 
-    socioSemantic4ModeGraph: null,
-    tweetCount: 0,
-    tweets: [null],
-    urls: null
+import { 
+        SET_TWITTER_SNA_NEW_REQUEST,
+        SET_TWITTER_SNA_RESULT,
+        TSNA_PROCESS_MAX_STAGE,
+        SET_TWITTER_SNA_HEATMAP_RESULTS,
+        SET_TWITTER_COHASHTAG_RESULTS,
+        SET_TWITTER_SNA_SOCIO_GRAPH_RESULTS, 
+        SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE, 
+        SET_TWITTER_URLS_RESULTS,
+        SET_TWITTER_SNA_CLOUD_WORDS_RESULTS, 
+        SET_TWITTER_SNA_LOADING } from '../../actions/types/tsnaTypes';
 
-};
 const defaultState = {
     notification: false,
     loading: false,
@@ -19,31 +19,36 @@ const defaultState = {
     result: null,
     pieCharts: [null,null,null,null], 
     donutIndex: null,
-    topUser: null
+    topUser: null,
+    maxStage : 0,
+    stage : 0
 };
 
 const twitterSnaReducer = (state = defaultState, {type, payload}) => {
     switch (type) {
         case HYDRATE:
             return {...state, ...payload};
-        case "SET_TWITTER_SNA_NEW_REQUEST":
+        case SET_TWITTER_SNA_NEW_REQUEST:
             return {...state, "notification" : false, "loading" : false,
                 "request" : payload.request, "result" : null, "pieCharts" : [null,null,null,null], 
                 "donutIndex" : null, "topUser" : null, "gexfExport" : null}
-        case "SET_TWITTER_SNA_RESULT":
+        case SET_TWITTER_SNA_RESULT:
             return {...state, 
                 notification : payload.notification, 
                 loading : payload.loading, 
                 request : payload.request, 
                 result : payload.result
             }            
-        case "SET_TWITTER_SNA_LOADING":
-            return {...state, "loading" : payload, "loadingMessage" : ((payload)? state.loadingMessage:"")};
+        case SET_TWITTER_SNA_LOADING:        
+            return {...state, 
+                    "loading" : payload.load, 
+                    "loadingMessage" : ((payload.load)? state.loadingMessage:""), 
+                    maxStage : payload.maxStage, stage : !(payload.load) ? state.maxStage: 0};
         case "SET_TWITTER_SNA_LOADING_MSG":
             return {...state, loadingMessage : payload}        
         case "TWITTER_SNA_CLEAN_STATE":
             return state = defaultState;
-        case "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE":
+        case SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE:
             return {...state, topUser : payload}           
         case "SET_TWITTER_SNA_GEXF_EXPORT":
             return {...state, gexfExport : payload}
@@ -65,21 +70,24 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
             return {...state, result: {...state.result, tweetCount: payload}} 
         case "SET_TWITTER_TWEETS_RESULTS":
             return {...state, result: {...state.result, tweets: payload}} 
-        case "SET_TWITTER_SNA_CLOUD_WORDS_RESULTS":
-            return {...state, result: {...state.result, cloudChart: payload}} 
-        case "SET_TWITTER_SNA_SOCIO_GRAPH_RESULTS":
-            return {...state, result: {...state.result, socioSemantic4ModeGraph: payload}}
-        case "SET_TWITTER_SNA_HEATMAP_RESULTS":
-            return {...state, result: {...state.result, heatMap: payload}}
+        case SET_TWITTER_SNA_CLOUD_WORDS_RESULTS:
+            return {...state, result: {...state.result, cloudChart: payload}, stage: ++state.stage} 
+        case SET_TWITTER_SNA_SOCIO_GRAPH_RESULTS:
+            return {...state, result: {...state.result, socioSemantic4ModeGraph: payload}, stage: ++state.stage}
+        case SET_TWITTER_SNA_HEATMAP_RESULTS:
+            return {...state, result: {...state.result, heatMap: payload}, stage: ++state.stage}
         case "SET_TWITTER_PIE_CHARTS_RESULTS":
             return {...state, result: {...state.result, pieCharts: payload}}
-        case "SET_TWITTER_COHASHTAG_RESULTS":
-            return {...state, result: {...state.result, coHashtagGraph: payload}}
-        case "SET_TWITTER_URLS_RESULTS":
-            return {...state, result: {...state.result, urls: payload}}
+        case SET_TWITTER_COHASHTAG_RESULTS:
+            return {...state, result: {...state.result, coHashtagGraph: payload}, stage: ++state.stage}
+        case SET_TWITTER_URLS_RESULTS:
+            return {...state, result: {...state.result, urls: payload}, stage: ++state.stage}
         case "SET_TWITTER_SNA_BUBBLE_CHART_RESULTS":
             return {...state, result: {...state.result, topUser: payload}}
-       
+        case TSNA_PROCESS_MAX_STAGE:
+            return {...state,
+                maxStage : payload
+            };
         default:
             return state;
     }

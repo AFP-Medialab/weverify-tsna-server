@@ -46,10 +46,12 @@ export function displayPosts (filteredTweets, keyword, sortedColumn) {
                 + "elastic_url" +'\n';
 
     let resData = [];
+    let index = 0;
     filteredTweets.forEach(tweetObj => {
         const date = new Date(tweetObj._source.datetimestamp * 1000);
         resData.push(
             {
+                id : index ++,
                 date: date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes(),
                 screen_name: <a href={"https://twitter.com/" + tweetObj._source.screen_name} target="_blank" rel="noopener noreferrer">{tweetObj._source.screen_name}</a>,
                 tweet: tweetObj._source.full_text,

@@ -34,7 +34,7 @@ import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
 
 import { createHeatMap } from "./heatMap";
 
-import { getJsonDataForURLTable } from "./urlList";
+import { getJsonDataForURLTable } from "../../Hooks/urlList";
 
 import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthenticatedRequest"
 
@@ -64,7 +64,7 @@ const useTwitterSnaRequest = (request, keyword) => {
       );
       //generateFirstGraph(request);
       (generateSecondGraph(request) && generateThirdGraph(request)).then(() => {
-        dispatch(setTwitterSnaLoading(false));
+        //dispatch(setTwitterSnaLoading(false));
       });
     };
 
@@ -82,7 +82,7 @@ const useTwitterSnaRequest = (request, keyword) => {
               generateSecondGraph(request);
             }
             generateThirdGraph(request);
-            dispatch(setTwitterSnaLoading(false));
+            //dispatch(setTwitterSnaLoading(false));
           } else if (response.data.status === "CountingWords") {
             if (lastStep === "Running") {
               //flag
@@ -203,13 +203,14 @@ const useTwitterSnaRequest = (request, keyword) => {
         responseArrayOf9[0]["aggregations"].top_user_retweet.buckets
       );
       buidTopUsers(lcTweets);
+      buildUrls(responseArrayOf9[0]["aggregations"]);
     };
 
     const buildFirstResult = (request, responseAggs) => {
       buildHistogram(request, responseAggs);
       buildTweetCount(responseAggs);
       buildPieCharts(request, responseAggs);
-      buildUrls(responseAggs);
+      
     };
 
     const makeThirdResult = (request, responseArrayOf9) => {
@@ -300,9 +301,14 @@ const useTwitterSnaRequest = (request, keyword) => {
     };
 
     const buildUrls = async (responseAggs) => {
-      const urls = getJsonDataForURLTable(
+      const urls = await getJsonDataForURLTable(
         responseAggs["top_url_keyword"]["buckets"],
-        keyword
+        {
+          "url" : keyword("elastic_url"),
+          "count": keyword("elastic_count"), 
+          "credibility" : keyword("sna_credibility")
+        },
+        {"url": "key", "count" :"doc_count"}
       );
       dispatch(setUrlsResult(urls));
     };
@@ -329,7 +335,7 @@ const useTwitterSnaRequest = (request, keyword) => {
       dispatch(setTwitterSnaResult(request, null, false, false));
       return;
     }
-    dispatch(setTwitterSnaLoading(true));
+    dispatch(setTwitterSnaLoading(true, 5));
     dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_start")));
     //TODO premier message à mettre ici
 

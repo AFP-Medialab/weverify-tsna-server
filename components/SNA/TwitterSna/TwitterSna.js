@@ -27,9 +27,10 @@ import dateFormat from "dateformat";
 
 import { setError } from "../../../redux/actions/errorActions";
 import {
-	cleanTwitterSnaState,
-	setTwitterSnaNewRequest,
-	setSnaType
+  cleanTwitterSnaState,
+  setTwitterSnaNewRequest,
+  setSnaType,
+  setTwitterSnaLoading
 } from "../../../redux/actions/tools/twitterSnaActions";
 import convertToGMT from "../../shared/DateTimePicker/convertToGMT";
 import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
@@ -361,6 +362,17 @@ const TwitterSna = () => {
 		}
 		return mystring;
 	}
+
+	useEffect(() => {
+		if (isLoading) {
+			setLoading(isLoading);
+		}
+		if (stage === maxStage) {
+			setLoading(false);
+			//dispatch(setTwitterSnaLoadingMessage(null))
+			dispatch(setTwitterSnaLoading(false))
+		}
+	}, [isLoading, stage]);
 
 	// Reset form & result when user login
 	useEffect(() => {
