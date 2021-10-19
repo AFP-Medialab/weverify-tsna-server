@@ -114,6 +114,7 @@ const TweetTable = ({ cluster_id, open }) => {
                           <TableCell>TweetID(s)</TableCell>
                           {/* <TableCell>UserID(s)</TableCell> */}
                           <TableCell>Handle(s)</TableCell>
+                          <TableCell>Lang(s)</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -141,6 +142,7 @@ const TweetTable = ({ cluster_id, open }) => {
                                 Consts.USER_LINK
                               )}
                             />
+                            <TableCell>{tweet.lang}</TableCell>
                           </TableRow>
                         ))}
                         {emptyRows > 0 && (

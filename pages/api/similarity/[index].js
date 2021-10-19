@@ -2,6 +2,7 @@ import { userPostAction } from "../../../components/shared/lib/fetch";
 
 let tweetSimClusterURL = process.env.REACT_APP_TWEET_SIMILARITY_URL+ "/similarity/clusters";
 let tweetSimTweetsURL = process.env.REACT_APP_TWEET_SIMILARITY_URL+ "/similarity/tweets";
+let elasticURL = process.env.REACT_APP_ELK_URL;
 export default (req, res) => {
     const {
       query: { index },
@@ -15,8 +16,12 @@ export default (req, res) => {
     switch(index){
         case "getClusters":{
             let url = tweetSimClusterURL;
-            const body = JSON.stringify(req.body);
-            return userPostAction(res, url, body , headers);
+            // add the ES url to the request.
+            let body = req.body
+            body['elasticURL']=elasticURL;
+            const bodyJSON = JSON.stringify(body);
+            console.log("bodyJSON",bodyJSON);
+            return userPostAction(res, url, bodyJSON , headers);
         }
         case "getTweets":{
             let url = tweetSimTweetsURL;
