@@ -20,6 +20,8 @@ import {displayPosts} from "../../../SNA/lib/displayTweets"
 import { downloadClick } from "../../lib/downloadClick";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 
 export default function PlotPieChart(props) {
   const dispatch = useDispatch();
@@ -197,18 +199,17 @@ export default function PlotPieChart(props) {
   return state.result.pieCharts.map((obj, index) => {
     if (request.userList.length === 0 || index === 3) {
       return (
-        <Accordion key={index}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+        <div key={index}>
+
+        
+        <Card >
+          <CardHeader
+            className={classes.headerCard}
+            title={keyword(obj.title)}
             aria-controls={"panel" + index + "a-content"}
             id={"panel" + index + "a-header"}
-          >
-            <Typography className={classes.heading}>
-              {keyword(obj.title)}
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box alignItems="center" justifyContent="center" width={"100%"}>
+          />
+          <Box alignItems="center" justifyContent="center" width={"100%"} className={classes.cardsResults}>
               {(obj.json === null ||
                 (obj.json[0].values.length === 1 &&
                   obj.json[0].values[0] === "")) && (
@@ -297,8 +298,10 @@ export default function PlotPieChart(props) {
                 )
               }
             </Box>
-          </AccordionDetails>
-        </Accordion>
+        </Card>
+        <Box m={3}/>
+
+        </div>
       );
     } else return null;
   });

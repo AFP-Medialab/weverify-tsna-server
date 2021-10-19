@@ -16,6 +16,8 @@ import {getDayAsString} from "../Hooks/heatMap"
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import PostViewTable from "../../Components/PostViewTable";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 
 const Plot = createPlotComponent(plotly);
 
@@ -55,16 +57,18 @@ export default function HeatMap (props) {
 
 
     return (
-        <Accordion>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-            >
-                <Typography className={classes.heading}>{keyword("heatmap_chart_title")}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
+
+        <Card>
+            <CardHeader
+                className={classes.headerCard}
+                title={keyword("heatmap_chart_title")}
+                aria-controls={""}
+                id={""}
+            />
+
                 {
                     props.result && props.result.heatMap &&
-                    <Box alignItems="center" justifyContent="center" width={"100%"}>
+                    <Box alignItems="center" justifyContent="center" width={"100%"} className={classes.cardsResults}>
                         {
                             ((props.result.heatMap.isAllnul) &&
                                 <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>) ||
@@ -99,8 +103,7 @@ export default function HeatMap (props) {
 
                         <CircularProgress className={classes.circularProgress} />)
                 }
-            </AccordionDetails>
-        </Accordion>
+        </Card>
     )
 
 }

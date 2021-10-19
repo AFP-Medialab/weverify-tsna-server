@@ -27,7 +27,7 @@ function Layout(props) {
     };
 
     return (
-        <div className={styles.container}>
+        <div>
             <Head>
                 <link rel="icon" href="/favicon.ico" />
                 <meta name="description"
@@ -68,7 +68,10 @@ function Layout(props) {
                 </AppBar>
 
             </div>
-        {props.children}</div>
+            <div>
+                {props.children}
+            </div>
+        </div>
     )
   }
   

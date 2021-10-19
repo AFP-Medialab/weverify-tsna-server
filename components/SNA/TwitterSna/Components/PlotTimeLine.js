@@ -16,6 +16,8 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 import { filterForTimeLine } from "../../Hooks/timeline";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
@@ -54,17 +56,13 @@ export default function PlotTimeLine(props) {
   };
 
   return (
-    <Accordion
-      expanded={histoVisible}
-      onChange={() => setHistoVisible(!histoVisible)}
-    >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+    <Card className={classes.cardsResults}>
+      <CardHeader
+        className={classes.headerCard}
+        title={keyword("user_time_chart_title")}
         aria-controls={"panel0a-content"}
-        id={"panel0a-header"}>
-        <Typography className={classes.heading}>{keyword("user_time_chart_title")}</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
+        id={"panel0a-header"}
+      />
         {
             state.result.histogram &&
             <div style={{ width: "100%" }}>
@@ -98,7 +96,6 @@ export default function PlotTimeLine(props) {
             state.result.histogram === undefined &&
             <CircularProgress className={classes.circularProgress} />
         }
-      </AccordionDetails>
-    </Accordion>
+    </Card>
   );
 }

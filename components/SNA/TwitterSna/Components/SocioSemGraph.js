@@ -20,6 +20,9 @@ import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
 import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import {getDomain} from "../Hooks/socioSemGraph"
 import PostViewTable from "../../Components/PostViewTable";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
@@ -135,16 +138,17 @@ export default function SocioSemGraph (props) {
 
     return (
     //request.userList.length === 0 && result &&
-    <Accordion>
-        <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-        >
-            <Typography className={classes.heading}>{keyword("sosem_4mode_graph_title")}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
+
+        <Card>
+            <CardHeader
+                className={classes.headerCard}
+                title={keyword("sosem_4mode_graph_title")}
+                aria-controls={""}
+                id={""}
+            />
         {
             props.result.socioSemantic4ModeGraph && props.result.socioSemantic4ModeGraph.data.nodes.length !== 0 &&
-                <div style={{ width: '100%' }}>
+                <div style={{ width: '100%' }} className={classes.cardsResults}>
                     <Box pb={3}>
                         <Grid container justifyContent="space-between" spacing={2}
                             alignContent={"center"}>
@@ -263,7 +267,6 @@ export default function SocioSemGraph (props) {
                 props.result.socioSemantic4ModeGraph === undefined &&
                 <CircularProgress className={classes.circularProgress} />
             }
-        </AccordionDetails>
-    </Accordion>
+    </Card>
     )
 }

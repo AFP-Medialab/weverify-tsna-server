@@ -15,6 +15,8 @@ import plotly from 'plotly.js-dist';
 import {createBubbleChartOfMostActiveUsers} from "../Hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
 import PostViewTable from "../../Components/PostViewTable";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 
 const Plot = createPlotComponent(plotly);
 
@@ -56,61 +58,59 @@ export default function BubbleChart(props) {
 
     return (
 
-        <Accordion>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+
+        <Card >
+            <CardHeader
+                className={classes.headerCard}
+                title={keyword("bubble_chart_title")}
                 aria-controls={"panel0a-content"}
                 id={"panel0a-header"}
-            >
-                <Typography className={classes.heading}>{keyword("bubble_chart_title")}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
+            />
                 
-                {
-                    topUserProfile && topUserProfile.length !== 0 &&
-                    <div style={{ width: '100%', }}>
-                        { 
-                            [createBubbleChartOfMostActiveUsers(topUserProfile, props.request, props.result, keyword)].map((bubbleChart) => {
-                                return (
-                                    <div key={Math.random()}>
-                                        <Plot useResizeHandler
-                                            style={{ width: '100%', height: "600px" }}
-                                            data={bubbleChart.data}
-                                            layout={bubbleChart.layout}
-                                            config={bubbleChart.config}
-                                            onClick={(e) => onBubbleChartClick(e, props.result)}
-                                            
-                                        />
-                                        <Box m={1} />
-                                        <OnClickInfo keyword={"twittersna_bubble_chart_tip"} />
-                                        <Box m={2} />
-                                    </div>
-                                )
-                            })
-                        }
-                        {
-                            bubbleTweets &&
-                            <PostViewTable 
-                                    snatype={sna} 
-                                    setTypeValue={setBubbleTweets} 
-                                    data={bubbleTweets} 
-                                    downloadEnable={true} 
-                                    request={props.request}
-                                    csvArr={bubbleTweets.csvArr} 
-                                    selected={bubbleTweets.selected}/>
-                        }
-                    </div>
-                }
-                {
-                    ((topUserProfile && topUserProfile.length === 0) || props.result.tweetCount.count === "0") &&
-                    <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>
-                }
-                {
-                    (!topUserProfile && props.result.tweetCount.count !== "0") &&
-                    <CircularProgress className={classes.circularProgress} />
-                }
-            </AccordionDetails>
-        </Accordion>
+            {
+                topUserProfile && topUserProfile.length !== 0 &&
+                <div style={{ width: '100%', }} className={classes.cardsResults}>
+                    { 
+                        [createBubbleChartOfMostActiveUsers(topUserProfile, props.request, props.result, keyword)].map((bubbleChart) => {
+                            return (
+                                <div key={Math.random()}>
+                                    <Plot useResizeHandler
+                                        style={{ width: '100%', height: "600px" }}
+                                        data={bubbleChart.data}
+                                        layout={bubbleChart.layout}
+                                        config={bubbleChart.config}
+                                        onClick={(e) => onBubbleChartClick(e, props.result)}
+                                        
+                                    />
+                                    <Box m={1} />
+                                    <OnClickInfo keyword={"twittersna_bubble_chart_tip"} />
+                                    <Box m={2} />
+                                </div>
+                            )
+                        })
+                    }
+                    {
+                        bubbleTweets &&
+                        <PostViewTable 
+                                snatype={sna} 
+                                setTypeValue={setBubbleTweets} 
+                                data={bubbleTweets} 
+                                downloadEnable={true} 
+                                request={props.request}
+                                csvArr={bubbleTweets.csvArr} 
+                                selected={bubbleTweets.selected}/>
+                    }
+                </div>
+            }
+            {
+                ((topUserProfile && topUserProfile.length === 0) || props.result.tweetCount.count === "0") &&
+                <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>
+            }
+            {
+                (!topUserProfile && props.result.tweetCount.count !== "0") &&
+                <CircularProgress className={classes.circularProgress} />
+            }
+        </Card>
         
     )
 }

@@ -10,6 +10,9 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import Grid from "@material-ui/core/Grid";
 import { useSelector } from "react-redux";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
 
 
 export default function TweetCount(props) {
@@ -35,54 +38,40 @@ export default function TweetCount(props) {
   }, [props.result.tweetCount]);
 
   return (
-    <Accordion
-      expanded={countVisible}
-      onChange={() => setCountVisible(!countVisible)}
-    >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls={"panel0a-content"}
-        id={"panel0a-header"}
-      >
-        <Typography className={classes.heading}>
-          {keyword("tweetCounter_title")}
-        </Typography>
-      </AccordionSummary>
-
-
-
-      
-      <AccordionDetails>
-        <Box alignItems="center" justifyContent="center" width={"100%"}>
+    <Card>
+      <CardHeader
+        className={classes.headerCard}
+        title={keyword("tweetCounter_title")}
+      />
+        <Box alignItems="center" justifyContent="center" width={"100%"} mt={4} className={classes.cardsResults}>
           <Grid
             container
             justifyContent="space-around"
             spacing={2}
             alignContent={"center"}
           >
-            <Grid item>
+            <Grid item style={{minWidth: "120px"}}>
               <Typography variant={"h6"}>Tweets</Typography>
               <Typography variant={"h2"}>
                 {tweetCount.count}
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item style={{ minWidth: "120px" }}>
               <Typography variant={"h6"}>Retweets</Typography>
               <Typography variant={"h2"}>
                 {tweetCount.retweet}
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item style={{ minWidth: "120px" }}>
               <Typography variant={"h6"}>Likes</Typography>
               <Typography variant={"h2"}>
                 {tweetCount.like}
               </Typography>
             </Grid>
           </Grid>
-          <Box m={3} />
+          <Box m={4} />
           <OnClickInfo keyword={"twittersna_tweetnb_tip"} />
         </Box>
-      </AccordionDetails>
-    </Accordion>
+    </Card>
   );
 }

@@ -17,6 +17,8 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import PostViewTable from "../../Components/PostViewTable";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 
 //possible error, same as plot
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
@@ -91,20 +93,21 @@ export default function HashtagGraph (props) {
     }]
 
     return (
-        <Accordion>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-            >
-                <Typography className={classes.heading}>{keyword("hashtag_graph_title")}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
+
+        <Card>
+            <CardHeader
+                className={classes.headerCard}
+                title={keyword("hashtag_graph_title")}
+                aria-controls={""}
+                id={""}
+            />
             {
                 props.result && props.result.coHashtagGraph && props.result.coHashtagGraph.data.nodes.length === 0 &&
                 <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>
             }
             {
                 props.result && props.result.coHashtagGraph && props.result.coHashtagGraph.data.nodes.length !== 0 &&
-                <div style={{ width: '100%' }}>
+                <div style={{ width: '100%' }} className={classes.cardsResults}>
                     <Box pb={3}>
                         <Grid container justifyContent="space-between" spacing={2}
                             alignContent={"center"}>
@@ -220,8 +223,8 @@ export default function HashtagGraph (props) {
                 props.result.coHashtagGraph === undefined &&
                 <CircularProgress className={classes.circularProgress} />
             }
-            </AccordionDetails>
-        </Accordion>
+
+        </Card>
         
     )
 }

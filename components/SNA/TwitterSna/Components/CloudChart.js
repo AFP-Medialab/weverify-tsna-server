@@ -18,6 +18,8 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import Plotly from 'plotly.js-dist';
 import PostViewTable from "../../Components/PostViewTable";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
@@ -160,15 +162,13 @@ export default function cloudChart (props) {
 
     let call = getCallbacks();
     return (
-        <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={"panel0a-content"}
-                        id={"panel0a-header"}
-                    >
-                        <Typography className={classes.heading}>{keyword("top_words_cloud_chart_title")}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
+        <Card>
+            <CardHeader
+                className={classes.headerCard}
+                title={keyword("top_words_cloud_chart_title")}
+                aria-controls={"panel0a-content"}
+                id={"panel0a-header"}
+            />
                         {
                             props.result && props.result.cloudChart && props.result.cloudChart.json &&
                             <Box alignItems="center" justifyContent="center" width={"100%"}>
@@ -239,7 +239,7 @@ export default function cloudChart (props) {
                              props.result.cloudChart  === undefined &&
                             <CircularProgress className={classes.circularProgress} />
                         }
-                    </AccordionDetails>
-                </Accordion>
+
+                </Card>
     )
 }

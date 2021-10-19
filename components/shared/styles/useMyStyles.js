@@ -7,6 +7,9 @@ const useMyStyles = makeStyles(theme => ({
     all: {
         width: "90%",
     },
+    container: {
+        backgroundColor: "#fafafa"
+    },
     root: {
         padding: theme.spacing(3, 2),
         marginTop: 5,
@@ -20,6 +23,14 @@ const useMyStyles = makeStyles(theme => ({
     noMargin: {
         marginLeft: "0px!important",
         marginRight: "0px!important"
+    },
+
+    cardsResults: {
+        textAlign: "center",
+    },
+
+    headerCard:{
+        textAlign: "left",
     },
 
     circularProgress: {
