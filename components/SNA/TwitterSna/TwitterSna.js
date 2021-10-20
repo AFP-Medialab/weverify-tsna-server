@@ -104,7 +104,12 @@ const TwitterSna = () => {
 					boxShadow: "none",
 					'&:before': {
 						width: "0px",
-					}
+					},
+					border: "1px solid #51A5B2",
+					
+				},
+				rounded:{
+					borderRadius: "15px",
 				}
 
 				
@@ -133,8 +138,10 @@ const TwitterSna = () => {
 	const cardClasses = myCardStyles();
 	const request = useSelector((state) => state.twitterSna.request);
 	const error = useSelector((state) => state.error);
-
+	const [loading, setLoading] = useState(false);
 	const isLoading = useSelector((state) => state.twitterSna.loading);
+	const stage = useSelector((state) => state.twitterSna.stage);
+	const maxStage = useSelector((state) => state.twitterSna.maxStage);
 	const loadingMessage = useSelector(
 		(state) => state.twitterSna.loadingMessage
 	);
@@ -533,55 +540,58 @@ const TwitterSna = () => {
 								</Grid>
 							</Grid>
 
-							<Box m={1} />
+							<Box m={1}/>
 
-							<FormControl component="fieldset" disabled={searchFormDisabled} style={{ width: "100%", paddingLeft: "30px" }}>
-								<RadioGroup
-									aria-label="position"
-									name="position"
-									value={localTime}
-									onChange={(e) => setLocalTime(e.target.value)}
-									row
-								>
-									<Grid container direction="column" justifyContent="flex-start" alignItems="flex-start">
-										<FormControlLabel
-											value={"true"}
-											control={<Radio color="primary" />}
-											label={keyword("twitter_local_time")}
-											labelPlacement="end"
-										/>
-										<Box m={1} />
-										<FormControlLabel
-											value={"false"}
-											control={<Radio color="primary" />}
-											label={keyword("twitter_sna_gmt")}
-											labelPlacement="end"
-										/>
-									</Grid>
-								</RadioGroup>
-							</FormControl>
+							<Box pl={3}>
 
-							<Box m={3} />
+								<FormControl component="fieldset" disabled={searchFormDisabled} style={{ width: "100%" }}>
+									<RadioGroup
+										aria-label="position"
+										name="position"
+										value={localTime}
+										onChange={(e) => setLocalTime(e.target.value)}
+										row
+									>
+										<Grid container direction="column" justifyContent="flex-start" alignItems="flex-start">
+											<FormControlLabel
+												value={"true"}
+												control={<Radio color="primary" />}
+												label={keyword("twitter_local_time")}
+												labelPlacement="end"
+											/>
+											<Box m={1} />
+											<FormControlLabel
+												value={"false"}
+												control={<Radio color="primary" />}
+												label={keyword("twitter_sna_gmt")}
+												labelPlacement="end"
+											/>
+										</Grid>
+									</RadioGroup>
+								</FormControl>
 
-							<Divider style={{marginRight: "32px"}}/>
+							</Box>
 
-							<Box m={1} />
+							<Box m={2} />
 		
 							<Accordion>
+								
 								<AccordionSummary
-									expandIcon={<ExpandMoreIcon />}
+									expandIcon={<ExpandMoreIcon style={{ color: "#17717e"}}/>}
 									aria-controls="panel1a-content"
 									id="panel1a-header"
 								>
-									<Typography variant="h5" align="left">
+									<Box pl={3} pr={3} pt={1} pb={1}>
+									<Typography variant="h6" align="left" style={{ color: "#17717e"}}>
 										Optional parameters
 									</Typography>
+									</Box>
 								</AccordionSummary>
-								<AccordionDetails>
+									<AccordionDetails style={{ flexDirection: "column"}}>
+
+									<Box pl={3} pr={3}>
 
 									<Grid container direction="column" spacing={0}>
-
-										
 
 										<Typography variant="h6" align="left" style={{ paddingLeft: "0px" }}>
 											Words
@@ -626,11 +636,13 @@ const TwitterSna = () => {
 													className={classes.formControl}
 													disabled={searchFormDisabled}
 												>
-													<InputLabel id="demo-controlled-open-select-label">
+													<InputLabel id="test-select-label">
 														{keyword("lang_choices")}
 													</InputLabel>
 													<Select
-														labelid="demo-controlled-open-select-label"
+														native
+														labelId="test-select-label"
+														label={keyword("lang_choices")}
 														id="demo-controlled-open-select"
 														open={openLangInput}
 														onClose={() => setLangInputOpen(false)}
@@ -638,30 +650,30 @@ const TwitterSna = () => {
 														value={langInput}
 														onChange={(e) => setLangInput(e.target.value)}
 													>
-														<MenuItem value={"lang_all"}>{keyword("lang_all")}</MenuItem>
-														<MenuItem value={"lang_fr"}>{keyword("lang_fr")}</MenuItem>
-														<MenuItem value={"lang_en"}>{keyword("lang_en")}</MenuItem>
-														<MenuItem value={"lang_es"}>{keyword("lang_es")}</MenuItem>
-														<MenuItem value={"lang_ar"}>{keyword("lang_ar")}</MenuItem>
-														<MenuItem value={"lang_de"}>{keyword("lang_de")}</MenuItem>
-														<MenuItem value={"lang_it"}>{keyword("lang_it")}</MenuItem>
-														<MenuItem value={"lang_id"}>{keyword("lang_id")}</MenuItem>
-														<MenuItem value={"lang_pt"}>{keyword("lang_pt")}</MenuItem>
-														<MenuItem value={"lang_ko"}>{keyword("lang_ko")}</MenuItem>
-														<MenuItem value={"lang_tr"}>{keyword("lang_tr")}</MenuItem>
-														<MenuItem value={"lang_ru"}>{keyword("lang_ru")}</MenuItem>
-														<MenuItem value={"lang_nl"}>{keyword("lang_nl")}</MenuItem>
-														<MenuItem value={"lang_hi"}>{keyword("lang_hi")}</MenuItem>
-														<MenuItem value={"lang_no"}>{keyword("lang_no")}</MenuItem>
-														<MenuItem value={"lang_sv"}>{keyword("lang_sv")}</MenuItem>
-														<MenuItem value={"lang_fi"}>{keyword("lang_fi")}</MenuItem>
-														<MenuItem value={"lang_da"}>{keyword("lang_da")}</MenuItem>
-														<MenuItem value={"lang_pl"}>{keyword("lang_pl")}</MenuItem>
-														<MenuItem value={"lang_hu"}>{keyword("lang_hu")}</MenuItem>
-														<MenuItem value={"lang_fa"}>{keyword("lang_fa")}</MenuItem>
-														<MenuItem value={"lang_he"}>{keyword("lang_he")}</MenuItem>
-														<MenuItem value={"lang_ur"}>{keyword("lang_ur")}</MenuItem>
-														<MenuItem value={"lang_th"}>{keyword("lang_th")}</MenuItem>
+														<option value=""></option>
+														<option value={"lang_fr"}>{keyword("lang_fr")}</option>
+														<option value={"lang_en"}>{keyword("lang_en")}</option>
+														<option value={"lang_es"}>{keyword("lang_es")}</option>
+														<option value={"lang_ar"}>{keyword("lang_ar")}</option>
+														<option value={"lang_de"}>{keyword("lang_de")}</option>
+														<option value={"lang_it"}>{keyword("lang_it")}</option>
+														<option value={"lang_id"}>{keyword("lang_id")}</option>
+														<option value={"lang_pt"}>{keyword("lang_pt")}</option>
+														<option value={"lang_ko"}>{keyword("lang_ko")}</option>
+														<option value={"lang_tr"}>{keyword("lang_tr")}</option>
+														<option value={"lang_ru"}>{keyword("lang_ru")}</option>
+														<option value={"lang_nl"}>{keyword("lang_nl")}</option>
+														<option value={"lang_hi"}>{keyword("lang_hi")}</option>
+														<option value={"lang_no"}>{keyword("lang_no")}</option>
+														<option value={"lang_sv"}>{keyword("lang_sv")}</option>
+														<option value={"lang_fi"}>{keyword("lang_fi")}</option>
+														<option value={"lang_da"}>{keyword("lang_da")}</option>
+														<option value={"lang_pl"}>{keyword("lang_pl")}</option>
+														<option value={"lang_hu"}>{keyword("lang_hu")}</option>
+														<option value={"lang_fa"}>{keyword("lang_fa")}</option>
+														<option value={"lang_he"}>{keyword("lang_he")}</option>
+														<option value={"lang_ur"}>{keyword("lang_ur")}</option>
+														<option value={"lang_th"}>{keyword("lang_th")}</option>
 													</Select>
 												</FormControl>
 											</Grid>
@@ -720,34 +732,24 @@ const TwitterSna = () => {
 
 										<Grid container spacing={4} alignItems="center" style={{ paddingLeft: "0px" }}>
 											<Grid item xs={8}>
-												<Grid item >
+												<Box pl={2}>
 													<FormControl component="fieldset" disabled={searchFormDisabled}>
-														<FormLabel component="legend">
-															{keyword("twitter_sna_verified")}
-														</FormLabel>
-															<Box m={1} />
-														<RadioGroup
-															aria-label="position"
-															name="position"
-															value={verifiedUsers}
-															onChange={handleVerifiedUsersChange}
-															row
-														>
 															<FormControlLabel
-																value={"false"}
-																control={<Radio color="primary" />}
-																label={keyword("twitterStats_verified_no")}
+																aria-label="position"
+																name="position"
+																control={
+																	<Checkbox 
+																		color="primary"
+																		onChange={handleVerifiedUsersChange} 
+																		disabled={searchFormDisabled}
+																		checked={verifiedUsers}/>
+																}
+																label={keyword("twitter_sna_verified")}
 																labelPlacement="end"
 															/>
-															<FormControlLabel
-																value={"true"}
-																control={<Radio color="primary" />}
-																label={keyword("twitterStats_verified_yes")}
-																labelPlacement="end"
-															/>
-														</RadioGroup>
 													</FormControl>
-												</Grid>
+												</Box>
+
 											</Grid>
 
 											<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
@@ -765,8 +767,9 @@ const TwitterSna = () => {
 											</Grid>
 										</Grid>
 
-											<Box m={3} />
+										<Box m={3} />
 
+										
 										<Grid container spacing={4} alignItems="center">
 											<Grid item xs={8}>
 												<Typography variant="h6" align="left" style={{ paddingLeft: "0px" }}>
@@ -774,6 +777,7 @@ const TwitterSna = () => {
 												</Typography>
 											</Grid>
 
+											
 											<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
 												<Grid item>
 													<PermMediaIcon style={{ color: "#757575" }} />
@@ -787,39 +791,42 @@ const TwitterSna = () => {
 													</Typography>
 												</Grid>
 											</Grid>
+											
 										</Grid>
+										
 
 										<Box m={1} />
 										
-
-										<FormControlLabel
-											control={
-												<Checkbox
-													disabled={searchFormDisabled}
-													checked={mediaImage}
-													onChange={imageChange}
-													value="checkedBox"
-													color="primary"
-												/>
-											}
-											label={keyword("twitterStats_media_images")}
-											style={{ paddingLeft: "0px" }}
-											
-										/>
-										<Box mt={1} />
-										<FormControlLabel
-											control={
-												<Checkbox
-													disabled={searchFormDisabled}
-													checked={mediaVideo}
-													onChange={videoChange}
-													value="checkedBox"
-													color="primary"
-												/>
-											}
-											label={keyword("twitterStats_media_videos")}
-											style={{ paddingLeft: "0px" }}
-										/>
+										<Box pl={3}>
+											<FormControlLabel
+												control={
+													<Checkbox
+														disabled={searchFormDisabled}
+														checked={mediaImage}
+														onChange={imageChange}
+														value="checkedBox"
+														color="primary"
+													/>
+												}
+												label={keyword("twitterStats_media_images")}
+												style={{ paddingLeft: "0px" }}
+												
+											/>
+											<Box mt={1} />
+											<FormControlLabel
+												control={
+													<Checkbox
+														disabled={searchFormDisabled}
+														checked={mediaVideo}
+														onChange={videoChange}
+														value="checkedBox"
+														color="primary"
+													/>
+												}
+												label={keyword("twitterStats_media_videos")}
+												style={{ paddingLeft: "0px" }}
+											/>
+										</Box>
 
 										<Box m={3} />
 
@@ -848,25 +855,32 @@ const TwitterSna = () => {
 										<Box m={1} />
 
 										{cacheCheck() && (
-											<FormControlLabel
-												control={
-													<Checkbox
-														disabled={searchFormDisabled}
-														checked={cache}
-														onChange={cacheChange}
-														value="checkedBox"
-														color="primary"
-													/>
-												}
-												label={keyword("disable_cache")}
-											/>
+											<Box pl={3}>
+												<FormControlLabel
+													control={
+														<Checkbox
+															disabled={searchFormDisabled}
+															checked={cache}
+															onChange={cacheChange}
+															value="checkedBox"
+															color="primary"
+														/>
+													}
+													label={keyword("disable_cache")}
+												/>
+											</Box>
 										)}
 									</Grid>
+
+										
+									</Box>
 								</AccordionDetails>
+								
+								
 							</Accordion>
 
 
-							<Box m={1} />
+							<Box m={2} />
 
 
 							<Button
@@ -890,7 +904,7 @@ const TwitterSna = () => {
 							)}
 							<Box m={2} />
 							<Typography>{loadingMessage}</Typography>
-							<LinearProgress hidden={!isLoading} />
+							<LinearProgress hidden={!loading} />
 							{userAuthenticated && (
 								<OnClickInfo keyword={"twittersna_explication"} tsvInfo={sna.tsvInfo} />
 							)}
