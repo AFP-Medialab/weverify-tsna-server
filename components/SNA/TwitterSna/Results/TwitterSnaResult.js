@@ -17,6 +17,10 @@ import Typography from "@material-ui/core/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
+
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), { ssr: false });
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), { ssr: false });
 const BubbleChart = dynamic(import("../Components/BubbleChart"), { ssr: false });
@@ -28,6 +32,7 @@ const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 export default function TwitterSnaResult(props) {
 
     const dispatch = useDispatch();
+    const keyword = useLoadLanguage(tsv);
     const classes = useMyStyles();
     const request = useSelector(state => state.twitterSna.request);
     const resultStore = useSelector(state => state.twitterSna.result);
@@ -37,15 +42,18 @@ export default function TwitterSnaResult(props) {
     const [widthIndex, setWidthIndex] = useState(4);
     const [widthCards, setWidthCards] = useState(8);
     const [collapsed, setCollapsed] = useState(false);
+    const [alignIndex, setAlignIndex] = useState("flex-start");
     function onClickCollapseIndex() {
         if (widthIndex == 4){
             setCollapsed(true);
             setWidthIndex(1);
             setWidthCards(11);
+            setAlignIndex("center");
         }else{
             setCollapsed(false);
             setWidthIndex(4);
             setWidthCards(8);
+            setAlignIndex("flex-start");
         }
     } 
 
@@ -86,15 +94,16 @@ export default function TwitterSnaResult(props) {
                                 <Grid
                                     container
                                     direction="row"
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                    spacing={2}>
+                                    justifyContent="center"
+                                    alignItems="center">
 
+                                    {!collapsed &&
                                     <Grid item xs>
-                                        <span>{!collapsed &&
-                                            "Index"
-                                        }</span>
+                                        <span>
+                                            {keyword("twitter_sna_index")}
+                                        </span>
                                     </Grid>
+                                    }
 
                                     {!collapsed &&
                                         <Grid item>
@@ -120,13 +129,14 @@ export default function TwitterSnaResult(props) {
                             <Grid
                                 container
                                 direction="column"
+                                alignItems={alignIndex}
                             >
 
                                 <a href="#tweets" style={{textDecoration: "none", color: "black"}}>
                                     <Typography variant={"h6"} >
-                                        {"1. "}
+                                        {"1."}
                                         {!collapsed &&
-                                            "Tweets number"
+                                            " " + keyword("tweetCounter_title")
                                         }
                                         
                                     </Typography>
@@ -135,9 +145,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#propagation" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"2. "}
+                                        {"2."}
                                         {!collapsed &&
-                                            "Propagation timeline"
+                                            " " + keyword("user_time_chart_title")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -145,9 +155,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#bubble0" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"3. "}
+                                        {"3."}
                                         {!collapsed &&
-                                            "Most retweeted users"
+                                            " " + keyword("retweets_cloud_chart_title")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -155,9 +165,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#bubble1" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"4. "}
+                                        {"4."}
                                         {!collapsed &&
-                                            "Most liked users"
+                                            " " + keyword("likes_cloud_chart_title")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -165,9 +175,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#bubble2" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"5. "}
+                                        {"5."}
                                         {!collapsed &&
-                                            "Most active users"
+                                            " " + keyword("top_users_pie_chart_title")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -175,9 +185,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#bubble3" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"6. "}
+                                        {"6."}
                                         {!collapsed &&
-                                            "Most mentioned accounts"
+                                            " " + keyword("mention_cloud_chart_title")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -187,7 +197,7 @@ export default function TwitterSnaResult(props) {
                                     <Typography variant={"h6"} >
                                         {"7. "}
                                         {!collapsed &&
-                                            "Top 100 most active accounts"
+                                            " " + keyword("bubble_chart_title_index")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -195,9 +205,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#heatmap" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"8. "}
+                                        {"8."}
                                         {!collapsed &&
-                                            "Heatmap of tweets distribution"
+                                            " " + keyword("heatmap_chart_title")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -205,9 +215,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#hastag" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"9. "}
+                                        {"9."}
                                         {!collapsed &&
-                                            "Most associated hastags"
+                                            " " + keyword("hashtag_graph_title")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -215,9 +225,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#sociosemantic" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"10. "}
+                                        {"10."}
                                         {!collapsed &&
-                                            "Socio-semantic graph"
+                                            " " + keyword("sosem_graph_title2")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -225,9 +235,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#words" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"11. "}
+                                        {"11."}
                                         {!collapsed &&
-                                            "Most used words in tweets"
+                                            " " + keyword("top_words_cloud_chart_title")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -235,9 +245,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#interaction" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"12. "}
+                                        {"12."}
                                         {!collapsed &&
-                                            "Interaction graph"
+                                            " " + keyword("export_graph_title")
                                         }
                                     </Typography>
                                     <Box m={1} />
@@ -245,9 +255,9 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#urls" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"13. "}
+                                        {"13."}
                                         {!collapsed &&
-                                            "URLs in tweets"
+                                            " " + keyword("twittersna_result_url_in_tweets")
                                         }
                                     </Typography>
                                     <Box m={1} />

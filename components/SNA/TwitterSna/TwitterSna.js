@@ -428,7 +428,7 @@ const TwitterSna = () => {
 
 					<Card className={cardClasses.root}>
 
-						<CustomCardHeader title="Search parameters" showHelp={true} helpText={"twittersna_explication"}/>
+						<CustomCardHeader title={keyword("twittersna_searchparameters")} showHelp={true} helpText={"twittersna_explication"}/>
 
 						<Box p={4}>
 
@@ -445,9 +445,9 @@ const TwitterSna = () => {
 											setKeyWordsError(false);
 										}}
 										id="standard-full-width"
-										label={"*  " + keyword("twitter_sna_search")}
+										label={"*  " + keyword("twitter_sna_searchelement")}
 										className={classes.neededField}
-										placeholder={"#example"}
+										placeholder={keyword("twitter_sna_search")}
 										fullWidth
 										variant="outlined"
 									/>
@@ -462,7 +462,7 @@ const TwitterSna = () => {
 									</Grid>
 									<Grid item xs>
 										<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-											Specify words that you don’t want to analyze in the search results
+											{keyword("explanation_keyword")}
 										</Typography>
 									</Grid>
 								</Grid>
@@ -484,6 +484,7 @@ const TwitterSna = () => {
 										value={since}
 										handleChange={handleSinceDateChange}
 										error={sinceError}
+										placeholder={keyword("twitter_sna_selectdate")}
 
 									/>
 								</Grid>
@@ -500,6 +501,7 @@ const TwitterSna = () => {
 										value={until}
 										handleChange={handleUntilDateChange}
 										error={untilError}
+										placeholder={keyword("twitter_sna_selectdate")}
 									/>
 								</Grid>
 
@@ -512,7 +514,7 @@ const TwitterSna = () => {
 									</Grid>
 									<Grid item xs>
 										<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-											Dates between the tweets were analyzed for the search term indicated
+											{keyword("explanation_dates")}
 										</Typography>
 									</Grid>
 								</Grid>
@@ -523,7 +525,7 @@ const TwitterSna = () => {
 							<Grid container spacing={4} alignItems="center">
 								<Grid item xs={8}>
 									<Typography variant="h6" align="left" style={{ paddingLeft: "0px"}}>
-										Time zone of the dates
+										{keyword("twittersna_title_timezone")}
 									</Typography>
 								</Grid>
 
@@ -536,7 +538,7 @@ const TwitterSna = () => {
 									</Grid>
 									<Grid item xs>
 										<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-											Specify the time zone of the dates introduced before
+											{keyword("explanation_timezone")}
 										</Typography>
 									</Grid>
 								</Grid>
@@ -585,7 +587,7 @@ const TwitterSna = () => {
 								>
 									<Box pl={3} pr={3} pt={1} pb={1}>
 									<Typography variant="h6" align="left" style={{ color: "#17717e"}}>
-										Optional parameters
+										{keyword("twittersna_title_optional")}
 									</Typography>
 									</Box>
 								</AccordionSummary>
@@ -596,7 +598,7 @@ const TwitterSna = () => {
 									<Grid container direction="column" spacing={0}>
 
 										<Typography variant="h6" align="left" style={{ paddingLeft: "0px" }}>
-											Words
+											{keyword("twittersna_title_words")}
 										</Typography>
 										<Box m={1} />
 
@@ -623,7 +625,7 @@ const TwitterSna = () => {
 												</Grid>
 												<Grid item xs>
 													<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-														Specify words that you don’t want to analyze in the search results
+														{keyword("explanation_exclude")}
 													</Typography>
 												</Grid>
 											</Grid>
@@ -689,14 +691,14 @@ const TwitterSna = () => {
 												</Grid>
 												<Grid item xs>
 													<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-														Specify the language in which the tweets are going to be analyzed
+														{keyword("explanation_language")}
 													</Typography>
 												</Grid>
 											</Grid>
 										</Grid>
 										<Box m={3} />
 										<Typography variant="h6" align="left" style={{ paddingLeft: "0px" }}>
-											Accounts
+											{keyword("twittersna_title_accounts")}
 										</Typography>
 										<Box m={1} />
 
@@ -709,7 +711,7 @@ const TwitterSna = () => {
 													onChange={(e) => setUsersInput(e.target.value)}
 													id="standard-full-width"
 													label={keyword("twitter_sna_user")}
-													placeholder={keyword("user_placeholder")}
+														placeholder={keyword("twitter_sna_placholder_tweetedby")}
 													fullWidth
 													variant="outlined"
 												/>
@@ -724,7 +726,7 @@ const TwitterSna = () => {
 												</Grid>
 												<Grid item xs>
 													<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-														Specify the twitter account whose tweets are going to be analyzed
+														{keyword("explanation_account")}
 													</Typography>
 												</Grid>
 											</Grid>
@@ -763,7 +765,7 @@ const TwitterSna = () => {
 												</Grid>
 												<Grid item xs>
 													<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-														Specify if you only want to analyze tweets of verified accounts
+														{keyword("explanation_verified")}
 													</Typography>
 												</Grid>
 											</Grid>
@@ -775,7 +777,7 @@ const TwitterSna = () => {
 										<Grid container spacing={4} alignItems="center">
 											<Grid item xs={8}>
 												<Typography variant="h6" align="left" style={{ paddingLeft: "0px" }}>
-													Media
+													{keyword("twittersna_title_media")}
 												</Typography>
 											</Grid>
 
@@ -789,7 +791,7 @@ const TwitterSna = () => {
 												</Grid>
 												<Grid item xs>
 													<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-														Specify the media elements that you want to analyze
+														{keyword("explanation_media")}
 													</Typography>
 												</Grid>
 											</Grid>
@@ -835,7 +837,7 @@ const TwitterSna = () => {
 										<Grid container spacing={4} alignItems="center">
 											<Grid item xs={8}>
 												<Typography variant="h6" align="left">
-													Advanced tools
+													{keyword("twittersna_title_advanced")}
 												</Typography>
 											</Grid>
 
@@ -848,7 +850,7 @@ const TwitterSna = () => {
 												</Grid>
 												<Grid item xs>
 													<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-														Explanation
+														{keyword("explanation_cache")}
 													</Typography>
 												</Grid>
 											</Grid>

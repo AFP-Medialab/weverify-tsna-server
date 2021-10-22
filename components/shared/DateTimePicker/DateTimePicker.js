@@ -20,7 +20,7 @@ const DateTimePicker = (props) => {
                     {...newProps}
                     type={"dateTime"}
                     label={props.label}
-                    placeholder={"ex : (need tsv changes)"}
+                    placeholder={props.placeholder}
                     fullWidth
                     autoComplete='off'
                     error={props.error}

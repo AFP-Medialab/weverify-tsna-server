@@ -43,14 +43,14 @@ export default function GexfExport(props) {
             >
                 <Grid item xs container direction="column" >
 
-                    <Typography variant="h6">Open</Typography>
+                    <Typography variant="h6" style={{marginLeft: "8px"}}>{keyword("interaction_graph_open")} </Typography>
                     {
                         gexfExport && gexfExport.map((gexfRes, index) => {
                             return (
                                 <div>
                                     <Box m={1} />
                                     <Button href={gexfExport ? gexfRes.visualizationUrl : undefined} disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
-                                        <BigButton title={gexfRes.title} subtitle="Subtitle" icon={<BubbleChartIcon fontSize="large" className={classes.bigButtonIcon} />} />
+                                        <BigButton title={gexfRes.title} subtitle={keyword("interaction_graph_open_subtitle")} icon={<BubbleChartIcon fontSize="large" className={classes.bigButtonIcon} />} />
                                     </Button>
                                 </div>
                             )
@@ -65,7 +65,7 @@ export default function GexfExport(props) {
 
                 <Grid item xs container direction="column" >
 
-                    <Typography variant="h6">Download</Typography>
+                        <Typography variant="h6" style={{ marginLeft: "8px" }}>{keyword("interaction_graph_export")} </Typography>
                         {
                             gexfExport && gexfExport.map((gexfRes, index) => {
                                 var title = keyword("twittersna_result_download") + " " + gexfRes.title;
@@ -73,7 +73,7 @@ export default function GexfExport(props) {
                                     <div>
                                         <Box m={1} />
                                         <Button href={gexfExport ? gexfRes.getUrl : undefined} disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
-                                            <BigButton title={title} subtitle="Subtitle" icon={<SaveIcon fontSize="large" className={classes.bigButtonIcon} />}/>
+                                            <BigButton title={title} subtitle={keyword("interaction_graph_export_subtitle")} icon={<SaveIcon fontSize="large" className={classes.bigButtonIcon} />}/>
                                         </Button>
                                     </div>
                                 )
