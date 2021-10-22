@@ -18,6 +18,7 @@ import { filterForTimeLine } from "../../Hooks/timeline";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { CardHeader } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
@@ -57,12 +58,7 @@ export default function PlotTimeLine(props) {
 
   return (
     <Card className={classes.cardsResults}>
-      <CardHeader
-        className={classes.headerCard}
-        title={keyword("user_time_chart_title")}
-        aria-controls={"panel0a-content"}
-        id={"panel0a-header"}
-      />
+      <CustomCardHeader title={keyword("user_time_chart_title")} showHelp={true} helpText={"twittersna_timeline_tip"} />
         {
             state.result.histogram &&
             <div style={{ width: "100%" }}>
@@ -87,7 +83,6 @@ export default function PlotTimeLine(props) {
                 />
                 )}
             <Box m={1} />
-            <OnClickInfo keyword={"twittersna_timeline_tip"} />
             <Box m={2} />
             {histoTweets && <HistoTweetsTable data={histoTweets} from={from} />}
             </div>

@@ -18,6 +18,7 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import PostViewTable from "../../Components/PostViewTable";
 import { CardHeader } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 
 const Plot = createPlotComponent(plotly);
 
@@ -59,12 +60,7 @@ export default function HeatMap (props) {
     return (
 
         <Card>
-            <CardHeader
-                className={classes.headerCard}
-                title={keyword("heatmap_chart_title")}
-                aria-controls={""}
-                id={""}
-            />
+            <CustomCardHeader title={keyword("heatmap_chart_title")} showHelp={true} helpText={"twittersna_heatmap_tip"} />
 
                 {
                     props.result && props.result.heatMap &&
@@ -81,7 +77,6 @@ export default function HeatMap (props) {
                                     onClick={(e) => onHeatMapClick(e, props.result, setheatMapTweets, keyword)}
                                 />
                                 <Box m={1}/>
-                                <OnClickInfo keyword={"twittersna_heatmap_tip"}/>
                             </div>
                         }
                         {

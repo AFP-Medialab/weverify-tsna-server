@@ -405,6 +405,39 @@ const useMyStyles = makeStyles(theme => ({
         alignItems: "center",
     },
 
+    bigButtonDiv: {
+        border: 'solid #E1E1E1 2px',
+        borderRadius: "25px",
+        cursor: "pointer",
+
+        "&:hover": {
+            border: 'solid #51A5B2 2px',
+
+        },
+    },
+
+
+    bigButtonDivSelectted: {
+        border: 'solid #51A5B2 3px',
+        borderRadius: "25px",
+    },
+
+    bigButtonIcon: {
+
+        fontSize: "large",
+        color: "#9A9A9A",
+
+    },
+
+    bigButtonIconSelectted: {
+
+        height: "50px",
+        width: "auto",
+        color: "#51A5B2"
+
+    },
+    
+
 }));
 export const myCardStyles = makeStyles({
     root: {

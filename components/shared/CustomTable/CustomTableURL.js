@@ -119,7 +119,7 @@ export default function CustomTableURL(props) {
             }}
             
             icons={tableIcons}
-            title={state.title}
+            title={""}
             columns={
                 state.columns.map((obj) => {
                     if (obj.field === "credibility"){

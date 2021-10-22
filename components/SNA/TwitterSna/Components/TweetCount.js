@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { CardHeader } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 
 
 export default function TweetCount(props) {
@@ -39,10 +40,7 @@ export default function TweetCount(props) {
 
   return (
     <Card>
-      <CardHeader
-        className={classes.headerCard}
-        title={keyword("tweetCounter_title")}
-      />
+      <CustomCardHeader title={keyword("tweetCounter_title")} showHelp={true} helpText={"twittersna_tweetnb_tip"} />
         <Box alignItems="center" justifyContent="center" width={"100%"} mt={4} className={classes.cardsResults}>
           <Grid
             container
@@ -70,7 +68,6 @@ export default function TweetCount(props) {
             </Grid>
           </Grid>
           <Box m={4} />
-          <OnClickInfo keyword={"twittersna_tweetnb_tip"} />
         </Box>
     </Card>
   );

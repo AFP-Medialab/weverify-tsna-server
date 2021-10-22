@@ -1,5 +1,5 @@
 import {useSelector } from "react-redux";
-import { Paper } from "@material-ui/core";
+import { Card, Paper } from "@material-ui/core";
 import React  from "react";
 import Box from "@material-ui/core/Box";
 import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import OnClickInfo from "../../shared/OnClickInfo/OnClickInfo";
 import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
 import {downloadClick} from "../lib/downloadClick";
+import CustomCardHeader from "../../shared/CustomCardHeader/CustomCardheader";
 
 
 export default function UrlList (props) {
@@ -63,18 +64,14 @@ export default function UrlList (props) {
     }
 
     return (
-        <Paper>
-            <br></br><br></br>
+        <Card>
+            
+            <CustomCardHeader title={keyword(props.title_message)} showHelp={true} helpText={"twittersna_urls_tip"} showCSV={true} functionCSV={() => downloadClick(props.request, createCSVFromURLTable(props.result.urls), "Urls", false, "")} />
+            <Box p={2}>
             {
+
             props.downloadable && 
-            <Box pb={3}>
-                <Button
-                    variant={"contained"}
-                    color={"primary"}
-                    onClick={() => downloadClick(props.request,createCSVFromURLTable(props.result.urls), "Urls", false, "")}
-                >
-                    CSV
-                </Button>
+            <Box>
             </Box>
                 }
             <CustomTableURL
@@ -85,8 +82,8 @@ export default function UrlList (props) {
                 actions={actions}
             />
             <Box m={1}/>
-            <OnClickInfo keyword={"twittersna_urls_tip"}/>
-        </Paper>
+            </Box>
+        </Card>
 
     )
 

@@ -66,6 +66,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CustomCardHeader from "../../shared/CustomCardHeader/CustomCardheader";
 
 //keyword from /components/NavItems/tools/TwitterSna.tsv
 const TwitterSna = () => {
@@ -197,7 +198,7 @@ const TwitterSna = () => {
 	);
 
 	const [verifiedUsers, setVerifiedUsers] = useState(
-		request && request.verified ? listToString(request.verified) : "false"
+		request && request.verified ? listToString(request.verified) : false
 	);
 
 	const [filters, setFilers] = useState(
@@ -214,6 +215,10 @@ const TwitterSna = () => {
 	//HANDLERS
 	const cacheChange = () => {
 		setCache(!cache);
+	};
+
+	const verifiedChange = () => {
+		setVerifiedUsers(!verifiedUsers);
 	};
 
 	const videoChange = () => {
@@ -423,10 +428,7 @@ const TwitterSna = () => {
 
 					<Card className={cardClasses.root}>
 
-						<CardHeader
-							title="Search parameters"
-							className={classes.headerUpladedImage}
-						/>
+						<CustomCardHeader title="Search parameters" showHelp={true} helpText={"twittersna_explication"}/>
 
 						<Box p={4}>
 
@@ -732,7 +734,7 @@ const TwitterSna = () => {
 
 										<Grid container spacing={4} alignItems="center" style={{ paddingLeft: "0px" }}>
 											<Grid item xs={8}>
-												<Box pl={2}>
+												<Box pl={3}>
 													<FormControl component="fieldset" disabled={searchFormDisabled}>
 															<FormControlLabel
 																aria-label="position"
@@ -740,7 +742,7 @@ const TwitterSna = () => {
 																control={
 																	<Checkbox 
 																		color="primary"
-																		onChange={handleVerifiedUsersChange} 
+																		onChange={verifiedChange}
 																		disabled={searchFormDisabled}
 																		checked={verifiedUsers}/>
 																}
@@ -902,12 +904,9 @@ const TwitterSna = () => {
 									onClick={() => dispatch(cleanError())}
 								/>
 							)}
-							<Box m={2} />
+							<Box m={1} />
 							<Typography>{loadingMessage}</Typography>
 							<LinearProgress hidden={!loading} />
-							{userAuthenticated && (
-								<OnClickInfo keyword={"twittersna_explication"} tsvInfo={sna.tsvInfo} />
-							)}
 							{!userAuthenticated && <OnWarningInfo keyword={"warning_sna"} />}
 			
 							

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import CloseResult from "../../../shared/CloseResult/CloseResult";
 import { cleanTwitterSnaState } from "../../../../redux/actions/tools/twitterSnaActions";
-import { Paper } from "@material-ui/core";
+import { IconButton, Paper } from "@material-ui/core";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, { useEffect, useState, useCallback } from "react";
 import Box from "@material-ui/core/Box";
@@ -14,6 +14,8 @@ import Grid from "@material-ui/core/Grid";
 import { CardHeader } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), { ssr: false });
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), { ssr: false });
@@ -31,6 +33,21 @@ export default function TwitterSnaResult(props) {
     const resultStore = useSelector(state => state.twitterSna.result);
     const [result, setResult] = useState(null);
     const [histogram, setHistogram] = useState(null);
+
+    const [widthIndex, setWidthIndex] = useState(4);
+    const [widthCards, setWidthCards] = useState(8);
+    const [collapsed, setCollapsed] = useState(false);
+    function onClickCollapseIndex() {
+        if (widthIndex == 4){
+            setCollapsed(true);
+            setWidthIndex(1);
+            setWidthCards(11);
+        }else{
+            setCollapsed(false);
+            setWidthIndex(4);
+            setWidthCards(8);
+        }
+    } 
 
     //Set result 
     useEffect(() => {
@@ -51,7 +68,7 @@ export default function TwitterSnaResult(props) {
         <Box>
             <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
 
-            <Box m={3} />
+            <Box m={4} />
 
             <Grid
                 container
@@ -61,11 +78,41 @@ export default function TwitterSnaResult(props) {
                 spacing={3}
                 >
 
-                <Grid item xs={4} style={{position: "sticky", top: "100px"}}>
+                <Grid item xs={widthIndex} style={{position: "sticky", top: "100px"}}>
                     <Card>
                         <CardHeader
                             className={classes.headerCard}
-                            title="Index"
+                            title={
+                                <Grid
+                                    container
+                                    direction="row"
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                    spacing={2}>
+
+                                    <Grid item xs>
+                                        <span>{!collapsed &&
+                                            "Index"
+                                        }</span>
+                                    </Grid>
+
+                                    {!collapsed &&
+                                        <Grid item>
+                                            <IconButton onClick={props.functionNodes} onClick={onClickCollapseIndex}>
+                                                <ArrowBackIosIcon style={{marginRight: "-5px"}} />
+                                            </IconButton>
+                                        </Grid>
+                                    }
+                                    {collapsed &&
+                                        <Grid item>
+                                            <IconButton onClick={props.functionNodes} onClick={onClickCollapseIndex}>
+                                                <ArrowForwardIosIcon/>
+                                            </IconButton>
+                                        </Grid>
+                                    }
+
+                                </Grid>
+                            }
                         />
 
                         <Box p={3}>
@@ -77,91 +124,131 @@ export default function TwitterSnaResult(props) {
 
                                 <a href="#tweets" style={{textDecoration: "none", color: "black"}}>
                                     <Typography variant={"h6"} >
-                                        {"Tweets number"}
+                                        {"1. "}
+                                        {!collapsed &&
+                                            "Tweets number"
+                                        }
+                                        
                                     </Typography>
                                     <Box m={1}/>
                                 </a>
 
                                 <a href="#propagation" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Propagation timeline"}
+                                        {"2. "}
+                                        {!collapsed &&
+                                            "Propagation timeline"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
-                                <a href="#" style={{ textDecoration: "none", color: "black" }}>
+                                <a href="#bubble0" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Most retweeted users"}
+                                        {"3. "}
+                                        {!collapsed &&
+                                            "Most retweeted users"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
-                                <a href="#" style={{ textDecoration: "none", color: "black" }}>
+                                <a href="#bubble1" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Most liked users"}
+                                        {"4. "}
+                                        {!collapsed &&
+                                            "Most liked users"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
-                                <a href="#" style={{ textDecoration: "none", color: "black" }}>
+                                <a href="#bubble2" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Most active users"}
+                                        {"5. "}
+                                        {!collapsed &&
+                                            "Most active users"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
-                                <a href="#" style={{ textDecoration: "none", color: "black" }}>
+                                <a href="#bubble3" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Most mentioned accounts"}
+                                        {"6. "}
+                                        {!collapsed &&
+                                            "Most mentioned accounts"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
                                 <a href="#bubble" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Top 100 most active accounts"}
+                                        {"7. "}
+                                        {!collapsed &&
+                                            "Top 100 most active accounts"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
                                 <a href="#heatmap" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Heatmap of tweets distribution"}
+                                        {"8. "}
+                                        {!collapsed &&
+                                            "Heatmap of tweets distribution"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
                                 <a href="#hastag" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Most associated hastags"}
+                                        {"9. "}
+                                        {!collapsed &&
+                                            "Most associated hastags"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
                                 <a href="#sociosemantic" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Socio-semantic graph"}
+                                        {"10. "}
+                                        {!collapsed &&
+                                            "Socio-semantic graph"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
                                 <a href="#words" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Most used words in tweets"}
+                                        {"11. "}
+                                        {!collapsed &&
+                                            "Most used words in tweets"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
                                 <a href="#interaction" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"Interaction graph"}
+                                        {"12. "}
+                                        {!collapsed &&
+                                            "Interaction graph"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
 
-                                <a href="#words" style={{ textDecoration: "none", color: "black" }}>
+                                <a href="#urls" style={{ textDecoration: "none", color: "black" }}>
                                     <Typography variant={"h6"} >
-                                        {"URLs in tweets"}
+                                        {"13. "}
+                                        {!collapsed &&
+                                            "URLs in tweets"
+                                        }
                                     </Typography>
                                     <Box m={1} />
                                 </a>
@@ -179,7 +266,7 @@ export default function TwitterSnaResult(props) {
                 </Grid>
 
 
-                <Grid item xs={8}>
+                <Grid item xs={widthCards}>
                     {
                         <div style={{ position: "relative" }}>
                             <span id="tweets" style={{ position: "absolute", top: "-112px" }}></span>
@@ -254,8 +341,11 @@ export default function TwitterSnaResult(props) {
                     <Box m={3} />
                     {
                         result.urls &&
-                        <UrlList result={result} request={request} title_message={'twittersna_result_url_in_tweets'}
-                            tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true} />
+                        <div style={{ position: "relative" }}>
+                            <span id="urls" style={{ position: "absolute", top: "-112px" }}></span>
+                            <UrlList result={result} request={request} title_message={'twittersna_result_url_in_tweets'}
+                                tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true} />
+                        </div>
                     }
 
 

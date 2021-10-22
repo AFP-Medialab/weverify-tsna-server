@@ -17,6 +17,7 @@ import createPlotComponent from 'react-plotly.js/factory';
 import PostViewTable from "../../Components/PostViewTable";
 import { CardHeader } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 
 const Plot = createPlotComponent(plotly);
 
@@ -60,12 +61,7 @@ export default function BubbleChart(props) {
 
 
         <Card >
-            <CardHeader
-                className={classes.headerCard}
-                title={keyword("bubble_chart_title")}
-                aria-controls={"panel0a-content"}
-                id={"panel0a-header"}
-            />
+            <CustomCardHeader title={keyword("bubble_chart_title")} showHelp={true} helpText={"twittersna_bubble_chart_tip"} />
                 
             {
                 topUserProfile && topUserProfile.length !== 0 &&
@@ -83,7 +79,6 @@ export default function BubbleChart(props) {
                                         
                                     />
                                     <Box m={1} />
-                                    <OnClickInfo keyword={"twittersna_bubble_chart_tip"} />
                                     <Box m={2} />
                                 </div>
                             )
@@ -92,13 +87,13 @@ export default function BubbleChart(props) {
                     {
                         bubbleTweets &&
                         <PostViewTable 
-                                snatype={sna} 
-                                setTypeValue={setBubbleTweets} 
-                                data={bubbleTweets} 
-                                downloadEnable={true} 
-                                request={props.request}
-                                csvArr={bubbleTweets.csvArr} 
-                                selected={bubbleTweets.selected}/>
+                            snatype={sna} 
+                            setTypeValue={setBubbleTweets} 
+                            data={bubbleTweets} 
+                            downloadEnable={true} 
+                            request={props.request}
+                            csvArr={bubbleTweets.csvArr} 
+                            selected={bubbleTweets.selected}/>
                     }
                 </div>
             }

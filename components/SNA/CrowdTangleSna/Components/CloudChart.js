@@ -17,7 +17,7 @@ import {displayPostsFb} from "./lib/displayPosts"
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import Plotly from 'plotly.js-dist';
-import { saveSvgAsPng } from 'save-svg-as-png';
+import { SaveSvgAsPng } from 'save-svg-as-png';
 import {useSelector } from "react-redux";
 import PostViewTable  from "../../Components/PostViewTable";
 
@@ -245,7 +245,7 @@ export default function cloudChart (props) {
     
         if (elementId === "top_words_cloud_chart") {
             let name = filesNames + '.png';
-            saveSvgAsPng(element.children[0].children[0], name, { backgroundColor: "white", scale: 2 });
+            SaveSvgAsPng(element.children[0].children[0], name, { backgroundColor: "white", scale: 2 });
         } else {
             let positionInfo = element.getBoundingClientRect();
             let height = positionInfo.height;
