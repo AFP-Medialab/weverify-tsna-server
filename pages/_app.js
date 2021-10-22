@@ -52,7 +52,7 @@ const MyApp = ({ Component, pageProps }) => {
     })
         return (
             <Provider store={store}>
-              <MuiThemeProvider theme={theme}>
+              <MuiThemeProvider theme={theme} >
                 <PersistGate loading={<div>loading</div>} persistor={persistor}>
                     <Component {...pageProps} />
                   </PersistGate>

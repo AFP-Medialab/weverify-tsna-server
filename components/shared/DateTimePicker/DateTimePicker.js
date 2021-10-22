@@ -20,12 +20,12 @@ const DateTimePicker = (props) => {
                     {...newProps}
                     type={"dateTime"}
                     label={props.label}
-                    style={{margin: 8}}
-                    placeholder={"ex : (need tsv changes)"}
+                    placeholder={props.placeholder}
                     fullWidth
                     autoComplete='off'
                     error={props.error}
                     disabled={props.disabled}
+                    variant= "outlined"
                 />
             </div>
         )
@@ -36,6 +36,7 @@ const DateTimePicker = (props) => {
             {...props}
             onChange={checkIfDate}
             renderInput={renderInput}
+            inline
         />
     )
 };

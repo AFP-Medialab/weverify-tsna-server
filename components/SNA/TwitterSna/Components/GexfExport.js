@@ -1,4 +1,4 @@
-import { Paper } from "@material-ui/core";
+import { Card, Paper } from "@material-ui/core";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
@@ -12,6 +12,9 @@ import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
 import React, {useEffect, useState} from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import BigButton from "../../../shared/BigButon/BigButton";
+import { BurstMode } from "@material-ui/icons";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
@@ -32,62 +35,64 @@ export default function GexfExport(props) {
     return (
     
     props.request.userList.length === 0 && props.result &&
-    <Paper>
-        <Toolbar>
-            <Typography className={classes.heading}>{keyword("export_graph_title")}</Typography>
-            <div style={{ flexGrow: 1 }} />
-            {
-                gexfExport && gexfExport.map((gexfRes, index) => {
-                    return (
-                        <Button
-                            key={index}
-                            aria-label="download"
-                            disabled={_.isEmpty(gexfExport)}
-                            startIcon={<SaveIcon />}
-                            href={gexfExport ? gexfRes.getUrl : undefined}
-                            tooltip={keyword("twittersna_result_download")}>
-                            {keyword("twittersna_result_download") + " " + gexfRes.title}
-                        </Button>
-                    )
-                })
-            }
-        </Toolbar>
-        <Box pb={2}>
-        <Box alignItems="center" justifyContent="center" width={"100%"}>
-            <div style={{margin: 20}}>
-                <Grid container justifyContent="space-between" spacing={2}
-                    alignContent={"center"}>
+    <Card>
+        <CustomCardHeader title={keyword("export_graph_title")} showHelp={true} helpText={"twittersna_export_graph_tip"} />
+
+        <Box m={3}>
+        <Grid container direction="row" 
+            >
+                <Grid item xs container direction="column" >
+
+                    <Typography variant="h6" style={{marginLeft: "8px"}}>{keyword("interaction_graph_open")} </Typography>
                     {
                         gexfExport && gexfExport.map((gexfRes, index) => {
                             return (
-                                <Grid item key={Math.random()}>
-                                    <Button
-                                        key={index}
-                                        variant={"contained"}
-                                        color={"primary"}
-                                        startIcon={<BubbleChartIcon />}
-                                        disabled={_.isEmpty(gexfExport)}
-                                        href={gexfExport ? gexfRes.visualizationUrl : undefined}
-                                        target="_blank"
-                                        rel="noopener"
-                                        tooltip={gexfExport ? gexfRes.message : undefined}
-                                    >
-                                        {gexfRes.title/* {keyword("twittersna_result_view_graph")} */}
+                                <div>
+                                    <Box m={1} />
+                                    <Button href={gexfExport ? gexfRes.visualizationUrl : undefined} disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
+                                        <BigButton title={gexfRes.title} subtitle={keyword("interaction_graph_open_subtitle")} icon={<BubbleChartIcon fontSize="large" className={classes.bigButtonIcon} />} />
                                     </Button>
-                                </Grid>
+                                </div>
                             )
                         })
                     }
+
                 </Grid>
-            </div>
+
+                
+
+                <Box m={2} style={{ borderRight: '0.1em solid #ECECEC' }}/>
+
+                <Grid item xs container direction="column" >
+
+                        <Typography variant="h6" style={{ marginLeft: "8px" }}>{keyword("interaction_graph_export")} </Typography>
+                        {
+                            gexfExport && gexfExport.map((gexfRes, index) => {
+                                var title = keyword("twittersna_result_download") + " " + gexfRes.title;
+                                return (
+                                    <div>
+                                        <Box m={1} />
+                                        <Button href={gexfExport ? gexfRes.getUrl : undefined} disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
+                                            <BigButton title={title} subtitle={keyword("interaction_graph_export_subtitle")} icon={<SaveIcon fontSize="large" className={classes.bigButtonIcon} />}/>
+                                        </Button>
+                                    </div>
+                                )
+                            })
+                        }
+                </Grid>
+            
+        </Grid>
+                
         </Box>
+
+        <Box pb={2}>
         {
             (!gexfExport && props.result.tweetCount && props.result.tweetCount.count !== "0") &&
             <CircularProgress className={classes.circularProgress} />
         }
         </Box>
         <Box m={1} />
-        <OnClickInfo keyword={"twittersna_export_graph_tip"} />
-    </Paper>
+        
+    </Card>
     )
 }

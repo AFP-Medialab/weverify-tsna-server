@@ -6,6 +6,9 @@ import AllTools from "../components/Navigation/AllTools";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import TwitterSnaIcon from "../images/SVG/DataAnalysis/Twitter_sna.svg"
+import TwitterSnaIconBig from "../images/SVG/DataAnalysis/Twitter_sna_big.svg"
+import CsvSnaIcon  from "../images/SVG/DataAnalysis/CSV_SNA.svg"
+import CsvSnaIconBig from "../images/SVG/DataAnalysis/CSV_SNA_big.svg"
 
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
@@ -17,18 +20,18 @@ const Index = () => {
     {
       title: "navbar_twitter_sna",
       description: "navbar_twitter_sna_description",
-      icon: (drawerValue === 10) ? <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#51A5B2" }} title="Twitter SNA"/>
-          : <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#4c4c4c" }} title="Twitter SNA"/>,
+      icon: <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#4c4c4c" }} title="Twitter SNA"/>,
       iconColored: <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#51A5B2" }} title="Twitter SNA"/>,
+      iconBig: <TwitterSnaIconBig width="75px" height="75px" style={{ fill: "#51A5B2" }} title="Twitter SNA" />,
       tsvPrefix: "twitter_sna",
       path: "twitterSna"
   },
   {
     title: "navbar_csv_sna",
     description: "navbar_csv_sna_description",
-    icon: (drawerValue === 11) ? <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#51A5B2" }} title="CSV SNA"/>
-        : <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#4c4c4c" }} title="CSV SNA"/>,
-    iconColored: <TwitterSnaIcon width="45px" height="45px" style={{ fill: "#51A5B2" }} title="CSV SNA"/>,
+    icon: <CsvSnaIcon width="45px" height="45px" style={{ fill: "#4c4c4c" }} title="CSV SNA"/>,
+    iconColored: <CsvSnaIcon width="45px" height="45px" style={{ fill: "#51A5B2" }} title="CSV SNA"/>,
+    iconBig: <CsvSnaIconBig width="75px" height="75px" style={{ fill: "#51A5B2" }} title="Twitter SNA" />,
     tsvPrefix: "csv_sna",
     path: "csvSna"
   },
@@ -47,7 +50,7 @@ const Index = () => {
       </footer>
       <style jsx>{`
         main {
-          padding: 5rem 0;
+          padding: 7rem 0;
           flex: 1;
           display: flex;
           flex-direction: column;

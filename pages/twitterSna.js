@@ -14,7 +14,7 @@ const TwitterSnaIndex = () => {
       <title>WeVerify Twitter SNA</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <main>        
+    <main>
       <TwitterSna />
     </main>
     <footer>
@@ -22,12 +22,13 @@ const TwitterSnaIndex = () => {
     </footer>
     <style jsx>{`
       main {
-        padding: 5rem 0;
+        padding: 7rem 0;
         flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-color: #fafafa!important;
       }
       footer {
         width: 100%;

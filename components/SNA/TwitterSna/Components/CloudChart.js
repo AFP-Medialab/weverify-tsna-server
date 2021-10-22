@@ -18,9 +18,14 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import Plotly from 'plotly.js-dist';
 import PostViewTable from "../../Components/PostViewTable";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import { saveSvgAsPng } from 'save-svg-as-png';
 
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import IconCSV from "../../../../images/SVG/CardHeader/CSV.svg";
 
 export default function cloudChart (props) {
 
@@ -160,15 +165,32 @@ export default function cloudChart (props) {
 
     let call = getCallbacks();
     return (
-        <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={"panel0a-content"}
-                        id={"panel0a-header"}
-                    >
-                        <Typography className={classes.heading}>{keyword("top_words_cloud_chart_title")}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
+        <Card>
+            {(props.result && props.result.cloudChart && props.result.cloudChart.json && props.result.cloudChart.json.length !== 0) &&
+                <CustomCardHeader 
+                    title={keyword("top_words_cloud_chart_title")}
+                    showHelp={true} 
+                    helpText={"twittersna_wordcloud_tip"} 
+                    showPNG={true}
+                    functionPNG={() => 
+                        downloadAsPNG("top_words_cloud_chart", keyword, filesNames)
+                    }
+                    showSVG={true}
+                    functionSVG={() => 
+                        downloadAsSVG("top_words_cloud_chart", keyword, filesNames)
+                    }
+                    showSpecialCSV={true}
+                    functionSpecialCSV={
+                        <CSVLink
+                            data={getCSVData()} headers={CSVheaders} filename={filesNames + ".csv"} className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
+                            {
+                                <IconCSV style={{ marginRight: "10px", marginTop: "2px" }}/>
+                            }
+                        </CSVLink>
+                    }
+                    />
+                }
+
                         {
                             props.result && props.result.cloudChart && props.result.cloudChart.json &&
                             <Box alignItems="center" justifyContent="center" width={"100%"}>
@@ -176,40 +198,6 @@ export default function cloudChart (props) {
                                     {
                                         (props.result.cloudChart.json && props.result.cloudChart.json.length === 0) &&
                                         <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>}
-                                    {(props.result.cloudChart.json && props.result.cloudChart.json.length !== 0) &&
-                                        <Grid container justifyContent="space-between" spacing={2}
-                                            alignContent={"center"}>
-                                            <Grid item>
-                                                <Button
-                                                    variant={"contained"}
-                                                    color={"primary"}
-                                                    onClick={() => downloadAsPNG("top_words_cloud_chart", keyword, filesNames)}>
-                                                    {
-                                                        keyword('twittersna_result_download_png')
-                                                    }
-                                                </Button>
-                                            </Grid>
-                                            <Grid item>
-                                                <CSVLink
-                                                    data={getCSVData()} headers={CSVheaders} filename={filesNames + ".csv"} className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                                                    {
-                                                        "CSV"
-                                                        // keyword('twittersna_result_download_csv')
-                                                    }
-                                                </CSVLink>
-                                            </Grid>
-                                            <Grid item>
-                                                <Button
-                                                    variant={"contained"}
-                                                    color={"primary"}
-                                                    onClick={() => downloadAsSVG("top_words_cloud_chart",  keyword, filesNames)}>
-                                                    {
-                                                        keyword('twittersna_result_download_svg')
-                                                    }
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                    }
 
                                 </div>
                                 <Box m={2} />
@@ -218,7 +206,6 @@ export default function cloudChart (props) {
                                     <div id="top_words_cloud_chart" height={"100%"} width={"100%"}>
                                         <ReactWordcloud key={JSON.stringify(props.result)} options={props.result.cloudChart.options} callbacks={call} words={props.result.cloudChart.json} />
                                         <Box m={1}/>
-                                        <OnClickInfo keyword={"twittersna_wordcloud_tip"}/>
                                     </div>
 
                                 }
@@ -239,7 +226,7 @@ export default function cloudChart (props) {
                              props.result.cloudChart  === undefined &&
                             <CircularProgress className={classes.circularProgress} />
                         }
-                    </AccordionDetails>
-                </Accordion>
+
+                </Card>
     )
 }

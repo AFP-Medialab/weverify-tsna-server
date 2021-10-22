@@ -5,13 +5,15 @@ const drawerWidth = 200;
 
 const useMyStyles = makeStyles(theme => ({
     all: {
-        width: "80%"
+        width: "90%",
+    },
+    container: {
+        backgroundColor: "#fafafa"
     },
     root: {
         padding: theme.spacing(3, 2),
         marginTop: 5,
         textAlign: "center",
-       
     },
 
     rootNoCenter: {
@@ -21,6 +23,14 @@ const useMyStyles = makeStyles(theme => ({
     noMargin: {
         marginLeft: "0px!important",
         marginRight: "0px!important"
+    },
+
+    cardsResults: {
+        textAlign: "center",
+    },
+
+    headerCard:{
+        textAlign: "left",
     },
 
     circularProgress: {
@@ -182,8 +192,8 @@ const useMyStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
     },
     formControl: {
-        margin: theme.spacing(1),
         minWidth: 200,
+        width:"100%"
     },
     histogram: {
         width: "100%",
@@ -395,10 +405,43 @@ const useMyStyles = makeStyles(theme => ({
         alignItems: "center",
     },
 
+    bigButtonDiv: {
+        border: 'solid #E1E1E1 2px',
+        borderRadius: "25px",
+        cursor: "pointer",
+
+        "&:hover": {
+            border: 'solid #51A5B2 2px',
+
+        },
+    },
+
+
+    bigButtonDivSelectted: {
+        border: 'solid #51A5B2 3px',
+        borderRadius: "25px",
+    },
+
+    bigButtonIcon: {
+
+        fontSize: "large",
+        color: "#9A9A9A",
+
+    },
+
+    bigButtonIconSelectted: {
+
+        height: "50px",
+        width: "auto",
+        color: "#51A5B2"
+
+    },
+    
+
 }));
 export const myCardStyles = makeStyles({
     root: {
-        overflow: "visible"
+        overflow: "hidden",
     }
 });
 export default useMyStyles;

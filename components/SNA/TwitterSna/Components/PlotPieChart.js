@@ -20,6 +20,9 @@ import {displayPosts} from "../../../SNA/lib/displayTweets"
 import { downloadClick } from "../../lib/downloadClick";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
+import { CardHeader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 
 export default function PlotPieChart(props) {
   const dispatch = useDispatch();
@@ -197,18 +200,37 @@ export default function PlotPieChart(props) {
   return state.result.pieCharts.map((obj, index) => {
     if (request.userList.length === 0 || index === 3) {
       return (
-        <Accordion key={index}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls={"panel" + index + "a-content"}
-            id={"panel" + index + "a-header"}
-          >
-            <Typography className={classes.heading}>
-              {keyword(obj.title)}
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box alignItems="center" justifyContent="center" width={"100%"}>
+        <div key={index}>
+
+        
+        <Card >
+          <div style={{ position: "relative" }}>
+          <span id={"bubble" + index}  style={{ position: "absolute", top: "-112px" }}></span>
+          
+            <CustomCardHeader 
+              title={keyword(obj.title)} 
+              showHelp={true} 
+              helpText={obj.tip} 
+              showPNG={true} 
+              functionPNG={() =>
+                downloadAsPNG(obj.title, keyword, filesNames)
+              }
+              showCSV={true}
+              functionCSV={() =>
+                downloadClick(
+                  request,
+                  createCSVFromPieChart(obj),
+                  keyword(obj.title),
+                  false,
+                  ""
+                )
+              }
+              showSVG={true}
+              functionSVG={() =>
+                  downloadAsSVG(obj.title, keyword, filesNames)
+              }
+              />
+          <Box alignItems="center" justifyContent="center" width={"100%"} className={classes.cardsResults}>
               {(obj.json === null ||
                 (obj.json[0].values.length === 1 &&
                   obj.json[0].values[0] === "")) && (
@@ -221,6 +243,8 @@ export default function PlotPieChart(props) {
                   obj.json[0].values.length === 1 &&
                   obj.json[0].values[0] === ""
                 ) && (
+                  <div>
+                  {/*
                   <Grid
                     container
                     justifyContent="space-between"
@@ -267,6 +291,8 @@ export default function PlotPieChart(props) {
                       </Button>
                     </Grid>
                   </Grid>
+                  */}
+                  </div>
                 )}
               {obj.json !== null &&
                 !(
@@ -284,7 +310,6 @@ export default function PlotPieChart(props) {
                       divId={obj.title}
                     />
                     <Box m={1} />
-                    <OnClickInfo keyword={obj.tip} />
                   </div>
                 )}
               {
@@ -297,8 +322,11 @@ export default function PlotPieChart(props) {
                 )
               }
             </Box>
-          </AccordionDetails>
-        </Accordion>
+            </div>
+        </Card>
+        <Box m={3}/>
+
+        </div>
       );
     } else return null;
   });
