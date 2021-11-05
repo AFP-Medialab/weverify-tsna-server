@@ -9,6 +9,7 @@ import FeedBack from "../../shared/FeedBack/FeedBack";
 import Grid from "@material-ui/core/Grid";
 import HeaderTool from '../../shared/HeaderTool/HeaderTool';
 import TwitterSNAIcon from "../../../images/SVG/DataAnalysis/Twitter_sna.svg"
+import CSVIcon from "../../../images/SVG/DataAnalysis/CSV_SNA_big.svg"
 import Typography from "@material-ui/core/Typography";
 import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
 import { StylesProvider } from "@material-ui/core/styles";
@@ -17,6 +18,8 @@ import {cleanError} from "../../../redux/actions/errorActions"
 import {useFacebookResult} from './Components/hooks/buildFBResult'
 import {useInstagramResult} from './Components/hooks/buildInstaResult'
 import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage"
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
 
 import {
     setCSVLoading,
@@ -32,6 +35,73 @@ import {
 import { CT_TSV } from "../lib/CrowdTangleConstant";  
 
 const CrowdTangleSnaComponent = () => {
+
+    const theme = createTheme({
+
+        overrides: {
+
+            MuiCardHeader: {
+                root: {
+                    backgroundColor: "#05A9B4",
+                    paddingTop: "11px!important",
+                    paddingBottom: "11px!important",
+                },
+                title: {
+                    color: 'white',
+                    fontSize: "20px!important",
+                    fontweight: 500,
+                }
+            },
+
+            MuiTab: {
+                wrapper: {
+                    fontSize: 12,
+
+                },
+                root: {
+                    minWidth: "25%!important",
+                }
+            },
+
+
+            MuiAccordion: {
+                root: {
+                    boxShadow: "none",
+                    '&:before': {
+                        width: "0px",
+                    },
+                    border: "1px solid #51A5B2",
+
+                },
+                rounded: {
+                    borderRadius: "15px",
+                }
+
+
+            },
+
+            MuiIconButton: {
+                root: {
+                    padding: "0px"
+                }
+            }
+
+        },
+
+
+
+        palette: {
+            primary: {
+                light: '#5cdbe6',
+                main: '#05a9b4',
+                dark: '#007984',
+                contrastText: '#fff',
+            },
+        },
+
+    });
+
+
     const keyword = useLoadLanguage(CT_TSV)
     const dispatch = useDispatch();
     const classes = useMyStyles();
@@ -83,15 +153,22 @@ const CrowdTangleSnaComponent = () => {
       
     return (
     <div className={classes.all}>
-        <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center">
-          <Grid item xs>
-              <HeaderTool name={keyword("navbar_ct_sna")} description={keyword("navbar_ct_sna_description")} icon={<TwitterSNAIcon style={{ fill: "#51A5B2" }} />} />
-          </Grid>
-        </Grid>
+        <ThemeProvider theme={theme}>
+
+            <Grid
+                container
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center">
+
+                <Grid item xs>
+                        <HeaderTool name={keyword("navbar_ct_sna")} description={keyword("navbar_ct_sna_description")} icon={<CSVIcon style={{ fill: "#51A5B2" }} />} />
+                </Grid>
+                <Grid item>
+                    <AdvancedTools />
+                </Grid>
+            </Grid>
+
         <StylesProvider injectFirst>
             <Card className={cardClasses.root}>
                 <CardHeader
@@ -125,6 +202,8 @@ const CrowdTangleSnaComponent = () => {
             resultRedux && <CrowdTangleSnaResults result={resultRedux} />
         }
         <FeedBack/>
+
+        </ThemeProvider>
     </div>);
 }
 

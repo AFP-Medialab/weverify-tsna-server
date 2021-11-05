@@ -14,6 +14,8 @@ import {onHeatMapClick} from "./hooks/heatMap"
 import PostViewTable  from "../../Components/PostViewTable";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 
 const Plot = createPlotComponent(plotly);
 
@@ -44,16 +46,12 @@ export default function HeatMap (props) {
     console.log("heat ", heatMapTweets)
 
     return (
-        <Accordion>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-            >
-                <Typography className={classes.heading}>{keyword("ct_heatmap_chart_title")}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
+        <Card>
+            <CustomCardHeader title={keyword("ct_heatmap_chart_title")} showHelp={true} helpText={"twittersna_heatmap_tip"} />
+        
                 {
                     props.result && props.result.heatMap &&
-                    <Box alignItems="center" justifyContent="center" width={"100%"}>
+                    <Box alignItems="center" justifyContent="center" width={"100%"} className={classes.cardsResults}>
                         {
                             ((props.result.heatMap.isAllnul) &&
                                 <Typography variant={"body2"}>{keyword("ct_sna_no_data")}</Typography>) ||
@@ -81,8 +79,7 @@ export default function HeatMap (props) {
 
                         <CircularProgress className={classes.circularProgress} />)
                 }
-            </AccordionDetails>
-        </Accordion>
+        </Card>
     )
 
 }

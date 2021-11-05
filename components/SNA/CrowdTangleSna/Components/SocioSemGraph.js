@@ -16,8 +16,11 @@ import {displayPostsInsta} from "./lib/displayPosts"
 import {displayPostsFb} from "./lib/displayPosts"
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
 import {createGraphWhenClickANode} from "../../../shared/lib/sigmaGraph";
-
+import IconNodes from "../../../../images/SVG/CardHeader/Nodes.svg";
+import IconEdges from "../../../../images/SVG/CardHeader/Edges.svg";
 import PostViewTable  from "../../Components/PostViewTable";
+import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function SocioSemGraph (props) {
@@ -263,41 +266,44 @@ export default function SocioSemGraph (props) {
 
     return (
     //request.userList.length === 0 && result &&
-    <Accordion>
-        <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-        >
-            <Typography className={classes.heading}>{keyword("ct_sosem_4mode_graph_title")}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
+        <Card>
+            {props.result.socioSemantic4ModeGraph && props.result.socioSemantic4ModeGraph.data.nodes.length !== 0 &&
+                <CustomCardHeader
+                    title={keyword("ct_sosem_4mode_graph_title")}
+                    showHelp={true}
+                    helpText={"twittersna_sosem_4mode_graph_tip"}
+                    showNodes={true}
+                    functionNodes={
+                        <Grid item>
+                            <CSVLink
+                                data={props.result.socioSemantic4ModeGraph.data.nodes}
+                                filename={"Nodes_" + keyword("ct_sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
+                                className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
+                                {
+                                    <IconNodes />
+                                }
+                            </CSVLink>
+                        </Grid>
+                    }
+                    showEdges={true}
+                    functionEdges={
+                        <Grid item>
+                            <CSVLink
+                                data={props.result.socioSemantic4ModeGraph.data.edges}
+                                filename={"Edges_" + keyword("ct_sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
+                                className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
+                                {
+                                    <IconEdges style={{  marginLeft: "6px" }} />
+                                }
+                            </CSVLink>
+                        </Grid>
+                    } />
+            }
+
+
         {
             props.result.socioSemantic4ModeGraph && props.result.socioSemantic4ModeGraph.data.nodes.length !== 0 &&
                 <div style={{ width: '100%' }}>
-                    <Box pb={3}>
-                        <Grid container justifyContent="space-between" spacing={2}
-                            alignContent={"center"}>
-                            <Grid item>
-                                <CSVLink
-                                    data={props.result.socioSemantic4ModeGraph.data.nodes}
-                                    filename={"Nodes_" + keyword("ct_sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
-                                    className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                                    {
-                                        "CSV Nodes"
-                                    }
-                                </CSVLink>
-                            </Grid>
-                            <Grid item>
-                                <CSVLink
-                                    data={props.result.socioSemantic4ModeGraph.data.edges}
-                                    filename={"Edges_" + keyword("ct_sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
-                                    className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                                    {
-                                        "CSV Edges"
-                                    }
-                                </CSVLink>
-                            </Grid>
-                        </Grid>
-                    </Box>
                     {
                         (socioSemantic4ModeGraphReset === null && socioSemantic4ModeGraphClickNode === null && props.result.socioSemantic4ModeGraph.data.nodes.length !== 0) &&
                         <div>
@@ -367,9 +373,6 @@ export default function SocioSemGraph (props) {
                             </Sigma>
                         </div>
                     }
-                    <Box m={1}/>
-                    <OnClickInfo keyword={"twittersna_sosem_4mode_graph_tip"}/>
-                    <Box m={2}/>
                     {
                         socioSemantic4ModeGraphTweets &&
                         <PostViewTable snatype={sna} setTypeValue={setSocioSemantic4ModeGraphTweets} data={socioSemantic4ModeGraphTweets} downloadEnable={false} />
@@ -384,7 +387,6 @@ export default function SocioSemGraph (props) {
                 props.result.socioSemantic4ModeGraph === undefined &&
                 <CircularProgress className={classes.circularProgress} />
             }
-        </AccordionDetails>
-    </Accordion>
+        </Card>
     )
 }
