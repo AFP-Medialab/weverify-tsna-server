@@ -19,15 +19,7 @@ import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { Paper } from "@material-ui/core";
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Box from '@material-ui/core/Box';
-import Typography from "@material-ui/core/Typography";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import TweetDialog from '../TweetDialog/TweetDialog'
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
@@ -145,44 +137,8 @@ export default function CustomTableURL(props) {
                 sorting: true
             }}
         />
-        <Dialog
-                fullWidth
-                maxWidth={'xs'}
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="max-width-dialog-title"
-            >
-            <Box p={2}>
-            {selectedURL[0] && <>
-                <DialogTitle id="max-width-dialog-title">
-                    <Typography gutterBottom style={{ color: "#51A5B2", fontSize: "24px" }}>
-                        {creditType === desinfo ? keyword("credibility_desinfo_title"): keyword("credibility_fct_title")}
-                    </Typography>
-                </DialogTitle>
-                <DialogContent style={{ height: '300px' }}>
-                <Typography variant="body2">
-                    {"resolved-url : "}{selectedURL[0].string}
-                </Typography>
-                <Box m={4} />
-                <Typography variant="body2">
-                    {selectedURL[0].description}
-                </Typography>
-                {selectedURL[0].debunks &&<>
-                <Box m={4} />
-                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                    {creditType === desinfo ? selectedURL[0].debunks.map((debunk, index) => (
-                        <ListItem key={index} component="a" href={debunk.trim()} target="_blank">
-                            <ListItemText primary={debunk.trim()} />
-                        </ListItem>
-                    )) : <Typography variant="body2">selectedURL[0].description</Typography>}
-                </List>
-                </>}
-                <Box m={2} />
-                </DialogContent>
-                </>
-                }
-            </Box>
-        </Dialog>
+        <TweetDialog open={open} selectedURL={selectedURL} handleClose={handleClose} creditType={creditType}/>
+       
         </div>
         
     );
