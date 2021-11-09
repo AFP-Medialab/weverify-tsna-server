@@ -8,9 +8,10 @@ const TOKENS = {
 const client = new TwitterApi({
    ...TOKENS
   });
+const callbackUrl = process.env.TWITTER_CALL_BACK_URL
 const  twitterAuth = async (req)  => {
   console.log("authentication ...")
-  const link = await client.generateAuthLink('http://localhost:3000/api/twitter/callback')
+  const link = await client.generateAuthLink(callbackUrl)
   var data = { authLink: link.url, authMode: 'callback' }
   console.log("link ", link)
   // session enable
@@ -30,9 +31,9 @@ export default withIronSessionApiRoute (
     switch (twitter){
         case "twitterAuth":{
             console.log("authentication ...")
-            const link = await client.generateAuthLink('http://localhost:3000/api/twitter/callback')
+            const link = await client.generateAuthLink(callbackUrl)
             var data = { authLink: link.url, authMode: 'callback' }
-            console.log("link ", link)
+           // console.log("link ", link)
             // session enable
             req.session.oauthToken = link.oauth_token;
             req.session.oauthSecret = link.oauth_token_secret;
@@ -41,8 +42,8 @@ export default withIronSessionApiRoute (
             return ;
         }
         case "callback":{
-            console.log("call back ...")
-            console.log("req ", req.query)
+            //console.log("call back ...")
+            //console.log("req ", req.query)
             if (!req.query.oauth_token || !req.query.oauth_verifier) {
                 res.status(400).render('error', { error: 'Bad request, or you denied application access. Please renew your request.' });
                 return;
@@ -61,24 +62,15 @@ export default withIronSessionApiRoute (
             const tempClient = new TwitterApi({ ...TOKENS, accessToken: token, accessSecret: savedSecret });
             // Ask for definitive access token
             const accessToken =  await tempClient.login(verifier)
-            console.log("accessToken : ", accessToken)
-            console.log("screen name : ", accessToken.screenName)
             req.session.accessToken = accessToken.accessToken
             req.session.accessSecret = accessToken.accessSecret
             await req.session.save();
-           /* tempClient.login(verifier).then((accessToken) => {
-              console.log("accessToken : ", accessToken)
-              console.log("screen name : ", accessToken.screenName)
-              req.session.accessToken = accessToken.accessToken
-              req.session.accessSecret = accessToken.accessSecret
-              await req.session.save();
-            });*/
             res.redirect('/twitterConnect')
             return;}
         case "postTweet":{
             const accessToken = req.session.accessToken;
             const accessSecret = req.session.accessSecret;
-            console.log("tokens ... ", req.session)
+            //console.log("tokens ... ", req.session)
             if(!accessToken || !accessSecret){
               console.log("token does not exist");
               //connect
@@ -98,30 +90,15 @@ export default withIronSessionApiRoute (
               if(err.code === 401)
                 res.redirect('/api/twitter/twitterAuth')
             }
-           /*client.v1.tweet(tweet)
-            .then((response) => {
-              console.log("response ", response)
-              console.log("response status", response.status)
-              res.json(response)
-              return;
-              })
-          .catch((err) => {
-            console.log("Invalid verifier or access tokens! ", err);
-            if(err.code === 401)
-              res.redirect('/api/twitter/twitterAuth')
-          });*/
           
         }
         case "postTweetBot":{
             const client = new TwitterApi({ ...TOKENS, accessToken: process.env.TWITTER_ACCESS_TOKEN,
                 accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET, });
-            const tweet = req.body
-            //Test if it is API V1.1 or V2
-            //Default is v1
-            //console.log("client ", client)
+            const tweet = req.body           
             client.v1.tweet(tweet)
             .then((response) => {
-                //console.log("response :",JSON.stringify(response))
+
                 res.status(200)
                 res.json(response)
                 })
@@ -136,7 +113,7 @@ export default withIronSessionApiRoute (
     
 },
   {
-    cookieName: "myapp_cookiename",
-    password: "complex_password_at_least_32_characters_long"
+    cookieName: "weverify_bot_cookie",
+    password: "complex_password_at_least_32_characters_long_weverify"
   
 })
