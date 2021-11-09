@@ -13,12 +13,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from "@material-ui/core/Typography";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+import { Grid, TextField } from '@material-ui/core';
 
 const tsv = "/components/Shared/CustomTable.tsv";
 let postWithBotTweetUrl = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweetBot`;
 let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
 
 const TweetDialog = (props) => {
+    console.log("props");
+    console.log(props);
     var desinfo = "desinfo";
     const keyword = useLoadLanguage(tsv);
     const [twitterOAuthUrl, setTwitterOAuthUrl] = useState();
@@ -51,19 +54,121 @@ const TweetDialog = (props) => {
         <>
         <Dialog
                 fullWidth
-                maxWidth={'xs'}
+                maxWidth={'lg'}
                 open={props.open}
                 onClose={props.handleClose}
                 aria-labelledby="max-width-dialog-title"
             >
             <Box p={2}>
             {props.selectedURL[0] && <>
+
+                {/*
+                
                 <DialogTitle id="max-width-dialog-title">
-                    <Typography gutterBottom style={{ color: "#51A5B2", fontSize: "24px" }}>
+                    <Typography gutterBottom  >
                         {props.creditType === desinfo ? keyword("credibility_desinfo_title"): keyword("credibility_fct_title")}
                     </Typography>
                 </DialogTitle>
-                <DialogContent style={{ height: '300px' }}>
+
+                */}
+
+
+                <DialogContent style={{ height: '505px' }}>
+
+
+                    <Grid
+                        container
+                        direction="row">
+
+                            <Grid item xs={8} container direction="column" style={{ paddingRight: "35px", borderRight: "1px solid #CACACA"}}>
+                                <Typography variant="h4" style={{ color: "#51A5B2"}}>
+                                    Link Information
+                                </Typography>
+
+                                <Box m={2} />
+
+                                <Typography variant="h6">
+                                    Selected link
+                                </Typography>
+                                    <Typography variant="body" >
+                                        <a style={{ color: "#51A5B2" }} href={props.selectedURL[0].string }>{props.selectedURL[0].string}</a>
+                                </Typography>
+
+                                <Box m={2} />
+
+                                <TextField
+                                    id="outlined-multiline-static"
+                                    label="Multiline"
+                                    multiline
+                                    rows={11}
+                                    defaultValue={"There's a lot of misinformation on this topic checkout alternative reading : " + props.selectedURL[0].string }
+                                    variant="outlined"
+                                />
+
+                                <Box m={2} />
+
+                                 <Grid
+                                    container
+                                    direction="row"
+                                    spacing={4}>
+
+                                    <Grid item xs={6}>
+                                            <Button variant="contained" color="primary" fullWidth onClick={postTweetContent} style={{color: "white"}}>
+                                                Tweet with WeVerify Bot
+                                            </Button>
+                                    </Grid>
+
+                                    <Grid item xs={6}>
+                                            <Button variant="contained" color="primary" fullWidth onClick={postUserTweetContent} style={{ color: "white" }}>
+                                                Tweet with your account
+                                            </Button>
+                                    </Grid>
+
+
+                                </Grid>
+
+
+                            </Grid>
+
+
+                            <Grid item xs={4} container direction="column" style={{ paddingLeft: "35px", display: "flex", overflow: "auto", minHeight: "100%", maxHeight: "469px", flexWrap: "nowrap" }}>
+                                <Typography variant="h4" style={{ color: "#51A5B2" }}>
+                                    Author
+                                </Typography>
+                                    <Box m={2} />
+                                    <Typography variant="h6">
+                                        Name
+                                    </Typography>
+                                    <Typography variant="body">
+                                        {props.selectedURL[0].name}
+                                    </Typography>
+
+                                    <Box m={1} />
+
+                                    <Typography variant="h6">
+                                        Credibility
+                                    </Typography>
+                                    <Typography variant="body">
+                                        {props.creditType}
+                                    </Typography>
+
+                                    <Box m={1} />
+
+                                    <Typography variant="h6">
+                                        Description
+                                    </Typography>
+                                    <Typography variant="body" style={{lineHeight: "24px"}}>
+                                        {props.selectedURL[0].description}
+                                    </Typography>
+
+                            </Grid>
+
+                    </Grid>
+
+                <Box m={4} />
+
+                {/*
+
                 <Typography variant="body2">
                     {"resolved-url : "}{props.selectedURL[0].string}
                 </Typography>
@@ -82,7 +187,9 @@ const TweetDialog = (props) => {
                 </List>
                 </>}
                 <Box m={2} />
+                */}
                 </DialogContent>
+                        {/*
                 <Box m={1} />
                 <DialogActions>
                     <Button variant="contained" color="primary" fullWidth onClick={postTweetContent}>
@@ -94,6 +201,7 @@ const TweetDialog = (props) => {
                         Tweet with your account
                     </Button>
                 </DialogActions>
+                 */}
                 </>
                 }
             </Box>

@@ -182,8 +182,8 @@ export default function CustomTableURL(props) {
                 title={""}
                 columns={
                     state.columns.map((obj) => {
-                        console.log("COLUMN");
-                        console.log(obj);
+                        //console.log("COLUMN");
+                        //console.log(obj);
                         if (obj.field === "credibility") {
                             return {
                                 title: obj.title,
