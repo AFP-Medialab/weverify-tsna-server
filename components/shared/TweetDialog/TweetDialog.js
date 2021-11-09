@@ -5,9 +5,7 @@ import { useEffect, useState, useCallback } from "react";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -25,10 +23,8 @@ let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
 import LinkIcon from '@material-ui/icons/Link';
 
 
-
 const TweetDialog = (props) => {
-    //console.log("props");
-    //console.log(props);
+    
     var desinfo = "desinfo";
     const keyword = useLoadLanguage(tsv);
     const windowConnection = useSelector(state => state.conn.windowsOpen);
@@ -44,7 +40,6 @@ const TweetDialog = (props) => {
         setTweetText("There's a lot of misinformation on " + topic + ", checkout alternative reading : " + props.selectedURL[0].string);
     }
 
-    
     
     useEffect(() => {
         console.log("effect ", windowConnection)
@@ -67,33 +62,26 @@ const TweetDialog = (props) => {
         setTweetText(e.target.value);
     }
 
-
     const postTweetContent = () => {
-        console.log(tweetText);
-        //console.log(topic);
-        
-        //const content = props.selectedURL[0].description
-        
+        //console.log(tweetText);
         const content = tweetText;
-        const response =  fetch(postWithBotTweetUrl, {
+        
+        fetch(postWithBotTweetUrl, {
             method: 'POST',
             body: content,
             headers: {
                 'Content-Type': 'text/plain'
             }
+        }).then((response) => {
+            console.log("post response ", response.status)
+            props.handleClose()
         });
-        const status =  response.status;
-       
-        console.log("post response ", response)
-        console.log("post response status", status)
-        
     }
     const oncloseWindown= () => {
         console.log("close ...")
     }
     const postUserTweetContent = () => {
-        console.log("icic user ....")
-        const content = props.selectedURL[0].description
+        const content = tweetText;
         var status =''
         //Todo connection handler if not connect -> connect with Oauth
         fetch(postTweet, 
@@ -110,7 +98,6 @@ const TweetDialog = (props) => {
             console.log("status ", status)
             if(status === 301){
                 window.open(data.authLink, '', 'width=600,height=400,left=200,top=200');
-                
                 dispatch(connectionEnable(true)) 
                 dispatch(connectionWindow(true))
             }else if (status === 200){
