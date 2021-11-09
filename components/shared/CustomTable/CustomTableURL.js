@@ -16,11 +16,12 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
-import { createMuiTheme, MuiThemeProvider, Paper } from "@material-ui/core";
+import { MuiThemeProvider, Paper } from "@material-ui/core";
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
 import TweetDialog from '../TweetDialog/TweetDialog'
 import { PostAdd } from '@material-ui/icons';
+import { createTheme } from '@material-ui/core/styles'
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
@@ -49,7 +50,7 @@ const tableIcons = {
 
 export default function CustomTableURL(props) {
 
-    const theme = createMuiTheme({
+    const theme = createTheme({
         palette: {
             primary: {
                 main: '#05A9B4',

@@ -27,14 +27,23 @@ import LinkIcon from '@material-ui/icons/Link';
 
 
 const TweetDialog = (props) => {
-    console.log("props");
-    console.log(props);
+    //console.log("props");
+    //console.log(props);
     var desinfo = "desinfo";
     const keyword = useLoadLanguage(tsv);
     const windowConnection = useSelector(state => state.conn.windowsOpen);
     const isConnectionEnable = useSelector(state => state.conn.connectionEnable)
     const dispatch = useDispatch();
     const [popup, setPopup] = useState(null)
+
+    const topic = useSelector(state => state.twitterSna.request.keywordList[0]);
+
+    const [tweetText, setTweetText] = useState("There's a lot of misinformation on this topic checkout alternative reading :");
+
+    if (props.selectedURL[0] && props.selectedURL[0].string && tweetText === "There's a lot of misinformation on this topic checkout alternative reading :"){
+        setTweetText("There's a lot of misinformation on " + topic + ", checkout alternative reading : " + props.selectedURL[0].string);
+    }
+
     
     
     useEffect(() => {
@@ -53,8 +62,19 @@ const TweetDialog = (props) => {
         }
         return () => popup.removeEventListener("close",props.onEvent)
     }, [popup])*/
+
+    const handleChange = e =>{
+        setTweetText(e.target.value);
+    }
+
+
     const postTweetContent = () => {
-        const content = props.selectedURL[0].description
+        console.log(tweetText);
+        //console.log(topic);
+        
+        //const content = props.selectedURL[0].description
+        
+        const content = tweetText;
         const response =  fetch(postWithBotTweetUrl, {
             method: 'POST',
             body: content,
@@ -66,6 +86,7 @@ const TweetDialog = (props) => {
        
         console.log("post response ", response)
         console.log("post response status", status)
+        
     }
     const oncloseWindown= () => {
         console.log("close ...")
@@ -124,7 +145,7 @@ const TweetDialog = (props) => {
                 */}
 
 
-                <DialogContent style={{ height: '505px' }}>
+                <DialogContent style={{ height: '507px' }}>
 
 
                     <Grid
@@ -141,7 +162,7 @@ const TweetDialog = (props) => {
                                 <Typography variant="h6">
                                     Selected link
                                 </Typography>
-                                    <Typography variant="body" >
+                                    <Typography variant="body1" >
                                         <a style={{ color: "#51A5B2" }} href={props.selectedURL[0].string} target="_blank">{props.selectedURL[0].string}</a>
                                 </Typography>
 
@@ -152,8 +173,9 @@ const TweetDialog = (props) => {
                                     label="Multiline"
                                     multiline
                                     rows={11}
-                                    defaultValue={"There's a lot of misinformation on this topic checkout alternative reading : " + props.selectedURL[0].string }
+                                    value={tweetText}
                                     variant="outlined"
+                                    onChange={handleChange}
                                 />
 
                                 <Box m={2} />
@@ -182,7 +204,7 @@ const TweetDialog = (props) => {
                             </Grid>
 
 
-                            <Grid item xs={4} container direction="column" style={{ paddingLeft: "35px", display: "flex", overflow: "auto", minHeight: "100%", maxHeight: "469px", flexWrap: "nowrap" }}>
+                            <Grid item xs={4} container direction="column" style={{ paddingLeft: "35px", display: "flex", overflow: "auto", minHeight: "100%", maxHeight: "472px", flexWrap: "nowrap" }}>
                                 <Typography variant="h4" style={{ color: "#51A5B2" }}>
                                     Author
                                 </Typography>
@@ -202,7 +224,7 @@ const TweetDialog = (props) => {
 
                                             <a href={"https://" + props.selectedURL[0].website} target="_blank"><LinkIcon  style={{ marginRight: "10px", marginLeft: "2px", color:"#51A5B2" }}/></a>
 
-                                            <Typography variant="body">
+                                            <Typography variant="body1">
                                                 {props.selectedURL[0].name}
                                             </Typography>
 
@@ -228,7 +250,7 @@ const TweetDialog = (props) => {
                                                 alignItems="center"
                                             >
                                                 <DesinformationIcon viewBox="0 0 50 50" width="30" height="30" style={{marginRight: "10px"}}/>
-                                                <Typography variant="body">
+                                                <Typography variant="body1">
                                                     Desinformation
                                                 </Typography>
 
@@ -249,7 +271,7 @@ const TweetDialog = (props) => {
                                                 alignItems="center"
                                             >
                                                 <FactCheckerIcon viewBox="0 0 50 50" width="30" height="30" style={{ marginRight: "10px" }} />
-                                                <Typography variant="body">
+                                                <Typography variant="body1">
                                                     Fact Checker
                                                 </Typography>
 
@@ -262,7 +284,7 @@ const TweetDialog = (props) => {
                                     <Typography variant="h6">
                                         Description
                                     </Typography>
-                                    <Typography variant="body" style={{lineHeight: "24px"}}>
+                                    <Typography variant="body1" style={{lineHeight: "24px"}}>
                                         {props.selectedURL[0].description}
                                     </Typography>
 
