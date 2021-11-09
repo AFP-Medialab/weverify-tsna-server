@@ -14,10 +14,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from "@material-ui/core/Typography";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { Grid, TextField } from '@material-ui/core';
+import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
+import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
 
 const tsv = "/components/Shared/CustomTable.tsv";
 let postWithBotTweetUrl = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweetBot`;
 let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
+import LinkIcon from '@material-ui/icons/Link';
+
+
 
 const TweetDialog = (props) => {
     console.log("props");
@@ -91,7 +96,7 @@ const TweetDialog = (props) => {
                                     Selected link
                                 </Typography>
                                     <Typography variant="body" >
-                                        <a style={{ color: "#51A5B2" }} href={props.selectedURL[0].string }>{props.selectedURL[0].string}</a>
+                                        <a style={{ color: "#51A5B2" }} href={props.selectedURL[0].string} target="_blank">{props.selectedURL[0].string}</a>
                                 </Typography>
 
                                 <Box m={2} />
@@ -135,24 +140,78 @@ const TweetDialog = (props) => {
                                 <Typography variant="h4" style={{ color: "#51A5B2" }}>
                                     Author
                                 </Typography>
+                                    
                                     <Box m={2} />
-                                    <Typography variant="h6">
-                                        Name
-                                    </Typography>
-                                    <Typography variant="body">
-                                        {props.selectedURL[0].name}
-                                    </Typography>
+                                    {props.selectedURL[0].name &&
+                                        <div>
+                                        <Typography variant="h6">
+                                            Name
+                                        </Typography>
+                                        <Grid
+                                                container
+                                                direction="row"
+                                                justifyContent="flex-start"
+                                                alignItems="center"
+                                            >
 
-                                    <Box m={1} />
+                                            <a href={"https://" + props.selectedURL[0].website} target="_blank"><LinkIcon  style={{ marginRight: "10px", marginLeft: "2px", color:"#51A5B2" }}/></a>
 
-                                    <Typography variant="h6">
-                                        Credibility
-                                    </Typography>
-                                    <Typography variant="body">
-                                        {props.creditType}
-                                    </Typography>
+                                            <Typography variant="body">
+                                                {props.selectedURL[0].name}
+                                            </Typography>
 
-                                    <Box m={1} />
+                                        </Grid>
+                                        
+                                    
+
+                                        <Box m={1} />
+                                        </div>
+                                    }
+
+                                    {props.creditType === "desinfo" ?
+
+                                        <div>
+
+                                            <Typography variant="h6">
+                                                Credibility
+                                            </Typography>
+                                            <Grid
+                                                container
+                                                direction="row"
+                                                justifyContent="flex-start"
+                                                alignItems="center"
+                                            >
+                                                <DesinformationIcon viewBox="0 0 50 50" width="30" height="30" style={{marginRight: "10px"}}/>
+                                                <Typography variant="body">
+                                                    Desinformation
+                                                </Typography>
+
+                                            </Grid>
+                                            <Box m={1} />
+                                        </div>     
+                                    
+                                    :
+                                        <div>
+
+                                            <Typography variant="h6">
+                                                Credibility
+                                            </Typography>
+                                            <Grid
+                                                container
+                                                direction="row"
+                                                justifyContent="flex-start"
+                                                alignItems="center"
+                                            >
+                                                <FactCheckerIcon viewBox="0 0 50 50" width="30" height="30" style={{ marginRight: "10px" }} />
+                                                <Typography variant="body">
+                                                    Fact Checker
+                                                </Typography>
+
+                                            </Grid>
+
+                                            <Box m={1} />
+                                        </div>
+                                    }
 
                                     <Typography variant="h6">
                                         Description
@@ -160,6 +219,17 @@ const TweetDialog = (props) => {
                                     <Typography variant="body" style={{lineHeight: "24px"}}>
                                         {props.selectedURL[0].description}
                                     </Typography>
+
+                                    {props.selectedURL[0].debunks && <>
+                                        <Box m={1} />
+                                        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                                            {props.creditType === desinfo ? props.selectedURL[0].debunks.map((debunk, index) => (
+                                                <ListItem key={index} component="a" href={debunk.trim()} target="_blank">
+                                                    <ListItemText primary={debunk.trim()} />
+                                                </ListItem>
+                                            )) : <Typography variant="body2">props.selectedURL[0].description</Typography>}
+                                        </List>
+                                    </>}
 
                             </Grid>
 
@@ -187,9 +257,12 @@ const TweetDialog = (props) => {
                 </List>
                 </>}
                 <Box m={2} />
-                */}
+                */ }
+
                 </DialogContent>
+
                         {/*
+                        
                 <Box m={1} />
                 <DialogActions>
                     <Button variant="contained" color="primary" fullWidth onClick={postTweetContent}>
@@ -201,7 +274,9 @@ const TweetDialog = (props) => {
                         Tweet with your account
                     </Button>
                 </DialogActions>
-                 */}
+
+                */ }
+                 
                 </>
                 }
             </Box>
