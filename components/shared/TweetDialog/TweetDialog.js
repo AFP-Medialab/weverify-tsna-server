@@ -1,6 +1,7 @@
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, useCallback } from "react";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,6 +14,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from "@material-ui/core/Typography";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+import {connectionWindow, connectionEnable} from "../../../redux/actions/connectionAction"
 
 const tsv = "/components/Shared/CustomTable.tsv";
 let postWithBotTweetUrl = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweetBot`;
@@ -21,9 +23,32 @@ let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
 const TweetDialog = (props) => {
     var desinfo = "desinfo";
     const keyword = useLoadLanguage(tsv);
-    const [twitterOAuthUrl, setTwitterOAuthUrl] = useState();
-    const [showConnectionIframe, setShowConnectionIframe] = useState(false);
-
+    const windowConnection = useSelector(state => state.conn.windowsOpen);
+    const isConnectionEnable = useSelector(state => state.conn.connectionEnable)
+    const dispatch = useDispatch();
+    const [popup, setPopup] = useState(null)
+    const closeCallBack = useCallback(
+        () => {            
+            console.log()
+        },
+        [popup],
+    )
+    useEffect(() => {
+        console.log("effect ", windowConnection)
+        if(isConnectionEnable && !windowConnection){
+            console.log("connection is false")
+            postUserTweetContent();
+        }
+        return () => dispatch(connectionEnable(false))  
+    }, [windowConnection])
+   
+    useEffect(() => {
+        console.log("popip ", popup)
+        if(popup){
+            popup.addEventListener("close",props.onEvent)
+        }
+        return () => popup.removeEventListener("close",props.onEvent)
+    }, [popup])
     const postTweetContent = () => {
         const content = props.selectedURL[0].description
         const response =  fetch(postWithBotTweetUrl, {
@@ -37,15 +62,39 @@ const TweetDialog = (props) => {
         console.log("post response ", response)
         console.log("post response status", status)
     }
+    const oncloseWindown= () => {
+        console.log("close ...")
+    }
     const postUserTweetContent = () => {
         console.log("icic user ....")
+        const content = props.selectedURL[0].description
+        var status =''
         //Todo connection handler if not connect -> connect with Oauth
-        fetch(postTweet).then((response) => response.json())
-            .then((data) => { 
-                setTwitterOAuthUrl(data.authLink)
-                setShowConnectionIframe(true);
-                window.open(data.authLink, '', 'width=600,height=400,left=200,top=200')
-                console.log("body ", data)})
+        fetch(postTweet, 
+        {
+            method: 'POST',
+            body: content,
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        }).then((response) => {status = response.status; 
+            return response.json()})
+        .then((data) => { 
+            console.log("body ", data)
+            console.log("status ", status)
+            if(status === 301){
+                let pop = window.open(data.authLink, '', 'width=600,height=400,left=200,top=200');
+                pop.onClose 
+                dispatch(connectionEnable(true)) 
+                dispatch(connectionWindow(true))
+            }else if (status === 200){
+                //
+            }
+        }
+        )
+        .catch((err) => {
+            console.log("error connection ", err)
+        })
     }
     return (
         <>
