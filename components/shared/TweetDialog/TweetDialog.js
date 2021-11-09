@@ -1,7 +1,13 @@
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+import { useEffect, useState } from "react";
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -9,11 +15,40 @@ import Typography from "@material-ui/core/Typography";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
 const tsv = "/components/Shared/CustomTable.tsv";
+let postWithBotTweetUrl = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweetBot`;
+let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
+
 const TweetDialog = (props) => {
     var desinfo = "desinfo";
     const keyword = useLoadLanguage(tsv);
+    const [twitterOAuthUrl, setTwitterOAuthUrl] = useState();
+    const [showConnectionIframe, setShowConnectionIframe] = useState(false);
 
+    const postTweetContent = () => {
+        const content = props.selectedURL[0].description
+        const response =  fetch(postWithBotTweetUrl, {
+            method: 'POST',
+            body: content,
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        });
+        const status =  response.status;
+        console.log("post response ", response)
+        console.log("post response status", status)
+    }
+    const postUserTweetContent = () => {
+        console.log("icic user ....")
+        //Todo connection handler if not connect -> connect with Oauth
+        fetch(postTweet).then((response) => response.json())
+            .then((data) => { 
+                setTwitterOAuthUrl(data.authLink)
+                setShowConnectionIframe(true);
+                window.open(data.authLink, '', 'width=600,height=400,left=200,top=200')
+                console.log("body ", data)})
+    }
     return (
+        <>
         <Dialog
                 fullWidth
                 maxWidth={'xs'}
@@ -48,10 +83,23 @@ const TweetDialog = (props) => {
                 </>}
                 <Box m={2} />
                 </DialogContent>
+                <Box m={1} />
+                <DialogActions>
+                    <Button variant="contained" color="primary" fullWidth onClick={postTweetContent}>
+                            Tweet
+                    </Button>
+                </DialogActions>
+                <DialogActions>
+                    <Button variant="contained" color="primary" fullWidth onClick={postUserTweetContent}>
+                        Tweet with your account
+                    </Button>
+                </DialogActions>
                 </>
                 }
             </Box>
         </Dialog>
+        
+        </>
     )
 }
 export default TweetDialog;
