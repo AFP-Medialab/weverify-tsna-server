@@ -8,9 +8,20 @@ const TOKENS = {
 const client = new TwitterApi({
    ...TOKENS
   });
-
+const  twitterAuth = async (req)  => {
+  console.log("authentication ...")
+  const link = await client.generateAuthLink('http://localhost:3000/api/twitter/callback')
+  var data = { authLink: link.url, authMode: 'callback' }
+  console.log("link ", link)
+  // session enable
+  req.session.oauthToken = link.oauth_token;
+  req.session.oauthSecret = link.oauth_token_secret;
+  await req.session.save();
+  return data;
+}
 
 export default withIronSessionApiRoute (
+
   async function twitter(req, res){
     const {
         query: { twitter },
@@ -26,9 +37,8 @@ export default withIronSessionApiRoute (
             req.session.oauthToken = link.oauth_token;
             req.session.oauthSecret = link.oauth_token_secret;
             await req.session.save();
-            res.json(data)
-            
-            return res.status(200);
+            res.status(301).json(data)
+            return ;
         }
         case "callback":{
             console.log("call back ...")
@@ -49,19 +59,58 @@ export default withIronSessionApiRoute (
           
             // Build a temporary client to get access token
             const tempClient = new TwitterApi({ ...TOKENS, accessToken: token, accessSecret: savedSecret });
-            req.session.oauth_token = token;
-            await req.session.save();
             // Ask for definitive access token
-            tempClient.login(verifier).then((accessToken, accessSecret, screenName, userId) => {console.log("screen name : ", screenName)});
+            const accessToken =  await tempClient.login(verifier)
+            console.log("accessToken : ", accessToken)
+            console.log("screen name : ", accessToken.screenName)
+            req.session.accessToken = accessToken.accessToken
+            req.session.accessSecret = accessToken.accessSecret
+            await req.session.save();
+           /* tempClient.login(verifier).then((accessToken) => {
+              console.log("accessToken : ", accessToken)
+              console.log("screen name : ", accessToken.screenName)
+              req.session.accessToken = accessToken.accessToken
+              req.session.accessSecret = accessToken.accessSecret
+              await req.session.save();
+            });*/
             res.redirect('/twitterConnect')
             return;}
         case "postTweet":{
-            const token = req.session.oauth_token;
-            const savedSecret = req.session.oauthSecret;
-            if(!token || !savedSecret){
+            const accessToken = req.session.accessToken;
+            const accessSecret = req.session.accessSecret;
+            console.log("tokens ... ", req.session)
+            if(!accessToken || !accessSecret){
               console.log("token does not exist");
+              //connect
+              res.redirect('/api/twitter/twitterAuth')
+              return;
             }
-            
+            const client = new TwitterApi({ ...TOKENS, accessToken: accessToken, accessSecret: accessSecret });
+            const tweet = req.body
+            try {
+              const response = await client.v1.tweet(tweet)
+              console.log("response ", response)
+              res.json(response)
+              return;
+            } 
+            catch(err){
+              console.log("Invalid verifier or access tokens! ", err);
+              if(err.code === 401)
+                res.redirect('/api/twitter/twitterAuth')
+            }
+           /*client.v1.tweet(tweet)
+            .then((response) => {
+              console.log("response ", response)
+              console.log("response status", response.status)
+              res.json(response)
+              return;
+              })
+          .catch((err) => {
+            console.log("Invalid verifier or access tokens! ", err);
+            if(err.code === 401)
+              res.redirect('/api/twitter/twitterAuth')
+          });*/
+          
         }
         case "postTweetBot":{
             const client = new TwitterApi({ ...TOKENS, accessToken: process.env.TWITTER_ACCESS_TOKEN,
