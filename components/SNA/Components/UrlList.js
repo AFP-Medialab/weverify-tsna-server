@@ -8,6 +8,7 @@ import OnClickInfo from "../../shared/OnClickInfo/OnClickInfo";
 import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
 import {downloadClick} from "../lib/downloadClick";
 import CustomCardHeader from "../../shared/CustomCardHeader/CustomCardheader";
+import useMyStyles from "../../shared/styles/useMyStyles";
 
 
 export default function UrlList (props) {
@@ -17,6 +18,8 @@ export default function UrlList (props) {
     
     const userLogined = useSelector(state => state.userSession && state.userSession.user);
     const userData = encodeURIComponent(JSON.stringify(userLogined));
+
+    const classes = useMyStyles();
     var actions = [];
     if(props.action)
         actions = [
