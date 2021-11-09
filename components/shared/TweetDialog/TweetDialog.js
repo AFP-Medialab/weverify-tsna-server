@@ -35,12 +35,8 @@ const TweetDialog = (props) => {
     const isConnectionEnable = useSelector(state => state.conn.connectionEnable)
     const dispatch = useDispatch();
     const [popup, setPopup] = useState(null)
-    const closeCallBack = useCallback(
-        () => {            
-            console.log()
-        },
-        [popup],
-    )
+    
+    
     useEffect(() => {
         console.log("effect ", windowConnection)
         if(isConnectionEnable && !windowConnection){
@@ -50,13 +46,13 @@ const TweetDialog = (props) => {
         return () => dispatch(connectionEnable(false))  
     }, [windowConnection])
    
-    useEffect(() => {
+    /*useEffect(() => {
         console.log("popip ", popup)
         if(popup){
             popup.addEventListener("close",props.onEvent)
         }
         return () => popup.removeEventListener("close",props.onEvent)
-    }, [popup])
+    }, [popup])*/
     const postTweetContent = () => {
         const content = props.selectedURL[0].description
         const response =  fetch(postWithBotTweetUrl, {
@@ -67,6 +63,7 @@ const TweetDialog = (props) => {
             }
         });
         const status =  response.status;
+       
         console.log("post response ", response)
         console.log("post response status", status)
     }
@@ -91,12 +88,12 @@ const TweetDialog = (props) => {
             console.log("body ", data)
             console.log("status ", status)
             if(status === 301){
-                let pop = window.open(data.authLink, '', 'width=600,height=400,left=200,top=200');
-                pop.onClose 
+                window.open(data.authLink, '', 'width=600,height=400,left=200,top=200');
+                
                 dispatch(connectionEnable(true)) 
                 dispatch(connectionWindow(true))
             }else if (status === 200){
-                //
+                props.handleClose()
             }
         }
         )
