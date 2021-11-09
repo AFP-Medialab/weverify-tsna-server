@@ -10,9 +10,12 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
-export default function Count({ result}) {
+import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+
+export default function Count({ result }) {
   const snatsv = useSelector((state) => state.sna.tsv);
   const keyword = useLoadLanguage(snatsv);
   const classes = useMyStyles();
@@ -30,63 +33,52 @@ export default function Count({ result}) {
 
   return (
 
-    <Accordion
-      expanded={countVisible}
-      onChange={() => setCountVisible(!countVisible)}
-    >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls={"panel0a-content"}
-        id={"panel0a-header"}
-      >
-        <Typography className={classes.heading}>
-          {
-            keyword("ct_counter_title")
-          }
-          
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>
+    <Card>
+      <CustomCardHeader title={keyword("ct_counter_title")} showHelp={true} helpText={"ct_sna_timeline_tip"} />
 
-        <Box alignItems="center" justifyContent="center" width={"100%"}>
-          <Grid
-            container
-            justifyContent="space-around"
-            spacing={2}
-            alignContent={"center"}
-          >
-            <Grid item>
-              <Typography variant={"h6"}>{keyword("ct_sna_publications")}</Typography>
-              <Typography variant={"h2"}>{result.countSna.count}</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant={"h6"}>{keyword("ct_sna_total_interactions")}</Typography>
-              <Typography variant={"h2"}>
-                {result.countSna.total_interactions}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant={"h6"}>{keyword("ct_sna_likes")}</Typography>
-              <Typography variant={"h2"}>{result.countSna.likes}</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant={"h6"}>{keyword("ct_sna_comments")}</Typography>
-              <Typography variant={"h2"}>{result.countSna.comments}</Typography>
-            </Grid>
-            {result.countSna.shares && (
-              <Grid item>
-                <Typography variant={"h6"}>{keyword("ct_sna_shares")}</Typography>
-                <Typography variant={"h2"}>{result.countSna.shares}</Typography>
-              </Grid>
-            )}
+      <Box alignItems="center" justifyContent="center" width={"100%"} p={3}>
+        <Grid
+          container
+          justifyContent="center"
+          spacing={0}
+          alignContent={"center"}
+        >
+          <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
+            <Typography style={{ fontSize: "36px" }}>{result.countSna.count}</Typography>
+            <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_publications")}</Typography>
+
+          </Grid>
+          <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
+
+            <Typography style={{ fontSize: "36px" }}>{result.countSna.total_interactions}</Typography>
+            <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_total_interactions")}</Typography>
+
+          </Grid>
+          <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
+
+            <Typography style={{ fontSize: "36px" }}>{result.countSna.likes}</Typography>
+            <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_likes")}</Typography>
+
+          </Grid>
+          <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
+
+            <Typography style={{ fontSize: "36px" }}>{result.countSna.comments}</Typography>
+            <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_comments")}</Typography>
+
+          </Grid>
+          {result.countSna.shares && (
+            <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
+
+              <Typography style={{ fontSize: "36px" }}>{result.countSna.shares}</Typography>
+              <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_shares")}</Typography>
 
             </Grid>
-            
-            <OnClickInfo keyword={"ct_sna_timeline_tip"} />
-        </Box>
-        
+          )}
 
-      </AccordionDetails>
-    </Accordion>
+        </Grid>
+      </Box>
+
+
+    </Card>
   );
 }

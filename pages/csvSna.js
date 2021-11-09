@@ -29,6 +29,7 @@ const CsvSnaIndex = () => {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          background-color: #fafafa!important;
         }
         footer {
           width: 100%;

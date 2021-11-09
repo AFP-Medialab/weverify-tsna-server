@@ -17,6 +17,9 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
+import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+
 
 
 const Plot = createPlotComponent(plotly);
@@ -341,48 +344,43 @@ return (
     state.result.pieCharts.map((obj, index) => {
                   
             return (
-                <Accordion key={index}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={"panel" + index + "a-content"}
-                        id={"panel" + index + "a-header"}
-                    >
-                        <Typography className={classes.heading}>{obj.title}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Box alignItems="center" justifyContent="center" width={"100%"}>
+
+                <div key={index}>
+
+                <Card >
+                    <div style={{ position: "relative" }}>
+                        <span id={"bubble" + index} style={{ position: "absolute", top: "-112px" }}></span>
+                        {
+                            obj.json !== null && !(obj.json[0].values.length === 1 && obj.json[0].values[0] === "") ?
+                                <CustomCardHeader
+                                    title={obj.title}
+                                    showHelp={true}
+                                    helpText={obj.tip}
+
+                                    showPNG={true}
+                                    functionPNG={() =>
+                                        downloadAsPNG(obj.title, keyword, filesNames)
+                                    }
+                                    showSVG={true}
+                                    functionSVG={() =>
+                                        downloadAsSVG(obj.title, keyword, filesNames)
+                                    }
+                                />
+                            :
+                                <CustomCardHeader
+                                    title={obj.title}
+                                    showHelp={true}
+                                    helpText={obj.tip}
+                                />
+
+                        }
+                        
+                            <Box alignItems="center" justifyContent="center" width={"100%"} className={classes.cardsResults}>
                             {
                                 (obj.json === null || (obj.json[0].values.length === 1 && obj.json[0].values[0] === "")) &&
                                     <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>
                             }
-                            {
-                                obj.json !== null && !(obj.json[0].values.length === 1 && obj.json[0].values[0] === "") &&
-                                <Grid container justifyContent="space-between" spacing={2}
-                                    alignContent={"center"}>
-                                    <Grid item>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"primary"}
-                                            onClick={() => downloadAsPNG(obj.title, keyword, filesNames)}>
-                                            {
-                                                keyword('ct_sna_result_download_png')
-                                            }
-                                        </Button>
-
-                                    </Grid>
-                                    
-                                    <Grid item>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"primary"}
-                                            onClick={() => downloadAsSVG(obj.title, keyword, filesNames)}>
-                                            {
-                                                keyword('ct_sna_result_download_svg')
-                                            }
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            }
+                            
                             {
                                 (obj.json !== null) && !(obj.json[0].values.length === 1 && obj.json[0].values[0] === "") &&
                                 <div>
@@ -396,7 +394,7 @@ return (
                                         divId={obj.title}
                                     />
                                     <Box m={1} />
-                                    <OnClickInfo keyword={obj.tip}/>
+                                    
                                 </div>
                             }
                             {
@@ -407,8 +405,10 @@ return (
                                 />
                             }
                         </Box>
-                    </AccordionDetails>
-                </Accordion>
+                        </div>
+                </Card>
+                    <Box m={3} />
+                </div>
             )
                         
     })

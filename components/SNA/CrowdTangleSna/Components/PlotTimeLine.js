@@ -18,6 +18,8 @@ import {getEpochMillis } from "./hooks/timelineCT";
 import { filterForTimeLine } from '../../Hooks/timeline';
 import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import { CT_TSV } from '../../lib/CrowdTangleConstant';
+import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
@@ -80,17 +82,11 @@ export default function PlotTimeLine(props){
 
     
     return (
-        <Accordion expanded={histoVisible} onChange={() => setHistoVisible(!histoVisible)}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls={"panel0a-content"}
-                id={"panel0a-header"}
-            >
-                <Typography className={classes.heading}>{keyword(state.result.histogram.title)}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
+        <Card className={classes.cardsResults}>
+            <CustomCardHeader title={keyword(state.result.histogram.title)} showHelp={true} helpText={"ct_sna_timeline_tip"} />
+        
                 {
-                <div style={{ width: '100%', }}>
+                <div style={{ width: '100%', }} className={classes.cardsResults}>
                     {(state.result.histogram.json && (state.result.histogram.json.length === 0) &&
                         <Typography variant={"body2"}>{keyword("ct_sna_no_data")}</Typography>)}
                     {(state.result.histogram.json && state.result.histogram.json.length !== 0) &&
@@ -104,9 +100,6 @@ export default function PlotTimeLine(props){
                         }}
                     />
                     }
-                    <Box m={1} />
-                    <OnClickInfo keyword={"ct_sna_timeline_tip"}/>
-                    <Box m={2} />
                     
                     {
                         
@@ -123,7 +116,6 @@ export default function PlotTimeLine(props){
             state.result.histogram === undefined &&
             <CircularProgress className={classes.circularProgress} />
         }
-            </AccordionDetails>
-        </Accordion>
+        </Card>
     );
 }

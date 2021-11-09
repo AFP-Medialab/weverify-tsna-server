@@ -16,6 +16,10 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {createGraphWhenClickANode} from "../../../shared/lib/sigmaGraph"
 import PostViewTable  from "../../Components/PostViewTable";
+import Card from "@material-ui/core/Card";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import IconNodes from "../../../../images/SVG/CardHeader/Nodes.svg";
+import IconEdges from "../../../../images/SVG/CardHeader/Edges.svg";
 
 //possible error, same as plot
 import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
@@ -167,12 +171,42 @@ export default function HashtagGraph (props) {
     
 
     return (
-        <Accordion>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-            >
-                <Typography className={classes.heading}>{keyword("ct_hashtag_graph_title")}</Typography>
-            </AccordionSummary>
+        <Card>
+            {
+                props.result && props.result.coHashtagGraph && props.result.coHashtagGraph.data.nodes.length !== 0 &&
+                <CustomCardHeader
+                    title={keyword("ct_hashtag_graph_title")}
+                    showHelp={true}
+                    helpText={"twittersna_hashtag_graph_tip"}
+                    showNodes={true}
+                    functionNodes={
+                        <CSVLink
+                            data={props.result.coHashtagGraph.data.nodes}
+                            filename={"Nodes_" + keyword("ct_hashtag_graph_title") + ".csv"}
+                            className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
+                            {
+                                <IconNodes />
+                            }
+                        </CSVLink>
+                    }
+                    showEdges={true}
+                    functionEdges={
+
+                        <Grid item>
+                            <Grid item>
+                                <CSVLink
+                                    data={props.result.coHashtagGraph.data.edges}
+                                    filename={"Edges_" + keyword("ct_hashtag_graph_title") + ".csv"}
+                                    className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
+                                    {
+                                        <IconEdges style={{ marginBottom: "2px", marginLeft: "10px" }}/>
+                                    }
+                                </CSVLink>
+                            </Grid>
+                        </Grid>
+                    } />
+            }
+
             <AccordionDetails>
             {
                 props.result && props.result.coHashtagGraph && props.result.coHashtagGraph.data.nodes.length === 0 &&
@@ -181,31 +215,7 @@ export default function HashtagGraph (props) {
             {
                 props.result && props.result.coHashtagGraph && props.result.coHashtagGraph.data.nodes.length !== 0 &&
                 <div style={{ width: '100%' }}>
-                    <Box pb={3}>
-                        <Grid container justifyContent="space-between" spacing={2}
-                            alignContent={"center"}>
-                            <Grid item>
-                                <CSVLink
-                                    data={props.result.coHashtagGraph.data.nodes}
-                                    filename={"Nodes_" + keyword("ct_hashtag_graph_title")+ ".csv"}
-                                    className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                                    {
-                                        "CSV Nodes"
-                                    }
-                                </CSVLink>
-                            </Grid>
-                            <Grid item>
-                                <CSVLink
-                                    data={props.result.coHashtagGraph.data.edges}
-                                    filename={"Edges_" + keyword("ct_hashtag_graph_title") + ".csv"}
-                                    className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                                    {
-                                        "CSV Edges"
-                                    }
-                                </CSVLink>
-                            </Grid>
-                        </Grid>
-                    </Box>
+
                     {
                         (coHashtagGraphReset === null && coHashtagGraphClickNode === null && props.result.coHashtagGraph.data.nodes.length !== 0) &&
                         <div>
@@ -279,9 +289,6 @@ export default function HashtagGraph (props) {
                         </div>
                         
                     }
-                    <Box m={1} />
-                    <OnClickInfo keyword={"twittersna_hashtag_graph_tip"} />
-                    <Box m={2} />
                     {
                         coHashtagGraphTweets &&
                         <PostViewTable snatype={sna} setTypeValue={setCoHashtagGraphTweets} data={coHashtagGraphTweets} downloadEnable={false} />
@@ -293,7 +300,7 @@ export default function HashtagGraph (props) {
                 <CircularProgress className={classes.circularProgress} />
             }
             </AccordionDetails>
-        </Accordion>
+        </Card>
         
     )
 }

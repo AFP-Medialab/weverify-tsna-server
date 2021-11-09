@@ -15,6 +15,7 @@ function getBasePath() {
 }
 
 module.exports = {
+  
   basePath: getBasePath(),
   publicRuntimeConfig: {
     baseFolder: getBasePath(),
