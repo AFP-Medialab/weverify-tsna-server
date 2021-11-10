@@ -61,8 +61,10 @@ export function filterForTimeLine(postDate, selectedPoints) {
           displaylogo: false,
       };
       json.map((obj) => {
+        console.log("DATE", obj);
           obj.x = obj.x.map((timestamp) => {
-            if(timestamp.length === 10)
+            console.log("DATE", timestamp);
+            if (timestamp!== undefined && timestamp.length === 10)
               return new Date(parseInt(timestamp) * 1000)
             else return new Date(parseInt(timestamp));
           });

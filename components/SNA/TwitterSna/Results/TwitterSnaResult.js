@@ -29,6 +29,7 @@ const HashtagGraph = dynamic(import("../Components/HashtagGraph"), { ssr: false 
 const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), { ssr: false });
 const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 
+
 export default function TwitterSnaResult(props) {
 
     const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export default function TwitterSnaResult(props) {
     const classes = useMyStyles();
     const request = useSelector(state => state.twitterSna.request);
     const resultStore = useSelector(state => state.twitterSna.result);
+    const topic = useSelector(state => state.twitterSna.request.keywordList[0]);
     const [result, setResult] = useState(null);
     const [histogram, setHistogram] = useState(null);
 
@@ -354,7 +356,7 @@ export default function TwitterSnaResult(props) {
                         <div style={{ position: "relative" }}>
                             <span id="urls" style={{ position: "absolute", top: "-112px" }}></span>
                             <UrlList result={result} request={request} title_message={'twittersna_result_url_in_tweets'}
-                                tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true} />
+                                tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true} topic={topic}/>
                         </div>
                     }
 

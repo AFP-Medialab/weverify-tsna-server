@@ -138,7 +138,7 @@ export default function CustomTableURL(props) {
     }, [JSON.stringify(props.data)]);
 
     const handleClick = (data, type) => {
-        console.log("onclick ", data);
+        //console.log("onclick ", data);
         setSelectedURL(data)
         setCreditType(type);
         setOpen(true);
@@ -238,7 +238,7 @@ export default function CustomTableURL(props) {
                     }
                 }}
             />
-            <TweetDialog open={open} selectedURL={selectedURL} handleClose={handleClose} creditType={creditType} />
+            <TweetDialog open={open} selectedURL={selectedURL} handleClose={handleClose} creditType={creditType} topic={props.topic}/>
             </MuiThemeProvider>
         </div>
 

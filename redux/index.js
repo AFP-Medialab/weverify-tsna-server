@@ -17,8 +17,8 @@ const bindMiddleware = (middleware) => {
 const loggerMiddleware = (storeAPI) => (next) => (action) => {
   let result = next(action);
   if (process.env.NODE_ENV !== "production") {
-    console.log("dispatching", action);
-    console.log("next state", storeAPI.getState());
+    //console.log("dispatching", action);
+    //console.log("next state", storeAPI.getState());
   }
   return result;
 };

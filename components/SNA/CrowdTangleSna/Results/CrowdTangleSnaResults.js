@@ -321,7 +321,7 @@ export default function CrowdTangleSnaResults(props) {
 							{
 								props.result.urls &&
 								<UrlList result={props.result} title_message={'ct_sna_result_url_in_posts'}
-									tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={false} />
+									tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={false} topic={"this topic"}/>
 							}
 						</div>
 					}
