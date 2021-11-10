@@ -30,16 +30,22 @@ const TweetDialog = (props) => {
     const windowConnection = useSelector(state => state.conn.windowsOpen);
     const isConnectionEnable = useSelector(state => state.conn.connectionEnable)
     const dispatch = useDispatch();
-    const [popup, setPopup] = useState(null)
+    const topic = props.topic;
+    const [tweetText, setTweetText] = useState("");
 
-    const topic = useSelector(state => state.twitterSna.request.keywordList[0]);
 
-    const [tweetText, setTweetText] = useState("There's a lot of misinformation on this topic checkout alternative reading :");
-
-    if (props.selectedURL[0] && props.selectedURL[0].string && tweetText === "There's a lot of misinformation on this topic checkout alternative reading :"){
-        setTweetText("There's a lot of misinformation on " + topic + ", checkout alternative reading : " + props.selectedURL[0].string);
+    if(props.open && tweetText=== ""){
+        if (props.creditType === "desinfo") {
+            var tweetTextTemp = "There's a lot of misinformation on " + topic + ", checkout alternative reading : " + "\n";
+            props.selectedURL[0].debunks.map((debunk, index) => {
+                tweetTextTemp += tweetText + "\n" + debunk;
+            });
+            setTweetText(tweetTextTemp);
+        } else if (props.creditType === "factchecker"){
+            setTweetText("There's a lot of misinformation on " + topic + ", checkout alternative reading : " + props.selectedURL[0].string);
+        }
     }
-
+    
     
     useEffect(() => {
         console.log("effect ", windowConnection)
@@ -77,7 +83,7 @@ const TweetDialog = (props) => {
             props.handleClose()
         });
     }
-    const oncloseWindown= () => {
+    const oncloseWindown = () => {
         console.log("close ...")
     }
     const postUserTweetContent = () => {
@@ -109,6 +115,12 @@ const TweetDialog = (props) => {
             console.log("error connection ", err)
         })
     }
+
+    if(!props.open && tweetText !== ""){
+        console.log("Closing dialog text and cleaning tweet text");
+        setTweetText("");
+    }
+
     return (
         <>
         <Dialog
@@ -121,19 +133,7 @@ const TweetDialog = (props) => {
             <Box p={2}>
             {props.selectedURL[0] && <>
 
-                {/*
-                
-                <DialogTitle id="max-width-dialog-title">
-                    <Typography gutterBottom  >
-                        {props.creditType === desinfo ? keyword("credibility_desinfo_title"): keyword("credibility_fct_title")}
-                    </Typography>
-                </DialogTitle>
-
-                */}
-
-
                 <DialogContent style={{ height: '507px' }}>
-
 
                     <Grid
                         container
@@ -224,7 +224,6 @@ const TweetDialog = (props) => {
                                     }
 
                                     {props.creditType === "desinfo" ?
-
                                         <div>
 
                                             <Typography variant="h6">
@@ -292,45 +291,8 @@ const TweetDialog = (props) => {
 
                 <Box m={4} />
 
-                {/*
-
-                <Typography variant="body2">
-                    {"resolved-url : "}{props.selectedURL[0].string}
-                </Typography>
-                <Box m={4} />
-                <Typography variant="body2">
-                    {props.selectedURL[0].description}
-                </Typography>
-                {props.selectedURL[0].debunks &&<>
-                <Box m={4} />
-                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                    {props.creditType === desinfo ? props.selectedURL[0].debunks.map((debunk, index) => (
-                        <ListItem key={index} component="a" href={debunk.trim()} target="_blank">
-                            <ListItemText primary={debunk.trim()} />
-                        </ListItem>
-                    )) : <Typography variant="body2">props.selectedURL[0].description</Typography>}
-                </List>
-                </>}
-                <Box m={2} />
-                */ }
 
                 </DialogContent>
-
-                        {/*
-                        
-                <Box m={1} />
-                <DialogActions>
-                    <Button variant="contained" color="primary" fullWidth onClick={postTweetContent}>
-                            Tweet
-                    </Button>
-                </DialogActions>
-                <DialogActions>
-                    <Button variant="contained" color="primary" fullWidth onClick={postUserTweetContent}>
-                        Tweet with your account
-                    </Button>
-                </DialogActions>
-
-                */ }
                  
                 </>
                 }

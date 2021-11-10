@@ -83,6 +83,7 @@ export default function UrlList (props) {
                 columns={props.result.urls.columns}
                 data={props.result.urls.data}
                 actions={actions}
+                topic={props.topic}
             />
             <Box m={1}/>
             </Box>
