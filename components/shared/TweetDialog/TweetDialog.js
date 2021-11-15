@@ -17,10 +17,12 @@ import { Grid, TextField } from '@material-ui/core';
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
 
-const tsv = "/components/Shared/CustomTable.tsv";
+const tsv = "/components/Shared/TweetDialog.tsv";
 let postWithBotTweetUrl = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweetBot`;
 let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
 import LinkIcon from '@material-ui/icons/Link';
+import LaptopIcon from '@material-ui/icons/Laptop';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 
 const TweetDialog = (props) => {
@@ -36,16 +38,15 @@ const TweetDialog = (props) => {
 
     if(props.open && tweetText=== ""){
         if (props.creditType === "desinfo") {
-            var tweetTextTemp = "There's a lot of misinformation on " + topic + ", checkout alternative reading : " + "\n";
+            var tweetTextTemp = keyword("textTweet_1") + topic + keyword("textTweet_2")  + "\n";
             props.selectedURL[0].debunks.map((debunk, index) => {
-                tweetTextTemp += tweetText + "\n" + debunk;
+                tweetTextTemp += "\n" + debunk;
             });
             setTweetText(tweetTextTemp);
         } else if (props.creditType === "factchecker"){
-            setTweetText("There's a lot of misinformation on " + topic + ", checkout alternative reading : " + props.selectedURL[0].string);
+            setTweetText(keyword("textTweet_1") + topic + keyword("textTweet_2") + props.selectedURL[0].string);
         }
     }
-    
     
     useEffect(() => {
         console.log("effect ", windowConnection)
@@ -141,13 +142,13 @@ const TweetDialog = (props) => {
 
                             <Grid item xs={8} container direction="column" style={{ paddingRight: "35px", borderRight: "1px solid #CACACA"}}>
                                 <Typography variant="h4" style={{ color: "#51A5B2"}}>
-                                    Link Information
+                                    {keyword("title_infotmationLink")}
                                 </Typography>
 
                                 <Box m={2} />
 
                                 <Typography variant="h6">
-                                    Selected link
+                                    {keyword("title_selectedLink")}
                                 </Typography>
                                     <Typography variant="body1" >
                                         <a style={{ color: "#51A5B2" }} href={props.selectedURL[0].string} target="_blank">{props.selectedURL[0].string}</a>
@@ -173,14 +174,14 @@ const TweetDialog = (props) => {
                                     spacing={4}>
 
                                     <Grid item xs={6}>
-                                            <Button variant="contained" color="primary" fullWidth onClick={postTweetContent} style={{color: "white"}}>
-                                                Tweet with WeVerify Bot
+                                            <Button variant="contained" color="primary" fullWidth onClick={postTweetContent} style={{ color: "white" }} startIcon={<LaptopIcon/>}>
+                                                {keyword("tweet_bot")}
                                             </Button>
                                     </Grid>
 
                                     <Grid item xs={6}>
-                                            <Button variant="contained" color="primary" fullWidth onClick={postUserTweetContent} style={{ color: "white" }}>
-                                                Tweet with your account
+                                            <Button variant="contained" color="primary" fullWidth onClick={postUserTweetContent} style={{ color: "white" }} startIcon={<PersonOutlineIcon />}>
+                                                {keyword("tweet_account")}
                                             </Button>
                                     </Grid>
 
@@ -193,14 +194,14 @@ const TweetDialog = (props) => {
 
                             <Grid item xs={4} container direction="column" style={{ paddingLeft: "35px", display: "flex", overflow: "auto", minHeight: "100%", maxHeight: "472px", flexWrap: "nowrap" }}>
                                 <Typography variant="h4" style={{ color: "#51A5B2" }}>
-                                    Author
+                                    {keyword("title_author")}
                                 </Typography>
                                     
                                     <Box m={2} />
                                     {props.selectedURL[0].name &&
                                         <div>
                                         <Typography variant="h6">
-                                            Name
+                                            {keyword("title_name")}
                                         </Typography>
                                         <Grid
                                                 container
@@ -227,7 +228,7 @@ const TweetDialog = (props) => {
                                         <div>
 
                                             <Typography variant="h6">
-                                                Credibility
+                                                {keyword("title_credibility")}
                                             </Typography>
                                             <Grid
                                                 container
@@ -237,7 +238,7 @@ const TweetDialog = (props) => {
                                             >
                                                 <DesinformationIcon viewBox="0 0 50 50" width="30" height="30" style={{marginRight: "10px"}}/>
                                                 <Typography variant="body1">
-                                                    Desinformation
+                                                    {keyword("desinformation")}
                                                 </Typography>
 
                                             </Grid>
@@ -248,7 +249,7 @@ const TweetDialog = (props) => {
                                         <div>
 
                                             <Typography variant="h6">
-                                                Credibility
+                                                {keyword("title_credibility")}
                                             </Typography>
                                             <Grid
                                                 container
@@ -258,7 +259,7 @@ const TweetDialog = (props) => {
                                             >
                                                 <FactCheckerIcon viewBox="0 0 50 50" width="30" height="30" style={{ marginRight: "10px" }} />
                                                 <Typography variant="body1">
-                                                    Fact Checker
+                                                    {keyword("factchecker")}
                                                 </Typography>
 
                                             </Grid>
@@ -268,7 +269,7 @@ const TweetDialog = (props) => {
                                     }
 
                                     <Typography variant="h6">
-                                        Description
+                                        {keyword("title_description")}
                                     </Typography>
                                     <Typography variant="body1" style={{lineHeight: "24px"}}>
                                         {props.selectedURL[0].description}
@@ -281,7 +282,7 @@ const TweetDialog = (props) => {
                                                 <ListItem key={index} component="a" href={debunk.trim()} target="_blank">
                                                     <ListItemText primary={debunk.trim()} />
                                                 </ListItem>
-                                            )) : <Typography variant="body2">props.selectedURL[0].description</Typography>}
+                                            )) : <Typography variant="body2">{props.selectedURL[0].description}</Typography>}
                                         </List>
                                     </>}
 
