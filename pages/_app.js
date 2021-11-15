@@ -7,6 +7,7 @@ import { useStore } from "../redux";
 import { persistStore } from 'redux-persist'
 import "react-datetime/css/react-datetime.css";
 import { PersistGate } from 'redux-persist/integration/react'
+import { useEffect } from 'react'
 
 
 const theme = createTheme({
@@ -45,8 +46,13 @@ const theme = createTheme({
 
 
 const MyApp = ({ Component, pageProps }) => {
+
+
+    useEffect(() => {
+      document.body.style.backgroundColor = "#fafafa";
+    }, [])
   
-    document.body.style.backgroundColor = "#fafafa";
+    
     const store = useStore(pageProps.initialReduxState)
     const persistor = persistStore(store, {}, function () {
       persistor.persist()
