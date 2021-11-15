@@ -46,6 +46,7 @@ const theme = createTheme({
 
 const MyApp = ({ Component, pageProps }) => {
   
+    document.body.style.backgroundColor = "#fafafa";
     const store = useStore(pageProps.initialReduxState)
     const persistor = persistStore(store, {}, function () {
       persistor.persist()
