@@ -308,7 +308,7 @@ const useTwitterSnaRequest = (request, keyword) => {
           "count": keyword("elastic_count"), 
           "credibility" : keyword("sna_credibility")
         },
-        {"url": "key", "count" :"doc_count"}
+        {"url": "key", "count" :"doc_count"}, true
       );
       dispatch(setUrlsResult(urls));
     };
