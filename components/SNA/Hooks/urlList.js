@@ -46,6 +46,8 @@ const { publicRuntimeConfig } = getConfig();
           return newObj;
         })
       }
+    }else{
+      data = mergeUrlsAndourceCredibilityResults(dataResponse, {}, keys);
     }
     return {
       columns: columns,

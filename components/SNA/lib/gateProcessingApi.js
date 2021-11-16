@@ -3,7 +3,8 @@ import isEqual from "lodash/isEqual";
 
 export const mergeUrlsAndourceCredibilityResults = (urls, originalResult, keys) => {
     let sourceCredibility = [];
-    if(originalResult.entities.SourceCredibility)
+
+    if(originalResult.entities && originalResult.entities.SourceCredibility)
         sourceCredibility = originalResult.entities.SourceCredibility
    
     sourceCredibility.forEach(dc => {
