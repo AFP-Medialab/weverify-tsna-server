@@ -10,7 +10,6 @@ const { publicRuntimeConfig } = getConfig();
     let columns = [
       { title: labels.url, field: 'url', render: rowData => <Link target="_blank" href={rowData.url}>{rowData.url}</Link>},
       { title: labels.count, field: 'count', type: "numeric" },
-      { title: labels.credibility, field: 'credibility' },
     ];
     //call credibility
     let urls = dataResponse.map((obj) =>{
@@ -23,6 +22,7 @@ const { publicRuntimeConfig } = getConfig();
     //console.log('query', query);
     let data = {};
     if(credibility){
+      columns.push({ title: labels.credibility, field: 'credibility' })
       try{
         const response = await fetch(credibility_url, {
           method: 'POST',
@@ -32,8 +32,8 @@ const { publicRuntimeConfig } = getConfig();
           }
       });
         const serviceResponse = await response.json();
-        data = mergeUrlsAndourceCredibilityResults(dataResponse, serviceResponse, keys);
-        console.log("data w credibility", data);
+        data = mergeUrlsAndourceCredibilityResults(dataResponse, serviceResponse, keys, credibility);
+        //console.log("data w credibility", data);
       }
       catch (error) {
         console.log("Error call service ", error)
@@ -46,8 +46,8 @@ const { publicRuntimeConfig } = getConfig();
           return newObj;
         })
       }
-    }else{
-      data = mergeUrlsAndourceCredibilityResults(dataResponse, {}, keys);
+    } else{
+      data = mergeUrlsAndourceCredibilityResults(dataResponse, {}, keys, credibility);
     }
     return {
       columns: columns,
