@@ -183,8 +183,7 @@ export default function CustomTableURL(props) {
                 title={""}
                 columns={
                     state.columns.map((obj) => {
-                        //console.log("COLUMN");
-                        //console.log(obj);
+                        //console.log("COLUMN", obj);
                         if (obj.field === "credibility") {
                             return {
                                 title: obj.title,
@@ -197,11 +196,12 @@ export default function CustomTableURL(props) {
                                     <FactCheckerIcon onClick={() => handleClick(rowData.credibility_details, factcheck)} style={{ cursor: 'pointer' }} /> : rowData.credibility === 'KO' ?
                                         <DesinformationIcon onClick={() => handleClick(rowData.credibility_details, desinfo)} style={{ cursor: 'pointer' }} /> : ''
                             }
-                        } else if (obj.field === "url") {
+                        } else if (obj.field === "url" || obj.field === "URL") {
                             return {
                                 title: obj.title,
                                 field: obj.field,
-                                width: "70%"
+                                width: "100%",
+                                render: rowData => <a href={rowData.url} target="_blank" style={{ color: "#51A5B2"}}>{rowData.url}</a>
                             }
                         } else if (obj.field === "count") {
                             return {

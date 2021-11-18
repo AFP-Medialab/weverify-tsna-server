@@ -90,7 +90,36 @@ export default function CustomTable(props) {
             }}
             icons={tableIcons}
             title={state.title}
-            columns={state.columns}
+            columns={
+                    
+                state.columns.map((obj) => {
+                    if (obj.title === "Tweet") {
+                        return {
+                            title: obj.title,
+                            field: obj.field,
+                            width: "75%"
+                        }
+                    }else if (obj.title === "Date") {
+                        return {
+                            title: obj.title,
+                            field: obj.field,
+                            width: "20%",
+                        }
+                    } else if (obj.title === "Post description") {
+                        return {
+                            title: obj.title,
+                            field: obj.field,
+                            width: "50%",
+                        }
+                    } else {
+                        return {
+                            title: obj.title,
+                            field: obj.field,
+                            width: "5%"
+                        }
+                    }
+
+                })}
             data={state.data}
             actions={state.actions}
             options={{

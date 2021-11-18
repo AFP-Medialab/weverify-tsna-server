@@ -70,6 +70,7 @@ export function displayPostsInsta (filteredTweets, sortedColumn) {
 
 
 export function displayPostsFb (filteredTweets, sortedColumn) {
+  console.log("FILTEREDTWEETS", filteredTweets);
   let columns = [];
   if (sortedColumn === "nbLikes") {
     columns = [
@@ -119,7 +120,7 @@ export function displayPostsFb (filteredTweets, sortedColumn) {
               id : index ++,
               date: date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes(),
               screen_name: <a href={"https://facebook.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
-              tweet: postObj.description,
+              post: postObj.description,
               nbLikes: postObj.likes,
               total_interactions: postObj.total_interactions,
               shares: postObj.shares,
