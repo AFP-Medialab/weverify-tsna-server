@@ -47,7 +47,7 @@ export default function GexfExport(props) {
                     {
                         gexfExport && gexfExport.map((gexfRes, index) => {
                             return (
-                                <div>
+                                <div key={index}>
                                     <Box m={1} />
                                     <Button href={gexfExport ? gexfRes.visualizationUrl : undefined} disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
                                         <BigButton title={gexfRes.title} subtitle={keyword("interaction_graph_open_subtitle")} icon={<BubbleChartIcon fontSize="large" className={classes.bigButtonIcon} />} />
@@ -70,7 +70,7 @@ export default function GexfExport(props) {
                             gexfExport && gexfExport.map((gexfRes, index) => {
                                 var title = keyword("twittersna_result_download") + " " + gexfRes.title;
                                 return (
-                                    <div>
+                                    <div key={index}>
                                         <Box m={1} />
                                         <Button href={gexfExport ? gexfRes.getUrl : undefined} disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
                                             <BigButton title={title} subtitle={keyword("interaction_graph_export_subtitle")} icon={<SaveIcon fontSize="large" className={classes.bigButtonIcon} />}/>
