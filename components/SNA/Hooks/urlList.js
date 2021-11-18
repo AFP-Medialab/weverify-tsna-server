@@ -18,10 +18,11 @@ const { publicRuntimeConfig } = getConfig();
       return newObj;
     });
     
-    let query = urls.map((obj) => obj['url']).join("\n");
+    
     //console.log('query', query);
     let data = {};
-    if(credibility){
+    if(credibility && urls.length !=0){
+      let query = urls.map((obj) => obj['url']).join("\n");
       columns.push({ title: labels.credibility, field: 'credibility' })
       try{
         const response = await fetch(credibility_url, {
