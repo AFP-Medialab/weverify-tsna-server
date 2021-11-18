@@ -249,14 +249,24 @@ function constructMatchPhrase(param, startDate, endDate) {
                     '}' +
                 '}'
         } else if (validUrl.isUri(arg)) {
-            let search_value = (arg.startsWith("url:") ? "*"+arg.substring(arg.indexOf(":") + 1) : arg)
-            match_phrases += ',{' +
+            if(arg.startsWith("url:")){
+                let search_value = "*"+arg.substring(arg.indexOf(":") + 1)
+                match_phrases += ',{' +
                 '"wildcard": {' +
                     '"urls": {' +
                         '"value":"' + search_value + '"' +
                         '}' +
                     '}' +
                 '}'
+            }else{
+                match_phrases += ',{' +
+                '"term": {' +
+                    '"urls.keyword": {' +
+                        '"value":"' + arg + '"' +
+                        '}' +
+                    '}' +
+                '}'
+            }
         }
         else {
             match_phrases += ',{' +
