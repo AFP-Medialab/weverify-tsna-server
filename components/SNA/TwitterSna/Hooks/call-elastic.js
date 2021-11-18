@@ -249,10 +249,11 @@ function constructMatchPhrase(param, startDate, endDate) {
                     '}' +
                 '}'
         } else if (validUrl.isUri(arg)) {
+            let search_value = (arg.startsWith("url:") ? "*"+arg.substring(arg.indexOf(":") + 1) : arg)
             match_phrases += ',{' +
-                '"match_phrase": {' +
+                '"wildcard": {' +
                     '"urls": {' +
-                        '"query":"' + arg + '"' +
+                        '"value":"' + search_value + '"' +
                         '}' +
                     '}' +
                 '}'
