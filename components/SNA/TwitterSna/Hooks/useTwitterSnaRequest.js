@@ -48,8 +48,17 @@ const useTwitterSnaRequest = (request, keyword) => {
   const userAuthenticated = useSelector(
     (state) => state.userSession && state.userSession.userAuthenticated
   );
+  const role = useSelector((state) => state.userSession.user.roles);
 
   useEffect(() => {
+    const enableExtraFeatures = () => {
+      for (let index in role) {
+        if (role[index] == "EXTRA_FEATURE") {
+          return true;
+        }
+      }
+      return false;
+    };
     const handleErrors = (e) => {
       if (keyword(e) !== "") {
         dispatch(setError(keyword(e)));
@@ -308,7 +317,7 @@ const useTwitterSnaRequest = (request, keyword) => {
           "count": keyword("elastic_count"), 
           "credibility" : keyword("sna_credibility")
         },
-        {"url": "key", "count" :"doc_count"}, true
+        {"url": "key", "count" :"doc_count"}, enableExtraFeatures()
       );
       dispatch(setUrlsResult(urls));
     };
