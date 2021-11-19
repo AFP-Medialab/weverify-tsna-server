@@ -1,30 +1,24 @@
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
-import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import React, {useEffect, useState} from 'react';
-import {useSelector } from "react-redux";
-import { CSVLink } from "react-csv";
-import {displayPosts} from "../../../SNA/lib/displayTweets"
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import TwitterIcon from '@material-ui/icons/Twitter';
-
-import useMyStyles from "../../../shared/styles/useMyStyles";
+import React, { useEffect, useState } from 'react';
+import { CSVLink } from "react-csv";
+import { useSelector } from "react-redux";
+//possible error, same as plot
+import { ForceAtlas2, RandomizeNodePositions, Sigma } from 'react-sigma';
+import IconEdges from "../../../../images/SVG/CardHeader/Edges.svg";
+import IconNodes from "../../../../images/SVG/CardHeader/Nodes.svg";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
+import useMyStyles from "../../../shared/styles/useMyStyles";
+import { displayPosts } from "../../../SNA/lib/displayTweets";
 import PostViewTable from "../../Components/PostViewTable";
-import { CardHeader } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
-import IconNodes from "../../../../images/SVG/CardHeader/Nodes.svg";
-import IconEdges from "../../../../images/SVG/CardHeader/Edges.svg";
 
-//possible error, same as plot
-import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
-import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+
 
 let from = "PLOT_HASHTAG_GRAPH";
 

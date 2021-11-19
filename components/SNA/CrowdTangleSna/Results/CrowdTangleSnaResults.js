@@ -1,19 +1,20 @@
 
-import React, { useEffect, useState, useCallback } from "react";
-import { IconButton } from "@material-ui/core";
-import CloseResult from "../../../shared/CloseResult/CloseResult";
-import useMyStyles from "../../../shared/styles/useMyStyles";
-import Count from "../Components/Count";
-import { useDispatch, useSelector } from "react-redux";
-import { cleanCsvSnaState } from "../../../../redux/actions/tools/crowdTangleSnaActions";
-import dynamic from "next/dynamic";
-import Grid from "@material-ui/core/Grid";
-import { CardHeader } from "@material-ui/core";
+import { CardHeader, IconButton } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import dynamic from "next/dynamic";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { cleanCsvSnaState } from "../../../../redux/actions/tools/crowdTangleSnaActions";
+import CloseResult from "../../../shared/CloseResult/CloseResult";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../../shared/styles/useMyStyles";
+import UrlList from "../../Components/UrlList";
+import Count from "../Components/Count";
 
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
@@ -25,8 +26,6 @@ const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {
 const HeatMap = dynamic(import("../Components/HeatMap"), { ssr: false });
 const BubbleChart = dynamic(import("../Components/BubbleChartCSV"), { ssr: false });
 const HashtagGraph = dynamic(import("../Components/HashtagGraph"), { ssr: false });
-import UrlList from "../../Components/UrlList"
-import Box from "@material-ui/core/Box";
 const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), { ssr: false });
 const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 

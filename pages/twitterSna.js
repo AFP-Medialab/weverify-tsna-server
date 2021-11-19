@@ -1,9 +1,9 @@
 import Head from "next/head";
 import React from "react";
 import Layout from "../components/layout";
-import TwitterSna from "../components/SNA/TwitterSna/TwitterSna";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
+import TwitterSna from "../components/SNA/TwitterSna/TwitterSna";
 const tsv = "/components/NavItems/tools/SNA.tsv";
 
 const TwitterSnaIndex = () => {

@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import plotly from "plotly.js-dist";
-import createPlotComponent from "react-plotly.js/factory";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import {displayPosts} from "../../../SNA/lib/displayTweets"
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
-import HistoTweetsTable from "../Components/HistoTweetsTable";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useMyStyles from "../../../shared/styles/useMyStyles";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
-import { filterForTimeLine } from "../../Hooks/timeline";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { CardHeader } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Typography from "@material-ui/core/Typography";
+import plotly from "plotly.js-dist";
+import React, { useEffect, useState } from "react";
+import createPlotComponent from "react-plotly.js/factory";
+import { useDispatch, useSelector } from "react-redux";
+import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../../shared/styles/useMyStyles";
+import { displayPosts } from "../../../SNA/lib/displayTweets";
+import { filterForTimeLine } from "../../Hooks/timeline";
+import HistoTweetsTable from "../Components/HistoTweetsTable";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";

@@ -1,9 +1,9 @@
 import Head from "next/head";
 import React from "react";
 import Layout from "../components/layout";
-import CrowdTangleSnaComponent from "../components/SNA/CrowdTangleSna/CrowdTangleSnaComponent"
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
+import CrowdTangleSnaComponent from "../components/SNA/CrowdTangleSna/CrowdTangleSnaComponent";
 const tsv = "/components/NavItems/tools/SNA.tsv";
 
 

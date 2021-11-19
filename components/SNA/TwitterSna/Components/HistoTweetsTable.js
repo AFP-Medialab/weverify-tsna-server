@@ -1,12 +1,12 @@
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import CustomTable from "../../../shared/CustomTable/CustomTable";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
+import CustomTable from "../../../shared/CustomTable/CustomTable";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 
 export default function HistoTweetsTable(props) {

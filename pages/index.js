@@ -1,14 +1,14 @@
 import Head from "next/head";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Layout from "../components/layout";
 import AllTools from "../components/Navigation/AllTools";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
-import TwitterSnaIcon from "../images/SVG/DataAnalysis/Twitter_sna.svg"
-import TwitterSnaIconBig from "../images/SVG/DataAnalysis/Twitter_sna_big.svg"
-import CsvSnaIcon  from "../images/SVG/DataAnalysis/CSV_SNA.svg"
-import CsvSnaIconBig from "../images/SVG/DataAnalysis/CSV_SNA_big.svg"
+import CsvSnaIcon from "../images/SVG/DataAnalysis/CSV_SNA.svg";
+import CsvSnaIconBig from "../images/SVG/DataAnalysis/CSV_SNA_big.svg";
+import TwitterSnaIcon from "../images/SVG/DataAnalysis/Twitter_sna.svg";
+import TwitterSnaIconBig from "../images/SVG/DataAnalysis/Twitter_sna_big.svg";
 
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 

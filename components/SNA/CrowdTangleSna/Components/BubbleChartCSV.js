@@ -18,7 +18,6 @@ import PostViewTable from "../../Components/PostViewTable";
 const Plot = createPlotComponent(plotly);
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 //const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-let from = "PLOT_BUBBLE_CHART";
 
 export default function BubbleChart(props) {
     

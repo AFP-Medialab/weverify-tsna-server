@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import MaterialTable from '@material-table/core';
+import { MuiThemeProvider, Paper } from "@material-ui/core";
+import { createTheme } from '@material-ui/core/styles';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';
@@ -15,13 +16,11 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
-import { MuiThemeProvider, Paper } from "@material-ui/core";
+import React, { useEffect, useState } from 'react';
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
-import TweetDialog from '../TweetDialog/TweetDialog'
-import { PostAdd } from '@material-ui/icons';
-import { createTheme } from '@material-ui/core/styles'
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+import TweetDialog from '../TweetDialog/TweetDialog';
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";

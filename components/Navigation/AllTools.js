@@ -1,23 +1,23 @@
-import AdvancedTools from './AdvancedTools/AdvancedTools';
-import Alert from '@material-ui/lab/Alert';
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import HeaderTool from '../shared/HeaderTool/HeaderTool';
-import IconData from '../../images/SVG/DataAnalysis/Data_analysis.svg';
-import IconTools from '../../images/SVG/NavBar/Tools.svg'
-import React, {useState} from "react";
 import Snackbar from '@material-ui/core/Snackbar';
-import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import ToolCard from "./ToolCard"
+import Tabs from '@material-ui/core/Tabs';
 import Typography from "@material-ui/core/Typography";
-
-
-import useMyStyles from '../shared/styles/useMyStyles';
-import useLoadLanguage from '../shared/hooks/useRemoteLoadLanguage';
+import Alert from '@material-ui/lab/Alert';
 import { useRouter } from 'next/router';
+import React from "react";
 import { useSelector } from 'react-redux';
+import IconData from '../../images/SVG/DataAnalysis/Data_analysis.svg';
+import IconTools from '../../images/SVG/NavBar/Tools.svg';
+import HeaderTool from '../shared/HeaderTool/HeaderTool';
+import useLoadLanguage from '../shared/hooks/useRemoteLoadLanguage';
+import useMyStyles from '../shared/styles/useMyStyles';
+import AdvancedTools from './AdvancedTools/AdvancedTools';
+import ToolCard from "./ToolCard";
+
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;

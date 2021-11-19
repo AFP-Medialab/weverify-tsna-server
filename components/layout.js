@@ -1,18 +1,17 @@
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
-import Head from 'next/head';
-import Languages from './shared/languages/languages';
-import Toolbar from '@material-ui/core/Toolbar';
-import styles from './layout.module.css';
-import useMyStyles from './shared/styles/useMyStyles';
-import getConfig from 'next/config';
-import CustomTitle from "../components/shared/CustomTitle/CustomTitle"
 //import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
 import Grid from '@material-ui/core/Grid';
-import WeVerifyIcon from "../images/SVG/NavBar/WeVerify.svg";
-import ToolsIcon from "../images/SVG/NavBar/Tools.svg";
-const { publicRuntimeConfig } = getConfig();
+import Toolbar from '@material-ui/core/Toolbar';
+import getConfig from 'next/config';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
+import CustomTitle from "../components/shared/CustomTitle/CustomTitle";
+import WeVerifyIcon from "../images/SVG/NavBar/WeVerify.svg";
+import styles from './layout.module.css';
+import Languages from './shared/languages/languages';
+import useMyStyles from './shared/styles/useMyStyles';
+const { publicRuntimeConfig } = getConfig();
 
 export const siteTitle = 'Weverify'
 
@@ -20,10 +19,6 @@ function Layout(props) {
     const classes = useMyStyles();
     const router = useRouter();
     //keyword from /components/NavItems/tools/TwitterSna.ts
-
-    const handleClick = event => {
-        window.open("https://weverify.eu/about/", "_blank");
-    };
 
     const handlePush = () => {
         router.push('/', undefined, { shallow: true })

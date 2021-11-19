@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import { CardHeader, IconButton, Popover } from '@material-ui/core';
 import Box from "@material-ui/core/Box";
-import useMyStyles from "../styles/useMyStyles";
-import IconHelp from "../../../images/SVG/CardHeader/Help.svg";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import CloseIcon from '@material-ui/icons/Close';
+import React from 'react';
 import IconCSV from "../../../images/SVG/CardHeader/CSV.svg";
+import IconHelp from "../../../images/SVG/CardHeader/Help.svg";
 import IconPNG from "../../../images/SVG/CardHeader/PNG.svg";
 import IconSVG from "../../../images/SVG/CardHeader/SVG.svg";
-import IconNodes from "../../../images/SVG/CardHeader/Nodes.svg";
-import IconEdges from "../../../images/SVG/CardHeader/Edges.svg";
-import { CardHeader, IconButton, Popover } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { TW_SNA_TYPE } from "../hooks/SnaTypes";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+import useMyStyles from "../styles/useMyStyles";
 
 export default function CustomCardHeader(props) {
 

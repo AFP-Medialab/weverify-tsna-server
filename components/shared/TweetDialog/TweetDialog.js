@@ -1,28 +1,28 @@
-import getConfig from 'next/config';
-const { publicRuntimeConfig } = getConfig();
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useCallback } from "react";
+import { Grid, TextField } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from "@material-ui/core/Typography";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
-import {connectionWindow, connectionEnable} from "../../../redux/actions/connectionAction"
-import { Grid, TextField } from '@material-ui/core';
+import LaptopIcon from '@material-ui/icons/Laptop';
+import LinkIcon from '@material-ui/icons/Link';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import getConfig from 'next/config';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
+import { connectionEnable, connectionWindow } from "../../../redux/actions/connectionAction";
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+const { publicRuntimeConfig } = getConfig();
+
 
 const tsv = "/components/Shared/TweetDialog.tsv";
 let postWithBotTweetUrl = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweetBot`;
 let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
-import LinkIcon from '@material-ui/icons/Link';
-import LaptopIcon from '@material-ui/icons/Laptop';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 
 const TweetDialog = (props) => {

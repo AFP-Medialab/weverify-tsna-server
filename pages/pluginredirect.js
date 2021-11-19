@@ -1,10 +1,10 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react'
-import { useDispatch } from "react-redux";
-import { redirectFromPlugin } from "../redux/actions/tools/twitterSnaActions";
-import { userLoginAction, userLoginLoadingAction } from "../redux/actions/authentificationActions";
-import { decodeJWTToken } from "../components/shared/AuthenticationCard/userAuthenticationUtils";
 import _ from "lodash";
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useDispatch } from "react-redux";
+import { decodeJWTToken } from "../components/shared/AuthenticationCard/userAuthenticationUtils";
+import { userLoginAction, userLoginLoadingAction } from "../redux/actions/authentificationActions";
+import { redirectFromPlugin } from "../redux/actions/tools/twitterSnaActions";
 
 //Redirect page for SSO connection from WeverifyPlugin
 //TODO error management in case of URL manupilation

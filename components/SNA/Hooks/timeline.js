@@ -1,4 +1,3 @@
-import { Height } from "@material-ui/icons";
 
 export function filterForTimeLine(postDate, selectedPoints) {
     for (let i = 0; i < selectedPoints.length; i++) {

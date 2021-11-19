@@ -1,16 +1,14 @@
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
-import Head from 'next/head';
-
-import Languages from './shared/languages/languages';
-import Toolbar from '@material-ui/core/Toolbar';
-import styles from './layout.module.css';
-import useMyStyles from './shared/styles/useMyStyles';
-import getConfig from 'next/config';
-import CustomTitle from "./shared/CustomTitle/CustomTitle"
-import HelpDialog from "./shared/HelpDialog/HelpDialogCSV";
 import Grid from '@material-ui/core/Grid';
-import Link from 'next/link'
+import Toolbar from '@material-ui/core/Toolbar';
+import getConfig from 'next/config';
+import Head from 'next/head';
+import CustomTitle from "./shared/CustomTitle/CustomTitle";
+import HelpDialog from "./shared/HelpDialog/HelpDialogCSV";
+import Languages from './shared/languages/languages';
+import useMyStyles from './shared/styles/useMyStyles';
+
 
 const { publicRuntimeConfig } = getConfig();
 

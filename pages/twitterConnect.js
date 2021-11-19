@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import {connectionWindow} from "../redux/actions/connectionAction"
+import { useDispatch } from "react-redux";
+import { connectionWindow } from "../redux/actions/connectionAction";
 
 const TwitterConnect = () => {
     const dispatch = useDispatch();

@@ -1,22 +1,15 @@
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
-import React, { useEffect, useState } from "react";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useMyStyles from "../../../shared/styles/useMyStyles";
-import Grid from "@material-ui/core/Grid";
-import { useSelector } from "react-redux";
-import { CardHeader } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import IconTweet from "../../../../images/SVG/TweetCount/Tweet.svg";
-import IconRetweet from "../../../../images/SVG/TweetCount/Retweet.svg";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import IconLike from "../../../../images/SVG/TweetCount/Like.svg";
+import IconRetweet from "../../../../images/SVG/TweetCount/Retweet.svg";
+import IconTweet from "../../../../images/SVG/TweetCount/Tweet.svg";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../../shared/styles/useMyStyles";
 
 
 export default function TweetCount(props) {
