@@ -12,15 +12,21 @@ import Grid from '@material-ui/core/Grid';
 import WeVerifyIcon from "../images/SVG/NavBar/WeVerify.svg";
 import ToolsIcon from "../images/SVG/NavBar/Tools.svg";
 const { publicRuntimeConfig } = getConfig();
+import { useRouter } from 'next/router';
 
 export const siteTitle = 'Weverify'
 
 function Layout(props) {
     const classes = useMyStyles();
+    const router = useRouter();
     //keyword from /components/NavItems/tools/TwitterSna.ts
 
     const handleClick = event => {
         window.open("https://weverify.eu/about/", "_blank");
+    };
+
+    const handlePush = () => {
+        router.push('/', undefined, { shallow: true })
     };
 
     return (
@@ -52,7 +58,7 @@ function Layout(props) {
                         >
 
                             <Box display={{ xs: 'none', md: 'block' }}>
-                                <WeVerifyIcon style={{ cursor: 'pointer' }} />
+                                <WeVerifyIcon style={{ cursor: 'pointer' }} onClick={() => handlePush()}/>
                             </Box>
                             <Grid item xs>
                                 <CustomTitle text={props.title} />
