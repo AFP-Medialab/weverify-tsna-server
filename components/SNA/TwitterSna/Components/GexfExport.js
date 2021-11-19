@@ -46,7 +46,7 @@ export default function GexfExport(props) {
                             return (
                                 <div key={index}>
                                     <Box m={1} />
-                                    <Button href={gexfExport ? gexfRes.visualizationUrl : undefined} disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
+                                    <Button href={gexfExport ? gexfRes.visualizationUrl : undefined} target="_blank" disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
                                         <BigButton title={gexfRes.title} subtitle={keyword("interaction_graph_open_subtitle")} icon={<BubbleChartIcon fontSize="large" className={classes.bigButtonIcon} />} />
                                     </Button>
                                 </div>
@@ -69,7 +69,7 @@ export default function GexfExport(props) {
                                 return (
                                     <div key={index}>
                                         <Box m={1} />
-                                        <Button href={gexfExport ? gexfRes.getUrl : undefined} disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
+                                        <Button href={gexfExport ? gexfRes.getUrl : undefined} target="_blank" disableRipple style={{ backgroundColor: 'transparent', textTransform: "none", width:"100%" }} >
                                             <BigButton title={title} subtitle={keyword("interaction_graph_export_subtitle")} icon={<SaveIcon fontSize="large" className={classes.bigButtonIcon} />}/>
                                         </Button>
                                     </div>
