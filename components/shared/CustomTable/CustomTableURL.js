@@ -128,7 +128,7 @@ export default function CustomTableURL(props) {
     const keyword = useLoadLanguage(tsv);
 
     useEffect(() => {
-        console.log("use effect");
+        //console.log("use effect");
         setState({
             ...state,
             data: props.data,

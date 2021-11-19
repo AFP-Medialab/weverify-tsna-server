@@ -37,7 +37,7 @@ const { publicRuntimeConfig } = getConfig();
         //console.log("data w credibility", data);
       }
       catch (error) {
-        console.log("Error call service ", error)
+        //console.log("Error call service ", error)
         data = dataResponse.map((obj, index) => {
           let newObj = {};
           newObj['id'] = index;

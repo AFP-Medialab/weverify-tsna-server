@@ -67,7 +67,7 @@ const useTwitterSnaRequest = (request, keyword) => {
     };
     // Check request
     const cacheRenderCall = (request) => {
-      console.log("cache cachce");
+      //console.log("cache cachce");
       dispatch(
         setTwitterSnaLoadingMessage(keyword("twittersna_building_graphs"))
       );

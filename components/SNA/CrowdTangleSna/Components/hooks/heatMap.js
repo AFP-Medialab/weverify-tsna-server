@@ -70,7 +70,7 @@ export function displayPostsInsta (filteredTweets, sortedColumn) {
 
 
 export function displayPostsFb (filteredTweets, sortedColumn) {
-  console.log("FILTEREDTWEETS", filteredTweets);
+  //console.log("FILTEREDTWEETS", filteredTweets);
   let columns = [];
   if (sortedColumn === "nbLikes") {
     columns = [
@@ -149,12 +149,12 @@ export var new_date = function(dateStr) {
   var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CES*T\s*$/
     , m = (""+dateStr).match(r);
 
-  console.log("DATEPARSE", `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`);
+  //console.log("DATEPARSE", `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`);
   return `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`; 
 };
 
 export const onHeatMapClick = (data, result, setHeatMapData) => {
-    console.log("onclick .... ", result);
+    //console.log("onclick .... ", result);
     let selectedHour = data.points[0].x;
 
     let selectedDay = data.points[0].y;

@@ -125,12 +125,12 @@ export default function PlotPieChart (props) {
 
          onDonutsClick = (data, index) => {
         
-            console.log("DONUTS-DATA ", data)
+            //console.log("DONUTS-DATA ", data)
             //console.log("DONUTS-CSV-tweets ", tweets)
     
             //For mention donuts
             if (index === 3) {
-                console.log("INDEX=3")
+                //console.log("INDEX=3")
     
                 
                     let selectedUser = data.points[0].label;
@@ -138,7 +138,7 @@ export default function PlotPieChart (props) {
                         .filter(function (tweet) {
                             return tweet.account/*.toLowerCase()*/ === selectedUser/*.toLowerCase()*/;
                         });
-                        console.log("filtered tweets  ",filteredTweets)
+                        //console.log("filtered tweets  ",filteredTweets)
     
                     let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
                     dataToDisplay["selected"] = selectedUser;
@@ -158,7 +158,7 @@ export default function PlotPieChart (props) {
                     let filteredTweets = state.result.data.filter(function (tweetObj) {
                         return tweetObj.account === selectedUser;
                     });
-                    console.log("filtered tweets  ",filteredTweets)
+                    //console.log("filtered tweets  ",filteredTweets)
     
                     
                     let dataToDisplay = index === 0 ? displayPostsInsta(filteredTweets, keyword, "retweetNb") : (index === 1 ? displayPostsInsta(filteredTweets, keyword, "nbLikes") : displayPostsInsta(filteredTweets, keyword));
@@ -200,7 +200,7 @@ export default function PlotPieChart (props) {
     
             //For mention donuts
             if (index === 3) {
-                console.log("INDEX=3")
+                //console.log("INDEX=3")
     
                 
                     let selectedUser = data.points[0].label;
@@ -208,7 +208,7 @@ export default function PlotPieChart (props) {
                         .filter(function (tweet) {
                             return tweet.page_name.toLowerCase() === selectedUser.toLowerCase();
                         });
-                        console.log("filtered tweets  ",filteredTweets)
+                        //console.log("filtered tweets  ",filteredTweets)
     
                     let dataToDisplay = displayPostsFb(filteredTweets, keyword);
                     dataToDisplay["selected"] = selectedUser;
@@ -218,7 +218,7 @@ export default function PlotPieChart (props) {
             }
             // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
             else {
-                console.log("The Other 3 PieGraphs ")
+                //console.log("The Other 3 PieGraphs ")
                 let selectedUser = data.points[0].label;
                 //console.log("DONUT ", data)
                 //console.log("SELECTED=USER ",data.points[0].label)
@@ -267,12 +267,12 @@ export default function PlotPieChart (props) {
 
     const onDonutsClick1 = (data, index) => {
         
-        console.log("DONUTS-DATA ", data)
+        //console.log("DONUTS-DATA ", data)
         //console.log("DONUTS-CSV-tweets ", tweets)
 
         //For mention donuts
         if (index === 3) {
-            console.log("INDEX=3")
+            //console.log("INDEX=3")
 
             
                 let selectedUser = data.points[0].label;
@@ -280,7 +280,7 @@ export default function PlotPieChart (props) {
                     .filter(function (tweet) {
                         return tweet.account.toLowerCase() === selectedUser.toLowerCase();
                     });
-                    console.log("filtered tweets  ",filteredTweets)
+                    //console.log("filtered tweets  ",filteredTweets)
 
                 let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
                 dataToDisplay["selected"] = selectedUser;
@@ -300,11 +300,11 @@ export default function PlotPieChart (props) {
                 let filteredTweets = state.result.data.filter(function (tweetObj) {
                     return tweetObj.account === selectedUser;
                 });
-                console.log("filtered tweets  ",filteredTweets)
+                //console.log("filtered tweets  ",filteredTweets)
 
                 
                 let dataToDisplay = index === 0 ? displayPostsInsta(filteredTweets, keyword, "retweetNb") : (index === 1 ? displayPostsInsta(filteredTweets, keyword, "nbLikes") : displayPostsInsta(filteredTweets, keyword));
-                console.log("DATA_DISPLAY ",dataToDisplay)
+                //console.log("DATA_DISPLAY ",dataToDisplay)
                 
                 dataToDisplay["selected"] = selectedUser;
                 

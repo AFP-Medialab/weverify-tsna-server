@@ -40,32 +40,32 @@ export default function Count({ result }) {
         >
           <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
             <Typography style={{ fontSize: "36px" }}>{result.countSna.count}</Typography>
-            <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_publications")}</Typography>
+            <Typography variant={"body1"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_publications")}</Typography>
 
           </Grid>
           <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
 
             <Typography style={{ fontSize: "36px" }}>{result.countSna.total_interactions}</Typography>
-            <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_total_interactions")}</Typography>
+            <Typography variant={"body1"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_total_interactions")}</Typography>
 
           </Grid>
           <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
 
             <Typography style={{ fontSize: "36px" }}>{result.countSna.likes}</Typography>
-            <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_likes")}</Typography>
+            <Typography variant={"body1"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_likes")}</Typography>
 
           </Grid>
           <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
 
             <Typography style={{ fontSize: "36px" }}>{result.countSna.comments}</Typography>
-            <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_comments")}</Typography>
+            <Typography variant={"body1"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_comments")}</Typography>
 
           </Grid>
           {result.countSna.shares && (
             <Grid item style={{ minWidth: "160px", display: "flex", flexDirection: "column", alignItems: "center" }} >
 
               <Typography style={{ fontSize: "36px" }}>{result.countSna.shares}</Typography>
-              <Typography variant={"body"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_shares")}</Typography>
+              <Typography variant={"body1"} style={{ color: "#818B95", fontWeight: "600" }}>{keyword("ct_sna_shares")}</Typography>
 
             </Grid>
           )}

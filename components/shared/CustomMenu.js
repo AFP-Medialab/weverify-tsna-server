@@ -9,13 +9,13 @@ import Link from 'next/link'
 export default function SimpleMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);  
   const handleClick = (event) => {
-    console.log("handleOpen");
+    //console.log("handleOpen");
     setAnchorEl(event.currentTarget);
   };
   
   const handleClose1 = (event) => {
     setAnchorEl(null);
-    console.log("handleClose1");
+    //console.log("handleClose1");
 
   };
   
@@ -26,7 +26,7 @@ export default function SimpleMenu() {
   const nothing = (event) => {
     
     setAnchorEl(null);
-    console.log("nothing");
+    //console.log("nothing");
   };
 
   return (

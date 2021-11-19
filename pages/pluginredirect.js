@@ -30,7 +30,7 @@ const PluginRedirect = () => {
             dispatch(userLoginAction(token, tokenContent.accessTokenExpiry, refreshToken, userInfo));
         }
         catch (jwtError) {
-            console.log("error token");
+            //console.log("error token");
             dispatch(userLoginLoadingAction(false));
         }
     }
