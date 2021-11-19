@@ -7,8 +7,10 @@ import styles from './layout.module.css';
 import useMyStyles from './shared/styles/useMyStyles';
 import getConfig from 'next/config';
 import CustomTitle from "../components/shared/CustomTitle/CustomTitle"
-import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
+//import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
 import Grid from '@material-ui/core/Grid';
+import WeVerifyIcon from "../images/SVG/NavBar/WeVerify.svg";
+import ToolsIcon from "../images/SVG/NavBar/Tools.svg";
 const { publicRuntimeConfig } = getConfig();
 
 export const siteTitle = 'Weverify'
@@ -41,23 +43,23 @@ function Layout(props) {
             <div className={classes.flex}>
                 <AppBar position="fixed" color="default" className={classes.appBar}>
                     <Toolbar className={classes.toolbar}>
-                    <Box display={{xs: 'none', md: 'block'}}>
-                        <img
-                            src={`${publicRuntimeConfig.baseFolder}/images/logo-we-verifymini.png`}
-                            alt="logo"
-                            className={classes.logoLeft}
-                            onClick={()=> handleClick()}
-                        />
-                    </Box>
-                    <Languages/>
-                    <CustomTitle text={props.title}/>
-                    <Grid>
-                {<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
-                 "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",
-                 "aboutsna_wordcloud", "aboutsna_gexf_export", "aboutsna_urls"]}
-                             />
-                }
-            </Grid>
+
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="center"
+                        >
+
+                            <Box display={{ xs: 'none', md: 'block' }}>
+                                <WeVerifyIcon style={{ cursor: 'pointer' }} />
+                            </Box>
+                            <Grid item xs>
+                                <CustomTitle text={props.title} />
+                            </Grid>
+                            <Languages />
+                        </Grid>
+
                     </Toolbar>
                 </AppBar>
 
@@ -67,3 +69,15 @@ function Layout(props) {
   }
   
   export default Layout
+
+
+  /*
+
+{<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
+                 "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",
+                 "aboutsna_wordcloud", "aboutsna_gexf_export", "aboutsna_urls"]}
+                             />
+                }
+
+
+  */
