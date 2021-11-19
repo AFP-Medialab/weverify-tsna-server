@@ -138,7 +138,7 @@ export const setSnaType = (snaType) => {
   };
 
 export const setTweetsDetailPanel = (from, data) => {    
-    console.log("from " + from)
+    //console.log("from " + from)
     switch(from){
         case "PLOT_LINE":
             return {

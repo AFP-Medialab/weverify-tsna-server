@@ -27,7 +27,7 @@ export default function PlotTimeLine(props){
     const [histoVisible, setHistoVisible] = useState(true);
     const histoPosts = useSelector((state) => state.ctSna.result.histoview);
     const classes = useMyStyles();
-    console.log("PLOT", props.result);
+    //console.log("PLOT", props.result);
 
 
     const [state, setState] = useState(
@@ -56,14 +56,14 @@ export default function PlotTimeLine(props){
 
             
             if (filteredPost[0].facebook_id){
-                console.log("FACEBOOK")
+                //console.log("FACEBOOK")
                 dispatch(
                     setCSVHistoview(from, displayPostsFb(filteredPost)));
 
             }
             else
             {
-                console.log("INSTA")
+                //console.log("INSTA")
                 dispatch(
                     setCSVHistoview(from, displayPostsInsta(filteredPost)));
 

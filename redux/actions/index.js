@@ -1,5 +1,5 @@
 export const changeLanguage = (lang) => {
-    console.log("lang ", lang)
+    //console.log("lang ", lang)
     return {
         type : 'CHANGE',
         payload : lang

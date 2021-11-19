@@ -55,7 +55,7 @@ export default function SocioSemGraph (props) {
 
         if (data.data.node.type === "Hashtag") {
             let selectedHashtag = data.data.node.id;
-            console.log("selectedHashtag ",selectedHashtag)
+            //console.log("selectedHashtag ",selectedHashtag)
 
             var filteredTweets4=[]
 
@@ -121,7 +121,7 @@ export default function SocioSemGraph (props) {
         else if (data.data.node.type === "Mention") {
             let selectedUser = data.data.node.id
         //   let selectedUser = data.data.node.id
-            console.log("selectedUser ",selectedUser)
+            //console.log("selectedUser ",selectedUser)
             var filteredTweets4=[]
 
 
@@ -184,7 +184,7 @@ export default function SocioSemGraph (props) {
         }
         else if (data.data.node.type === "URL") {
             let selectedURL = data.data.node.id.replace("URL:", "");;
-            console.log("selectedURL ",selectedURL)
+            //console.log("selectedURL ",selectedURL)
 
             var filteredTweets4=[]
 

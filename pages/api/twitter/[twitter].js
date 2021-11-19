@@ -10,10 +10,10 @@ const client = new TwitterApi({
   });
 const callbackUrl = process.env.TWITTER_CALL_BACK_URL
 const  twitterAuth = async (req)  => {
-  console.log("authentication ...")
+  //console.log("authentication ...")
   const link = await client.generateAuthLink(callbackUrl)
   var data = { authLink: link.url, authMode: 'callback' }
-  console.log("link ", link)
+  //console.log("link ", link)
   // session enable
   req.session.oauthToken = link.oauth_token;
   req.session.oauthSecret = link.oauth_token_secret;
@@ -27,10 +27,10 @@ export default withIronSessionApiRoute (
     const {
         query: { twitter },
       } = req;
-    console.log("call ..... ", twitter)
+    //console.log("call ..... ", twitter)
     switch (twitter){
         case "twitterAuth":{
-            console.log("authentication ...")
+            //console.log("authentication ...")
             const link = await client.generateAuthLink(callbackUrl)
             var data = { authLink: link.url, authMode: 'callback' }
            // console.log("link ", link)
@@ -72,7 +72,7 @@ export default withIronSessionApiRoute (
             const accessSecret = req.session.accessSecret;
             //console.log("tokens ... ", req.session)
             if(!accessToken || !accessSecret){
-              console.log("token does not exist");
+              //console.log("token does not exist");
               //connect
               res.redirect('/api/twitter/twitterAuth')
               return;
@@ -81,12 +81,12 @@ export default withIronSessionApiRoute (
             const tweet = req.body
             try {
               const response = await client.v1.tweet(tweet)
-              console.log("response ", response)
+              //console.log("response ", response)
               res.json(response)
               return;
             } 
             catch(err){
-              console.log("Invalid verifier or access tokens! ", err);
+              //console.log("Invalid verifier or access tokens! ", err);
               if(err.code === 401)
                 res.redirect('/api/twitter/twitterAuth')
             }

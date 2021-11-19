@@ -18,7 +18,7 @@ function getTweetAttrObjArr(tweets /*,topUser*/) {
     var tweetAttrObjArr=null
 
     if(tweets[0].facebook_id){
-      console.log("FACEBOOK") /////////////////////////////////////// FB
+      //console.log("FACEBOOK") /////////////////////////////////////// FB
       tweetAttrObjArr = tweets.map((tweet) => {
         //console.log("data ", tweet)
         /////////////////////////// HASHTAG
@@ -388,7 +388,7 @@ function getTweetAttrObjArr(tweets /*,topUser*/) {
       });
     }
     else{
-      console.log("INSTA")       /////////////////////////////////////// INSTA
+      //console.log("INSTA")       /////////////////////////////////////// INSTA
      tweetAttrObjArr = tweets.map((tweet) => {
       //console.log("data ", tweet)
 
@@ -799,7 +799,7 @@ function getTweetAttrObjArr(tweets /*,topUser*/) {
 
   function getEdgesFromCoOcurObjArr(coOccurObjArr) {
     let edges = [];
-    console.log("edges ",edges)
+    //console.log("edges ",edges)
     coOccurObjArr.forEach((obj) => {
       let [first, second] =  obj.id.split("___and___");
       
@@ -890,7 +890,7 @@ function getTweetAttrObjArr(tweets /*,topUser*/) {
 
 
 export const createSocioSemantic4ModeGraph = (tweets/*, topUser*/) => {
-    console.log("1 ", new Date().valueOf());
+    //console.log("1 ", new Date().valueOf());
       let lcTweets = tweets;
 
       //console.log("2 ",new Date().valueOf());
@@ -901,12 +901,12 @@ export const createSocioSemantic4ModeGraph = (tweets/*, topUser*/) => {
 
       //console.log("4 ",new Date().valueOf());
       let edges = getEdgesFromCoOcurObjArr(coOccurObjArr);
-      console.log("edges ",edges)
+      //console.log("edges ",edges)
       //console.log("5 ",new Date().valueOf());
       
       let nodes = [];
       let freqHashtagObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.hashtags; }).flat());
-      console.log("freqHashtagObj ", freqHashtagObj)  
+      //console.log("freqHashtagObj ", freqHashtagObj)  
 
       let freqMentionObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.userIsMentioned; }).flat());
       let freqURLObj = _.countBy(tweetAttrObjArr.map((obj) => { return obj.urls; }).flat());

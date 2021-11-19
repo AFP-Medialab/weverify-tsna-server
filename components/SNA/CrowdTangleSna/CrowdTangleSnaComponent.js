@@ -137,7 +137,7 @@ const CrowdTangleSnaComponent = () => {
 
     const completeCsvParse = (results, file) => {
         dispatch(cleanCsvSnaState());
-        console.log("Parsing complete:", results, file);
+        //console.log("Parsing complete:", results, file);
         dispatch(setCSVResult(results.data));
       }
     const parseOptions = {

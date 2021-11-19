@@ -24,7 +24,7 @@ function getIcon(snaType){
 }
 
 export default function PostViewTable ({snatype, setTypeValue, data, downloadEnable, request, csvArr, selected}){
-    console.log("data POSTED", downloadEnable);
+    //console.log("data POSTED", downloadEnable);
     const keyword = useLoadLanguage(snatype.tsv);
     const keywordSNA = useLoadLanguage("/components/NavItems/tools/SNA.tsv");
     var goToAction = [
@@ -38,7 +38,7 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
       ];
     
     var labeledColumns = getLabelsColumns(keyword, data.columns);
-    console.log("labeledColumns  ", labeledColumns);
+    //console.log("labeledColumns  ", labeledColumns);
     return (
         <div>
             <Grid container justifyContent="space-between" spacing={2}

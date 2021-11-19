@@ -27,7 +27,7 @@ export default function BubbleChart(props) {
 
     const sna = useSelector((state) => state.sna);
 
-    console.log("SNATYPE ", sna)
+    //console.log("SNATYPE ", sna)
     const keyword = useLoadLanguage(sna.tsv);
 
     const classes = useMyStyles();

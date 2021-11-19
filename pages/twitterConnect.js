@@ -3,7 +3,7 @@ import { connectionWindow } from "../redux/actions/connectionAction";
 
 const TwitterConnect = () => {
     const dispatch = useDispatch();
-    console.log("close windownd ")
+    //console.log("close windownd ")
     window.close();
     dispatch(connectionWindow(false))
 }

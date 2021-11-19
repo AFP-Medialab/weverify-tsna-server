@@ -39,7 +39,7 @@ export default function HeatMap (props) {
         setHeatMapTweets(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.request])
-    console.log("heat ", heatMapTweets)
+    //console.log("heat ", heatMapTweets)
 
     return (
         <Card>

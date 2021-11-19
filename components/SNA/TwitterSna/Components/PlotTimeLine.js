@@ -71,8 +71,8 @@ export default function PlotTimeLine(props) {
                     config={state.result.histogram.config}
                     onClick={(e) => onHistogramClick(e)}
                     onPurge={(a, b) => {
-                    console.log(a);
-                    console.log(b);
+                    //console.log(a);
+                    //console.log(b);
                     }}
                 />
                 )}

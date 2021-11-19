@@ -28,9 +28,9 @@ const buildFirstFbResult = (data, dispatch, keyword) => {
     let titleLabel = keyword("sna_time_chart_title");
     let timeLabel = keyword('sna_local_time');
     let heatMapTitle = keyword("ct_heatmap_chart_title")
-    console.log("eed", titleLabel);
-    console.log("eed2", timeLabel);
-    console.log("eed3", heatMapTitle);
+    //console.log("eed", titleLabel);
+    //console.log("eed2", timeLabel);
+    //console.log("eed3", heatMapTitle);
     buildHistogram(data, dispatch, titleLabel, timeLabel);
     buildCountFb(data, dispatch);
     buildPieChartsFB(data, dispatch, keyword);

@@ -50,7 +50,7 @@ export default function UrlList (props) {
 
         for (let obj in rowData) {           
             newReq.keywordList[0] = rowData[index].url;
-            console.log(newReq.keywordList[0])
+            //console.log(newReq.keywordList[0])
             window.open("/pluginredirect" + "?data=" + encodeURIComponent(JSON.stringify(newReq)) + "&user=" + userData, "_blank");
             index++;
         }       

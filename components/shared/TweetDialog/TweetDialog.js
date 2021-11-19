@@ -49,9 +49,9 @@ const TweetDialog = (props) => {
     }
     
     useEffect(() => {
-        console.log("effect ", windowConnection)
+        //console.log("effect ", windowConnection)
         if(isConnectionEnable && !windowConnection){
-            console.log("connection is false")
+            //console.log("connection is false")
             postUserTweetContent();
         }
         return () => dispatch(connectionEnable(false))  
@@ -80,12 +80,12 @@ const TweetDialog = (props) => {
                 'Content-Type': 'text/plain'
             }
         }).then((response) => {
-            console.log("post response ", response.status)
+            //console.log("post response ", response.status)
             props.handleClose()
         });
     }
     const oncloseWindown = () => {
-        console.log("close ...")
+        //console.log("close ...")
     }
     const postUserTweetContent = () => {
         const content = tweetText;
@@ -101,8 +101,8 @@ const TweetDialog = (props) => {
         }).then((response) => {status = response.status; 
             return response.json()})
         .then((data) => { 
-            console.log("body ", data)
-            console.log("status ", status)
+            //console.log("body ", data)
+            //console.log("status ", status)
             if(status === 301){
                 window.open(data.authLink, '', 'width=600,height=400,left=200,top=200');
                 dispatch(connectionEnable(true)) 
@@ -113,12 +113,12 @@ const TweetDialog = (props) => {
         }
         )
         .catch((err) => {
-            console.log("error connection ", err)
+            //console.log("error connection ", err)
         })
     }
 
     if(!props.open && tweetText !== ""){
-        console.log("Closing dialog text and cleaning tweet text");
+        //console.log("Closing dialog text and cleaning tweet text");
         setTweetText("");
     }
 
