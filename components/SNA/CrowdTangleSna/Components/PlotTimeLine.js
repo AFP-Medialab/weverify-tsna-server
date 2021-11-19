@@ -34,6 +34,7 @@ export default function PlotTimeLine(props){
     const [histoVisible, setHistoVisible] = useState(true);
     const histoPosts = useSelector((state) => state.ctSna.result.histoview);
     const classes = useMyStyles();
+    console.log("PLOT", props.result);
 
 
     const [state, setState] = useState(
@@ -84,7 +85,6 @@ export default function PlotTimeLine(props){
     return (
         <Card className={classes.cardsResults}>
             <CustomCardHeader title={keyword(state.result.histogram.title)} showHelp={true} helpText={"ct_sna_timeline_tip"} />
-        
                 {
                 <div style={{ width: '100%', }} className={classes.cardsResults}>
                     {(state.result.histogram.json && (state.result.histogram.json.length === 0) &&

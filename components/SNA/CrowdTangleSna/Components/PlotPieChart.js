@@ -391,7 +391,7 @@ return (
                                         onClick={e => {
                                             onDonutsClick(e, index)
                                         }}
-                                        divId={obj.title}
+                                        divId={obj.title} 
                                     />
                                     <Box m={1} />
                                     

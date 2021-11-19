@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
 	ssr: false,
@@ -48,11 +49,13 @@ export default function CrowdTangleSnaResults(props) {
 			setWidthIndex(1);
 			setWidthCards(11);
 			setAlignIndex("center");
+
 		} else {
 			setCollapsed(false);
 			setWidthIndex(4);
 			setWidthCards(8);
 			setAlignIndex("flex-start");
+
 		}
 	}
 

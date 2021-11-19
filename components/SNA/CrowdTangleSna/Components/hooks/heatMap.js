@@ -149,6 +149,7 @@ export var new_date = function(dateStr) {
   var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CES*T\s*$/
     , m = (""+dateStr).match(r);
 
+  console.log("DATEPARSE", `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`);
   return `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`; 
 };
 
