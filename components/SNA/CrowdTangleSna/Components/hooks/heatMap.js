@@ -70,6 +70,7 @@ export function displayPostsInsta (filteredTweets, sortedColumn) {
 
 
 export function displayPostsFb (filteredTweets, sortedColumn) {
+  console.log("FILTEREDTWEETS", filteredTweets);
   let columns = [];
   if (sortedColumn === "nbLikes") {
     columns = [
@@ -119,7 +120,7 @@ export function displayPostsFb (filteredTweets, sortedColumn) {
               id : index ++,
               date: date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes(),
               screen_name: <a href={"https://facebook.com/" + postObj.user_name} target="_blank" rel="noopener noreferrer">{postObj.user_name}</a>,
-              tweet: postObj.description,
+              post: postObj.description,
               nbLikes: postObj.likes,
               total_interactions: postObj.total_interactions,
               shares: postObj.shares,
@@ -148,6 +149,7 @@ export var new_date = function(dateStr) {
   var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CES*T\s*$/
     , m = (""+dateStr).match(r);
 
+  console.log("DATEPARSE", `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`);
   return `${m[1]}-${m[2]}-${m[3]}" "${m[4]}:${m[5]}:${m[6]}`; 
 };
 

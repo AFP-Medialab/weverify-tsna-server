@@ -1,14 +1,14 @@
-import InstagramIcon from '@material-ui/icons/Instagram';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from "@material-ui/icons/Twitter";
-import {downloadClick} from "../lib/downloadClick"
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
-import React, {useState} from 'react';
-import CustomTable from '../../shared/CustomTable/CustomTable';
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import {getLabelsColumns} from "../../shared/lib/StringUtil";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import TwitterIcon from "@material-ui/icons/Twitter";
+import React from 'react';
+import CustomTable from '../../shared/CustomTable/CustomTable';
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
+import { getLabelsColumns } from "../../shared/lib/StringUtil";
+import { downloadClick } from "../lib/downloadClick";
 
 function getIcon(snaType){
     switch (snaType){

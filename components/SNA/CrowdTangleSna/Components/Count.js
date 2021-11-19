@@ -1,19 +1,14 @@
-import Accordion from "@material-ui/core/Accordion";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Box from "@material-ui/core/Box";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-
-import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, { useEffect, useState } from "react";
-import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { useSelector } from "react-redux";
-
-import Card from "@material-ui/core/Card";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../../shared/styles/useMyStyles";
+
+
 
 export default function Count({ result }) {
   const snatsv = useSelector((state) => state.sna.tsv);

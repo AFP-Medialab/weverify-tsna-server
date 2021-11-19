@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import MaterialTable from '@material-table/core';
+import { MuiThemeProvider, Paper } from "@material-ui/core";
+import { createTheme } from '@material-ui/core/styles';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';
@@ -15,13 +16,11 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
-import { MuiThemeProvider, Paper } from "@material-ui/core";
+import React, { useEffect, useState } from 'react';
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
-import TweetDialog from '../TweetDialog/TweetDialog'
-import { PostAdd } from '@material-ui/icons';
-import { createTheme } from '@material-ui/core/styles'
+import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+import TweetDialog from '../TweetDialog/TweetDialog';
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
@@ -183,8 +182,7 @@ export default function CustomTableURL(props) {
                 title={""}
                 columns={
                     state.columns.map((obj) => {
-                        //console.log("COLUMN");
-                        //console.log(obj);
+                        //console.log("COLUMN", obj);
                         if (obj.field === "credibility") {
                             return {
                                 title: obj.title,
@@ -197,11 +195,12 @@ export default function CustomTableURL(props) {
                                     <FactCheckerIcon onClick={() => handleClick(rowData.credibility_details, factcheck)} style={{ cursor: 'pointer' }} /> : rowData.credibility === 'KO' ?
                                         <DesinformationIcon onClick={() => handleClick(rowData.credibility_details, desinfo)} style={{ cursor: 'pointer' }} /> : ''
                             }
-                        } else if (obj.field === "url") {
+                        } else if (obj.field === "url" || obj.field === "URL") {
                             return {
                                 title: obj.title,
                                 field: obj.field,
-                                width: "70%"
+                                width: "100%",
+                                render: rowData => <a href={rowData.url} target="_blank" style={{ color: "#51A5B2"}}>{rowData.url}</a>
                             }
                         } else if (obj.field === "count") {
                             return {

@@ -1,72 +1,64 @@
 
-import useMyStyles, { myCardStyles } from "../../shared/styles/useMyStyles";
-import { useEffect, useState } from "react";
-import TextField from "@material-ui/core/TextField";
-import "../../../redux/actions/tools/twitterSnaActions";
-import { useDispatch, useSelector } from "react-redux";
-import Grid from "@material-ui/core/Grid";
-import DateTimePicker from "../../shared/DateTimePicker/DateTimePicker"
-import FormControl from "@material-ui/core/FormControl";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Box from "@material-ui/core/Box";
-import FormLabel from "@material-ui/core/FormLabel";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
 import Checkbox from "@material-ui/core/Checkbox";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+import InputLabel from "@material-ui/core/InputLabel";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Select from "@material-ui/core/Select";
+import { createTheme, StylesProvider, ThemeProvider } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import DoneIcon from '@material-ui/icons/Done';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExcludeIcon from '@material-ui/icons/HighlightOff';
+import LaptopIcon from '@material-ui/icons/Laptop';
+import PermMediaIcon from '@material-ui/icons/PermMedia';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import GlobeIcon from '@material-ui/icons/Public';
+import SearchIcon from '@material-ui/icons/Search';
+import TranslateIcon from '@material-ui/icons/Translate';
+import dateFormat from "dateformat";
+import _ from "lodash";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import TwitterSNAIcon from '../../../images/SVG/DataAnalysis/Twitter_sna_big.svg';
+import { changeLanguage } from "../../../redux/actions";
+import { cleanError, setError } from "../../../redux/actions/errorActions";
+import "../../../redux/actions/tools/twitterSnaActions";
+import {
+	cleanTwitterSnaState,
+	setSnaType,
+	setTwitterSnaLoading, setTwitterSnaNewRequest} 
+	from "../../../redux/actions/tools/twitterSnaActions";
+import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
+import CustomCardHeader from "../../shared/CustomCardHeader/CustomCardheader";
+import convertToGMT from "../../shared/DateTimePicker/convertToGMT";
+import DateTimePicker from "../../shared/DateTimePicker/DateTimePicker";
+import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
+import FeedBack from "../../shared/FeedBack/FeedBack";
+import HeaderTool from "../../shared/HeaderTool/HeaderTool";
+import { TW_SNA_TYPE } from "../../shared/hooks/SnaTypes";
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
+import { replaceAll, stringToList } from "../../shared/lib/StringUtil";
+import OnWarningInfo from "../../shared/OnClickInfo/OnWarningInfo";
+import useMyStyles, { myCardStyles } from "../../shared/styles/useMyStyles";
 import useTwitterSnaRequest from "./Hooks/useTwitterSnaRequest";
 import TwitterSnaResult from "./Results/TwitterSnaResult";
-import _ from "lodash";
-import { replaceAll, stringToList } from "../../shared/lib/StringUtil"
-import dateFormat from "dateformat";
 
-import { setError } from "../../../redux/actions/errorActions";
-import {
-  cleanTwitterSnaState,
-  setTwitterSnaNewRequest,
-  setSnaType,
-  setTwitterSnaLoading
-} from "../../../redux/actions/tools/twitterSnaActions";
-import convertToGMT from "../../shared/DateTimePicker/convertToGMT";
-import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
-import { cleanError } from "../../../redux/actions/errorActions";
-import OnClickInfo from "../../shared/OnClickInfo/OnClickInfo";
-import OnWarningInfo from "../../shared/OnClickInfo/OnWarningInfo";
-import FeedBack from "../../shared/FeedBack/FeedBack";
-import { changeLanguage } from "../../../redux/actions";
 
-import HeaderTool from "../../shared/HeaderTool/HeaderTool";
-import { StylesProvider } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import TwitterSNAIcon from '../../../images/SVG/DataAnalysis/Twitter_sna_big.svg';
-import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
-import { TW_SNA_TYPE } from "../../shared/hooks/SnaTypes";
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
-import SearchIcon from '@material-ui/icons/Search';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import GlobeIcon from '@material-ui/icons/Public';
-import ExcludeIcon from '@material-ui/icons/HighlightOff';
-import TranslateIcon from '@material-ui/icons/Translate';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import DoneIcon from '@material-ui/icons/Done';
-import PermMediaIcon from '@material-ui/icons/PermMedia';
-import LaptopIcon from '@material-ui/icons/Laptop';
 
-import Divider from '@material-ui/core/Divider';
 
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import CustomCardHeader from "../../shared/CustomCardHeader/CustomCardheader";
 
 //keyword from /components/NavItems/tools/TwitterSna.tsv
 const TwitterSna = () => {

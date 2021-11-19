@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import MaterialTable  from '@material-table/core';
+import MaterialTable from '@material-table/core';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';
@@ -15,12 +14,12 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import React, { useEffect, useState } from 'react';
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
 
-import { PatchedPagination } from '../../patch/PatchedTablePagination';
 
 const tableIcons = {
     Add: AddBox,
@@ -90,7 +89,36 @@ export default function CustomTable(props) {
             }}
             icons={tableIcons}
             title={state.title}
-            columns={state.columns}
+            columns={
+                    
+                state.columns.map((obj) => {
+                    if (obj.title === "Tweet") {
+                        return {
+                            title: obj.title,
+                            field: obj.field,
+                            width: "75%"
+                        }
+                    }else if (obj.title === "Date") {
+                        return {
+                            title: obj.title,
+                            field: obj.field,
+                            width: "20%",
+                        }
+                    } else if (obj.title === "Post description") {
+                        return {
+                            title: obj.title,
+                            field: obj.field,
+                            width: "50%",
+                        }
+                    } else {
+                        return {
+                            title: obj.title,
+                            field: obj.field,
+                            width: "5%"
+                        }
+                    }
+
+                })}
             data={state.data}
             actions={state.actions}
             options={{

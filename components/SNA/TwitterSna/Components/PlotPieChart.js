@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import plotly from "plotly.js-dist";
-import createPlotComponent from "react-plotly.js/factory";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
-import HistoTweetsTable from "../Components/HistoTweetsTable";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useMyStyles from "../../../shared/styles/useMyStyles";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
+import plotly from "plotly.js-dist";
+import React, { useEffect, useState } from "react";
+import createPlotComponent from "react-plotly.js/factory";
+import { useDispatch, useSelector } from "react-redux";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
-import { createCSVFromPieChart } from "../Hooks/pieCharts";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import {displayPosts} from "../../../SNA/lib/displayTweets"
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../../shared/styles/useMyStyles";
+import { displayPosts } from "../../../SNA/lib/displayTweets";
 import { downloadClick } from "../../lib/downloadClick";
+import HistoTweetsTable from "../Components/HistoTweetsTable";
+import { createCSVFromPieChart } from "../Hooks/pieCharts";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
-import { CardHeader } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
-import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 
 export default function PlotPieChart(props) {
   const dispatch = useDispatch();

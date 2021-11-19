@@ -1,24 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import plotly from 'plotly.js-dist';
-import createPlotComponent from 'react-plotly.js/factory';
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfo';
-import HistoTweetsTable from "./HistoTweetsTableCSV";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useMyStyles from "../../../shared/styles/useMyStyles";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import {setTweetsDetailPanel} from "../../../../redux/actions/tools/twitterSnaActions";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
-import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
 import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
+import plotly from 'plotly.js-dist';
+import React, { useEffect, useState } from 'react';
+import createPlotComponent from 'react-plotly.js/factory';
+import { useDispatch, useSelector } from "react-redux";
+import { setCSVHistoview } from "../../../../redux/actions/tools/crowdTangleSnaActions";
+import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../../shared/styles/useMyStyles";
+import HistoTweetsTable from "./HistoTweetsTableCSV";
+import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 
 
 
@@ -391,7 +384,7 @@ return (
                                         onClick={e => {
                                             onDonutsClick(e, index)
                                         }}
-                                        divId={obj.title}
+                                        divId={obj.title} 
                                     />
                                     <Box m={1} />
                                     

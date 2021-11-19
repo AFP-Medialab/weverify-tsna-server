@@ -1,23 +1,17 @@
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OnClickInfo from "../../../shared/OnClickInfo/OnClickInfo";
+import Card from "@material-ui/core/Card";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { displayPosts } from "../../lib/displayTweets";
+import Typography from "@material-ui/core/Typography";
+import plotly from 'plotly.js-dist';
+import React, { useEffect, useState } from 'react';
+import createPlotComponent from 'react-plotly.js/factory';
+import { useSelector } from "react-redux";
+import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
-import React, {useEffect, useState} from 'react';
-import { useSelector } from "react-redux";
-import plotly from 'plotly.js-dist';
-import {createBubbleChartOfMostActiveUsers} from "../Hooks/bubbleChart"
-import createPlotComponent from 'react-plotly.js/factory';
 import PostViewTable from "../../Components/PostViewTable";
-import { CardHeader } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
-import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import { displayPosts } from "../../lib/displayTweets";
+import { createBubbleChartOfMostActiveUsers } from "../Hooks/bubbleChart";
 
 const Plot = createPlotComponent(plotly);
 

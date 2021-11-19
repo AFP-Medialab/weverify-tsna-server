@@ -1,26 +1,19 @@
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfo';
-import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import React, {useEffect, useState} from 'react';
-import {useSelector } from "react-redux";
-import { CSVLink } from "react-csv";
-import useMyStyles from "../../../shared/styles/useMyStyles";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import {displayPostsInsta} from "./lib/displayPosts"
-import {displayPostsFb} from "./lib/displayPosts"
-import { Sigma, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma';
-import {createGraphWhenClickANode} from "../../../shared/lib/sigmaGraph";
-import IconNodes from "../../../../images/SVG/CardHeader/Nodes.svg";
-import IconEdges from "../../../../images/SVG/CardHeader/Edges.svg";
-import PostViewTable  from "../../Components/PostViewTable";
 import Card from "@material-ui/core/Card";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import React, { useEffect, useState } from 'react';
+import { CSVLink } from "react-csv";
+import { useSelector } from "react-redux";
+import { ForceAtlas2, RandomizeNodePositions, Sigma } from 'react-sigma';
+import IconEdges from "../../../../images/SVG/CardHeader/Edges.svg";
+import IconNodes from "../../../../images/SVG/CardHeader/Nodes.svg";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
+import useMyStyles from "../../../shared/styles/useMyStyles";
+import PostViewTable from "../../Components/PostViewTable";
+import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function SocioSemGraph (props) {

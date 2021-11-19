@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import React from 'react';
 import useMyStyles from "../styles/useMyStyles";
-import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 
 export default function BigButton(props) {
 

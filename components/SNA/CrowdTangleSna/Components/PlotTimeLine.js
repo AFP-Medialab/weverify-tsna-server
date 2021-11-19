@@ -1,25 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import plotly from 'plotly.js-dist';
-import createPlotComponent from 'react-plotly.js/factory';
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfo';
-import HistoTweetsTable from "./HistoTweetsTableCSV";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useMyStyles from "../../../shared/styles/useMyStyles";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { displayPostsFb,displayPostsInsta} from "./lib/displayPosts";
-import {getEpochMillis } from "./hooks/timelineCT";
-import { filterForTimeLine } from '../../Hooks/timeline';
-import {setCSVHistoview} from "../../../../redux/actions/tools/crowdTangleSnaActions";
-import { CT_TSV } from '../../lib/CrowdTangleConstant';
 import Card from "@material-ui/core/Card";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Typography from "@material-ui/core/Typography";
+import plotly from 'plotly.js-dist';
+import React, { useEffect, useState } from 'react';
+import createPlotComponent from 'react-plotly.js/factory';
+import { useDispatch, useSelector } from "react-redux";
+import { setCSVHistoview } from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import useMyStyles from "../../../shared/styles/useMyStyles";
+import { filterForTimeLine } from '../../Hooks/timeline';
+import HistoTweetsTable from "./HistoTweetsTableCSV";
+import { getEpochMillis } from "./hooks/timelineCT";
+import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
@@ -34,6 +27,7 @@ export default function PlotTimeLine(props){
     const [histoVisible, setHistoVisible] = useState(true);
     const histoPosts = useSelector((state) => state.ctSna.result.histoview);
     const classes = useMyStyles();
+    console.log("PLOT", props.result);
 
 
     const [state, setState] = useState(
@@ -84,7 +78,6 @@ export default function PlotTimeLine(props){
     return (
         <Card className={classes.cardsResults}>
             <CustomCardHeader title={keyword(state.result.histogram.title)} showHelp={true} helpText={"ct_sna_timeline_tip"} />
-        
                 {
                 <div style={{ width: '100%', }} className={classes.cardsResults}>
                     {(state.result.histogram.json && (state.result.histogram.json.length === 0) &&

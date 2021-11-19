@@ -3,13 +3,13 @@ import IconButton from "@material-ui/core/IconButton";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from "@material-ui/core/Tooltip";
-import TranslateIcon from '@material-ui/icons/Language';
 import {useSelector, useDispatch} from "react-redux";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
 import {changeLanguage} from "../../../redux/actions"
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
+import TranslateIcon from '@material-ui/icons/Translate';
 
 //const tsv = "/localDictionary/components/languages.tsv";
 const tsv = "/components/NavItems/languages.tsv";
@@ -18,6 +18,7 @@ const Languages = () => {
     
     const keyword = useLoadLanguage(tsv);
     const dictionary = useSelector(state => state.dictionary);
+    const storeLanguage = useSelector(state => state.language);
     
     const keywordByLang = (language) => {
         return (dictionary && dictionary[tsv] && dictionary[tsv][language])? dictionary[tsv][language]["lang_label"]: "";
@@ -44,10 +45,20 @@ const Languages = () => {
 
     return (
         <div>
+            <span id="language"
+                style={{
+                    color: "#596977",
+                    fontSize: "16px",
+                    fontWeight: "500",
+                    marginRight: "5px",
+                }}>
+
+                {keywordByLang(storeLanguage)}
+            </span>
              <Tooltip title={keyword("translations")} placement="bottom">
                 <IconButton aria-label="add to favorites"
                             onClick={handleClick}>
-                     <TranslateIcon fontSize="large"/>
+                    <TranslateIcon fontSize="large" style={{ color: "#596977" }} />
                 </IconButton>
              </Tooltip>
              <Menu

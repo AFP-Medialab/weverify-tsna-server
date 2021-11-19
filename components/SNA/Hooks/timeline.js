@@ -1,3 +1,4 @@
+
 export function filterForTimeLine(postDate, selectedPoints) {
     for (let i = 0; i < selectedPoints.length; i++) {
         let pointedDate = new Date(selectedPoints[i].x);

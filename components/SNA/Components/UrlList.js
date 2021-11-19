@@ -1,14 +1,12 @@
-import {useSelector } from "react-redux";
-import { Card, Paper } from "@material-ui/core";
-import React  from "react";
+import { Card } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
-import Button from "@material-ui/core/Button";
-import OnClickInfo from "../../shared/OnClickInfo/OnClickInfo";
-import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
-import {downloadClick} from "../lib/downloadClick";
+import React from "react";
+import { useSelector } from "react-redux";
 import CustomCardHeader from "../../shared/CustomCardHeader/CustomCardheader";
+import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../shared/styles/useMyStyles";
+import { downloadClick } from "../lib/downloadClick";
 
 
 export default function UrlList (props) {

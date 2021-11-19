@@ -77,8 +77,10 @@ const useMyStyles = makeStyles(theme => ({
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
-        height: "83px",
-        backgroundColor: "#ffffff"
+        height: "85px",
+        backgroundColor: "#ffffff",
+        display: "flex",
+        justifyContent: "center",
     },
     drawer: {
         width: drawerWidth,
@@ -292,18 +294,14 @@ const useMyStyles = makeStyles(theme => ({
         maxHeight: window.innerHeight / 2,
     },
     customTitle: {
-        background: theme.palette.primary.main,
-        borderRadius: 5,
         textAlign: "center",
-        color: 'white',
+        color: "#596977",
         fontSize: 28,
         fontWeight: "bold",
         padding: '15px',
         width: "auto",
         margin: 5,
         display: "block",
-        marginLeft: "22%",
-        marginRight: "auto",
     },
     expand: {
         transform: 'rotate(0deg)',
