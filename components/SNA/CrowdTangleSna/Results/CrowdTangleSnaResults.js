@@ -59,6 +59,8 @@ export default function CrowdTangleSnaResults(props) {
 	}
 
 
+
+
 	return (
 
 		<Box>
@@ -119,7 +121,7 @@ export default function CrowdTangleSnaResults(props) {
 								alignItems={alignIndex}
 							>
 
-								<a href="#tweets" style={{ textDecoration: "none", color: "black" }}>
+								<a href="#tweets" smooth style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
 										{"1."}
 										{!collapsed &&
@@ -130,10 +132,19 @@ export default function CrowdTangleSnaResults(props) {
 									<Box m={1} />
 								</a>
 
+								<a href="#propagation" style={{ textDecoration: "none", color: "black" }}>
+									<Typography variant={"h6"} >
+										{"2."}
+										{!collapsed &&
+											" " + keyword("user_time_chart_title")
+										}
+									</Typography>
+									<Box m={1} />
+								</a>
 
 								<a href="#bubble0" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
-										{"2."}
+										{"3."}
 										{!collapsed &&
 											" " + keyword("retweets_cloud_chart_title")
 										}
@@ -143,7 +154,7 @@ export default function CrowdTangleSnaResults(props) {
 
 								<a href="#bubble1" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
-										{"3."}
+										{"4."}
 										{!collapsed &&
 											" " + keyword("likes_cloud_chart_title")
 										}
@@ -153,7 +164,7 @@ export default function CrowdTangleSnaResults(props) {
 
 								<a href="#bubble2" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
-										{"4."}
+										{"5."}
 										{!collapsed &&
 											" " + keyword("top_users_pie_chart_title")
 										}
@@ -163,7 +174,7 @@ export default function CrowdTangleSnaResults(props) {
 
 								<a href="#bubble3" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
-										{"5."}
+										{"6."}
 										{!collapsed &&
 											" " + keyword("mention_cloud_chart_title")
 										}
@@ -174,7 +185,7 @@ export default function CrowdTangleSnaResults(props) {
 
 								<a href="#heatmap" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
-										{"6."}
+										{"7."}
 										{!collapsed &&
 											" " + keyword("heatmap_chart_title")
 										}
@@ -184,7 +195,7 @@ export default function CrowdTangleSnaResults(props) {
 
 								<a href="#hastag" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
-										{"7."}
+										{"8."}
 										{!collapsed &&
 											" " + keyword("hashtag_graph_title")
 										}
@@ -194,7 +205,7 @@ export default function CrowdTangleSnaResults(props) {
 
 								<a href="#sociosemantic" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
-										{"8."}
+										{"9."}
 										{!collapsed &&
 											" " + keyword("sosem_graph_title2")
 										}
@@ -204,7 +215,7 @@ export default function CrowdTangleSnaResults(props) {
 
 								<a href="#words" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
-										{"9."}
+										{"10."}
 										{!collapsed &&
 											" " + keyword("top_words_cloud_chart_title")
 										}
@@ -214,7 +225,7 @@ export default function CrowdTangleSnaResults(props) {
 
 								<a href="#urls" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
-										{"10."}
+										{"11."}
 										{!collapsed &&
 											" " + keyword("twittersna_result_url_in_tweets")
 										}
