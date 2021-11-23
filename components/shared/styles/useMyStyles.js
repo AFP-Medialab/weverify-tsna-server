@@ -438,7 +438,29 @@ const useMyStyles = makeStyles(theme => ({
 
     buttonTableURL:{
         backgroundColor:"#51A5B2!important"
-    }
+    },
+
+    feedbackButtonTitleHide: {
+        display: "none",
+    },
+
+    feedbackButtonTitleShow: {
+        marginLeft: "12px",
+        display: "block",
+    },
+
+    fabTop: {
+        margin: "0px",
+        top: "auto",
+        right: "14px",
+        bottom: "100px",
+        left: "auto",
+        position: "fixed",
+    },
+
+    feedbackHeaderTitle: {
+        marginLeft: "12px",
+    },
 
 
     

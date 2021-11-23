@@ -886,7 +886,7 @@ const TwitterSna = () => {
 								startIcon={<SearchIcon />}
 								onClick={onSubmit}
 								disabled={
-									searchFormDisabled || keyWordsError || sinceError || untilError
+									searchFormDisabled || keyWordsError || sinceError || untilError || loading
 								}
 							>
 								{keyword("button_submit")}
