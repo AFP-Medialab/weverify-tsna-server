@@ -19,6 +19,8 @@ export function filterForTimeLine(postDate, selectedPoints) {
     //console.log("date_max " , date_max);
     const range_min = normalizeDate(date_min);
     const range_max = normalizeDate(date_max);
+
+    //console.log("JSON 2", json);
   
       let layout = {
         title: titleLabel + "<br>" + date_min + " - " + date_max,
