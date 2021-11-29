@@ -824,6 +824,8 @@ const TwitterSna = () => {
 											/>
 										</Box>
 
+										{cacheCheck() && (
+											<>
 										<Box m={3} />
 
 										<Grid container spacing={4} alignItems="center">
@@ -850,7 +852,7 @@ const TwitterSna = () => {
 
 										<Box m={1} />
 
-										{cacheCheck() && (
+										
 											<Box pl={3}>
 												<FormControlLabel
 													control={
@@ -865,6 +867,7 @@ const TwitterSna = () => {
 													label={keyword("disable_cache")}
 												/>
 											</Box>
+										</>
 										)}
 									</Grid>
 

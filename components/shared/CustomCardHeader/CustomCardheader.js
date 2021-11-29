@@ -132,7 +132,7 @@ export default function CustomCardHeader(props) {
                                             alignItems="stretch">
 
                                             <Typography variant="h6" gutterBottom>
-                                                {"What is this?"}
+                                            {keyword("whatisthis")}
                                             </Typography>
 
                                         <CloseIcon onClick={closeHelpPopover} />
