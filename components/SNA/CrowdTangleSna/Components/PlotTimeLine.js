@@ -74,6 +74,10 @@ export default function PlotTimeLine(props){
         
     }
 
+    if (state.result.histogram.json && state.result.histogram.json.length !== 0){
+        //console.log("JSON", state.result.histogram.json) 
+    }
+
     
     return (
         <Card className={classes.cardsResults}>
@@ -85,6 +89,7 @@ export default function PlotTimeLine(props){
                     {(state.result.histogram.json && state.result.histogram.json.length !== 0) &&
                     <Plot useResizeHandler
                         style={{ width: '100%', height: "450px" }}
+                        
                         data={state.result.histogram.json}
                         layout={state.result.histogram.layout}
                         config={state.result.histogram.config}
