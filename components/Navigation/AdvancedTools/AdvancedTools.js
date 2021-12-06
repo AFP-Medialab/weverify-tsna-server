@@ -295,16 +295,17 @@ const AdvancedTools = () => {
                             <TextField
                                 label={"Email"}
                                 value={email}
+                                autoComplete="email"
                                 placeholder={messageI18NResolver("ACCESSCODEFORM_EMAIL_PLACEHOLDER")}
                                 fullWidth
                                 variant="outlined"
                                 onChange={e => {
                                     setEmail(e.target.value);
-                                    if (email !== "") {
+                                    if (e.target.value !== "") {
                                         setStateGetCode(false);
                                     }
 
-                                    if (email === "") {
+                                    if (e.target.value === "") {
                                         setStateGetCode(true);
                                     }
                                 }}

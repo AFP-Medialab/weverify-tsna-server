@@ -139,7 +139,7 @@ export default function SocioSemGraph (props) {
         <Card>
             {props.result.socioSemantic4ModeGraph && props.result.socioSemantic4ModeGraph.data.nodes.length !== 0 &&
             <CustomCardHeader
-                title={"Socio-semantic graph"}
+                title={keyword("sosem_4mode_graph_title")}
                 showHelp={true}
                 helpText={"twittersna_sosem_4mode_graph_tip"}
                 showNodes={true}

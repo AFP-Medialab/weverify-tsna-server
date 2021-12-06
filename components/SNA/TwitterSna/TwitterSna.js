@@ -56,14 +56,8 @@ import useTwitterSnaRequest from "./Hooks/useTwitterSnaRequest";
 import TwitterSnaResult from "./Results/TwitterSnaResult";
 
 
-
-
-
-
 //keyword from /components/NavItems/tools/TwitterSna.tsv
 const TwitterSna = () => {
-
-
 	const theme = createTheme({
 
 		overrides: {
@@ -90,28 +84,21 @@ const TwitterSna = () => {
 					minWidth: "25%!important",
 				}
 			},
-
-
 			MuiAccordion:{
 				root:{
 					boxShadow: "none",
 					'&:before': {
 						width: "0px",
 					},
-					border: "1px solid #51A5B2",
-					
+					border: "1px solid #51A5B2",			
 				},
 				rounded:{
 					borderRadius: "15px",
 				}
-
 				
 			}
 
 		},
-
-
-
 		palette: {
 			primary: {
 				light: '#5cdbe6',
@@ -123,13 +110,13 @@ const TwitterSna = () => {
 
 	});
 
-
 	const dispatch = useDispatch();
 	const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo.tsv" };
 	const keyword = useLoadLanguage(sna.tsv)
 	const classes = useMyStyles();
 	const cardClasses = myCardStyles();
 	const request = useSelector((state) => state.twitterSna.request);
+	const isRedirect = useSelector((state) => state.twitterSna.redirect);
 	const error = useSelector((state) => state.error);
 	const [loading, setLoading] = useState(false);
 	const isLoading = useSelector((state) => state.twitterSna.loading);
@@ -314,7 +301,8 @@ const TwitterSna = () => {
 	};
 
 	//HANDLE SUBMISSION
-
+	//const [submittedRequest, setSubmittedRequest] = useState(makeRequest());
+	const [submittedRequest, setSubmittedRequest] = useState(null);
 	const onSubmit = () => {
 		//Mandatory Fields errors
 		if (keyWords.trim() === "") {
@@ -351,12 +339,16 @@ const TwitterSna = () => {
 			dispatch(setSnaType(sna));
 		}
 	};
+	
+	
+	if(isRedirect){
+		let newRequest = makeRequest();
+		setSubmittedRequest(newRequest)
+		dispatch(setTwitterSnaNewRequest(newRequest));
+		dispatch(setSnaType(sna));
+	}
 
-	// const [submittedRequest, setSubmittedRequest] = useState(null);
-	const [submittedRequest, setSubmittedRequest] = useState(makeRequest());
-
-	useTwitterSnaRequest(submittedRequest, keyword);
-
+	
 	function listToString(list) {
 		var index = 0;
 		var mystring = "";
@@ -371,9 +363,8 @@ const TwitterSna = () => {
 		if (isLoading) {
 			setLoading(isLoading);
 		}
-		if (stage === maxStage) {
+		if (maxStage != 0 && stage === maxStage) {
 			setLoading(false);
-			//dispatch(setTwitterSnaLoadingMessage(null))
 			dispatch(setTwitterSnaLoading(false))
 		}
 	}, [isLoading, stage]);
@@ -395,8 +386,7 @@ const TwitterSna = () => {
 		}
 		return false;
 	}
-
-
+	useTwitterSnaRequest(submittedRequest);
 	return (
 		<div className={classes.all}>
 			<ThemeProvider theme={theme}>
@@ -764,7 +754,6 @@ const TwitterSna = () => {
 										</Grid>
 
 										<Box m={3} />
-
 										
 										<Grid container spacing={4} alignItems="center">
 											<Grid item xs={8}>
@@ -790,7 +779,6 @@ const TwitterSna = () => {
 											
 										</Grid>
 										
-
 										<Box m={1} />
 										
 										<Box pl={3}>
@@ -849,10 +837,7 @@ const TwitterSna = () => {
 												</Grid>
 											</Grid>
 										</Grid>
-
-										<Box m={1} />
-
-										
+										<Box m={1} />	
 											<Box pl={3}>
 												<FormControlLabel
 													control={
@@ -870,18 +855,10 @@ const TwitterSna = () => {
 										</>
 										)}
 									</Grid>
-
-										
 									</Box>
 								</AccordionDetails>
-								
-								
 							</Accordion>
-
-
 							<Box m={2} />
-
-
 							<Button
 								fullWidth
 								variant="contained"
@@ -905,29 +882,8 @@ const TwitterSna = () => {
 							<Typography>{loadingMessage}</Typography>
 							<LinearProgress hidden={!loading} />
 							{!userAuthenticated && <OnWarningInfo keyword={"warning_sna"} />}
-			
-							
-
-
-
 							</Grid>
-
-
-
-						</Box>
-
-
-
-
-
-
-
-
-
-
-						
-						
-
+						</Box>		
 					</Card>
 				</StylesProvider>
 				{reduxResult && (
