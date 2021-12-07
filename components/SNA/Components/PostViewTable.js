@@ -9,14 +9,15 @@ import CustomTable from '../../shared/CustomTable/CustomTable';
 import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../shared/lib/StringUtil";
 import { downloadClick } from "../lib/downloadClick";
+import{FB_SNA_TYPE, TW_SNA_TYPE, INSTA_SNA_TYPE} from "../../shared/hooks/SnaTypes"
 
 function getIcon(snaType){
     switch (snaType){
-        case "INSTA": 
+        case INSTA_SNA_TYPE: 
             return  InstagramIcon;
-        case "FB":
+        case FB_SNA_TYPE:
             return FacebookIcon;
-        case "TWITTER" :
+        case TW_SNA_TYPE :
             return TwitterIcon;
         default:
             return null;
@@ -32,7 +33,10 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
           icon: getIcon(snatype.type),
           tooltip: keyword("sna_result_go_to_post"),
           onClick: (event, rowData) => {
-            window.open(rowData.link.props.href, "_blank");
+            if(snatype.type == TW_SNA_TYPE)
+                window.open(rowData.link, "_blank");
+            else
+                window.open(rowData.link.props.href, "_blank");
           },
         },
       ];

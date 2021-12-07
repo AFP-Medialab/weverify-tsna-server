@@ -21,18 +21,25 @@ export async function userGexfAction(res, url, body) {
   }
 }
 
-export async function userPostAction(res, url, body, headers) {
-  
+export async function userPostAction(res, url, body, headers, type="json") {
   const response = await fetch(url, {
     method: "POST",
     headers: headers,
     body: body,
   });
   const status = response.status;
+
   if (response.ok) {
     if(status === 200){
-      const data = await response.json();
-      res.json(data);
+      if(type="text"){
+        const data = await response.text();
+        res.send(data);
+      }
+      else{
+        //default value is json
+        const data = await response.json();
+        res.json(data);
+      }
     }else{
       res.status(status).json(defaultBody);
     }
