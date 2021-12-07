@@ -5,6 +5,6 @@ export default (req, res) =>{
     const headers = {
         "Content-Type": "application/json"
       };
-      
-    return userPostAction(res, feedBackURL, req.body, headers);
+    let body = JSON.stringify(req.body);
+    return userPostAction(res, feedBackURL, body, headers, "text");
 }
