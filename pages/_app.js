@@ -1,7 +1,9 @@
 import React from 'react';
 import {Provider} from "react-redux"
 import '../styles/global.css';
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+// import createMuiTheme from "@material-ui/core/styles/createMuiTheme"; TODO seems is deprecated
+import {createTheme} from "@material-ui/core/styles";
+
 import { MuiThemeProvider } from "@material-ui/core";
 import { useStore } from "../redux";
 import { persistStore } from 'redux-persist'
@@ -9,7 +11,7 @@ import "react-datetime/css/react-datetime.css";
 import { PersistGate } from 'redux-persist/integration/react'
 
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
       primary: {
         light: '#fff',

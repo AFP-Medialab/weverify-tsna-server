@@ -1,6 +1,6 @@
 import { userPostAction } from "../../../components/shared/lib/fetch";
 
-let tweetSimClusterURL = process.env.REACT_APP_TWEET_SIMILARITY_URL+ "/similarity/clusters";
+let tweetSimClusterURL = process.env.REACT_APP_TWEET_SIMILARITY_URL+ "/similarity/clusters"; // TODO temporarly changed to csv file which should be + "/similarity/clusters" or "/similarity/csv"
 let tweetSimTweetsURL = process.env.REACT_APP_TWEET_SIMILARITY_URL+ "/similarity/tweets";
 let elasticURL = process.env.REACT_APP_ELK_URL;
 export default (req, res) => {
@@ -20,7 +20,6 @@ export default (req, res) => {
             let body = req.body
             body['elasticURL']=elasticURL;
             const bodyJSON = JSON.stringify(body);
-            console.log("bodyJSON",bodyJSON);
             return userPostAction(res, url, bodyJSON , headers);
         }
         case "getTweets":{

@@ -684,6 +684,7 @@ export function getESQuery4Gexf(param) {
     }
 
     //convert the response in appropriate format for GUI
+  // let aggs = constructAggs("urls");
 
     let gexfResults = [];
     if (
@@ -735,16 +736,13 @@ function timer(ms) {
 export function getESQuery4TweetSimilarity(param) {
   let must = constructMatchPhrase(param);
   let mustNot = constructMatchNotPhrase(param);
-  // let aggs = constructAggs("urls");
   let size = 1000;
-  // let esQuery = JSON.stringify(buildQuery4Gexf(must, mustNot,size)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
   let similarityParams = JSON.stringify({
     esQuery: buildQuery4Gexf(must, mustNot, size),
   })
     .replace(/\\/g, "")
     .replace(/"{/g, "{")
     .replace(/}"/g, "}");
-  // console.log("gexfParams:"+gexfParams);
 
   console.log("tweetSimClusterURL", tweetSimClusterURL);
 
