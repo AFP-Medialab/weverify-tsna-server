@@ -151,6 +151,7 @@ const TwitterSna = () => {
 	// const [localTime, setLocalTime] = useState("true");
 	const [openLangInput, setLangInputOpen] = useState(false);
 	const [keyWordsError, setKeyWordsError] = useState(false);
+	const [keyWordsAnyError, setKeyWordsAnyError] = useState(false);
 
 	const role = useSelector((state) => state.userSession.user.roles);
 
@@ -187,6 +188,10 @@ const TwitterSna = () => {
 
 	const [keyWords, setKeywords] = useState(
 		request && request.keywordList ? request.keywordList.join(" ") : ""
+	);
+
+	const [keyWordsAny, setKeywordsAny] = useState(
+		request && request.keywordAnyList ? request.keywordAnyList.join(" ") : ""
 	);
 
 	const [verifiedUsers, setVerifiedUsers] = useState(
@@ -280,6 +285,10 @@ const TwitterSna = () => {
 			? removeQuotes(keyWords.trim().match(/("[^"]+"|[^"\s]+)/g))
 			: [];
 
+		let trimedKeywordsAny = !_.isNil(keyWordsAny)
+			? removeQuotes(keyWordsAny.trim().match(/("[^"]+"|[^"\s]+)/g))
+			: [];
+
 		let trimedBannedWords = null;
 		if (!_.isNil(bannedWords) && bannedWords.trim() !== "")
 			trimedBannedWords = removeQuotes(
@@ -301,6 +310,7 @@ const TwitterSna = () => {
 
 		return {
 			keywordList: trimedKeywords,
+			keywordAnyList: trimedKeywordsAny,
 			bannedWords: trimedBannedWords,
 			lang: langInput === "lang_all" ? null : langInput.replace("lang_", ""),
 			userList: stringToList(usersInput),
@@ -317,11 +327,21 @@ const TwitterSna = () => {
 
 	const onSubmit = () => {
 		//Mandatory Fields errors
-		if (keyWords.trim() === "") {
-			handleErrors(keyword("twitterStatsErrorMessage"));
-			setKeyWordsError(true);
-			return;
+
+		if ((keyWords.trim() === "") && (keyWordsAny.trim() === "")){
+			if (keyWords.trim() === "") {
+				handleErrors(keyword("twitterStatsErrorMessage"));
+				setKeyWordsError(true);
+				return;
+			}
+			if (keyWordsAny.trim() === "") {
+				handleErrors(keyword("twitterStatsErrorMessage"));
+				setKeyWordsAnyError(true);
+				return;
+			}
+
 		}
+		
 		if (since === null || since === "") {
 			handleErrors(keyword("twitterStatsErrorMessage"));
 			setSince("");
@@ -334,8 +354,9 @@ const TwitterSna = () => {
 		}
 		let newRequest = makeRequest();
 
-		//console.log("Submit, newRequest: ", newRequest);
+		console.log("Submit, newRequest: ", newRequest);
 		if (JSON.stringify(newRequest) !== JSON.stringify(request)) {
+			
 			let prevResult = reduxResult;
 			if (prevResult && prevResult.coHashtagGraph) {
 				delete prevResult.coHashtagGraph;
@@ -397,6 +418,15 @@ const TwitterSna = () => {
 	}
 
 
+	/*
+	const [advancedSearch, setAdvancedSearch] = useState(false);
+
+	const handleChangeAdvancedChange = (event) => {
+		setAdvancedSearch(event.target.checked)
+	};
+	*/
+
+
 	return (
 		<div className={classes.all}>
 			<ThemeProvider theme={theme}>
@@ -424,8 +454,14 @@ const TwitterSna = () => {
 
 						<Box p={4}>
 
-						<Grid container direction="column" spacing={0}>
+						<Grid container direction="column" spacing={0} >
 
+							<Typography variant="h6" align="left" style={{ paddingLeft: "0px" }}>
+								{keyword("twittersna_title_elements")}
+							</Typography>
+							<Box m={1} />
+
+							
 							<Grid container spacing={4} alignItems="center">
 								<Grid item xs={8}>
 									<TextField
@@ -437,7 +473,7 @@ const TwitterSna = () => {
 											setKeyWordsError(false);
 										}}
 										id="standard-full-width"
-										label={"*  " + keyword("twitter_sna_searchelement")}
+											label={"* " + keyword("twittersna_field_all")}
 										className={classes.neededField}
 										placeholder={keyword("twitter_sna_search")}
 										fullWidth
@@ -454,13 +490,55 @@ const TwitterSna = () => {
 									</Grid>
 									<Grid item xs>
 										<Typography variant="body2" align="left" style={{ color: "#757575" }}>
-											{keyword("explanation_keyword")}
+												{keyword("explanation_allelements")}
 										</Typography>
 									</Grid>
 								</Grid>
 							</Grid>
 
 							<Box m={1} />
+
+							<Grid container spacing={4} alignItems="center">
+								<Grid item xs={8}>
+									<TextField
+										disabled={searchFormDisabled}
+										error={keyWordsAnyError}
+										value={keyWordsAny}
+										onChange={(e) => {
+											setKeywordsAny(e.target.value);
+											setKeyWordsAnyError(false);
+										}}
+										id="standard-full-width"
+											label={"*  " + keyword("twittersna_field_any")}
+										className={classes.neededField}
+										placeholder={keyword("twitter_sna_search")}
+										fullWidth
+										variant="outlined"
+									/>
+								</Grid>
+
+								<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+									<Grid item>
+										<SearchIcon style={{ color: "#757575" }} />
+									</Grid>
+									<Grid>
+										<Box m={1} />
+									</Grid>
+									<Grid item xs>
+										<Typography variant="body2" align="left" style={{ color: "#757575" }}>
+												{keyword("explanation_anyelements")}
+										</Typography>
+									</Grid>
+								</Grid>
+							</Grid>
+
+							<Box m={2} />	
+
+							<Typography variant="h6" align="left" style={{ paddingLeft: "0px" }}>
+								{keyword("twittersna_title_time")}
+							</Typography>
+							<Box m={1} />
+
 
 							<Grid container spacing={4} alignItems="center">
 								<Grid item xs={4}>
@@ -512,8 +590,8 @@ const TwitterSna = () => {
 								</Grid>
 							</Grid>
 
-							<Box m={1} />
-
+							
+							{/* 
 							<Grid container spacing={4} alignItems="center">
 								<Grid item xs={8}>
 									<Typography variant="h6" align="left" style={{ paddingLeft: "0px"}}>
@@ -536,37 +614,58 @@ const TwitterSna = () => {
 								</Grid>
 							</Grid>
 
+							*/}
+
 							<Box m={1}/>
 
-							<Box pl={3}>
+							<Grid container spacing={4} alignItems="center">
+								<Grid item xs={8}>
+									<Box pl={3}>
 
-								<FormControl component="fieldset" disabled={searchFormDisabled} style={{ width: "100%" }}>
-									<RadioGroup
-										aria-label="position"
-										name="position"
-										value={localTime}
-										onChange={(e) => setLocalTime(e.target.value)}
-										row
-									>
-										<Grid container direction="column" justifyContent="flex-start" alignItems="flex-start">
-											<FormControlLabel
-												value={"true"}
-												control={<Radio color="primary" />}
-												label={keyword("twitter_local_time")}
-												labelPlacement="end"
-											/>
-											<Box m={1} />
-											<FormControlLabel
-												value={"false"}
-												control={<Radio color="primary" />}
-												label={keyword("twitter_sna_gmt")}
-												labelPlacement="end"
-											/>
-										</Grid>
-									</RadioGroup>
-								</FormControl>
+										<FormControl component="fieldset" disabled={searchFormDisabled} style={{ width: "100%" }}>
+											<RadioGroup
+												aria-label="position"
+												name="position"
+												value={localTime}
+												onChange={(e) => setLocalTime(e.target.value)}
+												row
+											>
+												<Grid container direction="column" justifyContent="flex-start" alignItems="flex-start">
+													<FormControlLabel
+														value={"true"}
+														control={<Radio color="primary" />}
+														label={keyword("twitter_local_time")}
+														labelPlacement="end"
+													/>
+													<Box m={1} />
+													<FormControlLabel
+														value={"false"}
+														control={<Radio color="primary" />}
+														label={keyword("twitter_sna_gmt")}
+														labelPlacement="end"
+													/>
+												</Grid>
+											</RadioGroup>
+										</FormControl>
 
-							</Box>
+									</Box>
+								</Grid>
+
+								<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+									<Grid item>
+										<GlobeIcon style={{ color: "#757575" }} />
+									</Grid>
+									<Grid>
+										<Box m={1} />
+									</Grid>
+									<Grid item xs>
+										<Typography variant="body2" align="left" style={{ color: "#757575" }}>
+											{keyword("explanation_timezone")}
+										</Typography>
+									</Grid>
+								</Grid>
+							</Grid>
+							
 
 							<Box m={2} />
 		
@@ -775,6 +874,50 @@ const TwitterSna = () => {
 
 											
 											<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+												
+											</Grid>
+											
+										</Grid>
+										
+
+										<Box m={1} />
+
+										<Grid container spacing={4} alignItems="center">
+											<Grid item xs={8}>
+												<Box pl={3}>
+													<FormControlLabel
+														control={
+															<Checkbox
+																disabled={searchFormDisabled}
+																checked={mediaImage}
+																onChange={imageChange}
+																value="checkedBox"
+																color="primary"
+															/>
+														}
+														label={keyword("twitterStats_media_images")}
+														style={{ paddingLeft: "0px" }}
+
+													/>
+													<Box mt={1} />
+													<FormControlLabel
+														control={
+															<Checkbox
+																disabled={searchFormDisabled}
+																checked={mediaVideo}
+																onChange={videoChange}
+																value="checkedBox"
+																color="primary"
+															/>
+														}
+														label={keyword("twitterStats_media_videos")}
+														style={{ paddingLeft: "0px" }}
+													/>
+												</Box>
+											</Grid>
+
+
+											<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
 												<Grid item>
 													<PermMediaIcon style={{ color: "#757575" }} />
 												</Grid>
@@ -787,42 +930,10 @@ const TwitterSna = () => {
 													</Typography>
 												</Grid>
 											</Grid>
-											
+
 										</Grid>
 										
-
-										<Box m={1} />
 										
-										<Box pl={3}>
-											<FormControlLabel
-												control={
-													<Checkbox
-														disabled={searchFormDisabled}
-														checked={mediaImage}
-														onChange={imageChange}
-														value="checkedBox"
-														color="primary"
-													/>
-												}
-												label={keyword("twitterStats_media_images")}
-												style={{ paddingLeft: "0px" }}
-												
-											/>
-											<Box mt={1} />
-											<FormControlLabel
-												control={
-													<Checkbox
-														disabled={searchFormDisabled}
-														checked={mediaVideo}
-														onChange={videoChange}
-														value="checkedBox"
-														color="primary"
-													/>
-												}
-												label={keyword("twitterStats_media_videos")}
-												style={{ paddingLeft: "0px" }}
-											/>
-										</Box>
 
 										{cacheCheck() && (
 											<>
@@ -833,6 +944,30 @@ const TwitterSna = () => {
 												<Typography variant="h6" align="left">
 													{keyword("twittersna_title_advanced")}
 												</Typography>
+											</Grid>
+
+											<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
+											</Grid>
+										</Grid>
+
+										<Box m={1} />
+
+										<Grid container spacing={4} alignItems="center">
+											<Grid item xs={8}>
+												<Box pl={3}>
+													<FormControlLabel
+														control={
+															<Checkbox
+																disabled={searchFormDisabled}
+																checked={cache}
+																onChange={cacheChange}
+																value="checkedBox"
+																color="primary"
+															/>
+														}
+														label={keyword("disable_cache")}
+													/>
+												</Box>
 											</Grid>
 
 											<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
@@ -850,23 +985,8 @@ const TwitterSna = () => {
 											</Grid>
 										</Grid>
 
-										<Box m={1} />
 
-										
-											<Box pl={3}>
-												<FormControlLabel
-													control={
-														<Checkbox
-															disabled={searchFormDisabled}
-															checked={cache}
-															onChange={cacheChange}
-															value="checkedBox"
-															color="primary"
-														/>
-													}
-													label={keyword("disable_cache")}
-												/>
-											</Box>
+											
 										</>
 										)}
 									</Grid>
@@ -889,7 +1009,7 @@ const TwitterSna = () => {
 								startIcon={<SearchIcon />}
 								onClick={onSubmit}
 								disabled={
-									searchFormDisabled || keyWordsError || sinceError || untilError || loading
+									searchFormDisabled || keyWordsError || keyWordsAnyError || sinceError || untilError || loading
 								}
 							>
 								{keyword("button_submit")}

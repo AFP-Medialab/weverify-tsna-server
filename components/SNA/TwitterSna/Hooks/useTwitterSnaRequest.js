@@ -133,6 +133,7 @@ const useTwitterSnaRequest = (request, keyword) => {
         from: request.from,
         until: request.until,
         keywordList: request.keywordList,
+        keywordAnyList: request.keywordAnyList,
         bannedWords: request.bannedWords,
         userList: request.userList,
         session: data.session,
