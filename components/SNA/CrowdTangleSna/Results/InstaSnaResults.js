@@ -10,7 +10,7 @@ const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false})
 
 
 
-export default function CsvSnaResults(props) {
+export default function InstaSnaResults(props) {
   const dispatch = useDispatch();
   const classes = useMyStyles();
 

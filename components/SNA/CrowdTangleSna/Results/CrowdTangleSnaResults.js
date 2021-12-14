@@ -17,6 +17,7 @@ import UrlList from "../../Components/UrlList";
 import Count from "../Components/Count";
 
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+const tsv2 = "/components/NavItems/tools/CrowdTangle.tsv";
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
 	ssr: false,
 });
@@ -31,12 +32,10 @@ const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 
 
 export default function CrowdTangleSnaResults(props) {
-	const sna = useSelector((state) => state.sna);
 	const classes = useMyStyles();
 	const dispatch = useDispatch();
 	const keyword = useLoadLanguage(tsv);
-	const snatsv = useSelector((state) => state.sna.tsv);
-	const keyword2 = useLoadLanguage(snatsv);
+	const keyword2 = useLoadLanguage(tsv2);
 
 	const [widthIndex, setWidthIndex] = useState(4);
 	const [widthCards, setWidthCards] = useState(8);
@@ -57,9 +56,6 @@ export default function CrowdTangleSnaResults(props) {
 
 		}
 	}
-
-
-
 
 	return (
 
@@ -121,7 +117,7 @@ export default function CrowdTangleSnaResults(props) {
 								alignItems={alignIndex}
 							>
 
-								<a href="#tweets" smooth style={{ textDecoration: "none", color: "black" }}>
+								<a href="#tweets" smooth="true" style={{ textDecoration: "none", color: "black" }}>
 									<Typography variant={"h6"} >
 										{"1."}
 										{!collapsed &&
@@ -236,9 +232,6 @@ export default function CrowdTangleSnaResults(props) {
 							</Grid>
 
 						</Box>
-
-
-
 
 					</Card>
 

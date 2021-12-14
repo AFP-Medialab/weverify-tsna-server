@@ -75,7 +75,7 @@ const AllTools = (props) => {
     
     const toolsData = [];
     const tools = props.tools;
-    console.log("tools ", tools);
+    //console.log("tools ", tools);
     tools.forEach((value) => {
         if (value.title === "navbar_twitter_sna") {
             value.type = "lock";

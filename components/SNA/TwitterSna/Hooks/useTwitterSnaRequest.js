@@ -40,9 +40,13 @@ import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthe
 
 import { setError } from "../../../../redux/actions/errorActions";
 import getConfig from "next/config";
+import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 const { publicRuntimeConfig } = getConfig();
+const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
 
-const useTwitterSnaRequest = (request, keyword) => {
+const useTwitterSnaRequest = (request) => {
+  
+	const keyword = useLoadLanguage(sna.tsv)
   const dispatch = useDispatch();
   const authenticatedRequest = useAuthenticatedRequest();
   const userAuthenticated = useSelector(

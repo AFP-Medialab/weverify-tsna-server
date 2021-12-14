@@ -20,8 +20,10 @@ const defaultState = {
     pieCharts: [null,null,null,null], 
     donutIndex: null,
     topUser: null,
+    gexfExport: null,
     maxStage : 0,
-    stage : 0
+    stage : 0,
+    redirect: false
 };
 
 const twitterSnaReducer = (state = defaultState, {type, payload}) => {
@@ -31,7 +33,7 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
         case SET_TWITTER_SNA_NEW_REQUEST:
             return {...state, "notification" : false, "loading" : false,
                 "request" : payload.request, "result" : null, "pieCharts" : [null,null,null,null], 
-                "donutIndex" : null, "topUser" : null, "gexfExport" : null}
+                "donutIndex" : null, "topUser" : null, "gexfExport" : null, stage: 0, maxStage:0, redirect: false}
         case SET_TWITTER_SNA_RESULT:
             return {...state, 
                 notification : payload.notification, 
@@ -61,7 +63,7 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
         case "SET_HEAP_MAP_RESULT":
             return {...state, bubbleChart : payload} 
         case "SET_TWITTER_SNA_REDIRECT_REQUEST":
-            return {...state, request : payload};
+            return {...state, request : payload, redirect: true};
         case "SET_TWITTER_SNA_RESET":            
             return {...state, "request" : payload, "result" : null, "loadingMessage" : null};
         case "SET_TWITTER_SNA_HISTOGRAM_RESULTS":
