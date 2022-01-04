@@ -45,7 +45,7 @@ const { publicRuntimeConfig } = getConfig();
 const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
 
 const useTwitterSnaRequest = (request) => {
-  
+
 	const keyword = useLoadLanguage(sna.tsv)
   const dispatch = useDispatch();
   const authenticatedRequest = useAuthenticatedRequest();
@@ -137,6 +137,7 @@ const useTwitterSnaRequest = (request) => {
         from: request.from,
         until: request.until,
         keywordList: request.keywordList,
+        keywordAnyList: request.keywordAnyList,
         bannedWords: request.bannedWords,
         userList: request.userList,
         session: data.session,
@@ -340,7 +341,7 @@ const useTwitterSnaRequest = (request) => {
     if (
       _.isNil(request) ||
       _.isNil(request.keywordList) ||
-      _.isEmpty(request.keywordList) ||
+      _.isEmpty(request.keywordList && request.keywordAnyList) ||
       // || (_.isNil(request.userList) || _.isEmpty(request.userList))
       _.isNil(request.from) ||
       _.isNil(request.until)

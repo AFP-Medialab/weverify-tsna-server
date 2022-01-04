@@ -19,6 +19,7 @@ export class HeaderTool extends Component {
                     direction="row"
                     justifyContent="flex-start"
                     alignItems="center"
+                    style={{flexWrap: "nowrap"}}
                 >
 
                     {icon}
