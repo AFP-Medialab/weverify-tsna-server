@@ -342,7 +342,7 @@ const TwitterSna = () => {
 		}
 		let newRequest = makeRequest();
 
-		console.log("Submit, newRequest: ", newRequest);
+		//console.log("Submit, newRequest: ", newRequest);
 		if (JSON.stringify(newRequest) !== JSON.stringify(request)) {
 			
 			let prevResult = reduxResult;
