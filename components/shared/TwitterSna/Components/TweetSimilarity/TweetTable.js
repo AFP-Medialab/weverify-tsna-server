@@ -136,12 +136,12 @@ const TweetTable = ({ cluster_id, open }) => {
                             />
                             {/* <OverFlownCell content={userHandleStats(tweet)} /> */}
                             {/* tweet.user_id_str */}
-                            <OverFlownCell
+                            {tweet.screen_name && <OverFlownCell
                               content={addLinkToEachItem(
                                 tweet.screen_name,
                                 Consts.USER_LINK
                               )}
-                            />
+                            />}
                             <TableCell>{tweet.lang}</TableCell>
                           </TableRow>
                         ))}

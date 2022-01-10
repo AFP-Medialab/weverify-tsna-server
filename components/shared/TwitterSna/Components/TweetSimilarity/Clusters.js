@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 // import UserClusterSankey from "./UserClusterSankey";
 import dynamic from "next/dynamic";
 import { Button } from "@material-ui/core";
+import { Consts } from "./Constants";
 const UserClusterSankey = dynamic(() => import("./UserClusterSankey"), {
   ssr: false,
 });
@@ -20,15 +21,12 @@ const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 const Clusters = (props) => {
   const keyword = useLoadLanguage(tsv);
-  const tweetSimilarityClusters = useSelector(
-    (state) => state.twitterSna.tweetSimilarityClusters
+  const tweetSimilarity = useSelector(
+    (state) => state.twitterSna.tweetSimilarity
   );
 
-  // if (tweetSimilarityClusters) {
   const [filteredClusters, setFilteredClusters] = useState(null);
   const [showAllClustersBtn, setShowAllClustersBtn] = React.useState(false);
-
-  // }
 
   /**
    * This function is called by UserClusterSankey component to filter out the clusters
@@ -40,12 +38,12 @@ const Clusters = (props) => {
   function filterClusters(clusterIds) {
     let filteredClusters;
     if (clusterIds?.length > 0) {
-      filteredClusters = tweetSimilarityClusters.clusters.filter((cluster) => {
+      filteredClusters = tweetSimilarity.data.clusters.filter((cluster) => {
         return clusterIds.includes(cluster.cluster_id);
       });
       setShowAllClustersBtn(true);
     } else {
-      filteredClusters = tweetSimilarityClusters.clusters;
+      filteredClusters = tweetSimilarity.data.clusters;
       setShowAllClustersBtn(false);
     }
     console.log("filteredClusters", filteredClusters);
@@ -61,13 +59,14 @@ const Clusters = (props) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {tweetSimilarityClusters &&
-          tweetSimilarityClusters.clusters.length !== 0 && (
+        {tweetSimilarity &&
+          tweetSimilarity.status == Consts.COMPLETED &&
+          tweetSimilarity.data?.clusters.length !== 0 && (
             <Paper style={{ width: "100%" }}>
-              <UserClusterSankey
-                clusters={[...tweetSimilarityClusters.clusters]}
+              {tweetSimilarity.data.clusters[0].screen_name && <UserClusterSankey
+                clusters={[...tweetSimilarity.data.clusters]}
                 filterClustersFnc={filterClusters}
-              />
+              />}
               {showAllClustersBtn ? (
                 <Button
                   variant={"contained"}
@@ -81,19 +80,21 @@ const Clusters = (props) => {
                 clusters={
                   filteredClusters
                     ? filteredClusters
-                    : tweetSimilarityClusters.clusters
+                    : tweetSimilarity.data.clusters
                 }
-                // style={{ width: "100%", height:"2100" }}
               />
             </Paper>
           )}
-        {tweetSimilarityClusters &&
-          tweetSimilarityClusters.clusters.length === 0 && (
-            <Typography className={classes.heading}>
-              {"No similar tweets to form clusters!"}
-            </Typography>
-          )}
-        {!tweetSimilarityClusters &&
+        {tweetSimilarity && tweetSimilarity.data?.clusters.length === 0 && (
+          <Typography className={classes.heading}>
+            {
+              tweetSimilarity.status == Consts.COMPLETED
+                ? "No similar tweets to form clusters!"
+                : tweetSimilarity.message //if not completed then it is failed.
+            }
+          </Typography>
+        )}
+        {!tweetSimilarity &&
           props.result.tweetCount &&
           props.result.tweetCount.count !== "0" && (
             <CircularProgress className={classes.circularProgress} />

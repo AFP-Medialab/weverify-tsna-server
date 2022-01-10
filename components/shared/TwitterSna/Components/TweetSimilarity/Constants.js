@@ -1,6 +1,9 @@
 export const Consts = {
   STATUS_LINK: "https://twitter.com/dummy/status/", //append status_id
   USER_LINK: "https://twitter.com/", //append user handle
+  STARTED:"STARTED",
+  COMPLETED:"COMPLETED",
+  FAILED:"FAILED",
 };
 
 // export default Consts;

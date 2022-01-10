@@ -16,7 +16,7 @@ import {
   setUrlsResult,
   setCoHashtagResult,
   setGexfExport,
-  setTweetSimilarityClusters,
+  setTweetSimilarity,
 } from "../../../../redux/actions/tools/twitterSnaActions";
 import {
   getAggregationData,
@@ -247,16 +247,14 @@ const useTwitterSnaRequest = (request, keyword) => {
 
     const buildTweetSimilarity = async (entries) => {
       axios.all([getESQuery4TweetSimilarity(entries)]).then((response) => {
-        dispatch(setTweetSimilarityClusters(response[0]));
+        dispatch(setTweetSimilarity(response[0]));
       });
     };
 
     const buildSocioGraph = async (tweets, topUser) => {
       const instance = socioWorker();
-      const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(
-        tweets,
-        topUser
-      );
+      const socioSemantic4ModeGraphJson =
+        await instance.createSocioSemantic4ModeGraph(tweets, topUser);
       const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
       dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
     };
@@ -350,7 +348,7 @@ const useTwitterSnaRequest = (request, keyword) => {
         .then((response) => {
           if (response.data.status === "Error")
             handleErrors("twitterSnaErrorMessage");
-          else if (response.data.status === "Done") { 
+          else if (response.data.status === "Done") {
             cacheRenderCall(request);
           } else {
             getResultUntilsDone(response.data.session, request, "Pending");

@@ -3,6 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import Plot from "react-plotly.js";
 import { getFreq } from "./Constants";
 
+//TODO once only 4 user has been shown instead of 10, check why?
 var topN = 10; //number of users to be shown in sankey chart
 function getSankeyChartStructure() {
   let data = {

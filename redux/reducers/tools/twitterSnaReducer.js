@@ -9,7 +9,7 @@ const defaultResult = {
   tweetCount: 0,
   tweets: [null],
   urls: null,
-  tweetSimilarityClusters: null,
+  tweetSimilarity: null,
   gexfExport: null,
 };
 const defaultState = {
@@ -21,7 +21,7 @@ const defaultState = {
   pieCharts: [null, null, null, null],
   donutIndex: null,
   topUser: null,
-  tweetSimilarityClusters: null,
+  tweetSimilarity: null,
   gexfExport: null,
 };
 
@@ -40,7 +40,7 @@ const twitterSnaReducer = (state = defaultState, { type, payload }) => {
         donutIndex: null,
         topUser: null,
         gexfExport: null,
-        tweetSimilarityClusters: null
+        tweetSimilarity: null,
       };
     case "SET_TWITTER_SNA_RESULT":
       state.notification = payload.notification;
@@ -64,12 +64,12 @@ const twitterSnaReducer = (state = defaultState, { type, payload }) => {
       return state;
     case "SET_TWITTER_SNA_GEXF_EXPORT":
       // state.gexfExport = payload;
-      return {...state, gexfExport:payload };
-      // return state;
+      return { ...state, gexfExport: payload };
+    // return state;
     case "SET_TWEET_SIMILARITY_RESULT":
-      // state.tweetSimilarityClusters = payload;
-      return {...state, tweetSimilarityClusters:payload };
-      // return state;
+      // state.  tweetSimilarity = payload;
+      return { ...state, tweetSimilarity: payload };
+    // return state;
     case "SET_HISTOGRAM_RESULT":
       state.histoview = payload;
       return state;

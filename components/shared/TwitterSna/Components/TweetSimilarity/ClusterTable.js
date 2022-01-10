@@ -85,9 +85,9 @@ const Row = (props) => {
           />
         </TableCell>
         <OverFlownCell content={cluster.tweet_count} />
-        <OverFlownCell content={addLinkToEachItem(cluster.screen_name, Consts.USER_LINK)} />
-        <OverFlownCell content={getFreqInDiv(cluster.hashtags)} />
-        <OverFlownCell content={addLinkToEachItem(cluster.user_mentions, Consts.USER_LINK)} />
+        {cluster.screen_name && <OverFlownCell content={addLinkToEachItem(cluster.screen_name, Consts.USER_LINK)} />}
+        {cluster.hashtags && <OverFlownCell content={getFreqInDiv(cluster.hashtags)} />}
+        {cluster.user_mentions && <OverFlownCell content={addLinkToEachItem(cluster.user_mentions, Consts.USER_LINK)} />}
       </TableRow>
 
       {open && <TweetTable open={open} cluster_id={cluster.cluster_id} />}
