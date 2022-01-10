@@ -8,6 +8,7 @@ let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUse
 let gexfGen_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexf`;
 let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexfStatus`;
 let tweetSimClusterURL = `${publicRuntimeConfig.baseFolder}/api/similarity/getClusters`;
+let tweetSimJobStatusURL = `${publicRuntimeConfig.baseFolder}/api/similarity/jobStatus`;
 // let tweetSimTweetsURL = `${publicRuntimeConfig.baseFolder}/api/similarity/getTweets`;
 
 // Aggregation data for pie charts, timelime chart,...
@@ -650,7 +651,7 @@ export function getESQuery4Gexf(param) {
     .replace(/\\/g, "")
     .replace(/"{/g, "{")
     .replace(/}"/g, "}");
-//   console.log("gexfParams:" + gexfParams);
+  //   console.log("gexfParams:" + gexfParams);
 
   const userAction = async () => {
     const response = await fetch(gexfGen_url, {
@@ -684,7 +685,7 @@ export function getESQuery4Gexf(param) {
     }
 
     //convert the response in appropriate format for GUI
-  // let aggs = constructAggs("urls");
+    // let aggs = constructAggs("urls");
 
     let gexfResults = [];
     if (
@@ -751,10 +752,31 @@ export function getESQuery4TweetSimilarity(param) {
       method: "POST",
       credentials: "include",
       body: similarityParams,
-      headers: {"Content-Type": "application/json",},
+      headers: { "Content-Type": "application/json" },
     });
-    const tweetSimilarityResponse = await response.json();
-    return tweetSimilarityResponse;
+    var respJSON = await response.json();
+    var status = respJSON.status;
+    while (!(status === "COMPLETED" || status === "FAILED")) {
+      await timer(3000);
+      //check job status
+      const statusResp = await fetch(tweetSimJobStatusURL, {
+        method: "POST",
+        body: JSON.stringify({ jobId: respJSON.jobId }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      respJSON = await statusResp.json();
+      status = respJSON.status;
+      console.log(
+        "Check Similarity Status: Response:",
+        respJSON,
+        " Status",
+        status
+      );
+    }
+
+    return respJSON;
   };
   return userAction();
 }
