@@ -86,7 +86,6 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
         nameTitle = nameTitle.substr(0,90) + "...";
     }
 
-
     let layout = {
         title: {
             text: keyword("bubble_chart_title") + "<br>" + nameTitle + " - " + request["from"] + " - " + request["until"],

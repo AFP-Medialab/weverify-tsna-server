@@ -341,7 +341,7 @@ const useTwitterSnaRequest = (request) => {
     if (
       _.isNil(request) ||
       _.isNil(request.keywordList) ||
-      _.isEmpty(request.keywordList && request.keywordAnyList) ||
+      (_.isEmpty(request.keywordList) &&  _.isEmpty(request.keywordAnyList)) ||
       // || (_.isNil(request.userList) || _.isEmpty(request.userList))
       _.isNil(request.from) ||
       _.isNil(request.until)

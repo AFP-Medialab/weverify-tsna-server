@@ -186,7 +186,7 @@ export default function cloudChart (props) {
                         {
                             props.result && props.result.cloudChart && props.result.cloudChart.json &&
                             <Box alignItems="center" justifyContent="center" width={"100%"}>
-                                <div height={"500"} width={"100%"} >
+                                <div height={"700"} width={"100%"} >
                                     {
                                         (props.result.cloudChart.json && props.result.cloudChart.json.length === 0) &&
                                         <Typography variant={"body2"}>{keyword("twittersna_no_data")}</Typography>}
