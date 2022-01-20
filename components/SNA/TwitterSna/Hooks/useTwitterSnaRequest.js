@@ -41,6 +41,8 @@ import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthe
 import { setError } from "../../../../redux/actions/errorActions";
 import getConfig from "next/config";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import {widgetTitle, widgetPieTitle} from "./tsnaUtils"
+
 const { publicRuntimeConfig } = getConfig();
 const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
 
@@ -278,14 +280,14 @@ const useTwitterSnaRequest = (request) => {
     const buildPieCharts = async (request, responseAggs) => {
       const pieCharts = createPieCharts(
         request,
-        getJsonDataForPieCharts(responseAggs, request.keywordList),
+        getJsonDataForPieCharts(responseAggs, widgetPieTitle(request)),
         keyword
       );
       dispatch(setPieChartsResult(pieCharts));
     };
 
     const buildHistogram = async (request, responseAggs) => {
-      var title = keyword("user_time_chart_title") + "<br>" + request.keywordList.join(", ") + " - " + request.from + " - " + request.until;
+      var title = keyword("user_time_chart_title") + "<br>" + widgetTitle(request);
       var full_fileName = request.keywordList.join("&") + "_" + request["from"] + "_" + request["until"] + "_Timeline";
       const histogram = createTimeLineChart(
         request.from, request.until,

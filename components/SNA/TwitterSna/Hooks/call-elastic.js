@@ -405,7 +405,7 @@ function constructMatchShouldPhrase(param) {
                     '}';
             }
         });
-        console.log("or: ", match_phrases)
+        //console.log("or: ", match_phrases)
         return [match_phrases]
     }
     
