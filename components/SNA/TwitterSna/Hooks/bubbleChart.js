@@ -1,4 +1,4 @@
-
+import {widgetTitle, widgetFilename} from "./tsnaUtils"
 
 function getColorOfMostActiveUserBubble(value) {
     switch (true) {
@@ -81,14 +81,9 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
         } 
     ]
 
-    let nameTitle = request.keywordList.join(", ")
-    if (nameTitle.length > 90){
-        nameTitle = nameTitle.substr(0,90) + "...";
-    }
-
     let layout = {
         title: {
-            text: keyword("bubble_chart_title") + "<br>" + nameTitle + " - " + request["from"] + " - " + request["until"],
+            text: keyword("bubble_chart_title") + "<br>" + widgetTitle(request),
             font: {
                 family: 'Arial, sans-serif',
                 size: 18
@@ -129,7 +124,7 @@ export function createBubbleChartOfMostActiveUsers(userProfile, request, result,
         displayModeBar: true,
         toImageButtonOptions: {
             format: 'png', // one of png, svg, jpeg, webp
-            filename: request.keywordList.join("&") + "_" + request["from"] + "_" + request["until"] + "_Bubble",
+            filename: widgetFilename(request, "_Bubble"),
           },
         modeBarButtons: [
             ["toImage"], 

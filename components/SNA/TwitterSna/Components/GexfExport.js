@@ -20,15 +20,7 @@ export default function GexfExport(props) {
    
     const keyword = useLoadLanguage(tsv);
     const classes = useMyStyles();
-    const request = useSelector(state => state.twitterSna.request);
-
     const gexfExport = useSelector(state => state.twitterSna.gexfExport);
-
-    const [state, setState] = useState(
-        {
-            result: props.result        
-        }
-    );
     return (
     
     props.request.userList.length === 0 && props.result &&

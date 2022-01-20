@@ -23,7 +23,7 @@ export function filterForTimeLine(postDate, selectedPoints) {
     //console.log("JSON 2", json);
   
       let layout = {
-        title: titleLabel + "<br>" + date_min + " - " + date_max,
+        title: titleLabel,
         automargin: true,
           xaxis: {
             range: [range_min, range_max],

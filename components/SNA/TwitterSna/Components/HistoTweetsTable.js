@@ -8,6 +8,7 @@ import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSna
 import CustomTable from "../../../shared/CustomTable/CustomTable";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
+import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
@@ -23,10 +24,7 @@ export default function HistoTweetsTable(props) {
       "download",
       type +
         name +
-        "_" +
-        request.keywordList.join("&") +
-        "_" +
-        (!histo ? request.from + "_" + request.until : "") +
+        "_" + widgetSimpleFilename(request) +
         ".csv"
     );
     document.body.appendChild(link);

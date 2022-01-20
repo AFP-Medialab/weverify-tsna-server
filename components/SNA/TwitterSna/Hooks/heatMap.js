@@ -1,3 +1,5 @@
+import {widgetTitle, widgetFilename} from "./tsnaUtils"
+
 const getTweetWithClickableLink = (cellData) => {
     let urls = cellData.tweet.match(/((http|https|ftp|ftps):\/\/[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,3}(\/\S*)?|pic\.twitter\.com\/([-a-zA-Z0-9()@:%_+.~#?&//=]*))/g);
     if (urls === null)
@@ -141,7 +143,7 @@ export function createHeatMap(request, hits, keyword) {
       displayModeBar: true,
       toImageButtonOptions: {
         format: 'png', // one of png, svg, jpeg, webp
-        filename: request.keywordList.join("&") + "_" + request["from"] + "_" + request["until"] + "_Heatmap",
+        filename: widgetFilename(request, "_Heatmap"),
         scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
       },
       responsive: true,
@@ -151,7 +153,7 @@ export function createHeatMap(request, hits, keyword) {
 
     let layout = {
       title: {
-        text: keyword("heatmap_chart_title")  + "<br>" + request.keywordList.join(", ") + " - " + request["from"] + " - " + request["until"],
+        text: keyword("heatmap_chart_title")  + "<br>" + widgetTitle(request),
         font: {
           family: 'Arial, sans-serif',
           size: 18

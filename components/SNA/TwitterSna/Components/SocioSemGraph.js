@@ -16,7 +16,7 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import PostViewTable from "../../Components/PostViewTable";
 import { getDomain } from "../Hooks/socioSemGraph";
-
+import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 
 
 
@@ -146,7 +146,7 @@ export default function SocioSemGraph (props) {
                 functionNodes={
                     <CSVLink
                         data={props.result.socioSemantic4ModeGraph.data.nodes}
-                        filename={"Nodes_" + keyword("sosem_4mode_graph_title") + '_' + request.keywordList.join('&') + '_' + request.from + "_" + request.until + ".csv"}
+                        filename={"Nodes_" + keyword("sosem_4mode_graph_title") + '_' + widgetSimpleFilename(request) + ".csv"}
                         className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                         {
                             <IconNodes style={{marginRight: "8px", marginTop: "2px"}} />
@@ -158,7 +158,7 @@ export default function SocioSemGraph (props) {
                     <Grid item>
                         <CSVLink
                             data={props.result.socioSemantic4ModeGraph.data.edges}
-                            filename={"Edges_" + keyword("sosem_4mode_graph_title") + '_' + request.keywordList.join('&') + '_' + request.from + "_" + request.until + ".csv"}
+                            filename={"Edges_" + keyword("sosem_4mode_graph_title") + '_' + widgetSimpleFilename(request) + ".csv"}
                             className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                             {
                                 <IconEdges />
