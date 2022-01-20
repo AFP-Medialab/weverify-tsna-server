@@ -349,8 +349,7 @@ const useTwitterSnaRequest = (request) => {
       dispatch(setTwitterSnaResult(request, null, false, false));
       return;
     }
-    dispatch(setTwitterSnaLoading(true, 5));
-    dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_start")));
+    
     //TODO premier message à mettre ici
 
     //authentication test to set later
@@ -368,6 +367,8 @@ const useTwitterSnaRequest = (request) => {
           else if (response.data.status === "Done") { 
             cacheRenderCall(request);
           } else {
+            dispatch(setTwitterSnaLoading(true, 5));
+            dispatch(setTwitterSnaLoadingMessage(keyword("twittersna_start")));
             getResultUntilsDone(response.data.session, request, "Pending");
           }
         })
