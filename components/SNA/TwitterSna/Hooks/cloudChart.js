@@ -34,6 +34,10 @@ const getAllWordsMap = (elasticResponse, request) => {
   toRemove.forEach((wordToRemove) => {
     wordsMap.splice(includeWordObj(wordToRemove, wordsMap), 1);
   });
+  toRemove = request.keywordAnyList.map((word) => word.replace("#", ""));
+  toRemove.forEach((wordToRemove) => {
+    wordsMap.splice(includeWordObj(wordToRemove, wordsMap), 1);
+  });
   return getnMax(wordsMap, 100);
 };
 

@@ -17,10 +17,8 @@ import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import PostViewTable from "../../Components/PostViewTable";
+import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 
-
-
-let from = "PLOT_HASHTAG_GRAPH";
 
 export default function HashtagGraph (props) {
 
@@ -103,7 +101,7 @@ export default function HashtagGraph (props) {
                     <Grid item>
                         <CSVLink
                             data={props.result.coHashtagGraph.data.nodes}
-                            filename={"Nodes_" + keyword("hashtag_graph_title") + '_' + props.request.keywordList.join('&') + '_' + props.request.from + "_" + props.request.until + ".csv"}
+                            filename={"Nodes_" + keyword("hashtag_graph_title") + '_' + widgetSimpleFilename(props.request) + ".csv"}
                             className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                             {
                                 <IconNodes/>
@@ -117,7 +115,7 @@ export default function HashtagGraph (props) {
                     <Grid item>
                         <CSVLink
                             data={props.result.coHashtagGraph.data.edges}
-                            filename={"Edges_" + keyword("hashtag_graph_title") + '_' + props.request.keywordList.join('&') + '_' + props.request.from + "_" + props.request.until + ".csv"}
+                            filename={"Edges_" + keyword("hashtag_graph_title") + '_' + widgetSimpleFilename(props.request) + ".csv"}
                             className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                             {
                                 <IconEdges />

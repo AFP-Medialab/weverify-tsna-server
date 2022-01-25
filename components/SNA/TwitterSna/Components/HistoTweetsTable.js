@@ -10,6 +10,7 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
@@ -25,10 +26,7 @@ export default function HistoTweetsTable(props) {
       "download",
       type +
         name +
-        "_" +
-        request.keywordList.join("&") +
-        "_" +
-        (!histo ? request.from + "_" + request.until : "") +
+        "_" + widgetSimpleFilename(request) +
         ".csv"
     );
     document.body.appendChild(link);

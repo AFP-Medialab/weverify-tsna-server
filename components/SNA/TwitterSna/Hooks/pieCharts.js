@@ -1,3 +1,5 @@
+import {widgetPieTitle, widgetFilename} from "./tsnaUtils"
+
 export const createPieCharts = (request, jsonPieCharts, keyword) => {
   let layout = {
     title: {
@@ -26,13 +28,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
     displayModeBar: false,
     toImageButtonOptions: {
       format: "png", // one of png, svg, jpeg, webp
-      filename:
-        request.keywordList.join("&") +
-        "_" +
-        request.from +
-        "_" +
-        request.until +
-        "_Tweets",
+      filename: widgetFilename(request, "_Tweets"),
       scale: 1, // Multiply title/legend/axis/canvas sizes by this factor
     },
     modeBarButtons: [["toImage"]],
@@ -58,12 +54,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
   for (let cpt = 0; cpt < keywordTitles.length; cpt++) {
     let specificLayout = JSON.parse(JSON.stringify(layout));
     let specificTitle = keyword(keywordTitles[cpt]);
-    +"<br>" +
-      request.keywordList.join(", ") +
-      " - " +
-      request["from"] +
-      " - " +
-      request["until"];
+    +"<br>" + widgetPieTitle(request);
     specificLayout.title.text = specificTitle;
     pieCharts.push({
       title: keywordTitles[cpt],
@@ -78,7 +69,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
 
 const getJsonDataForPieChart = (
   dataResponse,
-  paramKeywordList,
+  title,
   specificGetCallBack
 ) => {
   let labels = [];
@@ -91,7 +82,8 @@ const getJsonDataForPieChart = (
 
   //Initialisation
   //console.log("paramKeywordList    ", paramKeywordList);
-  labels.push(paramKeywordList.join(", ").replace(/#/g, "t"));
+
+  labels.push(title);
   parents.push("");
   value.push("");
 
@@ -102,7 +94,7 @@ const getJsonDataForPieChart = (
       value,
       labels,
       parents,
-      paramKeywordList.join(", ").replace(/#/g, "")
+      title
     );
   });
 
@@ -120,7 +112,7 @@ const getJsonDataForPieChart = (
   return obj;
 };
 
-export const getJsonDataForPieCharts = (esResponse, paramKeywordList) => {
+export const getJsonDataForPieCharts = (esResponse, title) => {
 
   function topByCount(key, values, labels, parents, mainKey) {
     if (key["doc_count"] > 0) {
@@ -143,7 +135,7 @@ export const getJsonDataForPieCharts = (esResponse, paramKeywordList) => {
     jsonPieCharts.push(
       getJsonDataForPieChart(
         esResponse["top_user_retweet"]["buckets"],
-        paramKeywordList,
+        title,
         topBySum
       )
     );
@@ -152,7 +144,7 @@ export const getJsonDataForPieCharts = (esResponse, paramKeywordList) => {
     jsonPieCharts.push(
       getJsonDataForPieChart(
         esResponse["top_user_favorite"]["buckets"],
-        paramKeywordList,
+        title,
         topBySum
       )
     );
@@ -161,7 +153,7 @@ export const getJsonDataForPieCharts = (esResponse, paramKeywordList) => {
     jsonPieCharts.push(
       getJsonDataForPieChart(
         esResponse["top_user"]["buckets"],
-        paramKeywordList,
+        title,
         topByCount
       )
     );
@@ -170,7 +162,7 @@ export const getJsonDataForPieCharts = (esResponse, paramKeywordList) => {
     jsonPieCharts.push(
       getJsonDataForPieChart(
         esResponse["top_user_mentions"]["buckets"],
-        paramKeywordList,
+        title,
         topByCount
       )
     );

@@ -13,6 +13,7 @@ import { displayPosts } from "../../../SNA/lib/displayTweets";
 import { downloadClick } from "../../lib/downloadClick";
 import HistoTweetsTable from "../Components/HistoTweetsTable";
 import { createCSVFromPieChart } from "../Hooks/pieCharts";
+import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 
@@ -34,12 +35,7 @@ export default function PlotPieChart(props) {
   //Set the file name for wordsCloud export
   useEffect(() => {
     setfilesNames(
-      "PlotChart_" +
-        props.request.keywordList.join("&") +
-        "_" +
-        props.request.from +
-        "_" +
-        props.request.until
+      "PlotChart_" + widgetSimpleFilename(request)
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.request]);
@@ -95,7 +91,7 @@ export default function PlotPieChart(props) {
       let positionInfo = element.getBoundingClientRect();
       let height = positionInfo.height;
       let width = positionInfo.width;
-      let name = keyword(elementId) + filesNames.replace("WordCloud", "");
+      let name = keyword(elementId) + "_" + filesNames.replace("WordCloud", "");
       plotly.downloadImage(elementId, {
         format: "svg",
         width: width * 1.2,
@@ -119,7 +115,7 @@ export default function PlotPieChart(props) {
       let height = positionInfo.height;
       let width = positionInfo.width;
       let name =
-        keyword(elementId) + filesNames.replace("WordCloud", "") + ".png";
+        keyword(elementId) + "_" + filesNames.replace("WordCloud", "");
       plotly.downloadImage(elementId, {
         format: "png",
         width: width * 1.2,
@@ -236,54 +232,7 @@ export default function PlotPieChart(props) {
                   obj.json[0].values[0] === ""
                 ) && (
                   <div>
-                  {/*
-                  <Grid
-                    container
-                    justifyContent="space-between"
-                    spacing={2}
-                    alignContent={"center"}
-                  >
-                    <Grid item>
-                      <Button
-                        variant={"contained"}
-                        color={"primary"}
-                        onClick={() =>
-                          downloadAsPNG(obj.title, keyword, filesNames)
-                        }
-                      >
-                        {keyword("twittersna_result_download_png")}
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        variant={"contained"}
-                        color={"primary"}
-                        onClick={() =>
-                          downloadClick(
-                            request,
-                            createCSVFromPieChart(obj),
-                            keyword(obj.title),
-                            false,
-                            ""
-                          )
-                        }
-                      >
-                        CSV
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        variant={"contained"}
-                        color={"primary"}
-                        onClick={() =>
-                          downloadAsSVG(obj.title, keyword, filesNames)
-                        }
-                      >
-                        {keyword("twittersna_result_download_svg")}
-                      </Button>
-                    </Grid>
-                  </Grid>
-                  */}
+                  {}
                   </div>
                 )}
               {obj.json !== null &&

@@ -17,7 +17,7 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import PostViewTable from "../../Components/PostViewTable";
-
+import {widgetSimpleFilename} from "../Hooks/tsnaUtils";
 
 export default function cloudChart (props) {
 
@@ -48,7 +48,7 @@ export default function cloudChart (props) {
 
     //Set the file name for wordsCloud export
     useEffect(() => {
-        setfilesNames('WordCloud_' + props.request.keywordList.join("&") + "_" + props.request.from + "_" + props.request.until);
+        setfilesNames('WordCloud_' + widgetSimpleFilename(props.request));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(props.request), props.request]);
 

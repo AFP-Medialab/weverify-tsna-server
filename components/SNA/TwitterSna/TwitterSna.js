@@ -303,7 +303,7 @@ const TwitterSna = () => {
 			userList: stringToList(usersInput),
 			from: dateFormat(newFrom, "yyyy-mm-dd HH:MM:ss"),
 			until: dateFormat(newUntil, "yyyy-mm-dd HH:MM:ss"),
-			verified: String(verifiedUsers) === "true",
+			//verified: String(verifiedUsers) === "true",
 			media: filter,
 			retweetsHandling: null,
 			cached: !cache,
@@ -805,7 +805,7 @@ const TwitterSna = () => {
 										</Grid>
 
 										<Box m={1} />
-
+										{/*
 										<Grid container spacing={4} alignItems="center" style={{ paddingLeft: "0px" }}>
 											<Grid item xs={8}>
 												<Box pl={3}>
@@ -841,7 +841,7 @@ const TwitterSna = () => {
 													</Typography>
 												</Grid>
 											</Grid>
-										</Grid>
+										</Grid> */}
 
 										<Box m={3} />
 										

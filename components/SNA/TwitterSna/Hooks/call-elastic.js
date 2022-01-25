@@ -13,9 +13,10 @@ let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexfStatus`;
 export function getAggregationData(param) {
     let must = constructMatchPhrase(param);
     let mustNot = constructMatchNotPhrase(param);
+    let should = constructMatchShouldPhrase(param)
     let aggs = constructAggs(param);
 
-    let query = JSON.stringify(buildQuery(aggs, must, mustNot, 0, false)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
+    let query = JSON.stringify(buildQuery(aggs, must, mustNot, should, 0, false)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
 
     const userAction = async () => {
         const response = await fetch(elasticSearch_url, {
@@ -35,9 +36,10 @@ export function getAggregationData(param) {
 export async function getTweets(param) {
     let must = constructMatchPhrase(param);
     let mustNot = constructMatchNotPhrase(param);
+    let should = constructMatchShouldPhrase(param)
     let aggs = {};
     let cloudTweets = false;
-    return queryTweetsFromES(aggs, must, mustNot, cloudTweets).then(elasticResponse => {
+    return queryTweetsFromES(aggs, must, mustNot, should, cloudTweets).then(elasticResponse => {
         return {
             tweets: elasticResponse.hits.hits
         }
@@ -47,9 +49,10 @@ export async function getTweets(param) {
 export async function getCloudTweets(param) {
     let must = constructMatchPhrase(param);
     let mustNot = constructMatchNotPhrase(param);
+    let should = constructMatchShouldPhrase(param)
     let aggs = {};
     let cloudTweets = true;
-    return queryTweetsFromES(aggs, must, mustNot, cloudTweets).then(elasticResponse => {
+    return queryTweetsFromES(aggs, must, mustNot, should, cloudTweets).then(elasticResponse => {
         return {
             tweets: elasticResponse.hits.hits
         }
@@ -57,10 +60,10 @@ export async function getCloudTweets(param) {
 }
 
 //Get tweets
-async function queryTweetsFromES(aggs, must, mustNot, cloudTweets) {
+async function queryTweetsFromES(aggs, must, mustNot, should, cloudTweets) {
     const response = await fetch(elasticSearch_url, {
         method: 'POST',
-        body: JSON.stringify(buildQuery(aggs, must, mustNot, 10000, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
+        body: JSON.stringify(buildQuery(aggs, must, mustNot, should, 10000, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -78,7 +81,7 @@ async function queryTweetsFromES(aggs, must, mustNot, cloudTweets) {
             let tweets = elasticResponse.hits.hits;
             let searchAfter = tweets[tweets.length - 1]["sort"];
 
-            elasticResponse = await continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, searchAfter, elasticResponse, cloudTweets);
+            elasticResponse = await continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, should, searchAfter, elasticResponse, cloudTweets);
         } while (elasticResponse["current_hits_length"] !== 0)
 
         return elasticResponse;
@@ -89,12 +92,12 @@ async function queryTweetsFromES(aggs, must, mustNot, cloudTweets) {
     
 }
 
-async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, searchAfter, elasticResponse, cloudTweets) {
+async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, should, searchAfter, elasticResponse, cloudTweets) {
     let arr = Array.from(elasticResponse.hits.hits);
 
     const response = await fetch(elasticSearch_url, {
         method: 'POST',
-        body: JSON.stringify(buildQuerySearchAfter(aggs, must, mustNot, 10000, searchAfter, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
+        body: JSON.stringify(buildQuerySearchAfter(aggs, must, mustNot, should, 10000, searchAfter, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -115,7 +118,7 @@ async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, searchA
 }
 
 //Build a query for elastic search
-function buildQuery(aggs, must, mustNot, size, cloudTweets) {
+function buildQuery(aggs, must, mustNot, should, size, cloudTweets) {
     let query;
     if (cloudTweets) {
     query = {
@@ -127,8 +130,9 @@ function buildQuery(aggs, must, mustNot, size, cloudTweets) {
             "bool": {
                 "must": must,
                 "filter": [],
-                "should": [],
-                "must_not": mustNot
+                "should": should,
+                "must_not": mustNot, 
+                "minimum_should_match" : should.length === 0 ? 0: 1
             }
         },
         "sort": [
@@ -146,8 +150,9 @@ function buildQuery(aggs, must, mustNot, size, cloudTweets) {
                 "bool": {
                     "must": must,
                     "filter": [],
-                    "should": [],
-                    "must_not": mustNot
+                    "should": should,
+                    "must_not": mustNot,
+                    "minimum_should_match" : should.length === 0 ? 0: 1
                 }
             },
             "sort": [
@@ -158,7 +163,7 @@ function buildQuery(aggs, must, mustNot, size, cloudTweets) {
     return query;
 }
 //Build a query for elastic search
-function buildQuerySearchAfter(aggs, must, mustNot, size, searchAfter, cloudTweets) {
+function buildQuerySearchAfter(aggs, must, mustNot, should, size, searchAfter, cloudTweets) {
     let query;
     if (cloudTweets) {
         query = {
@@ -171,8 +176,9 @@ function buildQuerySearchAfter(aggs, must, mustNot, size, searchAfter, cloudTwee
                 "bool": {
                     "must": must,
                     "filter": [],
-                    "should": [],
-                    "must_not": mustNot
+                    "should": should,
+                    "must_not": mustNot,
+                    "minimum_should_match" : should.length === 0 ? 0: 1
                 }
             },
             "search_after": searchAfter,
@@ -191,8 +197,9 @@ function buildQuerySearchAfter(aggs, must, mustNot, size, searchAfter, cloudTwee
                     "bool": {
                         "must": must,
                         "filter": [],
-                        "should": [],
-                        "must_not": mustNot
+                        "should": should,
+                        "must_not": mustNot,
+                        "minimum_should_match" : should.length === 0 ? 0: 1
                     }
                 },
                 "search_after": searchAfter,
@@ -349,6 +356,59 @@ function constructMatchPhrase(param, startDate, endDate) {
     }
 
     return [match_phrases]
+}
+
+function constructMatchShouldPhrase(param) {
+    if(param.keywordAnyList === null || param.keywordAnyList === undefined || param.keywordAnyList.length === 0)
+        return [];
+    else {
+        let match_phrases = "";
+        let validUrl = require('valid-url');
+        param.keywordAnyList.forEach(arg => {
+            if (match_phrases !== "")
+            match_phrases += ",";
+            if (arg[0] === '#') {
+                match_phrases += '{' +
+                    '"match_phrase": {' +
+                        '"hashtags": {' +
+                            '"query":"' + arg.substr(1) + '"' +
+                            '}' +
+                        '}' +
+                    '}'
+            } else if (validUrl.isUri(arg)) {
+                if(arg.startsWith("url:")){
+                    let search_value = "*"+arg.substring(arg.indexOf(":") + 1)
+                    match_phrases += '{' +
+                    '"wildcard": {' +
+                        '"urls": {' +
+                            '"value":"' + search_value + '"' +
+                            '}' +
+                        '}' +
+                    '}'
+                }else{
+                    match_phrases += '{' +
+                    '"term": {' +
+                        '"urls.keyword": {' +
+                            '"value":"' + arg + '"' +
+                            '}' +
+                        '}' +
+                    '}'
+                }
+            }
+            else {
+                match_phrases += '{' +
+                    '"match_phrase": {' +
+                        '"full_text": {' +
+                            '"query":"' + arg + '"' +
+                            '}' +
+                        '}' +
+                    '}';
+            }
+        });
+        //console.log("or: ", match_phrases)
+        return [match_phrases]
+    }
+    
 }
 
 //Construct the match phrase (filter for tweets)
@@ -561,6 +621,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
 
         let must = constructMatchPhrase(param);
         let mustNot = constructMatchNotPhrase(param);
+        let should = constructMatchShouldPhrase(param)
         // let aggs = constructAggs("urls");
 
         let size=1000;
@@ -572,7 +633,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
             "trim":false,
             "tweetJson":"TWINTPLUS", //values can be TWINTPLUS, TWINT, TWEEP
             "flow":false,
-            "esQuery":buildQuery4Gexf(must, mustNot,size)
+            "esQuery":buildQuery4Gexf(must, mustNot, should, size)
         }).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
         // console.log("gexfParams:"+gexfParams);
 
@@ -628,15 +689,16 @@ function buildQueryMultipleMatchPhrase (field, arr) {
         return userAction();
     }
 
-    function buildQuery4Gexf(must, mustNot, size) {
+    function buildQuery4Gexf(must, mustNot, should, size) {
         let query = {
             "size": size,
             "query": {
                 "bool": {
                     "must": must,
                     "filter": [],
-                    "should": [],
-                    "must_not": mustNot
+                    "should": should,
+                    "must_not": mustNot,
+                    "minimum_should_match" : should.length === 0 ? 0: 1
                 }
             },
             "sort": [
