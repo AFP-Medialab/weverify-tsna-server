@@ -7,13 +7,14 @@ export function widgetTitle(request){
     }*/
 
     let title = request.keywordList.join(" and ")
-    title += request.keywordList.length === 0 ? "" :" - " 
+    title += request.keywordAnyList.length === 0 ? "" :" - " 
     title += request.keywordAnyList.join(" or ") 
-    title +=  request.keywordAnyList.length === 0 ? "" :" - " 
-    title += request.bannedWords.length === 0 ? "" : " not "
-    title += request.bannedWords.join(", ")
-    title += request.bannedWords.length === 0 ? "" : " - "
-    title += request.userList.length === 0 ? "" : "user : "
+    
+    if(request.bannedWords){
+        title += request.bannedWords.length === 0 ? "" : " - not "
+        title += request.bannedWords.join(", ")
+    }
+    title += request.userList.length === 0 ? "" : " - user : "
     title += request.userList.join(", ")
     title += "<br />"
     title += request["from"] + " - " + request["until"]
@@ -23,10 +24,12 @@ export function widgetTitle(request){
 export function widgetPieTitle(request){ 
 
     let title = request.keywordList.join(", ").replace(/#/g, "")
-    title += request.keywordList.length === 0 ? "" :" - " 
+    title += request.keywordAnyList.length === 0 ? "" :" - " 
     title += request.keywordAnyList.join(" or ").replace(/#/g, "")
-    title += request.bannedWords.length === 0 ? "" : " not "
-    title += request.bannedWords.join(", ").replace(/#/g, "")
+    if(request.bannedWords){
+        title += request.bannedWords.length === 0 ? "" : " - not "
+        title += request.bannedWords.join(", ").replace(/#/g, "")
+    }
     return title;
 }
 
