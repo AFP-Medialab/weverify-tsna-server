@@ -200,7 +200,7 @@ export default function PlotPieChart(props) {
           <span id={"bubble" + index}  style={{ position: "absolute", top: "-112px" }}></span>
           
             <CustomCardHeader 
-              title={keyword(obj.title)} 
+                title={(index+3) + ". " + keyword(obj.title)} 
               showHelp={true} 
               helpText={obj.tip} 
               showPNG={true} 

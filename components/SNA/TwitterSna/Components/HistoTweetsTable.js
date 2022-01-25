@@ -8,6 +8,8 @@ import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSna
 import CustomTable from "../../../shared/CustomTable/CustomTable";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
@@ -36,7 +38,7 @@ export default function HistoTweetsTable(props) {
 
   let goToTweetAction = [
     {
-      icon: TwitterIcon,
+      icon: () => <TwitterIcon style={{ color: "#00acee" }}/>,
       tooltip: keyword("twittersna_result_go_to_tweet"),
       onClick: (event, rowData) => {
         window.open(rowData.link, "_blank");
@@ -45,7 +47,13 @@ export default function HistoTweetsTable(props) {
   ];
 
   return (
-    <div>
+    <div 
+      style={{ 
+        padding: "16px",
+        margin: "16px", 
+        backgroundColor: "#fbfbfb",
+        borderRadius: "15px"
+        }}>
       <Grid
         container
         justifyContent="space-between"
@@ -53,17 +61,19 @@ export default function HistoTweetsTable(props) {
         alignContent={"center"}
       >
         <Grid item>
+          <Box ml={1}>
           <Button
-            variant={"contained"}
-            color={"secondary"}
+            startIcon={<ExpandLessIcon />}
+            color={"primary"}
             onClick={() => dispatch(setTweetsDetailPanel(props.from, null))}
           >
             {keyword("twittersna_result_hide")}
           </Button>
+          </Box>
         </Grid>
         <Grid item>
           <Button
-            variant={"contained"}
+            startIcon={<SaveAltIcon />}
             color={"primary"}
             onClick={() =>
               downloadClick(

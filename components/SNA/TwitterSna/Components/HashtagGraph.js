@@ -95,7 +95,7 @@ export default function HashtagGraph (props) {
             {
                 props.result && props.result.coHashtagGraph && props.result.coHashtagGraph.data.nodes.length !== 0 &&
             <CustomCardHeader 
-                title={keyword("hashtag_graph_title")} 
+                title={"9. " + keyword("hashtag_graph_title")} 
                 showHelp={true} 
                 helpText={"twittersna_hashtag_graph_tip"}
                 showNodes={true}

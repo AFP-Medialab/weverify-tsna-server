@@ -160,7 +160,7 @@ export default function cloudChart (props) {
         <Card>
             {(props.result && props.result.cloudChart && props.result.cloudChart.json && props.result.cloudChart.json.length !== 0) &&
                 <CustomCardHeader 
-                    title={keyword("top_words_cloud_chart_title")}
+                    title={"11. " + keyword("top_words_cloud_chart_title")}
                     showHelp={true} 
                     helpText={"twittersna_wordcloud_tip"} 
                     showPNG={true}

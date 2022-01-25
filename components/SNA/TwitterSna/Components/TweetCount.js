@@ -36,7 +36,7 @@ export default function TweetCount(props) {
 
 	return (
 		<Card>
-			<CustomCardHeader title={keyword("tweetCounter_title")} showHelp={true} helpText={"twittersna_tweetnb_tip"} />
+			<CustomCardHeader title={"1. " + keyword("tweetCounter_title")} showHelp={true} helpText={"twittersna_tweetnb_tip"} />
 			<Box alignItems="center" justifyContent="center" width={"100%"} mt={4} className={classes.cardsResults}>
 				<Grid
 					container

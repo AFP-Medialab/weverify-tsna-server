@@ -53,7 +53,7 @@ export default function HeatMap (props) {
     return (
 
         <Card>
-            <CustomCardHeader title={keyword("heatmap_chart_title")} showHelp={true} helpText={"twittersna_heatmap_tip"} />
+            <CustomCardHeader title={"8. " + keyword("heatmap_chart_title")} showHelp={true} helpText={"twittersna_heatmap_tip"} />
 
                 {
                     props.result && props.result.heatMap &&
