@@ -67,14 +67,11 @@ pipeline {
         }
         stage ('Deploy to server') {
             steps{
-                configFileProvider([configFile(fileId: SSH_CONNECTION_ENV, variable: 'SSH_ENV')]){
-                    echo " =========== ^^^^^^^^^^^^ Reading config from pipeline script "
-                    sh "cat ${env.SSH_ENV}"
-                    sh "./deploy.sh ${env.SSH_ENV}"
-                    
-                   /* echo ${SSH_ENV.SSH_USERNAME}
-                    echo ${SSH_ENV.SSH_HOSTNAME}
-                    echo ${SSH_ENV.SSH_PROJECT_FOLDER}*/
+                sshagent (credentials: [sshCredentialKey]){
+                    configFileProvider([configFile(fileId: SSH_CONNECTION_ENV, variable: 'SSH_ENV')]){
+                        echo " =========== ^^^^^^^^^^^^ pull and restart tsna container "
+                        sh "./deploy.sh ${env.SSH_ENV}"
+                    }
                 }
             }
         }
