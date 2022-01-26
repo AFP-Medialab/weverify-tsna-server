@@ -6,7 +6,7 @@ while IFS= read -r line; do
     echo "key = $key"
     echo "value = $value"
     #eval "$key"="$value" # For ash, dash, sh.
-    declare "$key"="$value" # For bash, other shells.
+    declare "$key" # For bash, other shells.
 done < $1 
 echo "username $SSH_USERNAME"
 echo "hostname $SSH_HOSTNAME"
