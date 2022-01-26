@@ -70,8 +70,7 @@ pipeline {
                 configFileProvider([configFile(fileId: SSH_CONNECTION_ENV, variable: 'SSH_ENV')]){
                     echo " =========== ^^^^^^^^^^^^ Reading config from pipeline script "
                     sh "cat ${env.SSH_ENV}"
-                   
-                    echo "variable ${env.SSH_USERNAME}"
+                    sh "./deploy.sh ${env.SSH_ENV}"
                     
                    /* echo ${SSH_ENV.SSH_USERNAME}
                     echo ${SSH_ENV.SSH_HOSTNAME}

@@ -8,6 +8,3 @@ while IFS= read -r line; do
 done < $1 
 echo "username $SSH_USERNAME"
 echo "hostname $SSH_HOSTNAME"
-
-
-)
