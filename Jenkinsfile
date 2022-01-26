@@ -9,6 +9,8 @@ pipeline {
         version = ""
         registry = "registry-medialab.afp.com"
         registryCredential = "Medialab_Docker_Registry"
+        sshCredentialKey = "afp-dis-medialab_key"
+        SSH_CONNECTION_ENV = "tsna-server-pre-master-env"
         dockerImage = ""
         buidImage = ""
         
@@ -61,6 +63,18 @@ pipeline {
             }
             steps{
                 sh "docker rmi --force $dockerImage"
+            }
+        }
+        stage ('Deploy to server') {
+            steps{
+                configFileProvider([configFile(fileId: SSH_CONNECTION_ENV, variable: 'SSH_ENV')]){
+                    echo " =========== ^^^^^^^^^^^^ Reading config from pipeline script "
+                    sh "cat ${env.SSH_ENV}"
+                        
+                   /* echo ${SSH_ENV.SSH_USERNAME}
+                    echo ${SSH_ENV.SSH_HOSTNAME}
+                    echo ${SSH_ENV.SSH_PROJECT_FOLDER}*/
+                }
             }
         }
     }
