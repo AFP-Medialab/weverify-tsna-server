@@ -66,6 +66,9 @@ pipeline {
             }
         }
         stage ('Deploy to server') {
+            when {
+                branch 'pre-master'
+            }
             steps{
                 sshagent (credentials: [sshCredentialKey]){
                     configFileProvider([configFile(fileId: SSH_CONNECTION_ENV, variable: 'SSH_ENV')]){
