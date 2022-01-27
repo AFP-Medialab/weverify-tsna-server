@@ -55,7 +55,7 @@ export default function BubbleChart(props) {
 
 
         <Card >
-            <CustomCardHeader title={keyword("bubble_chart_title")} showHelp={true} helpText={"twittersna_bubble_chart_tip"} />
+            <CustomCardHeader title={"7. " + keyword("bubble_chart_title")} showHelp={true} helpText={"twittersna_bubble_chart_tip"} />
                 
             {
                 topUserProfile && topUserProfile.length !== 0 &&

@@ -51,7 +51,7 @@ export default function PlotTimeLine(props) {
 
   return (
     <Card className={classes.cardsResults}>
-      <CustomCardHeader title={keyword("user_time_chart_title")} showHelp={true} helpText={"twittersna_timeline_tip"} />
+      <CustomCardHeader title={"2. " + keyword("user_time_chart_title")} showHelp={true} helpText={"twittersna_timeline_tip"} />
         {
             state.result.histogram &&
             <div style={{ width: "100%" }}>

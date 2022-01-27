@@ -139,7 +139,7 @@ export default function SocioSemGraph (props) {
         <Card>
             {props.result.socioSemantic4ModeGraph && props.result.socioSemantic4ModeGraph.data.nodes.length !== 0 &&
             <CustomCardHeader
-                title={keyword("sosem_4mode_graph_title")}
+                title={"10. " + keyword("sosem_4mode_graph_title")}
                 showHelp={true}
                 helpText={"twittersna_sosem_4mode_graph_tip"}
                 showNodes={true}
@@ -177,7 +177,7 @@ export default function SocioSemGraph (props) {
                         <div>
                             <Sigma graph={props.result.socioSemantic4ModeGraph.data}
                                 renderer={"canvas"}
-                                style={{ textAlign: 'left', width: '100%', height: '700px' }}
+                                style={{ textAlign: 'left', width: '100%', height: '800px' }}
                                 onClickNode={(e) => onClickNodeSocioSemantic4ModeGraph(e)}
                                 settings={{
                                     drawEdges: true,

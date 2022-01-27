@@ -25,7 +25,7 @@ export default function GexfExport(props) {
     
     props.request.userList.length === 0 && props.result &&
     <Card>
-        <CustomCardHeader title={keyword("export_graph_title")} showHelp={true} helpText={"twittersna_export_graph_tip"} />
+        <CustomCardHeader title={"12. " + keyword("export_graph_title")} showHelp={true} helpText={"twittersna_export_graph_tip"} />
 
         <Box m={3}>
         <Grid container direction="row" 

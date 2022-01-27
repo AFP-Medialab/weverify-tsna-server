@@ -10,15 +10,17 @@ import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../shared/lib/StringUtil";
 import { downloadClick } from "../lib/downloadClick";
 import{FB_SNA_TYPE, TW_SNA_TYPE, INSTA_SNA_TYPE} from "../../shared/hooks/SnaTypes"
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
 function getIcon(snaType){
     switch (snaType){
         case INSTA_SNA_TYPE: 
-            return  InstagramIcon;
+            return () => <InstagramIcon style={{ color: "#C13584" }} />;
         case FB_SNA_TYPE:
-            return FacebookIcon;
+            return () => <FacebookIcon style={{ color: "#3b5998" }} />;;
         case TW_SNA_TYPE :
-            return TwitterIcon;
+            return () => <TwitterIcon style={{ color: "#00acee" }} />;;
         default:
             return null;
     }
@@ -44,24 +46,33 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
     var labeledColumns = getLabelsColumns(keyword, data.columns);
     //console.log("labeledColumns  ", labeledColumns);
     return (
-        <div>
+        <div
+            style={{
+                padding: "16px",
+                margin: "16px",
+                backgroundColor: "#fbfbfb",
+                borderRadius: "15px"
+            }}>
             <Grid container justifyContent="space-between" spacing={2}
                 alignContent={"center"}>
                 <Grid item>
+                    <Box ml={1}>
                     <Button
-                        variant={"contained"}
-                        color={"secondary"}
+                        startIcon={<ExpandLessIcon />}
+                        color={"primary"}
                         onClick={() => setTypeValue(null)}>
                         {
                             keywordSNA('sna_result_hide')
                         }
                     </Button>
+                    </Box>
                 </Grid>
                 {
                     downloadEnable && 
                     <Grid item>
                         <Button
-                            variant={"contained"}
+                            startIcon={<SaveAltIcon />}
+                            color={"primary"}
                             color={"primary"}
                             onClick={() => downloadClick(request, csvArr, selected)}>
                             {
@@ -72,7 +83,7 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
                 }
             </Grid>
             <Box m={2} />
-            <CustomTable title={keyword("sna_result_selected_post")}
+            <CustomTable title={keywordSNA("sna_result_selected_posts ")}
                 columns={labeledColumns}
                 data={data.data}
                 actions={goToAction}

@@ -1,14 +1,21 @@
+def notifySlack(message, color = null) {
+    slackSend(
+            message: message,
+            color: color,
+            baseUrl: "https://azemagin.slack.com/services/hooks/jenkins-ci/",
+            token: "LpFMbbHVqeE4EU7Mh4MimsyO",
+            channel: "onepay-build-jenkins"
+    )
+}
+
 pipeline {
     
-    /*agent {
-        docker {
-            image 'node:14.18.0-slim'
-        }
-    }*/
     environment {
         version = ""
         registry = "registry-medialab.afp.com"
         registryCredential = "Medialab_Docker_Registry"
+        sshCredentialKey = "afp-dis-medialab_key"
+        SSH_CONNECTION_ENV = "tsna-server-pre-master-env"
         dockerImage = ""
         buidImage = ""
         
@@ -62,6 +69,27 @@ pipeline {
             steps{
                 sh "docker rmi --force $dockerImage"
             }
+        }
+        stage ('Deploy to server') {
+            when {
+                branch 'pre-master'
+            }
+            steps{
+                sshagent (credentials: [sshCredentialKey]){
+                    configFileProvider([configFile(fileId: SSH_CONNECTION_ENV, variable: 'SSH_ENV')]){
+                        echo " =========== ^^^^^^^^^^^^ pull and restart tsna container "
+                        sh "./deploy.sh ${env.SSH_ENV}"
+                    }
+                }
+            }
+        }
+    }
+    post {
+        success {
+                slackSend channel: 'medialab_builds', message: "Success build & deploy project ${env.JOB_NAME} - ID: ${env.BUILD_ID}", tokenCredentialId: 'medialab_slack_token'
+        }
+        failure {
+            slackSend channel: 'medialab_builds', message: "Error building project ${env.JOB_NAME} - ID: ${env.BUILD_ID}", tokenCredentialId: 'medialab_slack_token'
         }
     }
 }

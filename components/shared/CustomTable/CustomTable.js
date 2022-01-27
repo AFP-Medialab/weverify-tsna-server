@@ -1,4 +1,5 @@
 import MaterialTable from '@material-table/core';
+import { createTheme, MuiThemeProvider } from '@material-ui/core';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';
@@ -19,6 +20,7 @@ import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
+
 
 
 const tableIcons = {
@@ -42,6 +44,84 @@ const tableIcons = {
 };
 
 export default function CustomTable(props) {
+
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: '#05A9B4',
+            },
+            secondary: {
+                main: '#05A9B4',
+            },
+        },
+
+        overrides: {
+
+            MuiToolbar: {
+                root: {
+                    borderRadius: "10px",
+                    padding: "10px"
+                },
+
+            },
+
+
+            MuiOutlinedInput: {
+                input: {
+                    padding: "10.5px 14px"
+                },
+
+                root: {
+                    backgroundColor: "white"
+                }
+            },
+
+            MuiTableCell: {
+                root: {
+                    overflowWrap: "break-word"
+                }
+            },
+
+            MuiFormControl: {
+                root: {
+                    paddingLeft: "0px!important"
+                }
+            },
+
+            MuiPaper: {
+                elevation2: {
+                    boxShadow: "none",
+                    backgroundColor: "#fbfbfb"
+                }
+            },
+
+            MuiTypography: {
+                h6: {
+                    
+                }
+            },
+            MuiTablePagination: {
+                root: {
+                    border: "none"
+                }
+            },
+
+            MuiTableCell:{
+                head:{
+                    color: "#186a70",
+                    backgroundColor: "#fbfbfb!important",
+                }
+            },
+
+
+
+
+
+        },
+
+    });
+
+
     const [state, setState] = useState(
         {
             title: props.title,
@@ -61,6 +141,7 @@ export default function CustomTable(props) {
     }, [JSON.stringify(props.data)]);
     
     return (
+        <MuiThemeProvider theme={theme}>
         <MaterialTable
             //components={{Pagination: PatchedPagination}}
             //more custom info at https://material-table.com/#/docs/features/localization
@@ -125,7 +206,9 @@ export default function CustomTable(props) {
                 search: true,
                 emptyRowsWhenPaging: false,
                 pageSizeOptions:[5, 10, 20, 50],
+                searchFieldVariant: 'outlined',
             }}
         />
+        </MuiThemeProvider>
     );
 }
