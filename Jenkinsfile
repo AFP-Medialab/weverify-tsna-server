@@ -1,10 +1,15 @@
+def notifySlack(message, color = null) {
+    slackSend(
+            message: message,
+            color: color,
+            baseUrl: "https://azemagin.slack.com/services/hooks/jenkins-ci/",
+            token: "LpFMbbHVqeE4EU7Mh4MimsyO",
+            channel: "onepay-build-jenkins"
+    )
+}
+
 pipeline {
     
-    /*agent {
-        docker {
-            image 'node:14.18.0-slim'
-        }
-    }*/
     environment {
         version = ""
         registry = "registry-medialab.afp.com"
@@ -77,6 +82,14 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    post {
+        success {
+                slackSend channel: 'medialab_builds', message: "Success build & deploy project ${env.JOB_NAME} - ID: ${env.BUILD_ID}", tokenCredentialId: 'medialab_slack_token'
+        }
+        failure {
+            slackSend channel: 'medialab_builds', message: "Error building project ${env.JOB_NAME} - ID: ${env.BUILD_ID}", tokenCredentialId: 'medialab_slack_token'
         }
     }
 }
