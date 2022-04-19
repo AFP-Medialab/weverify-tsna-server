@@ -1,13 +1,3 @@
-def notifySlack(message, color = null) {
-    slackSend(
-            message: message,
-            color: color,
-            baseUrl: "https://azemagin.slack.com/services/hooks/jenkins-ci/",
-            token: "LpFMbbHVqeE4EU7Mh4MimsyO",
-            channel: "onepay-build-jenkins"
-    )
-}
-
 pipeline {
     
     environment {
