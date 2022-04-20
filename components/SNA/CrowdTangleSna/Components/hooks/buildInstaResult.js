@@ -8,43 +8,42 @@ import {
   import {
     buildCoHashTag, 
     buildSocioGraph, 
-    wordCount, 
-    buildHeatMap, 
+    wordCount,  
     buildPieCharts, 
-    buildHistogram
+    buildHistogramHeatMap
   } from './commonBuildResult'
 import { INSTA_SNA_TYPE } from "../../../../shared/hooks/SnaTypes";
 import { getJsonDataForURLTable } from "../../../Hooks/urlList";
 
 const INSTA_SNA = {type:INSTA_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv" , tsvInfo : "/components/insta/OnClickInfo.tsv"}
-export const useInstagramResult = (data, keyword, dispatch) => {
+export const useInstagramResult = (workers, data, keyword, dispatch) => {
     dispatch(setSnaType(INSTA_SNA));
-    buildFirstInstaResult(data, dispatch, keyword);
+    buildFirstInstaResult(workers, data, dispatch, keyword);
 }
 
-const buildFirstInstaResult = (data, dispatch, keyword) => {
+const buildFirstInstaResult = (workers, data, dispatch, keyword) => {
+ 
   dispatch(setMaxProcessStage(13));
   let titleLabel = keyword("sna_time_chart_title");
   let timeLabel = keyword('sna_local_time');
   let heatMapTitle = keyword("ct_heatmap_chart_title")
-  buildHistogram(data, dispatch, titleLabel, timeLabel);
+  buildHistogramHeatMap(workers.timelineWorker, data, dispatch, titleLabel, timeLabel, heatMapTitle);
   buildCountInsta(data, dispatch);
-  buildPieChartsInsta(data, dispatch, keyword);
-  buildHeatMap(data, dispatch, heatMapTitle);
-  buildCoHashTag(data, dispatch);
-  buildSocioGraph(data, dispatch);
+  buildPieChartsInsta(workers.pieChartsWorker, data, dispatch, keyword);
+  buildCoHashTag(workers.hashtagWorker, data, dispatch);
+  buildSocioGraph(workers.socioWorker, data, dispatch);
   buildUrls(data, keyword, dispatch);
-  wordCount(data, dispatch);
+  wordCount(workers.cloudWorker, data, dispatch);
 }
 
-const buildPieChartsInsta = async (data, dispatch, keyword) => {
+const buildPieChartsInsta = async (pieChartsWorker, data, dispatch, keyword) => {
   const keywordTitles = [
     keyword("shared_cloud_chart_title"),
     keyword("likes_cloud_chart_title"),
     keyword("top_users_pie_chart_title"),
     keyword("mention_cloud_chart_title")
   ];
-  buildPieCharts(data, keywordTitles, dispatch, INSTA_SNA_TYPE);
+  buildPieCharts(pieChartsWorker, data, keywordTitles, dispatch, INSTA_SNA_TYPE);
 };
 
 /////////////////////////////////////////////////////COUNT INSTA

@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cleanCsvSnaState } from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import CloseResult from "../../../shared/CloseResult/CloseResult";
@@ -41,6 +41,16 @@ export default function CrowdTangleSnaResults(props) {
 	const [widthCards, setWidthCards] = useState(8);
 	const [collapsed, setCollapsed] = useState(false);
 	const [alignIndex, setAlignIndex] = useState("flex-start");
+	useEffect(() => {
+
+		return () => {
+			props.workers.current.cloudWorker.terminate()
+			props.workers.current.hashtagWorker.terminate()
+			props.workers.current.pieChartsWorker.terminate()
+			props.workers.current.timelineWorker.terminate()
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	function onClickCollapseIndex() {
 		if (widthIndex == 4) {
 			setCollapsed(true);
@@ -228,17 +238,10 @@ export default function CrowdTangleSnaResults(props) {
 									</Typography>
 									<Box m={1} />
 								</a>
-
 							</Grid>
-
 						</Box>
-
 					</Card>
-
-
 				</Grid>
-
-
 				<Grid item xs={widthCards}>
 					{
 						<div style={{ position: "relative" }}>
@@ -331,14 +334,8 @@ export default function CrowdTangleSnaResults(props) {
 							}
 						</div>
 					}
-
-
 				</Grid>
-
-
-
 			</Grid>
-
 		</Box>
 	);
 }

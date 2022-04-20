@@ -9,36 +9,31 @@ import {
   buildCoHashTag, 
   buildSocioGraph, 
   wordCount, 
-  buildHeatMap, 
   buildPieCharts, 
-  buildHistogram
+  buildHistogramHeatMap
 } from './commonBuildResult'
 import{FB_SNA_TYPE} from "../../../../shared/hooks/SnaTypes"
 import { getJsonDataForURLTable } from "../../../Hooks/urlList";
 
 const FB_SNA = {type:FB_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv", tsvInfo : "/components/fb/OnClickInfo.tsv" }
 
-export const useFacebookResult = (data, keyword, dispatch) => {
+export const useFacebookResult = (workers, data, keyword, dispatch) => {
     dispatch(setSnaType(FB_SNA));
-    buildFirstFbResult(data, dispatch, keyword);
+    buildFirstFbResult(workers, data, dispatch, keyword);
 };
 
-const buildFirstFbResult = (data, dispatch, keyword) => {
-    dispatch(setMaxProcessStage(13));
-    let titleLabel = keyword("sna_time_chart_title");
-    let timeLabel = keyword('sna_local_time');
-    let heatMapTitle = keyword("ct_heatmap_chart_title")
-    //console.log("eed", titleLabel);
-    //console.log("eed2", timeLabel);
-    //console.log("eed3", heatMapTitle);
-    buildHistogram(data, dispatch, titleLabel, timeLabel);
-    buildCountFb(data, dispatch);
-    buildPieChartsFB(data, dispatch, keyword);
-    buildHeatMap(data, dispatch, heatMapTitle);
-    buildCoHashTag(data, dispatch);
-    buildSocioGraph(data, dispatch);
-    buildUrls(data, keyword, dispatch);
-    wordCount(data, dispatch);
+const buildFirstFbResult = (workers, data, dispatch, keyword) => {
+  dispatch(setMaxProcessStage(13));
+  let titleLabel = keyword("sna_time_chart_title");
+  let timeLabel = keyword('sna_local_time');
+  let heatMapTitle = keyword("ct_heatmap_chart_title")
+  buildHistogramHeatMap(workers.timelineWorker, data, dispatch, titleLabel, timeLabel, heatMapTitle);
+  buildCountFb( data, dispatch);
+  buildPieChartsFB(workers.pieChartsWorker, data, dispatch, keyword);
+  buildCoHashTag(workers.hashtagWorker, data, dispatch);
+  buildSocioGraph(workers.socioWorker, data, dispatch);
+  buildUrls(data, keyword, dispatch);
+  wordCount(workers.cloudWorker, data, dispatch);
   }
 
   const buildCountFb = async (data, dispatch) => {
@@ -46,14 +41,14 @@ const buildFirstFbResult = (data, dispatch, keyword) => {
     dispatch(setCountResult(countFb));
 };
 
-const buildPieChartsFB = async (data, dispatch, keyword) => {
+const buildPieChartsFB = async (pieChartsWorker, data, dispatch, keyword) => {
     const keywordTitles = [
       keyword("shared_cloud_chart_title"),
       keyword("likes_cloud_chart_title"),
       keyword("top_users_pie_chart_title"),
       keyword("mention_cloud_chart_title")
     ];
-    buildPieCharts(data, keywordTitles, dispatch, FB_SNA_TYPE);
+    buildPieCharts(pieChartsWorker, data, keywordTitles, dispatch, FB_SNA_TYPE);
 };
 
 const buildUrls = async (data, keyword, dispatch) => {

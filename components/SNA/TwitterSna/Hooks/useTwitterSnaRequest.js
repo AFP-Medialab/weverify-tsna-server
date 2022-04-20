@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
@@ -45,6 +45,8 @@ const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
 
 const useTwitterSnaRequest = (request) => {
 
+const tsnaWorkers = useRef()
+
 	const keyword = useLoadLanguage(sna.tsv)
   const dispatch = useDispatch();
   const authenticatedRequest = useAuthenticatedRequest();
@@ -52,7 +54,25 @@ const useTwitterSnaRequest = (request) => {
     (state) => state.userSession && state.userSession.userAuthenticated
   );
   const role = useSelector((state) => state.userSession.user.roles);
+  
+  useEffect(() => {
+    console.log("effect empty")
+    let cloudWorker = new Worker(new URL('./cloudChart.js', import.meta.url));
+    let hashtagWorker =  new Worker(new URL('./hashtagGraph.js', import.meta.url))
+    let socioWorker = new Worker(new URL('./socioSemGraph.js', import.meta.url))
 
+    tsnaWorkers.current = {
+      socioWorker: socioWorker,
+      cloudWorker: cloudWorker,
+      hashtagWorker: hashtagWorker
+  }
+    return () => {
+      console.log("stop ....")
+      tsnaWorkers.current.socioWorker.terminate()
+      tsnaWorkers.current.cloudWorker.terminate()
+      tsnaWorkers.current.hashtagWorker.terminate()
+    }
+  }, []);
   useEffect(() => {
     const enableExtraFeatures = () => {
       for (let index in role) {
@@ -70,7 +90,6 @@ const useTwitterSnaRequest = (request) => {
     };
     // Check request
     const cacheRenderCall = (request) => {
-      //console.log("cache cachce");
       dispatch(
         setTwitterSnaLoadingMessage(keyword("twittersna_building_graphs"))
       );
@@ -248,10 +267,8 @@ const useTwitterSnaRequest = (request) => {
     }
 
     const wordCount = async (tweets, request) => {
-      const cloudWorker = new Worker(new URL('./cloudChart.js', import.meta.url));
-      cloudWorker.postMessage([tweets, request]);
-      cloudWorker.onmessage = (evt) => {
-        console.log("received message wordcount")
+      tsnaWorkers.current.cloudWorker.postMessage([tweets, request]);
+      tsnaWorkers.current.cloudWorker.onmessage = (evt) => {
         let wordCountResponse = evt.data;
         dispatch(setCloudWordsResult(wordCountResponse));
       }
@@ -265,10 +282,8 @@ const useTwitterSnaRequest = (request) => {
     };
 
     const buildSocioGraph = async (tweets, topUser) => {
-      const socioWorker = new Worker(new URL('./socioSemGraph.js', import.meta.url))
-      socioWorker.postMessage([tweets, topUser]);
-      socioWorker.onmessage = (evt) =>{
-        console.log("received message socio")
+      tsnaWorkers.current.socioWorker.postMessage([tweets, topUser]);
+      tsnaWorkers.current.socioWorker.onmessage = (evt) =>{
         const socioSemantic4ModeGraph = JSON.parse(evt.data);
         dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
       }
@@ -276,9 +291,8 @@ const useTwitterSnaRequest = (request) => {
     };
 
     const buildCoHashTag = async (tweets) => {
-      const hashtagWorker =  new Worker(new URL('./hashtagGraph.js', import.meta.url))
-      hashtagWorker.postMessage(tweets);
-      hashtagWorker.onmessage = (evt) => {
+      tsnaWorkers.current.hashtagWorker.postMessage(tweets);
+      tsnaWorkers.current.hashtagWorker.onmessage = (evt) => {
         console.log("received message hashtag")
         let coHashtagGraph = evt.data;
         dispatch(setCoHashtagResult(coHashtagGraph));
