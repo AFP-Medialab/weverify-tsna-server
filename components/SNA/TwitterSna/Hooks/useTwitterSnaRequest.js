@@ -28,9 +28,6 @@ import { getJsonDataForTimeLineChart } from "./timelineTW";
 import { createTimeLineChart } from "../../Hooks/timeline";
 import { createPieCharts, getJsonDataForPieCharts } from "./pieCharts";
 import {removeUnusedFields} from "../../../SNA/lib/displayTweets"
-import socioWorker from "workerize-loader?inline!./socioSemGraph";
-import cloudWorker from "workerize-loader?inline!./cloudChart";
-import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
 
 import { createHeatMap } from "./heatMap";
 
@@ -251,9 +248,15 @@ const useTwitterSnaRequest = (request) => {
     }
 
     const wordCount = async (tweets, request) => {
-      const instance = cloudWorker();
-      const wordCountResponse = await instance.createWordCloud(tweets, request);
-      dispatch(setCloudWordsResult(wordCountResponse));
+      const cloudWorker = new Worker(new URL('./cloudChart.js', import.meta.url));
+      cloudWorker.postMessage([tweets, request]);
+      cloudWorker.onmessage = (evt) => {
+        console.log("received message wordcount")
+        let wordCountResponse = evt.data;
+        dispatch(setCloudWordsResult(wordCountResponse));
+      }
+      //const wordCountResponse = await instance.createWordCloud(tweets, request);
+     
     };
     const buildGexf = async (entries) => {
       axios.all([getESQuery4Gexf(entries)]).then((response) => {
@@ -262,19 +265,24 @@ const useTwitterSnaRequest = (request) => {
     };
 
     const buildSocioGraph = async (tweets, topUser) => {
-      const instance = socioWorker();
-      const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(
-        tweets,
-        topUser
-      );
-      const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
-      dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+      const socioWorker = new Worker(new URL('./socioSemGraph.js', import.meta.url))
+      socioWorker.postMessage([tweets, topUser]);
+      socioWorker.onmessage = (evt) =>{
+        console.log("received message socio")
+        const socioSemantic4ModeGraph = JSON.parse(evt.data);
+        dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+      }
+     
     };
 
     const buildCoHashTag = async (tweets) => {
-      const instance = hashtagWorker();
-      const coHashtagGraph = await instance.createCoHashtagGraph(tweets);
-      dispatch(setCoHashtagResult(coHashtagGraph));
+      const hashtagWorker =  new Worker(new URL('./hashtagGraph.js', import.meta.url))
+      hashtagWorker.postMessage(tweets);
+      hashtagWorker.onmessage = (evt) => {
+        console.log("received message hashtag")
+        let coHashtagGraph = evt.data;
+        dispatch(setCoHashtagResult(coHashtagGraph));
+      }
     };
 
     const buildPieCharts = async (request, responseAggs) => {

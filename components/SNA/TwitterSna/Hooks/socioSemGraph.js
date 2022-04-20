@@ -1,6 +1,13 @@
 import _ from "lodash";
 import {lowercaseFieldInTweets} from "../../../SNA/lib/displayTweets"
 
+addEventListener('message', event=> {
+  postMessage(createSocioSemantic4ModeGraph(
+    event.data[0],
+    event.data[1]
+  ));
+})
+
 function getTweetAttrObjArr(tweets, topUser) {
   let topUsers = [];
   for (let user in topUser)

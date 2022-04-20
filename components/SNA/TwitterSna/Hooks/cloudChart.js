@@ -1,3 +1,8 @@
+addEventListener('message', event =>{
+  console.log("cloud chart worker on message")
+  postMessage(createWordCloud(event.data[0], event.data[1]))
+})
+
 const includeWordObj = (wordObj, wordsArray) => {
   for (let i = 0; i < wordsArray.length; i++) {
     if (wordsArray[i].word === wordObj) return i;
