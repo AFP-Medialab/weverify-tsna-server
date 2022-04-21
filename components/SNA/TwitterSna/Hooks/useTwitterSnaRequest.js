@@ -56,7 +56,6 @@ const tsnaWorkers = useRef()
   const role = useSelector((state) => state.userSession.user.roles);
   
   useEffect(() => {
-    console.log("effect empty")
     let cloudWorker = new Worker(new URL('./cloudChart.js', import.meta.url));
     let hashtagWorker =  new Worker(new URL('./hashtagGraph.js', import.meta.url))
     let socioWorker = new Worker(new URL('./socioSemGraph.js', import.meta.url))
@@ -67,7 +66,6 @@ const tsnaWorkers = useRef()
       hashtagWorker: hashtagWorker
   }
     return () => {
-      console.log("stop ....")
       tsnaWorkers.current.socioWorker.terminate()
       tsnaWorkers.current.cloudWorker.terminate()
       tsnaWorkers.current.hashtagWorker.terminate()
