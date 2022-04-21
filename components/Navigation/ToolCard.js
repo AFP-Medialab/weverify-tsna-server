@@ -15,8 +15,6 @@ export class ToolCard extends Component {
         };
     }
 
-
-
     onMouseEnter = e => {
         this.setState({ hovered: true });
     };
@@ -31,24 +29,27 @@ export class ToolCard extends Component {
         var showNew = false;
         var showRedesign = false;
         var showLock = false;
+        var showExperimental = false;
+
 
         //console.log(this.props);
+        
+        if (this.props.iconsAttributes !== undefined){
+            if (this.props.iconsAttributes.includes("redesigned")) {
+                showRedesign = true;
+            }
 
-        if (this.props.type === "redesigned") {
-            showRedesign = true;
-        }
+            if (this.props.iconsAttributes.includes("new")) {
+                showNew = true;
+            }
 
-        if (this.props.type === "new") {
-            showNew = true;
-        }
+            if (this.props.iconsAttributes.includes("lock")) {
+                showLock = true;
+            }
 
-        if (this.props.type === "lock") {
-            showLock = true;
-        }
-
-        if (this.props.type === "lock and new") {
-            showLock = true;
-            showNew = true;
+            if (this.props.iconsAttributes.includes("experimental")) {
+                showExperimental = true;
+            }
         }
 
         const { hovered } = this.state;
@@ -102,6 +103,12 @@ export class ToolCard extends Component {
                             {showNew &&
                                 <Grid item style={{ marginLeft: 'auto', color: "#F44336" }} >
                                     <FiberNewIcon />
+                                </Grid>
+                            }
+
+                            {showExperimental &&
+                                <Grid item style={{ marginLeft: 'auto', color: "#F44336" }} >
+                                    <BugReportIcon />
                                 </Grid>
                             }
 

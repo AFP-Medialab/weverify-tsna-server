@@ -1,10 +1,30 @@
-import { createTimeLineChart } from "../../../Hooks/timeline";
+import { createTimeLineChart } from "../../../Hooks/timeline"
 
-export const createTimeLineChart4CT = (date_min, date_max, json, titleLabel, timeLabel, full_fileName) => {
+addEventListener('message', event => {
+  if (event.data.type === "TIME_LINE_HEATMAP"){
+    postMessage(
+      {
+        type: event.data.type, 
+        data: getJsonDataForTimeLineChart(event.data.data)
+      })}
+  else if (event.data.type === "TIME_LINE"){
+    let getDataResult = getJsonDataForTimeLineChart(event.data.data[0])
+    //console.log("time_line  ", getDataResult)
+    var date_min = getDataResult[1];
+    var date_max = getDataResult[2];  
+    var full_filename = "FACEBOOK CSV NAME" + "_" + date_min + "_" + date_max + "_Timeline"
+    postMessage({
+      type: event.data.type, 
+      response: createTimeLineChart4CT(date_min, date_max , getDataResult[0], event.data.data[1], event.data.data[2], full_filename)
+    })
+  }
+})
+
+const createTimeLineChart4CT = (date_min, date_max, json, titleLabel, timeLabel, full_fileName) => {
   return createTimeLineChart(date_min, date_max, json, titleLabel, timeLabel, full_fileName);
 }
 
-export const getEpochMillis = (dateStr) => {
+const getEpochMillis = (dateStr) => {
 
   var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CES*T\s*$/
     , m = ("" + dateStr).match(r);
@@ -12,8 +32,8 @@ export const getEpochMillis = (dateStr) => {
   return (m) ? Date.UTC(m[1], m[2] - 1, m[3], m[4], m[5], m[6]) : undefined;
 };
 
-export const getJsonDataForTimeLineChart = (data) => {
-  //console.log("JSON 3", data);
+const getJsonDataForTimeLineChart = (data) => {
+  
   let datas = data;
   var infos = [];
   let min_epoch = 9999999999999999;

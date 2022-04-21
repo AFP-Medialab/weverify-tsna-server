@@ -1,5 +1,12 @@
 import _ from "lodash";
-import {lowercaseFieldInTweets} from "../../../SNA/lib/displayTweets"
+import {lowercaseFieldInTweets, getDomain} from "../../lib/displayTweets"
+
+addEventListener('message', event => {
+  postMessage(createSocioSemantic4ModeGraph(
+    event.data[0],
+    event.data[1]
+  ));
+})
 
 function getTweetAttrObjArr(tweets, topUser) {
   let topUsers = [];
@@ -48,25 +55,6 @@ function getTweetAttrObjArr(tweets, topUser) {
     return tweetAttrObjArr;
   }
 
-  export function getDomain(url) {
-    var domain;
-  
-    if (url.indexOf("://") > -1) {
-      domain = url.split('/')[2];
-    }
-    else {
-      domain = url.split('/')[0];
-    }
-    
-    if (domain.indexOf("www.") > -1) { 
-      domain = domain.split('www.')[1];
-    }
-    
-    domain = domain.split(':')[0];
-    domain = domain.split('?')[0];
-  
-    return domain;
-  }
 
   function getCoOccurence(tweetAttrObjArr) {
     let coOccur = [];

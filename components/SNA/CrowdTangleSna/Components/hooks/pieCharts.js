@@ -1,4 +1,13 @@
-export const createPieCharts = (request, jsonPieCharts,keywordTitles) => {
+addEventListener('message', event =>{
+  if (event.data.type === "INSTA")
+    postMessage({type: event.data.type, response: getJsonDataForPieChartsInsta(event.data.data)})
+  else if(event.data.type === "FB") 
+    postMessage({type: event.data.type, response: getJsonDataForPieCharts(event.data.data)})
+  else if(event.data.type === "BUILD")
+    postMessage({type: event.data.type, response: createPieCharts(event.data.data[0], event.data.data[1])})
+})
+
+const createPieCharts = (jsonPieCharts,keywordTitles) => {
   let layout = {
       title: {
         font: {
@@ -94,7 +103,7 @@ export const createPieCharts = (request, jsonPieCharts,keywordTitles) => {
     return obj;
   }
   
-  export const getJsonDataForPieCharts = (esResponse, paramKeywordList) => {
+  const getJsonDataForPieCharts = (esResponse) => {
   let newmap = [];
   for (let i = 0; i < esResponse.length; i++)
   {
@@ -111,7 +120,7 @@ export const createPieCharts = (request, jsonPieCharts,keywordTitles) => {
     }
     if (flag == 0) {
       newmap.push({
-        labels: esResponse[i].page_name,
+        labels: (esResponse[i].page_name ? esResponse[i].page_name : esResponse[i].group_name) ,
         shares : esResponse[i].shares,
         likes : esResponse[i].likes,
         comments : esResponse[i].comments,
@@ -165,7 +174,7 @@ export const createPieCharts = (request, jsonPieCharts,keywordTitles) => {
 };
 
 
-export const getJsonDataForPieChartsInsta = (esResponse, paramKeywordList) => {
+const getJsonDataForPieChartsInsta = (esResponse, paramKeywordList) => {
   let newmap = [];
   for (let i = 0; i < esResponse.length; i++)
   {

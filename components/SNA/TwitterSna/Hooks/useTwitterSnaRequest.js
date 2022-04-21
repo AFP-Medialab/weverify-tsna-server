@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
@@ -28,9 +28,6 @@ import { getJsonDataForTimeLineChart } from "./timelineTW";
 import { createTimeLineChart } from "../../Hooks/timeline";
 import { createPieCharts, getJsonDataForPieCharts } from "./pieCharts";
 import {removeUnusedFields} from "../../../SNA/lib/displayTweets"
-import socioWorker from "workerize-loader?inline!./socioSemGraph";
-import cloudWorker from "workerize-loader?inline!./cloudChart";
-import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
 
 import { createHeatMap } from "./heatMap";
 
@@ -48,6 +45,8 @@ const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
 
 const useTwitterSnaRequest = (request) => {
 
+const tsnaWorkers = useRef()
+
 	const keyword = useLoadLanguage(sna.tsv)
   const dispatch = useDispatch();
   const authenticatedRequest = useAuthenticatedRequest();
@@ -55,7 +54,23 @@ const useTwitterSnaRequest = (request) => {
     (state) => state.userSession && state.userSession.userAuthenticated
   );
   const role = useSelector((state) => state.userSession.user.roles);
+  
+  useEffect(() => {
+    let cloudWorker = new Worker(new URL('./cloudChart.js', import.meta.url));
+    let hashtagWorker =  new Worker(new URL('./hashtagGraph.js', import.meta.url))
+    let socioWorker = new Worker(new URL('./socioSemGraph.js', import.meta.url))
 
+    tsnaWorkers.current = {
+      socioWorker: socioWorker,
+      cloudWorker: cloudWorker,
+      hashtagWorker: hashtagWorker
+  }
+    return () => {
+      tsnaWorkers.current.socioWorker.terminate()
+      tsnaWorkers.current.cloudWorker.terminate()
+      tsnaWorkers.current.hashtagWorker.terminate()
+    }
+  }, []);
   useEffect(() => {
     const enableExtraFeatures = () => {
       for (let index in role) {
@@ -73,7 +88,6 @@ const useTwitterSnaRequest = (request) => {
     };
     // Check request
     const cacheRenderCall = (request) => {
-      //console.log("cache cachce");
       dispatch(
         setTwitterSnaLoadingMessage(keyword("twittersna_building_graphs"))
       );
@@ -251,9 +265,13 @@ const useTwitterSnaRequest = (request) => {
     }
 
     const wordCount = async (tweets, request) => {
-      const instance = cloudWorker();
-      const wordCountResponse = await instance.createWordCloud(tweets, request);
-      dispatch(setCloudWordsResult(wordCountResponse));
+      tsnaWorkers.current.cloudWorker.postMessage([tweets, request]);
+      tsnaWorkers.current.cloudWorker.onmessage = (evt) => {
+        let wordCountResponse = evt.data;
+        dispatch(setCloudWordsResult(wordCountResponse));
+      }
+      //const wordCountResponse = await instance.createWordCloud(tweets, request);
+     
     };
     const buildGexf = async (entries) => {
       axios.all([getESQuery4Gexf(entries)]).then((response) => {
@@ -262,19 +280,21 @@ const useTwitterSnaRequest = (request) => {
     };
 
     const buildSocioGraph = async (tweets, topUser) => {
-      const instance = socioWorker();
-      const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(
-        tweets,
-        topUser
-      );
-      const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
-      dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+      tsnaWorkers.current.socioWorker.postMessage([tweets, topUser]);
+      tsnaWorkers.current.socioWorker.onmessage = (evt) =>{
+        const socioSemantic4ModeGraph = JSON.parse(evt.data);
+        dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+      }
+     
     };
 
     const buildCoHashTag = async (tweets) => {
-      const instance = hashtagWorker();
-      const coHashtagGraph = await instance.createCoHashtagGraph(tweets);
-      dispatch(setCoHashtagResult(coHashtagGraph));
+      tsnaWorkers.current.hashtagWorker.postMessage(tweets);
+      tsnaWorkers.current.hashtagWorker.onmessage = (evt) => {
+        console.log("received message hashtag")
+        let coHashtagGraph = evt.data;
+        dispatch(setCoHashtagResult(coHashtagGraph));
+      }
     };
 
     const buildPieCharts = async (request, responseAggs) => {

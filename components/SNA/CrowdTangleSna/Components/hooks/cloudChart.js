@@ -1,48 +1,9 @@
 const unique = require('unique-words');
 const stopword = require('stopword');
-import {useSelector } from "react-redux";
 
-/*
-const includeWordObj = (wordObj, wordsArray) => {
-  console.log("wordObj ", wordObj)
-  console.log("wordsArray ", wordsArray)
-
-  for (let i = 0; i < wordsArray.length; i++) {
-    if (wordsArray[i] === wordObj) return i;
-  }
-  
-  return -1;
-};
-*/
-
-
-/*
-const getWords = state.result.data
-console.log("getWords ",getWords)
-let coHashtagArr1 = getWords.filter(tweet => tweet.description !== undefined && tweet.description !==null)
-.map((tweet) => { return tweet.description });
-console.log("coHashtagArr1 ",coHashtagArr1)
-let coHashtagArr2 = getWords.filter(tweet => tweet.image_text !== undefined && tweet.image_text !==null)
-.map((tweet) => { return tweet.image_text });
-console.log("coHashtagArr2 ",coHashtagArr2)
-
-var wordss=coHashtagArr1.join(" ")
-var wordss1=coHashtagArr2.join(" ")
-var wordss2=wordss+wordss1
-var final_count=unique.counts(wordss2)
-
-var pairs= Object.entries(final_count);
-console.log("PAIRS ",pairs)
-
-for(var i = 0; i < pairs.length; i++){
-    pairs[i].word = ceva[i]['0'];
-    pairs[i].nbOccurences = pairs[i]['1'];
-    delete pairs[i][0];
-    delete pairs[i][1];
-}
-console.log("PAIRS111 ",pairs)
-*/
-
+addEventListener('message', event =>{
+  postMessage(createWordCloud(event.data))
+})
 
 function getnMax(objArr, n) {
   let sorted = [...objArr.sort((a, b) => b.nbOccurences - a.nbOccurences)];
@@ -133,59 +94,7 @@ for(var i = 0; i < pairs.length; i++){
     delete pairs[i][0];
     delete pairs[i][1];
 }
-
-//console.log("PAIRS ",pairs)
-//wordsArray=pairs
-wordsMap=pairs
-//console.log("wordsMap + wordsArray",wordsMap)
-
-
-   /*
-  for (var i=0 ;i<coHashtagArr1.length; i++){
-    var intermediate=coHashtagArr1[i].split(' ')
-    for (var j=0; j<intermediate.length; j++){
-      intermediate[j] = intermediate[j].replace(/[^@#A-Za-z0-9]/g, '');
-      if(intermediate[j].length>0 && intermediate[j]!==" "){
-        wordss.push(intermediate[j])
-      }
-    }
-  }
-  */
- /*
-  for (var i=0 ;i<coHashtagArr1.length; i++){
-    wordss.push(coHashtagArr1[i])
-  }
-*/
-/*
-  let obj = {
-    ceva: "ceva", 
-    userIsMentioned: '1',
-    total_interactions: hits.total_interactions,
-    post:hits.link
-  }
-  return obj;
-*/
- 
-  
- /*
-  var arr = wordss
-  arr.forEach((word) => {
-    let j = includeWordObj(word, wordsMap);
-    if (j !== -1) {
-      wordsMap[j].nbOccurences += word.nbOccurences;
-    } else {
-      wordsMap.push(word);
-    }
-    console.log("wordsMap ",wordsMap)
-  });
-
-
-  let toRemove = request.keywordList.map((word) => word.replace("#", ""));
-
-  toRemove.forEach((wordToRemove) => {
-    wordsMap.splice(includeWordObj(wordToRemove, wordsMap), 1);
-  });
-  */
+  wordsMap=pairs
   return getnMax(wordsMap, 100);
 };
 
@@ -209,7 +118,7 @@ function getColor(entity) {
   return "#35347B";
 }
 
-export const createWordCloud = (plotlyJson/*, request*/) => {
+const createWordCloud = (plotlyJson/*, request*/) => {
   let mostUsedWords = getAllWordsMap(plotlyJson/*, request*/);
   //console.log("mostUsedWords ", mostUsedWords)
   mostUsedWords = mostUsedWords.map((word) => {

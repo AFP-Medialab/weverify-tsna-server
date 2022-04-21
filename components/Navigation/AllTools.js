@@ -10,13 +10,13 @@ import { useRouter } from 'next/router';
 import React from "react";
 import { useSelector } from 'react-redux';
 import IconData from '../../images/SVG/DataAnalysis/Data_analysis.svg';
+import IconSearch from '../../images/SVG/Search/Search.svg'
 import IconTools from '../../images/SVG/NavBar/Tools.svg';
 import HeaderTool from '../shared/HeaderTool/HeaderTool';
 import useLoadLanguage from '../shared/hooks/useRemoteLoadLanguage';
 import useMyStyles from '../shared/styles/useMyStyles';
 import AdvancedTools from './AdvancedTools/AdvancedTools';
 import ToolCard from "./ToolCard";
-
 
 
 function TabPanel(props) {
@@ -42,14 +42,18 @@ const AllTools = (props) => {
     const router = useRouter();
     const classes = useMyStyles();
     const keyword = useLoadLanguage("/components/NavItems/tools/AllTools.tsv");
+    const keywordNavbar = useLoadLanguage("/components/NavBar.tsv");
     const keywordWarning = useLoadLanguage("/components/Shared/OnWarningInfo.tsv");
     const [openAlert, setOpenAlert] = React.useState(false);
     const userAuthenticated = useSelector(
         (state) => state.userSession && state.userSession.userAuthenticated
     );
-    const handleClick = (path, mediaTool, type) => {
+    const role = useSelector((state) => state.userSession.user.roles);
+    const betaTester = role.includes('BETA_TESTER')
+
+    const handleClick = (path, mediaTool, restrictions) => {
         //console.log(type);
-        if (type === "lock" || type === "lock and new"){
+         if (restrictions !== undefined && restrictions.includes("lock")) {
             if (userAuthenticated){
                 //console.log("LOGGED");
                 handlePush(path, mediaTool);
@@ -74,15 +78,27 @@ const AllTools = (props) => {
     };
     
     const toolsData = [];
+    const toolsSearch = [];
     const tools = props.tools;
     //console.log("tools ", tools);
-    tools.forEach((value) => {
+    /*tools.forEach((value) => {
         if (value.title === "navbar_twitter_sna") {
             value.type = "lock";
         }
         toolsData.push(value);
 
-    });
+    });*/
+
+    tools.forEach((value) => {
+        if (value.type === keywordNavbar("navbar_category_search")) {
+            toolsSearch.push(value);
+        }
+
+        if (value.type === keywordNavbar("navbar_category_data")) {
+            toolsData.push(value);
+        }
+
+    })
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -137,6 +153,29 @@ const AllTools = (props) => {
                                 </Grid>
                             </Box>
                         } />
+                    <Tab label={
+                        <Box mt={1}>
+                            <Grid
+                                container
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="center"
+                            >
+                                <Grid item>
+                                    <IconSearch width="40px" height="40px" style={{ fill: "#596977" }} />
+                                </Grid>
+
+                                <Grid item>
+                                    <Box m={1} />
+                                </Grid>
+
+                                <Grid item>
+                                    <Typography variant="h6" style={{ color: "#596977", textTransform: "capitalize" }}>{keyword("category_search")}</Typography>
+                                </Grid>
+
+                            </Grid>
+                        </Box>
+                    } />
                 </Tabs>
                 <Box m={1} />
                 <div style={{minHeight: "340px"}}>
@@ -146,14 +185,47 @@ const AllTools = (props) => {
                             {
                                 toolsData.map((value, key) => {
                                     return (
-                                        <Grid className={classes.toolCardStyle} item key={key} onClick={() => handleClick(value.path, "datas", value.type)}>
+                                        <Grid className={classes.toolCardStyle} item key={key} onClick={() => handleClick(value.path, "datas", value.toolRestrictions)}>
                                             <ToolCard
                                                 name={keyword(value.title)}
                                                 description={keyword(value.description)}
                                                 icon={value.iconColored}
-                                                type={value.type} />
+                                                iconsAttributes={value.icons}  />
                                         </Grid>
                                     );
+                                })
+                            }
+
+                        </Grid>
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <Grid container justifyContent="flex-start" spacing={2} className={classes.toolCardsContainer}>
+
+                            {
+                                toolsSearch.map((value, key) => {
+                                    var element = 
+                                        <Grid className={classes.toolCardStyle} item key={key} onClick={() => handleClick(value.path, "search", value.toolRestrictions)}>
+                                            <ToolCard
+                                                name={keyword(value.title)}
+                                                description={keyword(value.description)}
+                                                icon={value.iconColored}
+                                                iconsAttributes={value.icons} />
+                                        </Grid>
+                                    if (value.toolRestrictions.includes("beta")) {
+                                        if (betaTester) {
+                                            return (
+                                                element
+                                            )
+                                        } else {
+                                            return (
+                                                null
+                                            )
+                                        }
+                                    } else {
+                                        return (
+                                            element
+                                        )
+                                    }
                                 })
                             }
 

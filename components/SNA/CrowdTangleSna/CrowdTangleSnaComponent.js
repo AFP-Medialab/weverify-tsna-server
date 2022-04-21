@@ -5,6 +5,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import { createTheme, StylesProvider, ThemeProvider } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { useRef, useState } from "react";
 import CSVReader from "react-csv-reader";
 import { useDispatch, useSelector } from "react-redux";
 import CSVIcon from "../../../images/SVG/DataAnalysis/CSV_SNA_big.svg";
@@ -35,9 +36,7 @@ import CrowdTangleSnaResults from "./Results/CrowdTangleSnaResults";
 const CrowdTangleSnaComponent = () => {
 
     const theme = createTheme({
-
         overrides: {
-
             MuiCardHeader: {
                 root: {
                     backgroundColor: "#05A9B4",
@@ -50,18 +49,14 @@ const CrowdTangleSnaComponent = () => {
                     fontweight: 500,
                 }
             },
-
             MuiTab: {
                 wrapper: {
                     fontSize: 12,
-
                 },
                 root: {
                     minWidth: "25%!important",
                 }
             },
-
-
             MuiAccordion: {
                 root: {
                     boxShadow: "none",
@@ -69,25 +64,17 @@ const CrowdTangleSnaComponent = () => {
                         width: "0px",
                     },
                     border: "1px solid #51A5B2",
-
                 },
                 rounded: {
                     borderRadius: "15px",
                 }
-
-
             },
-
             MuiIconButton: {
                 root: {
                     padding: "0px"
                 }
             }
-
         },
-
-
-
         palette: {
             primary: {
                 light: '#5cdbe6',
@@ -96,9 +83,7 @@ const CrowdTangleSnaComponent = () => {
                 contrastText: '#fff',
             },
         },
-
     });
-
 
     const keyword = useLoadLanguage(CT_TSV)
     const dispatch = useDispatch();
@@ -109,7 +94,8 @@ const CrowdTangleSnaComponent = () => {
     const maxStage = useSelector(state => state.ctSna.maxStage);
     const stage = useSelector(state => state.ctSna.stage)
     const resultRedux = useSelector(state => state.ctSna.result);
-
+    //const [workers, setWorkers] = useState({})
+    const workers = useRef()
     
     const makeResultCsv = (data) => {
         var from =["PLOT_LINE","PLOT_PIE_CHART_0","PLOT_PIE_CHART_1","PLOT_PIE_CHART_2","PLOT_PIE_CHART_3","PLOT_HASHTAG_GRAPH"]
@@ -124,14 +110,27 @@ const CrowdTangleSnaComponent = () => {
         dispatch(setUrlsResult(null))
         dispatch(setCloudWordsResult(null))
         dispatch(setSocioGraphResult(null))
-
+        //Create Workers 
+        let timelineWorker = new Worker(new URL('./Components/hooks/timelineCT.js', import.meta.url));
+        let pieChartsWorker = new Worker(new URL('./Components/hooks/pieCharts.js', import.meta.url));
+        let socioWorker = new Worker(new URL('./Components/hooks/socioSemGraph.js', import.meta.url));
+        let cloudWorker = new Worker(new URL('./Components/hooks/cloudChart.js', import.meta.url));
+        let hashtagWorker = new Worker(new URL('./Components/hooks/hashtagGraph.js', import.meta.url));
+        console.log("create workers ...")
+        workers.current = {
+            timelineWorker: timelineWorker,
+            pieChartsWorker: pieChartsWorker,
+            socioWorker: socioWorker,
+            cloudWorker: cloudWorker,
+            hashtagWorker: hashtagWorker
+        }
+        
         //facebook else instagram
-        if(data[0].facebook_id) {
-            
-            useFacebookResult(data, keyword, dispatch);
+        if(data[0].facebook_id) {          
+            useFacebookResult(workers.current, data, keyword, dispatch);
         }
         else{
-            useInstagramResult(data, keyword, dispatch);
+            useInstagramResult(workers.current, data, keyword, dispatch);
         }
     };
 
@@ -197,7 +196,7 @@ const CrowdTangleSnaComponent = () => {
             </Card>
         </StylesProvider>
         {
-            resultRedux && <CrowdTangleSnaResults result={resultRedux} />
+            resultRedux && <CrowdTangleSnaResults result={resultRedux} workers={workers}/>
         }
         <FeedBack/>
 

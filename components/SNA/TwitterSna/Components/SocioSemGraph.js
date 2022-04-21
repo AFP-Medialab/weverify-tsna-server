@@ -15,7 +15,7 @@ import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import PostViewTable from "../../Components/PostViewTable";
-import { getDomain } from "../Hooks/socioSemGraph";
+import { getDomain } from "../../../SNA/lib/displayTweets";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 
 

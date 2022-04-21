@@ -15,8 +15,6 @@ export function filterForTimeLine(postDate, selectedPoints) {
   }
 
   export const createTimeLineChart = (date_min, date_max, json, titleLabel, timeLabel, full_fileName) => {
-    //console.log("date_min " , date_min);
-    //console.log("date_max " , date_max);
     const range_min = normalizeDate(date_min);
     const range_max = normalizeDate(date_max);
 

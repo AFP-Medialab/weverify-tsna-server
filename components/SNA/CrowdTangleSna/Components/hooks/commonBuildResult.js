@@ -1,9 +1,3 @@
-import cloudWorker from "workerize-loader?inline!./cloudChart";
-import socioWorker from "workerize-loader?inline!./socioSemGraph";
-import hashtagWorker from "workerize-loader?inline!./hashtagGraph";
-import pieChartsWorker from "workerize-loader?inline!./pieCharts";
-import timelineWorker from "workerize-loader?inline!./timelineCT";
-
 import { createHeatMap } from "./heatMap";
 import {
     setCoHashtagResult,
@@ -15,52 +9,69 @@ import {
   } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
 import { INSTA_SNA_TYPE } from "../../../../shared/hooks/SnaTypes";
 
-export const buildCoHashTag = async (data, dispatch) => {
-    const instance = hashtagWorker();
-    const coHashtagGraph = await instance.createCoHashtagGraph(data);
-    dispatch(setCoHashtagResult(coHashtagGraph));
+export const buildCoHashTag = async (hashtagWorker, data, dispatch) => {
+    hashtagWorker.postMessage(data)
+    hashtagWorker.onmessage = (evt) => {
+      let coHashtagGraph = evt.data
+      dispatch(setCoHashtagResult(coHashtagGraph));
+    }
+    
 };
 
-export const wordCount = async (data, dispatch) => {
-    const instance = cloudWorker();
-    const wordCountResponse = await instance.createWordCloud(data);
+export const wordCount = async (cloudWorker, data, dispatch) => {
+  cloudWorker.postMessage(data);
+  cloudWorker.onmessage = (evt) => {
+    let wordCountResponse = evt.data
     dispatch(setCloudWordsResult(wordCountResponse));
+  }
 };
 
-export const buildSocioGraph = async (data, dispatch) => {
-    const instance = socioWorker();
-    const socioSemantic4ModeGraphJson = await instance.createSocioSemantic4ModeGraph(
-      data
-    );
-    const socioSemantic4ModeGraph = JSON.parse(socioSemantic4ModeGraphJson);
-    dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+export const buildSocioGraph = async (socioWorker, data, dispatch) => {
+    socioWorker.postMessage(data);
+    socioWorker.onmessage = (evt) => {
+      let socioSemantic4ModeGraph = JSON.parse(evt.data);
+      dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+    } 
+    
 };
 
- export const buildHeatMap = async (data, dispatch, heatMapTitle) => {
-    const heatMap = createHeatMap(data, heatMapTitle);
-    dispatch(setHeatMapResult(heatMap));
-};
-
-export const buildPieCharts = async (data, keywordTitles, dispatch, type) => {
-    const instance = pieChartsWorker();
-    let jsonPieChart = null;
+export const buildPieCharts = async (pieChartsWorker, data, keywordTitles, dispatch, type) => {
     if(type === INSTA_SNA_TYPE){
-      jsonPieChart = await instance.getJsonDataForPieChartsInsta(data);
+      pieChartsWorker.postMessage({type: "INSTA", data: data})
     }
     else {
-      jsonPieChart = await instance.getJsonDataForPieCharts(data);
+      pieChartsWorker.postMessage({type: "FB", data: data})
     }
-    const pieCharts = await instance.createPieCharts("",jsonPieChart,keywordTitles);
-    dispatch(setPieChartsResult(pieCharts));
+    pieChartsWorker.onmessage = (evt) => {
+      if(evt.data.type !== "BUILD"){
+        let jsonPieChart = evt.data.response
+        pieChartsWorker.postMessage({type: "BUILD", data: [jsonPieChart, keywordTitles]})
+      }
+      else {
+        let pieCharts = evt.data.response
+        dispatch(setPieChartsResult(pieCharts));
+      }
+    }    
 }
 
-export const buildHistogram = async (data, dispatch, titleLabel, timeLabel)=>{
-    const instance = timelineWorker();
-    let getDataResult = await instance.getJsonDataForTimeLineChart(data)
-    var date_min = getDataResult[1];
-    var date_max = getDataResult[2];
-    var full_filename = "FACEBOOK CSV NAME" + "_" + date_min + "_" + date_max + "_Timeline"
-    const histogram = await instance.createTimeLineChart4CT(date_min, date_max , getDataResult[0], titleLabel, timeLabel, full_filename);
-    dispatch(setHistogramResult(histogram));
+export const buildHistogramHeatMap = async (timelineWorker, data, dispatch, titleLabel, timeLabel, heatMapTitle)=>{
+    timelineWorker.postMessage({
+      type: "TIME_LINE", 
+      data: [data, titleLabel, timeLabel]
+    })
+    timelineWorker.postMessage({
+      type: "TIME_LINE_HEATMAP", 
+      data: data
+      })
+    timelineWorker.onmessage = (evt) => {
+      if(evt.data.type === "TIME_LINE"){
+        let histogram = evt.data.response;
+        dispatch(setHistogramResult(histogram));
+      }
+      if(evt.data.type === "TIME_LINE_HEATMAP"){
+        let heatMap = createHeatMap(data, evt.data.data, heatMapTitle);
+        dispatch(setHeatMapResult(heatMap));
+      }
+    }
   };
   
