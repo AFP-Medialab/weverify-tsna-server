@@ -11,7 +11,7 @@ import HeaderTool from "../shared/HeaderTool/HeaderTool";
 const XNetwork = () => {
   const classes = useMyStyles();
   const keyword = useLoadLanguage("/components/NavItems/tools/XNetwork.tsv");
-  const keywordAllTools = useLoadLanguage("/components/NavItems/tools/Alltools.tsv");
+  const keywordAllTools = useLoadLanguage("/components/NavItems/tools/AllTools.tsv");
   const tsvinfo = "/components/Shared/OnClickInfo.tsv";
 
   useEffect(() => {
