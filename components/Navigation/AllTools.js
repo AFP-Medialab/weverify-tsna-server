@@ -17,7 +17,7 @@ import useLoadLanguage from '../shared/hooks/useRemoteLoadLanguage';
 import useMyStyles from '../shared/styles/useMyStyles';
 import AdvancedTools from './AdvancedTools/AdvancedTools';
 import ToolCard from "./ToolCard";
-
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -105,6 +105,17 @@ const AllTools = (props) => {
         setValue(newValue);
     };
 
+    const theme = createTheme(
+    {
+        overrides:{
+            MuiTab:{
+                root: {
+                    maxWidth: "290px"
+                }
+            }
+        }
+    }
+    )
 
     return (
         <div className={classes.all}>
@@ -120,7 +131,7 @@ const AllTools = (props) => {
                 alignItems="center">
 
                 <Grid item xs>
-                    <HeaderTool name={keyword("navbar_tools")} icon={<IconTools style={{ fill: "#51A5B2" }} />} />
+                    <HeaderTool name={keyword("navbar_tools")} icon={<IconTools width="45px" height="45px" style={{ fill: "#51A5B2" }} />} />
                 </Grid>
 
                 <Grid item>
@@ -130,29 +141,31 @@ const AllTools = (props) => {
             </Grid>
             <Card>
                 <Tabs value={value} onChange={handleChange} indicatorColor={'primary'}>
+                    <ThemeProvider theme={theme}>
                     <Tab label={
-                            <Box mt={1}>
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justifyContent="flex-start"
-                                    alignItems="center"
-                                >
-                                    <Grid item>
-                                        <IconData width="45px" height="45px" style={{ fill: "#596977" }} />
-                                    </Grid>
-
-                                    <Grid item>
-                                        <Box m={1} />
-                                    </Grid>
-
-                                    <Grid item>
-                                        <Typography variant="h6" style={{ color: "#596977", textTransform: "capitalize" }}>{keyword("category_data")}</Typography>
-                                    </Grid>
-
+                        <Box mt={1}>
+                            <Grid
+                                container
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="center"
+                            >
+                                <Grid item>
+                                    <IconData width="45px" height="45px" style={{ fill: "#596977" }} />
                                 </Grid>
-                            </Box>
-                        } />
+
+                                <Grid item>
+                                    <Box m={1} />
+                                </Grid>
+
+                                <Grid item>
+                                    <Typography variant="h6" style={{ color: "#596977", textTransform: "capitalize"}}>{keyword("category_data")}</Typography>
+                                </Grid>
+
+                            </Grid>
+                        </Box>
+                    } />
+                    </ThemeProvider>
                     <Tab label={
                         <Box mt={1}>
                             <Grid
