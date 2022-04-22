@@ -4,13 +4,13 @@ import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import XNetworkSearch from "../components/Search/XNetworkSearch"
-const tsv = "/components/NavItems/tools/SNA.tsv";
+const tsv = "/components/NavItems/tools/XNetwork.tsv";
 
 
 const XNetwork = () => {
   const keyword = useLoadLanguage(tsv);
   return (
-    <Layout title={keyword("ct_sna_title")}>
+    <Layout title={keyword("navbar_xnetwork")}>
       <Head>
         <title>Csv Reader</title>
         <link rel="icon" href="/favicon.ico" />

@@ -4,13 +4,13 @@ import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import FactcheckSearch from "../components/Search/FactcheckSearch"
-const tsv = "/components/NavItems/tools/SNA.tsv";
+const tsv = "/components/NavItems/tools/FactcheckSearch.tsv";
 
 
 const FactCheckInfo = () => {
   const keyword = useLoadLanguage(tsv);
   return (
-    <Layout title={keyword("ct_sna_title")}>
+    <Layout title={keyword("navbar_factcheck")}>
       <Head>
         <title>Csv Reader</title>
         <link rel="icon" href="/favicon.ico" />

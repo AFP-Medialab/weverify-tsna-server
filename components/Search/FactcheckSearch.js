@@ -33,7 +33,7 @@ const FactcheckSearch = () => {
 
 
   return (
-    <div>
+    <div className={classes.all}>
       <HeaderTool name={keywordAllTools("navbar_factcheck")} description={keywordAllTools("navbar_factcheck_description")} icon={<FactcheckIcon style={{ fill: "#51A5B2" }} />} />
 
       <Card>
