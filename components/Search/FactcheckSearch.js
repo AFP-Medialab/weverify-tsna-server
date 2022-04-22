@@ -12,7 +12,7 @@ import HeaderTool from "../shared/HeaderTool/HeaderTool";
 const FactcheckSearch = () => {
   const classes = useMyStyles();
   const keyword = useLoadLanguage("/components/NavItems/tools/FactcheckSearch.tsv");
-  const keywordAllTools = useLoadLanguage("/components/NavItems/tools/Alltools.tsv");
+  const keywordAllTools = useLoadLanguage("/components/NavItems/tools/AllTools.tsv");
   const tsvinfo = "/components/Shared/OnClickInfo.tsv";
 
   useEffect(() => {

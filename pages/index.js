@@ -76,7 +76,7 @@ const Index = () => {
     }
   ];
   return (
-    <Layout title={"SOCIAL NETWORK ANALYSIS"}>
+    <Layout title={keyword("navbar_headline")}>
       <Head>
         <title>WeVerify Twitter SNA</title>
         <link rel="icon" href="/favicon.ico" />
