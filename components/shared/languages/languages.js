@@ -25,6 +25,7 @@ const Languages = () => {
     const lang = router.query.lang
     const language_list = (dictionary && dictionary[tsv])? Object.keys(dictionary[tsv]) : [];
     useEffect(() => {
+        console.log("lang ", lang)
         if(!_.isUndefined(lang)){
             if(language_list.includes(lang))
                 dispatch(changeLanguage(lang));

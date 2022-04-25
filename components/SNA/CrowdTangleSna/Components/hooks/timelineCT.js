@@ -24,7 +24,7 @@ const createTimeLineChart4CT = (date_min, date_max, json, titleLabel, timeLabel,
   return createTimeLineChart(date_min, date_max, json, titleLabel, timeLabel, full_fileName);
 }
 
-const getEpochMillis = (dateStr) => {
+export const getEpochMillis = (dateStr) => {
 
   var r = /^\s*(\d{4})-(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)\s+CES*T\s*$/
     , m = ("" + dateStr).match(r);
@@ -32,7 +32,7 @@ const getEpochMillis = (dateStr) => {
   return (m) ? Date.UTC(m[1], m[2] - 1, m[3], m[4], m[5], m[6]) : undefined;
 };
 
-const getJsonDataForTimeLineChart = (data) => {
+export const getJsonDataForTimeLineChart = (data) => {
   
   let datas = data;
   var infos = [];
