@@ -26,8 +26,10 @@ const Languages = () => {
     const language_list = (dictionary && dictionary[tsv])? Object.keys(dictionary[tsv]) : [];
     useEffect(() => {
         console.log("lang ", lang)
+        console.log("lang_list ", language_list)
         if(!_.isUndefined(lang)){
             if(language_list.includes(lang))
+                console.log("dispatch lang ", lang)
                 dispatch(changeLanguage(lang));
         }
     }, [lang]);
