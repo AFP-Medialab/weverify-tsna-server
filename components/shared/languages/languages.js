@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import IconButton from "@material-ui/core/IconButton";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,21 +10,31 @@ import {changeLanguage} from "../../../redux/actions"
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import TranslateIcon from '@material-ui/icons/Translate';
+import { useRouter } from 'next/router'
+import _ from 'lodash'
 
 //const tsv = "/localDictionary/components/languages.tsv";
 const tsv = "/components/NavItems/languages.tsv";
 
 const Languages = () => {
-    
+    const router = useRouter()
     const keyword = useLoadLanguage(tsv);
     const dictionary = useSelector(state => state.dictionary);
     const storeLanguage = useSelector(state => state.language);
+    const dispatch = useDispatch();
+    const lang = router.query.lang
+    const language_list = (dictionary && dictionary[tsv])? Object.keys(dictionary[tsv]) : [];
+    useEffect(() => {
+        if(!_.isUndefined(lang)){
+            if(language_list.includes(lang))
+                dispatch(changeLanguage(lang));
+        }
+    }, [lang]);
     
     const keywordByLang = (language) => {
         return (dictionary && dictionary[tsv] && dictionary[tsv][language])? dictionary[tsv][language]["lang_label"]: "";
     };
 
-    const dispatch = useDispatch();
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -41,7 +51,6 @@ const Languages = () => {
         setAnchorEl(null);
     };
 
-    const language_list = (dictionary && dictionary[tsv])? Object.keys(dictionary[tsv]) : [];
 
     return (
         <div>

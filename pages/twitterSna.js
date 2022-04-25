@@ -18,7 +18,7 @@ const TwitterSnaIndex = () => {
       <TwitterSna />
     </main>
     <footer>
-      <Footer />
+      <Footer type={"afp-usfd-eudisinfolab"} />
     </footer>
     <style jsx>{`
       main {

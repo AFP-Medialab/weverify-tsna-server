@@ -19,7 +19,7 @@ const XNetwork = () => {
         <XNetworkSearch />
       </main>
       <footer>
-        <Footer />
+        <Footer type={"afp"}/>
       </footer>
       <style jsx>{`
         main {
