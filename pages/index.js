@@ -85,7 +85,7 @@ const Index = () => {
         <AllTools tools={drawerItems}/>
       </main>
       <footer>
-        <Footer />
+        <Footer type={"afp"}/>
       </footer>
       <style jsx>{`
         main {

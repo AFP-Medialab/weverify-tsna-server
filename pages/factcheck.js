@@ -19,7 +19,7 @@ const FactCheckInfo = () => {
         <FactcheckSearch />
       </main>
       <footer>
-        <Footer />
+       <Footer type={"afp"}/>
       </footer>
       <style jsx>{`
         main {
