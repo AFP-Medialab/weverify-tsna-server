@@ -1,6 +1,16 @@
+import { SNA_SET_TYPE } from "../types/snaCommunTypes";
+import { TSNA_PROCESS_MAX_STAGE, SET_TWITTER_SNA_NEW_REQUEST,
+    SET_TWITTER_SNA_RESULT,
+    SET_TWITTER_SNA_HEATMAP_RESULTS, 
+    SET_TWITTER_COHASHTAG_RESULTS,
+    SET_TWITTER_SNA_SOCIO_GRAPH_RESULTS,
+    SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE,
+    SET_TWITTER_URLS_RESULTS,
+    SET_TWITTER_SNA_CLOUD_WORDS_RESULTS, 
+    SET_TWITTER_SNA_LOADING } from "../types/tsnaTypes";
 export const setTwitterSnaResult = (request, result, notification, loading) => {
     return {
-        type : "SET_TWITTER_SNA_RESULT",
+        type : SET_TWITTER_SNA_RESULT,
         payload : {
             notification : notification,
             loading : loading,
@@ -12,17 +22,17 @@ export const setTwitterSnaResult = (request, result, notification, loading) => {
 
 export const setTwitterSnaNewRequest = (request) => {
     return {
-        type : "SET_TWITTER_SNA_NEW_REQUEST",
+        type : SET_TWITTER_SNA_NEW_REQUEST,
         payload : {           
             request : request
         }
     }
 };
 
-export const setTwitterSnaLoading = (loading) => {
+export const setTwitterSnaLoading = (loading, maxStage) => {
     return {
-        type : "SET_TWITTER_SNA_LOADING",
-        payload : loading
+        type : SET_TWITTER_SNA_LOADING,
+        payload : {load: loading, maxStage: maxStage}
     }
 };
 
@@ -41,7 +51,7 @@ export const cleanTwitterSnaState = () => {
 
 export const setUserProfileMostActive = (data) => {
     return {
-        type : "SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE",
+        type : SET_TWITTER_SNA_USER_PROFILE_MOST_ACTIVE,
         payload : data
     }
 };
@@ -61,20 +71,20 @@ export const setTSNAReset = (data) => {
 
 export const setCloudWordsResult = (cloudWords) => {
     return {
-        type : "SET_TWITTER_SNA_CLOUD_WORDS_RESULTS",
+        type : SET_TWITTER_SNA_CLOUD_WORDS_RESULTS,
         payload :  cloudWords
     }
 };
 
 export const setSocioGraphResult = (sociodata) => {
     return {
-        type : "SET_TWITTER_SNA_SOCIO_GRAPH_RESULTS",
+        type : SET_TWITTER_SNA_SOCIO_GRAPH_RESULTS,
         payload :  sociodata
     }
 };
 export const setHeatMapResult = (heatMapData) => {
     return {
-        type : "SET_TWITTER_SNA_HEATMAP_RESULTS",
+        type : SET_TWITTER_SNA_HEATMAP_RESULTS,
         payload :  heatMapData
     }
 };
@@ -104,13 +114,13 @@ export const setPieChartsResult = (pieChartData) => {
 };
 export const setCoHashtagResult = (coHashtagData) => {
     return {
-        type : "SET_TWITTER_COHASHTAG_RESULTS",
+        type : SET_TWITTER_COHASHTAG_RESULTS,
         payload :  coHashtagData
     }
 };
 export const setUrlsResult = (urlData) => {
     return {
-        type : "SET_TWITTER_URLS_RESULTS",
+        type : SET_TWITTER_URLS_RESULTS,
         payload :  urlData
     }
 };
@@ -120,10 +130,15 @@ export const setGexfExport = (gexfData) => {
         payload : gexfData
     }
 };
-
+export const setSnaType = (snaType) => {
+    return {
+        type : SNA_SET_TYPE,
+        payload : snaType,
+    };
+  };
 
 export const setTweetsDetailPanel = (from, data) => {    
-    console.log("from " + from)
+    //console.log("from " + from)
     switch(from){
         case "PLOT_LINE":
             return {
@@ -170,3 +185,9 @@ export const setTweetsDetailPanel = (from, data) => {
     }
     
 };
+export const setMaxProcessStage = (stage_max) => {
+    return {
+      type : TSNA_PROCESS_MAX_STAGE,
+      payload : stage_max
+    }
+  };

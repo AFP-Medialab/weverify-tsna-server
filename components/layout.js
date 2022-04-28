@@ -1,25 +1,27 @@
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
-import Head from 'next/head';
-import Languages from './shared/languages/languages';
-import Toolbar from '@material-ui/core/Toolbar';
-import styles from './layout.module.css';
-import useMyStyles from './shared/styles/useMyStyles';
-import getConfig from 'next/config';
-import CustomTitle from "../components/shared/CustomTitle/CustomTitle"
-import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
+//import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
 import Grid from '@material-ui/core/Grid';
+import Toolbar from '@material-ui/core/Toolbar';
+import getConfig from 'next/config';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import CustomTitle from "../components/shared/CustomTitle/CustomTitle";
+import WeVerifyIcon from "../images/SVG/NavBar/WeVerify.svg";
+import styles from './layout.module.css';
+import Languages from './shared/languages/languages';
+import useMyStyles from './shared/styles/useMyStyles';
 const { publicRuntimeConfig } = getConfig();
 
 export const siteTitle = 'Weverify'
 
 function Layout(props) {
     const classes = useMyStyles();
-    //keyword from /components/NavItems/tools/TwitterSna.tsv
-    const keyword = props.keyword;
+    const router = useRouter();
+    //keyword from /components/NavItems/tools/TwitterSna.ts
 
-    const handleClick = event => {
-        window.open("https://weverify.eu/about/", "_blank");
+    const handlePush = () => {
+        router.push('/', undefined, { shallow: true })
     };
 
     return (
@@ -42,23 +44,23 @@ function Layout(props) {
             <div className={classes.flex}>
                 <AppBar position="fixed" color="default" className={classes.appBar}>
                     <Toolbar className={classes.toolbar}>
-                    <Box display={{xs: 'none', md: 'block'}}>
-                        <img
-                            src={`${publicRuntimeConfig.baseFolder}/images/logo-we-verifymini.png`}
-                            alt="logo"
-                            className={classes.logoLeft}
-                            onClick={()=> handleClick()}
-                        />
-                    </Box>
-                    <Languages/>
-                    <CustomTitle text={keyword("twitter_sna_title")}/>
-                    <Grid>
-                {<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
-                 "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",
-                 "aboutsna_wordcloud", "aboutsna_gexf_export", "aboutsna_urls"]}
-                             />
-                }
-            </Grid>
+
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="center"
+                        >
+
+                            <Box display={{ xs: 'none', md: 'block' }}>
+                                <WeVerifyIcon style={{ cursor: 'pointer' }} onClick={() => handlePush()}/>
+                            </Box>
+                            <Grid item xs>
+                                <CustomTitle text={props.title} />
+                            </Grid>
+                            <Languages />
+                        </Grid>
+
                     </Toolbar>
                 </AppBar>
 
@@ -68,3 +70,15 @@ function Layout(props) {
   }
   
   export default Layout
+
+
+  /*
+
+{<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
+                 "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",
+                 "aboutsna_wordcloud", "aboutsna_gexf_export", "aboutsna_urls"]}
+                             />
+                }
+
+
+  */

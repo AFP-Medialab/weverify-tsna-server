@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   tsna-server:
-    image: tsna-server:0.18
+    image: registry-medialab.afp.com/tsna-server:latest
     restart: on-failure
     container_name: tsna-server
     networks:

@@ -1,4 +1,4 @@
-FROM node:14.15.0-slim as builder
+FROM node:14.18.0-slim as builder
 RUN mkdir -p /home/node/app/build
 WORKDIR /home/node/app/build
 
@@ -8,7 +8,7 @@ RUN npx next telemetry disable
 RUN npm run build
 RUN npm prune --production
 
-FROM node:14.15.0-slim
+FROM node:14.18.0-slim
 RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 

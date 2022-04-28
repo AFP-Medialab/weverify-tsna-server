@@ -1,18 +1,38 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import {makeStyles} from "@material-ui/core/styles";
 import {green} from "@material-ui/core/colors";
 
 const drawerWidth = 200;
 
 const useMyStyles = makeStyles(theme => ({
     all: {
-        width: "80%"
+        width: "90%",
+    },
+    container: {
+        backgroundColor: "#fafafa"
     },
     root: {
         padding: theme.spacing(3, 2),
         marginTop: 5,
         textAlign: "center",
-       
     },
+
+    rootNoCenter: {
+        padding: theme.spacing(2),
+    },
+
+    noMargin: {
+        marginLeft: "0px!important",
+        marginRight: "0px!important"
+    },
+
+    cardsResults: {
+        textAlign: "center",
+    },
+
+    headerCard:{
+        textAlign: "left",
+    },
+
     circularProgress: {
         margin: "auto",
         width: "100%"
@@ -57,18 +77,42 @@ const useMyStyles = makeStyles(theme => ({
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
+        height: "85px",
+        backgroundColor: "#ffffff",
+        display: "flex",
+        justifyContent: "center",
     },
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
+        overflowX: "hidden",
+        
     },
+    drawerCategoryBorder: {
+        border: "1px solid #c4c4c4",
+    },
+
+    drawerWidth: {
+        width: "300px"
+    },
+
+    drawerWidthClose: {
+        width: "84px"
+    },
+
+
     drawerOpen: {
         width: drawerWidth,
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         }),
+        overflowX: "hidden",
+        "&::-webkit-scrollbar": {
+            display: 'none',
+
+        },
     },
     drawerClose: {
         transition: theme.transitions.create('width', {
@@ -76,26 +120,64 @@ const useMyStyles = makeStyles(theme => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
         overflowX: 'hidden',
-        width: theme.spacing(7) + 1,
+        width: "85px",
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9) + 1,
+            width: "85px",
         },
+        "&::-webkit-scrollbar": {
+            display: 'none',
+
+        },
+
+    },
+
+    drawerListText: {
+        fontWeight: "500", 
+        fontSize: "14px"
+    },
+
+    drawerListHeadingCenter: {
+        textAlign: "center"
+    },
+
+    drawerListHeadingLeft: {
+        textAlign: "left"
+    },
+
+
+    drawerListIcon: {
+        width: "24px", 
+        height: "24px"
+    },
+    
+    drawerListNested: {
+        paddingLeft: theme.spacing(4),
+    },
+
+    drawerListIcons: {
+        height: "30px",
+        width: "30px"
     },
     toolbar: {
-        ...theme.mixins.toolbar,
+        height: "70px",
+        paddingBottom: "10px",
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+        paddingTop: "50px",
+        backgroundColor: "#fafafa",
+        minHeight: "97vh"
     },
     logoLeft: {
         cursor: "pointer",
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(1),
         maxHeight: "60px",
     },
     logoRight: {
         cursor: "pointer",
-        marginLeft: 2, //theme.spacing(2)
+        marginLeft: theme.spacing(1),
         maxHeight: "70px",
     },
     selectedApp: {
@@ -166,8 +248,8 @@ const useMyStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
     },
     formControl: {
-        margin: theme.spacing(1),
         minWidth: 200,
+        width:"100%"
     },
     histogram: {
         width: "100%",
@@ -249,26 +331,31 @@ const useMyStyles = makeStyles(theme => ({
     },
     paper: {
         backgroundColor: "#151515",
-       // width: window.innerWidth * 0.9,
+        width: window.innerWidth * 0.9,
     },
     modalButton: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
     },
+    AboutMedia: {
+        height: "auto",
+        width: "auto",
+        maxWidth: "60%",
+    },
+    InteractiveMedia: {
+        maxWidth: "80%",
+        maxHeight: window.innerHeight / 2,
+    },
     customTitle: {
-        background: theme.palette.primary.main,
-        borderRadius: 5,
         textAlign: "center",
-        color: 'white',
+        color: "#596977",
         fontSize: 28,
         fontWeight: "bold",
         padding: '15px',
         width: "auto",
         margin: 5,
         display: "block",
-        marginLeft: "22%",
-        marginRight: "auto",
     },
     expand: {
         transform: 'rotate(0deg)',
@@ -298,18 +385,160 @@ const useMyStyles = makeStyles(theme => ({
     },
     tab: {
         [theme.breakpoints.up('sm')]: {
-            fontSize: theme.typography.pxToRem(13),
+            fontSize: "10px",
             minWidth: 100,
+            color: "#4c4c4c"
         },
-    },    
-    twitterIcon: {
-        color: theme.palette.secondary.main,
+    },
+    customAllToolsButton: {
+        padding: 0,
+        minHeight:0,
+        minWidth: 0,
+        backgroundColor: 'transparent',
+        fontSize: 40
+    },
+    customAllToolsIconDeselected: {
+        fontSize: "inherit",
+        color: "#9A9A9A"
+    },
+    customAllToolsIconSelected: {
+        fontSize: "inherit",
+        color: theme.palette.primary.main
+    },
+    
+    toolTipIcon: {
+        color: theme.palette.secondary,
+        position: "relative",
+        opacity: 0.7,
+        top: theme.spacing(1),
+        width: theme.typography.h5.fontSize,
+        height: theme.typography.h5.fontSize,
+        marginRight: 3,
+        marginLeft: 5
+    },
+    svgIcon: {
+        fill: theme.palette.primary,
+        position: "relative",
+        top: theme.spacing(1),
+        width: theme.typography.h3.fontSize,
+        height: theme.typography.h3.fontSize,
+        marginRight: 7,
+        marginLeft: 5,
+    },
+    toolTipWarning: {
+        color: "red",
         position: "relative",
         top: theme.spacing(1),
         width: theme.typography.h5.fontSize,
         height: theme.typography.h5.fontSize,
-        marginRight: 3
-    }
+        marginRight: 3,
+        marginLeft: 5
+    },
+    customAllToolsButton: {
+        padding: 0,
+        minHeight:0,
+        minWidth: 0,
+        backgroundColor: 'transparent',
+        fontSize: 40
+    },
+    customAllToolsIconDeselected: {
+        fontSize: "inherit",
+        color: "#9A9A9A"
+    },
+    customAllToolsIconSelected: {
+        fontSize: "inherit",
+        color: theme.palette.primary.main
+    },
+
+    
+    height100: {
+        height: "100%",
+    },
+
+    root2: {
+        textAlign: "center",
+        padding: theme.spacing(3),
+
+    },
+
+    toolCardStyle: {
+        width: "25%", 
+        maxWidth: "350px", 
+        minWidth: "250px",
+    },
+
+    dialogTitleWithButton: {
+        display: "flex",
+        justifyContent: "space - between",
+        alignItems: "center",
+    },
+
+    bigButtonDiv: {
+        border: 'solid #E1E1E1 2px',
+        borderRadius: "25px",
+        cursor: "pointer",
+
+        "&:hover": {
+            border: 'solid #51A5B2 2px',
+
+        },
+    },
+
+
+    bigButtonDivSelectted: {
+        border: 'solid #51A5B2 3px',
+        borderRadius: "25px",
+    },
+
+    bigButtonIcon: {
+
+        fontSize: "large",
+        color: "#9A9A9A",
+
+    },
+
+    bigButtonIconSelectted: {
+
+        height: "50px",
+        width: "auto",
+        color: "#51A5B2"
+
+    },
+
+    buttonTableURL:{
+        backgroundColor:"#51A5B2!important"
+    },
+
+    feedbackButtonTitleHide: {
+        display: "none",
+    },
+
+    feedbackButtonTitleShow: {
+        marginLeft: "12px",
+        display: "block",
+    },
+
+    fabTop: {
+        margin: "0px",
+        top: "auto",
+        right: "14px",
+        bottom: "100px",
+        left: "auto",
+        position: "fixed",
+    },
+
+    feedbackHeaderTitle: {
+        marginLeft: "12px",
+    },
+
+
+    
 
 }));
+export const myCardStyles = makeStyles({
+    root: {
+        overflow: "hidden",
+    }
+});
 export default useMyStyles;
+

@@ -1,15 +1,16 @@
 import React from 'react';
 import {Provider} from "react-redux"
 import '../styles/global.css';
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import {createTheme} from "@material-ui/core/styles";
 import { MuiThemeProvider } from "@material-ui/core";
 import { useStore } from "../redux";
 import { persistStore } from 'redux-persist'
 import "react-datetime/css/react-datetime.css";
 import { PersistGate } from 'redux-persist/integration/react'
+import { useEffect } from 'react'
 
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
       primary: {
         light: '#fff',
@@ -45,14 +46,20 @@ const theme = createMuiTheme({
 
 
 const MyApp = ({ Component, pageProps }) => {
+
+
+    useEffect(() => {
+      document.body.style.backgroundColor = "#fafafa";
+    }, [])
   
+    
     const store = useStore(pageProps.initialReduxState)
     const persistor = persistStore(store, {}, function () {
       persistor.persist()
     })
         return (
             <Provider store={store}>
-              <MuiThemeProvider theme={theme}>
+              <MuiThemeProvider theme={theme} >
                 <PersistGate loading={<div>loading</div>} persistor={persistor}>
                     <Component {...pageProps} />
                   </PersistGate>
