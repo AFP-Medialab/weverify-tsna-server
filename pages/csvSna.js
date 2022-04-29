@@ -12,7 +12,7 @@ const CsvSnaIndex = () => {
   return (
     <Layout title={keyword("ct_sna_title")}>
       <Head>
-        <title>Csv Reader</title>
+        <title>WeVerify Web Application</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>

@@ -12,7 +12,7 @@ const FactCheckInfo = () => {
   return (
     <Layout title={keyword("navbar_factcheck")}>
       <Head>
-        <title>Csv Reader</title>
+        <title>WeVerify Web Application</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
