@@ -39,5 +39,8 @@ module.exports = {
         },
       ]
     }]
+  },
+  env:{
+    gakey: process.env.REACT_APP_GOOGLE_ANALYTICS_KEY,
   }
 };

@@ -78,7 +78,7 @@ const Index = () => {
   return (
     <Layout title={keyword("navbar_headline")}>
       <Head>
-        <title>WeVerify Twitter SNA</title>
+        <title>WeVerify Web Application</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>        

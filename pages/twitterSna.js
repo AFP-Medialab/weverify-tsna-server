@@ -11,7 +11,7 @@ const TwitterSnaIndex = () => {
   return (
     <Layout title={keyword("twitter_sna_title")}>
     <Head>
-      <title>WeVerify Twitter SNA</title>
+      <title>WeVerify Web Application</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <main>
