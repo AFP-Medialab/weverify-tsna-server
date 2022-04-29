@@ -1,5 +1,10 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+
 export default class MyDocument extends Document {
+    
     render() {
       return (
         <Html>
@@ -7,7 +12,7 @@ export default class MyDocument extends Document {
             {/* Global Site Tag (gtag.js) - Google Analytics */}
             <script
               async
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.REACT_APP_GOOGLE_ANALYTICS_KEY}`}
+              src={`https://www.googletagmanager.com/gtag/js?id=${publicRuntimeConfig.gakey}`}
             />
             <script
               dangerouslySetInnerHTML={{
@@ -15,7 +20,7 @@ export default class MyDocument extends Document {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${process.env.REACT_APP_GOOGLE_ANALYTICS_KEY}', {
+              gtag('config', '${publicRuntimeConfig.gakey}', {
                 page_path: window.location.pathname,
               });
             `,
