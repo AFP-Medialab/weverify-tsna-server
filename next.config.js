@@ -19,6 +19,8 @@ module.exports = {
   basePath: getBasePath(),
   publicRuntimeConfig: {
     baseFolder: getBasePath(),
+    gakey: process.env.REACT_APP_GOOGLE_ANALYTICS_KEY,
+
   },
   webpack: (config) => {
     config.output.globalObject = `(typeof self !== 'undefined' ? self : this)`;
@@ -40,7 +42,5 @@ module.exports = {
       ]
     }]
   },
-  env:{
-    gakey: process.env.REACT_APP_GOOGLE_ANALYTICS_KEY,
-  }
+  
 };
