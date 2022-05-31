@@ -8,6 +8,8 @@ let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/search/getTweets`
 let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUsers`;
 let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/gexf/getGexf`;
 let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexfStatus`;
+const GEXF_URL = publicRuntimeConfig.gexfBase
+
 
 // Aggregation data for pie charts, timelime chart,...
 export function getAggregationData(param) {
@@ -618,7 +620,6 @@ function buildQueryMultipleMatchPhrase (field, arr) {
 
       // Export gexf file
     export function getESQuery4Gexf(param) {
-
         let must = constructMatchPhrase(param);
         let mustNot = constructMatchNotPhrase(param);
         let should = constructMatchShouldPhrase(param)
@@ -676,7 +677,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
                     let gexfRes = {};
                     gexfRes.title = message.title
                     gexfRes.fileName = message.fileName;
-                    gexfRes.getUrl = `${process.env.REACT_APP_GEXF_GENERATOR_URL}downloadGEXF?fileName=${message.fileName}`; //${gexfGen_url}
+                    gexfRes.getUrl = `${GEXF_URL}downloadGEXF?fileName=${message.fileName}`; //${gexfGen_url}
                     gexfRes.visualizationUrl = `https://mever.iti.gr/networkx/plugin?filepath=${gexfRes.getUrl}`;
                     gexfRes.message = message.message
                     gexfResults.push(gexfRes)
