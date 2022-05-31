@@ -620,6 +620,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
 
       // Export gexf file
     export function getESQuery4Gexf(param) {
+        console.log("URL ", GEXF_URL)
         let must = constructMatchPhrase(param);
         let mustNot = constructMatchNotPhrase(param);
         let should = constructMatchShouldPhrase(param)
@@ -680,6 +681,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
                     gexfRes.getUrl = `${GEXF_URL}downloadGEXF?fileName=${message.fileName}`; //${gexfGen_url}
                     gexfRes.visualizationUrl = `https://mever.iti.gr/networkx/plugin?filepath=${gexfRes.getUrl}`;
                     gexfRes.message = message.message
+                    console.log("gexfRes   ", gexfRes)
                     gexfResults.push(gexfRes)
                 }
             }
