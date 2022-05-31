@@ -12,7 +12,6 @@ if(process.env.hasOwnProperty("REACT_APP_ES_USERNAME")) {
     const authHeader = new Buffer(`${username}:${password}`).toString("base64");
     headers["Authorization"] = `Basic ${authHeader}`;
 }
-console.log("Headers ...", headers)
 
 export default (req, res) => {
     const {
