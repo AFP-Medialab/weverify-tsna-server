@@ -676,7 +676,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
                     let gexfRes = {};
                     gexfRes.title = message.title
                     gexfRes.fileName = message.fileName;
-                    gexfRes.getUrl = `https://weverify-gexf.gate.ac.uk/generate/downloadGEXF?fileName=${message.fileName}`; //${gexfGen_url}
+                    gexfRes.getUrl = `${publicRuntimeConfig.gexfBase}downloadGEXF?fileName=${message.fileName}`; //${gexfGen_url}
                     gexfRes.visualizationUrl = `https://mever.iti.gr/networkx/plugin?filepath=${gexfRes.getUrl}`;
                     gexfRes.message = message.message
                     gexfResults.push(gexfRes)
