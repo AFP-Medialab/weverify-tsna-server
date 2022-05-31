@@ -1,7 +1,8 @@
 import { userPostAction } from "../../../components/shared/lib/fetch";
 
 const headers = {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/vnd.elasticsearch+json;compatible-with=7',
+    'Accept': 'application/vnd.elasticsearch+json;compatible-with=7'
 };
 
 // prepare authorization header, if Elasticsearch requires it
@@ -11,6 +12,7 @@ if(process.env.hasOwnProperty("REACT_APP_ES_USERNAME")) {
     const authHeader = new Buffer(`${username}:${password}`).toString("base64");
     headers["Authorization"] = `Basic ${authHeader}`;
 }
+console.log("Headers ...", headers)
 
 export default (req, res) => {
     const {

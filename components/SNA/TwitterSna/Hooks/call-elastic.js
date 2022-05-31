@@ -450,7 +450,7 @@ function constructAggs(param) {
     let aggs = {
         "retweets": constructAggForSum("retweet_count"),
         "likes": constructAggForSum("favorite_count"),
-        "tweet_count": constructAggForCount("_id"),
+        "tweet_count": constructAggForCount("id_str"),
         "top_user": constructAggForTop("screen_name", "desc", 20, "_count", null),
         "top_user_favorite": constructAggForTop("screen_name", "desc", 20, "sum", "favorite_count"),
         "top_user_retweet": constructAggForTop("screen_name", "desc", 20, "sum", "retweet_count"),
