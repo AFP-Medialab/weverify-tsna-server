@@ -24,6 +24,10 @@ REACT_APP_I18N_CONTENT=https://raw.githubusercontent.com/AFP-Medialab/InVID-Tran
 
 REACT_APP_ELK_URL=http://localhost:9200/tsnatweets/_search
 REACT_APP_ES_USER_URL=http://localhost:9200/tsnausers/_search
+# If your Elasticsearch requires authentication, set credentials and uncomment
+# the relevant lines in docker-compose.yml
+# REACT_APP_ES_USERNAME=user
+# REACT_APP_ES_PASSWORD=password
 REACT_APP_AUTH_BASE_URL=http://localhost:8080/twint-wrapper
 
 TSV_SRV_LOCATION_PATH=../InVID-Translations
