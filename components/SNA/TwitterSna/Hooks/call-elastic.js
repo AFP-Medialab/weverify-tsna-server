@@ -621,7 +621,6 @@ function buildQueryMultipleMatchPhrase (field, arr) {
 
       // Export gexf file
     export function getESQuery4Gexf(param) {
-        console.log("URL ", GEXF_URL)
         let must = constructMatchPhrase(param);
         let mustNot = constructMatchNotPhrase(param);
         let should = constructMatchShouldPhrase(param)

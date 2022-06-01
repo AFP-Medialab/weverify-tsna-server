@@ -2,7 +2,7 @@ import _ from "lodash";
 import {lowercaseFieldInTweets} from "../../../SNA/lib/displayTweets"
 
 addEventListener('message', event => {
-  console.log("hashtag worker on message")
+  //console.log("hashtag worker on message")
   postMessage(createCoHashtagGraph(event.data));
 })
 

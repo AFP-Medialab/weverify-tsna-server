@@ -291,7 +291,7 @@ const tsnaWorkers = useRef()
     const buildCoHashTag = async (tweets) => {
       tsnaWorkers.current.hashtagWorker.postMessage(tweets);
       tsnaWorkers.current.hashtagWorker.onmessage = (evt) => {
-        console.log("received message hashtag")
+        //console.log("received message hashtag")
         let coHashtagGraph = evt.data;
         dispatch(setCoHashtagResult(coHashtagGraph));
       }
