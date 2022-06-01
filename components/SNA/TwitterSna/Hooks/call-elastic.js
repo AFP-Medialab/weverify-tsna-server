@@ -2,7 +2,7 @@
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
-//console.log(publicRuntimeConfig.baseFolder);
+console.log(publicRuntimeConfig);
 
 let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/search/getTweets`;
 let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUsers`;
