@@ -2,13 +2,14 @@
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
-console.log(publicRuntimeConfig);
+//console.log(publicRuntimeConfig);
 
 let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/search/getTweets`;
 let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUsers`;
 let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/gexf/getGexf`;
 let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexfStatus`;
-const GEXF_URL = publicRuntimeConfig.gexfBase
+//const GEXF_URL = publicRuntimeConfig.gexfBase
+const GEXF_URL ="https://weverify-gexf.gate.ac.uk/generate/"
 
 
 // Aggregation data for pie charts, timelime chart,...
@@ -681,7 +682,7 @@ function buildQueryMultipleMatchPhrase (field, arr) {
                     gexfRes.getUrl = `${GEXF_URL}downloadGEXF?fileName=${message.fileName}`; //${gexfGen_url}
                     gexfRes.visualizationUrl = `https://mever.iti.gr/networkx/plugin?filepath=${gexfRes.getUrl}`;
                     gexfRes.message = message.message
-                    console.log("gexfRes   ", gexfRes)
+                    //console.log("gexfRes   ", gexfRes)
                     gexfResults.push(gexfRes)
                 }
             }
