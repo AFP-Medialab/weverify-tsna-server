@@ -19,8 +19,8 @@ module.exports = {
   basePath: getBasePath(),
   publicRuntimeConfig: {
     baseFolder: getBasePath(),
-    gakey: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY,
-    gexfBase: process.env.NEXT_PUBLIC_GEXF_GENERATOR_URL,
+    gakey: process.env.REACT_APP_GOOGLE_ANALYTICS_KEY,
+    gexfBase: process.env.REACT_APP_GEXF_GENERATOR_URL,
   },
   webpack: (config) => {
     config.output.globalObject = `(typeof self !== 'undefined' ? self : this)`;
