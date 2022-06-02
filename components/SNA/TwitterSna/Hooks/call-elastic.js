@@ -8,8 +8,7 @@ let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/search/getTweets`
 let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUsers`;
 let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/gexf/getGexf`;
 let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexfStatus`;
-//const GEXF_URL = publicRuntimeConfig.gexfBase
-const GEXF_URL ="https://weverify-gexf.gate.ac.uk/generate/"
+const GEXF_URL = publicRuntimeConfig.gexfBase
 
 
 // Aggregation data for pie charts, timelime chart,...

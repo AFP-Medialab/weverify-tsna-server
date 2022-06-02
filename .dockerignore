@@ -6,6 +6,7 @@ node_modules
 .git
 .DS_Store
 .dockerignore
+.env
 nginx
 docker-compose.yml
 docker-compose-tsv-server.yml
