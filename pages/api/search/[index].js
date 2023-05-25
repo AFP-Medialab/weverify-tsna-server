@@ -8,8 +8,11 @@ const headers = {
 // prepare authorization header, if Elasticsearch requires it
 if(process.env.hasOwnProperty("REACT_APP_ES_USERNAME")) {
     const username = process.env.REACT_APP_ES_USERNAME;
+    console.log(username)
     const password = process.env.REACT_APP_ES_PASSWORD;
+    console.log(password)
     const authHeader = new Buffer(`${username}:${password}`).toString("base64");
+    console.log(authHeader)
     headers["Authorization"] = `Basic ${authHeader}`;
 }
 

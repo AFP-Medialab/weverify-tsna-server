@@ -9,6 +9,7 @@ import errorReducer from "./errorReducer";
 import toolReducer from "./tools/toolReducer";
 import snaTypeReducer from "./tools/snaTypeReducer";
 import connectionReducer from './connectionReducer'
+import navReducer from "./navReducer";
 
 const allReducers = combineReducers({
     language : languageReducer,
@@ -19,6 +20,7 @@ const allReducers = combineReducers({
     userSession: authenticationReducer,
     error : errorReducer,
     tool: toolReducer,
-    conn: connectionReducer
+    conn: connectionReducer,
+    nav: navReducer
 });
 export default allReducers;
