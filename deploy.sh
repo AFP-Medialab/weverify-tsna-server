@@ -7,6 +7,7 @@ while IFS= read -r line; do
 done < $1 
 echo "username $SSH_USERNAME"
 echo "hostname $SSH_HOSTNAME"
+echo "port $SSH_PORT"
 echo "folder $SSH_PROJECT_FOLDER"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -14,7 +15,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 (
   cd "$DIR/.." # Go to project dir.
 
-  ssh $SSH_USERNAME@$SSH_HOSTNAME -o StrictHostKeyChecking=no <<-EOF
+  ssh -p $SSH_PORT $SSH_USERNAME@$SSH_HOSTNAME -o StrictHostKeyChecking=no <<-EOF
     cd $SSH_PROJECT_FOLDER
     docker-compose pull
     docker-compose stop
