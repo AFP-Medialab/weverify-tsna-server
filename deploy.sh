@@ -17,9 +17,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
   ssh -p $SSH_PORT $SSH_USERNAME@$SSH_HOSTNAME -o StrictHostKeyChecking=no <<-EOF
     cd $SSH_PROJECT_FOLDER
-    docker-compose pull
-    docker-compose stop
-    docker-compose rm -f
-    docker-compose up -d
+    docker compose pull
+    docker compose up -d
 EOF
 )
