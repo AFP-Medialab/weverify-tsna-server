@@ -1,5 +1,5 @@
 addEventListener('message', event =>{
-  console.log("cloud chart worker on message")
+  //console.log("cloud chart worker on message")
   postMessage(createWordCloud(event.data[0], event.data[1]))
 })
 

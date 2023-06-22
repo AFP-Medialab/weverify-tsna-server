@@ -116,7 +116,7 @@ const CrowdTangleSnaComponent = () => {
         let socioWorker = new Worker(new URL('./Components/hooks/socioSemGraph.js', import.meta.url));
         let cloudWorker = new Worker(new URL('./Components/hooks/cloudChart.js', import.meta.url));
         let hashtagWorker = new Worker(new URL('./Components/hooks/hashtagGraph.js', import.meta.url));
-        console.log("create workers ...")
+        //console.log("create workers ...")
         workers.current = {
             timelineWorker: timelineWorker,
             pieChartsWorker: pieChartsWorker,

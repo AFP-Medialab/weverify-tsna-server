@@ -2,21 +2,24 @@
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
-//console.log(publicRuntimeConfig.baseFolder);
+//console.log(publicRuntimeConfig);
 
 let elasticSearch_url = `${publicRuntimeConfig.baseFolder}/api/search/getTweets`;
 let elasticSearchUser_url = `${publicRuntimeConfig.baseFolder}/api/search/getUsers`;
 let gexfGen_url =  `${publicRuntimeConfig.baseFolder}/api/gexf/getGexf`;
 let gexfStatus_url = `${publicRuntimeConfig.baseFolder}/api/gexf/getGexfStatus`;
+const GEXF_URL = publicRuntimeConfig.gexfBase
+
 
 // Aggregation data for pie charts, timelime chart,...
 export function getAggregationData(param) {
     let must = constructMatchPhrase(param);
     let mustNot = constructMatchNotPhrase(param);
     let should = constructMatchShouldPhrase(param)
+    let filter = contructFilterShouldPhase(param)
     let aggs = constructAggs(param);
 
-    let query = JSON.stringify(buildQuery(aggs, must, mustNot, should, 0, false)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
+    let query = JSON.stringify(buildQuery(aggs, must, mustNot, should, filter, 0, false)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}");
 
     const userAction = async () => {
         const response = await fetch(elasticSearch_url, {
@@ -37,9 +40,10 @@ export async function getTweets(param) {
     let must = constructMatchPhrase(param);
     let mustNot = constructMatchNotPhrase(param);
     let should = constructMatchShouldPhrase(param)
+    let filter = contructFilterShouldPhase(param)
     let aggs = {};
     let cloudTweets = false;
-    return queryTweetsFromES(aggs, must, mustNot, should, cloudTweets).then(elasticResponse => {
+    return queryTweetsFromES(aggs, must, mustNot, should, filter, cloudTweets).then(elasticResponse => {
         return {
             tweets: elasticResponse.hits.hits
         }
@@ -50,9 +54,10 @@ export async function getCloudTweets(param) {
     let must = constructMatchPhrase(param);
     let mustNot = constructMatchNotPhrase(param);
     let should = constructMatchShouldPhrase(param)
+    let filter = contructFilterShouldPhase(param)
     let aggs = {};
     let cloudTweets = true;
-    return queryTweetsFromES(aggs, must, mustNot, should, cloudTweets).then(elasticResponse => {
+    return queryTweetsFromES(aggs, must, mustNot, should, filter, cloudTweets).then(elasticResponse => {
         return {
             tweets: elasticResponse.hits.hits
         }
@@ -60,10 +65,10 @@ export async function getCloudTweets(param) {
 }
 
 //Get tweets
-async function queryTweetsFromES(aggs, must, mustNot, should, cloudTweets) {
+async function queryTweetsFromES(aggs, must, mustNot, should, filter, cloudTweets) {
     const response = await fetch(elasticSearch_url, {
         method: 'POST',
-        body: JSON.stringify(buildQuery(aggs, must, mustNot, should, 10000, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
+        body: JSON.stringify(buildQuery(aggs, must, mustNot, should, filter, 10000, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -81,7 +86,7 @@ async function queryTweetsFromES(aggs, must, mustNot, should, cloudTweets) {
             let tweets = elasticResponse.hits.hits;
             let searchAfter = tweets[tweets.length - 1]["sort"];
 
-            elasticResponse = await continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, should, searchAfter, elasticResponse, cloudTweets);
+            elasticResponse = await continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, should, filter, searchAfter, elasticResponse, cloudTweets);
         } while (elasticResponse["current_hits_length"] !== 0)
 
         return elasticResponse;
@@ -92,12 +97,12 @@ async function queryTweetsFromES(aggs, must, mustNot, should, cloudTweets) {
     
 }
 
-async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, should, searchAfter, elasticResponse, cloudTweets) {
+async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, should, filter, searchAfter, elasticResponse, cloudTweets) {
     let arr = Array.from(elasticResponse.hits.hits);
 
     const response = await fetch(elasticSearch_url, {
         method: 'POST',
-        body: JSON.stringify(buildQuerySearchAfter(aggs, must, mustNot, should, 10000, searchAfter, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
+        body: JSON.stringify(buildQuerySearchAfter(aggs, must, mustNot, should, filter, 10000, searchAfter, cloudTweets)).replace(/\\/g, "").replace(/"{/g, "{").replace(/}"/g, "}"),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -118,7 +123,7 @@ async function continueQueryTweetsFromESWhenMore10k(aggs, must, mustNot, should,
 }
 
 //Build a query for elastic search
-function buildQuery(aggs, must, mustNot, should, size, cloudTweets) {
+function buildQuery(aggs, must, mustNot, should, filter, size, cloudTweets) {
     let query;
     if (cloudTweets) {
     query = {
@@ -129,7 +134,7 @@ function buildQuery(aggs, must, mustNot, should, size, cloudTweets) {
         "query": {
             "bool": {
                 "must": must,
-                "filter": [],
+                "filter": filter,
                 "should": should,
                 "must_not": mustNot, 
                 "minimum_should_match" : should.length === 0 ? 0: 1
@@ -149,7 +154,7 @@ function buildQuery(aggs, must, mustNot, should, size, cloudTweets) {
             "query": {
                 "bool": {
                     "must": must,
-                    "filter": [],
+                    "filter": filter,
                     "should": should,
                     "must_not": mustNot,
                     "minimum_should_match" : should.length === 0 ? 0: 1
@@ -163,7 +168,7 @@ function buildQuery(aggs, must, mustNot, should, size, cloudTweets) {
     return query;
 }
 //Build a query for elastic search
-function buildQuerySearchAfter(aggs, must, mustNot, should, size, searchAfter, cloudTweets) {
+function buildQuerySearchAfter(aggs, must, mustNot, should, filter, size, searchAfter, cloudTweets) {
     let query;
     if (cloudTweets) {
         query = {
@@ -175,7 +180,7 @@ function buildQuerySearchAfter(aggs, must, mustNot, should, size, searchAfter, c
             "query": {
                 "bool": {
                     "must": must,
-                    "filter": [],
+                    "filter": filter,
                     "should": should,
                     "must_not": mustNot,
                     "minimum_should_match" : should.length === 0 ? 0: 1
@@ -196,7 +201,7 @@ function buildQuerySearchAfter(aggs, must, mustNot, should, size, searchAfter, c
                 "query": {
                     "bool": {
                         "must": must,
-                        "filter": [],
+                        "filter": filter,
                         "should": should,
                         "must_not": mustNot,
                         "minimum_should_match" : should.length === 0 ? 0: 1
@@ -286,20 +291,6 @@ function constructMatchPhrase(param, startDate, endDate) {
         }
     });
 
-    // USERNAME MATCH
-    if (param["userList"] !== undefined) {
-        param["userList"].forEach(user => {
-            if (user !== "") {
-                match_phrases += ',{' +
-                    '"match_phrase": {' +
-                        '"screen_name": {' +
-                            '"query":"' + user + '"' +
-                            '}' +
-                        '}' +
-                    '}';
-            }
-        })
-    }
     // RANGE SETUP
     match_phrases += "," + JSON.stringify({
         "range": {
@@ -356,6 +347,33 @@ function constructMatchPhrase(param, startDate, endDate) {
     }
 
     return [match_phrases]
+}
+
+function contructFilterShouldPhase(param) {
+    // USERNAME MATCH
+   if (param["userList"] === undefined || param["userList"].length === 0) 
+    return []
+   let match_phrases = "";
+   param["userList"].forEach(user => {
+       if (user !== "") {
+           if (match_phrases !== "")
+               match_phrases += ",";
+           match_phrases += '{' +
+               '"match_phrase": {' +
+                   '"screen_name": {' +
+                       '"query":"' + user + '"' +
+                       '}' +
+                   '}' +
+               '}';
+       }
+   })
+   let filter_phrases = '{ "bool": {'+
+       '"should": ['+ match_phrases + ']'+
+        '}' +
+       '}';
+
+   return [filter_phrases]
+
 }
 
 function constructMatchShouldPhrase(param) {
@@ -450,7 +468,7 @@ function constructAggs(param) {
     let aggs = {
         "retweets": constructAggForSum("retweet_count"),
         "likes": constructAggForSum("favorite_count"),
-        "tweet_count": constructAggForCount("_id"),
+        "tweet_count": constructAggForCount("id_str"),
         "top_user": constructAggForTop("screen_name", "desc", 20, "_count", null),
         "top_user_favorite": constructAggForTop("screen_name", "desc", 20, "sum", "favorite_count"),
         "top_user_retweet": constructAggForTop("screen_name", "desc", 20, "sum", "retweet_count"),
@@ -618,10 +636,10 @@ function buildQueryMultipleMatchPhrase (field, arr) {
 
       // Export gexf file
     export function getESQuery4Gexf(param) {
-
         let must = constructMatchPhrase(param);
         let mustNot = constructMatchNotPhrase(param);
         let should = constructMatchShouldPhrase(param)
+        let filter = contructFilterShouldPhase(param)
         // let aggs = constructAggs("urls");
 
         let size=1000;
@@ -676,9 +694,10 @@ function buildQueryMultipleMatchPhrase (field, arr) {
                     let gexfRes = {};
                     gexfRes.title = message.title
                     gexfRes.fileName = message.fileName;
-                    gexfRes.getUrl = `https://weverify-gexf.gate.ac.uk/generate/downloadGEXF?fileName=${message.fileName}`; //${gexfGen_url}
-                    gexfRes.visualizationUrl = `http://networkx.iti.gr/network_url/?filepath=${gexfRes.getUrl}`;
+                    gexfRes.getUrl = `${GEXF_URL}downloadGEXF?fileName=${message.fileName}`; //${gexfGen_url}
+                    gexfRes.visualizationUrl = `https://mever.iti.gr/networkx/plugin?filepath=${gexfRes.getUrl}`;
                     gexfRes.message = message.message
+                    //console.log("gexfRes   ", gexfRes)
                     gexfResults.push(gexfRes)
                 }
             }
@@ -689,13 +708,13 @@ function buildQueryMultipleMatchPhrase (field, arr) {
         return userAction();
     }
 
-    function buildQuery4Gexf(must, mustNot, should, size) {
+    function buildQuery4Gexf(must, mustNot, should, filter, size) {
         let query = {
             "size": size,
             "query": {
                 "bool": {
                     "must": must,
-                    "filter": [],
+                    "filter": filter,
                     "should": should,
                     "must_not": mustNot,
                     "minimum_should_match" : should.length === 0 ? 0: 1
