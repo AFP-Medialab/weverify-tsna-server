@@ -44,12 +44,10 @@ export default withIronSessionApiRoute(
         //console.log("call back ...")
         //console.log("req ", req.query)
         if (!req.query.oauth_token || !req.query.oauth_verifier) {
-          res
-            .status(400)
-            .render("error", {
-              error:
-                "Bad request, or you denied application access. Please renew your request.",
-            });
+          res.status(400).render("error", {
+            error:
+              "Bad request, or you denied application access. Please renew your request.",
+          });
           return;
         }
         const token = req.query.oauth_token;
@@ -58,12 +56,10 @@ export default withIronSessionApiRoute(
         const savedSecret = req.session.oauthSecret;
 
         if (!savedToken || !savedSecret || savedToken !== token) {
-          res
-            .status(400)
-            .render("error", {
-              error:
-                "OAuth token is not known or invalid. Your request may have expire. Please renew the auth process.",
-            });
+          res.status(400).render("error", {
+            error:
+              "OAuth token is not known or invalid. Your request may have expire. Please renew the auth process.",
+          });
           return;
         }
 

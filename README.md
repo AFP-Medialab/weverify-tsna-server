@@ -45,6 +45,16 @@ REACT_APP_GOOGLE_ANALYTICS_KEY=NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY
 REACT_APP_GEXF_GENERATOR_URL=NEXT_PUBLIC_GEXF_GENERATOR_URL
 ```
 
+## Docker env support for client page
+
+Some env which are used in client page are also set in .env.production file with a temporary custom key.
+at docker image build, these values are replace by entrypoint.sh script with runtime environement.
+
+```
+REACT_APP_GOOGLE_ANALYTICS_KEY=NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY
+REACT_APP_GEXF_GENERATOR_URL=NEXT_PUBLIC_GEXF_GENERATOR_URL
+```
+
 ## I18N support
 
 - Clone project https://github.com/AFP-Medialab/InVID-Translations
