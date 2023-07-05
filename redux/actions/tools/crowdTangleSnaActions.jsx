@@ -16,61 +16,59 @@ import {
   SET_CT_SNA_SOCIO_GRAPH_RESULTS,
   SET_CT_SNA_CLOUD_WORDS_RESULTS,
   CT_PROCESS_MAX_STAGE,
-  CT_PROCESS_STAGE
+  CT_PROCESS_STAGE,
 } from "../types/crowdTangleSnaTypes";
 
 import { SNA_SET_TYPE } from "../types/snaCommunTypes";
 
 export const cleanCsvSnaState = () => {
   return {
-      type: CT_SNA_CLEAN,
-    };
+    type: CT_SNA_CLEAN,
+  };
 };
 export const setCoHashtagResult = (result) => {
   return {
-      type : SET_CT_COHASHTAG_RESULTS,
-      payload :  result
-  }
+    type: SET_CT_COHASHTAG_RESULTS,
+    payload: result,
+  };
 };
 export const setUrlsResult = (result) => {
   return {
-      type : SET_CT_URLS_RESULTS,
-      payload :  result
-  }
+    type: SET_CT_URLS_RESULTS,
+    payload: result,
+  };
 };
 export const setSocioGraphResult = (result) => {
   return {
-      type : SET_CT_SNA_SOCIO_GRAPH_RESULTS,
-      payload :  result
-  }
+    type: SET_CT_SNA_SOCIO_GRAPH_RESULTS,
+    payload: result,
+  };
 };
 
 export const setCountResult = (count) => {
   return {
-      type : CT_COUNT_SET_RESULTS,
-      payload : count,
+    type: CT_COUNT_SET_RESULTS,
+    payload: count,
   };
 };
 
 export const setHistogramResult = (result) => {
   return {
-      type : CT_HISTOGRAM_SET_RESULTS,
-      payload : result,
+    type: CT_HISTOGRAM_SET_RESULTS,
+    payload: result,
   };
-  
 };
 export const setPieChartsResult = (result) => {
   return {
-      type : CT_PIECHART_SET_RESULTS,
-      payload : result,
+    type: CT_PIECHART_SET_RESULTS,
+    payload: result,
   };
-  
 };
 
 export const setSnaType = (snaType) => {
   return {
-      type : SNA_SET_TYPE,
-      payload : snaType,
+    type: SNA_SET_TYPE,
+    payload: snaType,
   };
 };
 export const setCSVLoading = (bool, message) => {
@@ -88,75 +86,75 @@ export const setCSVResult = (data) => {
 
 export const setHeatMapResult = (result) => {
   return {
-      type : SET_CT_SNA_HEATMAP_RESULTS,
-      payload :  result
-  }
+    type: SET_CT_SNA_HEATMAP_RESULTS,
+    payload: result,
+  };
 };
 
 export const setCloudWordsResult = (result) => {
   return {
-      type : SET_CT_SNA_CLOUD_WORDS_RESULTS,
-      payload :  result
-  }
+    type: SET_CT_SNA_CLOUD_WORDS_RESULTS,
+    payload: result,
+  };
 };
 
-export const setCSVHistoview = (from,data) => {
-  switch(from){
+export const setCSVHistoview = (from, data) => {
+  switch (from) {
     case "PLOT_LINE":
       return {
         type: CT_HISTOVIEW_RESULT,
-        payload: data, 
-      }
-      case "PLOT_PIE_CHART_0":
-            return {
-                /*type : "SET_PIE_CHART_RESULT_0",
+        payload: data,
+      };
+    case "PLOT_PIE_CHART_0":
+      return {
+        /*type : "SET_PIE_CHART_RESULT_0",
                 payload :  data*/
-                type : CT_PIE_CHART_RESULT,
-                payload :  data != null ? null : 0
-            }
-        case "PLOT_PIE_CHART_1":
-            return {
-                type : CT_PIE_CHART_RESULT,
-                payload :  data != null ? null : 1
-            }
-        case "PLOT_PIE_CHART_2":
-            return {
-                type : CT_PIE_CHART_RESULT,
-                payload :  data != null ? null : 2
-            }
-        case "PLOT_PIE_CHART_3":
-            return {
-                type : CT_PIE_CHART_RESULT,
-                payload :  data != null ? null : 3
-            }
-        case "PLOT_BUBBLE_CHART":
-            return {
-                type : CT_BUBBLE_CHART_RESULT,
-                payload :  data
-          } 
-          case "PLOT_HEAT_MAP":
-            return {
-                type : SET_HEAT_MAP_RESULT,
-                payload :  data
-        }
-        case "PLOT_HASHTAG_GRAPH":
-            return {
-                type : SET_HASHTAG_GRAPH_RESULT,
-                payload :  data
-            }           
+        type: CT_PIE_CHART_RESULT,
+        payload: data != null ? null : 0,
+      };
+    case "PLOT_PIE_CHART_1":
+      return {
+        type: CT_PIE_CHART_RESULT,
+        payload: data != null ? null : 1,
+      };
+    case "PLOT_PIE_CHART_2":
+      return {
+        type: CT_PIE_CHART_RESULT,
+        payload: data != null ? null : 2,
+      };
+    case "PLOT_PIE_CHART_3":
+      return {
+        type: CT_PIE_CHART_RESULT,
+        payload: data != null ? null : 3,
+      };
+    case "PLOT_BUBBLE_CHART":
+      return {
+        type: CT_BUBBLE_CHART_RESULT,
+        payload: data,
+      };
+    case "PLOT_HEAT_MAP":
+      return {
+        type: SET_HEAT_MAP_RESULT,
+        payload: data,
+      };
+    case "PLOT_HASHTAG_GRAPH":
+      return {
+        type: SET_HASHTAG_GRAPH_RESULT,
+        payload: data,
+      };
   }
 };
 
 export const setMaxProcessStage = (stage_max) => {
   return {
-    type : CT_PROCESS_MAX_STAGE,
-    payload : stage_max
-  }
+    type: CT_PROCESS_MAX_STAGE,
+    payload: stage_max,
+  };
 };
 
 export const setProcessStage = (stage) => {
   return {
-    type :  CT_PROCESS_STAGE,
-    payload : stage
-  }
+    type: CT_PROCESS_STAGE,
+    payload: stage,
+  };
 };

@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import {useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 
 import useMyStyles from "../styles/useMyStyles";
 
-import useAuthenticationAPI from './useAuthenticationAPI';
-import { ERR_AUTH_UNKNOWN_ERROR } from './authenticationErrors';
+import useAuthenticationAPI from "./useAuthenticationAPI";
+import { ERR_AUTH_UNKNOWN_ERROR } from "./authenticationErrors";
 import { setError } from "../../../redux/actions/errorActions";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
@@ -14,55 +14,60 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import _ from "lodash";
 
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Card from '@mui/material/Card';
-import Grid from '@mui/material/Grid';
-import Typography from '@material-ui/core/Typography';
-import Box from '@mui/system/Box';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import Divider from '@material-ui/core/Divider';
-import SendIcon from '@material-ui/icons/Send';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import LockIcon from '@mui/icons-material/Lock';
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import Typography from "@material-ui/core/Typography";
+import Box from "@mui/system/Box";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import Divider from "@material-ui/core/Divider";
+import SendIcon from "@material-ui/icons/Send";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import LockIcon from "@mui/icons-material/Lock";
 import Toolbar from "@material-ui/core/Toolbar";
 
-import { userRegistrationSentAction, userAccessCodeRequestSentAction } from "../../../redux/actions/authentificationActions";
-
+import {
+  userRegistrationSentAction,
+  userAccessCodeRequestSentAction,
+} from "../../../redux/actions/authentificationActions";
 
 const registrationValidationSchema = yup.object().shape({
-  email: yup.string()
+  email: yup
+    .string()
     .required("REGISTRATIONFORM_EMAIL_ERR_REQUIRED")
     .email("REGISTRATIONFORM_EMAIL_ERR_EMAIL"),
-  firstName: yup.string()
-    .required("REGISTRATIONFORM_FIRSTNAME_ERR_REQUIRED"),
-  lastName: yup.string()
-    .required("REGISTRATIONFORM_LASTNAME_ERR_REQUIRED"),
-  organization: yup.string()
+  firstName: yup.string().required("REGISTRATIONFORM_FIRSTNAME_ERR_REQUIRED"),
+  lastName: yup.string().required("REGISTRATIONFORM_LASTNAME_ERR_REQUIRED"),
+  organization: yup
+    .string()
     .required("REGISTRATIONFORM_ORGANIZATION_ERR_REQUIRED"),
-  organizationRole: yup.string()
+  organizationRole: yup
+    .string()
     .required("REGISTRATIONFORM_ORGANIZATIONROLE_ERR_REQUIRED"),
-  organizationRoleOther: yup.string().when('organizationRole', {
-    is: 'OTHER',
-    then: yup.string().required("REGISTRATIONFORM_ORGANIZATIONROLEOTHER_ERR_REQUIRED"),
-    otherwise: yup.string().notRequired()
-  })
+  organizationRoleOther: yup.string().when("organizationRole", {
+    is: "OTHER",
+    then: yup
+      .string()
+      .required("REGISTRATIONFORM_ORGANIZATIONROLEOTHER_ERR_REQUIRED"),
+    otherwise: yup.string().notRequired(),
+  }),
 });
 
 const accessCodeValidationSchema = yup.object().shape({
-  email: yup.string()
+  email: yup
+    .string()
     .required("ACCESSCODEFORM_EMAIL_ERR_REQUIRED")
-    .email("ACCESSCODEFORM_EMAIL_ERR_EMAIL")
+    .email("ACCESSCODEFORM_EMAIL_ERR_EMAIL"),
 });
 
 const loginValidationSchema = yup.object().shape({
-  accessCode: yup.string()
-    .required("LOGINFORM_ACCESSCODE_ERR_REQUIRED")
+  accessCode: yup.string().required("LOGINFORM_ACCESSCODE_ERR_REQUIRED"),
 });
 //const tsv = "/localDictionary/components/Shared/Authentication.tsv";
 const tsv = "/components/Shared/Authentication.tsv";
@@ -81,13 +86,27 @@ const AuthenticationCard = (props) => {
 
   // Redux store
   const dispatch = useDispatch();
-  const userAuthenticated = useSelector(state => state.userSession && state.userSession.userAuthenticated);
-  const user = useSelector(state => state.userSession && state.userSession.user);
-  const userRegistrationLoading = useSelector(state => state.userSession && state.userSession.userRegistrationLoading);
-  const userRegistrationSent = useSelector(state => state.userSession && state.userSession.userRegistrationSent);
-  const accessCodeRequestLoading = useSelector(state => state.userSession && state.userSession.accessCodeRequestLoading);
-  const accessCodeRequestSent = useSelector(state => state.userSession && state.userSession.accessCodeRequestSent);
-  const userLoginLoading = useSelector(state => state.userSession && state.userSession.userLoginLoading);
+  const userAuthenticated = useSelector(
+    (state) => state.userSession && state.userSession.userAuthenticated,
+  );
+  const user = useSelector(
+    (state) => state.userSession && state.userSession.user,
+  );
+  const userRegistrationLoading = useSelector(
+    (state) => state.userSession && state.userSession.userRegistrationLoading,
+  );
+  const userRegistrationSent = useSelector(
+    (state) => state.userSession && state.userSession.userRegistrationSent,
+  );
+  const accessCodeRequestLoading = useSelector(
+    (state) => state.userSession && state.userSession.accessCodeRequestLoading,
+  );
+  const accessCodeRequestSent = useSelector(
+    (state) => state.userSession && state.userSession.accessCodeRequestSent,
+  );
+  const userLoginLoading = useSelector(
+    (state) => state.userSession && state.userSession.userLoginLoading,
+  );
 
   // i18n
   const messageI18NResolver = useLoadLanguage(tsv);
@@ -109,23 +128,27 @@ const AuthenticationCard = (props) => {
   // User Registration form
   const registrationForm = useForm({
     mode: "onBlur",
-    validationSchema: registrationValidationSchema
+    validationSchema: registrationValidationSchema,
   });
   const registrationOnSubmit = (data) => {
-    authenticationAPI.registerUser({
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      organization: data.organization,
-      organizationRole: data.organizationRole,
-      organizationRoleOther: data.organizationRoleOther
-    }).then(result => {
-      registrationForm.reset();
-    }).catch(error => {
-      handleError(error.error ? error.error.code : ERR_AUTH_UNKNOWN_ERROR);
-    });
+    authenticationAPI
+      .registerUser({
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        organization: data.organization,
+        organizationRole: data.organizationRole,
+        organizationRoleOther: data.organizationRoleOther,
+      })
+      .then((result) => {
+        registrationForm.reset();
+      })
+      .catch((error) => {
+        handleError(error.error ? error.error.code : ERR_AUTH_UNKNOWN_ERROR);
+      });
   };
-  const registrationFormSubmitDisabled = registrationForm.formState.isSubmitting || userRegistrationLoading;
+  const registrationFormSubmitDisabled =
+    registrationForm.formState.isSubmitting || userRegistrationLoading;
   const registrationSentMsgReset = (e) => {
     dispatch(userRegistrationSentAction(false));
   };
@@ -133,18 +156,22 @@ const AuthenticationCard = (props) => {
   // Access Code form
   const accessCodeForm = useForm({
     mode: "onBlur",
-    validationSchema: accessCodeValidationSchema
+    validationSchema: accessCodeValidationSchema,
   });
   const accessCodeOnSubmit = (data) => {
-    authenticationAPI.requestAccessCode({
-      email: data.email
-    }).then(result => {
-      accessCodeForm.reset();
-    }).catch(error => {
-      handleError(error.error ? error.error.code : ERR_AUTH_UNKNOWN_ERROR);
-    });
+    authenticationAPI
+      .requestAccessCode({
+        email: data.email,
+      })
+      .then((result) => {
+        accessCodeForm.reset();
+      })
+      .catch((error) => {
+        handleError(error.error ? error.error.code : ERR_AUTH_UNKNOWN_ERROR);
+      });
   };
-  const accessCodeFormSubmitDisabled = accessCodeForm.formState.isSubmitting || accessCodeRequestLoading;
+  const accessCodeFormSubmitDisabled =
+    accessCodeForm.formState.isSubmitting || accessCodeRequestLoading;
   const accessCodeSentMsgReset = (e) => {
     dispatch(userAccessCodeRequestSentAction(false));
   };
@@ -152,38 +179,46 @@ const AuthenticationCard = (props) => {
   // Login form
   const loginForm = useForm({
     mode: "onBlur",
-    validationSchema: loginValidationSchema
+    validationSchema: loginValidationSchema,
   });
   const loginOnSubmit = (data) => {
-    authenticationAPI.login({
-      accessCode: data.accessCode
-    }).then(result => {
-      loginForm.reset();
-    }).catch(error => {
-      handleError(error.error ? error.error.code : ERR_AUTH_UNKNOWN_ERROR);
-    });
+    authenticationAPI
+      .login({
+        accessCode: data.accessCode,
+      })
+      .then((result) => {
+        loginForm.reset();
+      })
+      .catch((error) => {
+        handleError(error.error ? error.error.code : ERR_AUTH_UNKNOWN_ERROR);
+      });
   };
-  const loginFormSubmitDisabled = loginForm.formState.isSubmitting || userLoginLoading;
+  const loginFormSubmitDisabled =
+    loginForm.formState.isSubmitting || userLoginLoading;
 
   const logoutOnClick = () => {
-    authenticationAPI.logout().catch(error => {
+    authenticationAPI.logout().catch((error) => {
       handleError(error.error ? error.error.code : ERR_AUTH_UNKNOWN_ERROR);
     });
   };
 
   // If authenticated
   if (userAuthenticated) {
-    const logUserMsg = _.template(messageI18NResolver("LOGUSER_TEMPLATE") || "Welcome <%= user.firstName %> <%= user.lastName %> (<%= user.email %>)")({ user });
+    const logUserMsg = _.template(
+      messageI18NResolver("LOGUSER_TEMPLATE") ||
+        "Welcome <%= user.firstName %> <%= user.lastName %> (<%= user.email %>)",
+    )({ user });
     return (
       <Fragment>
-        <Toolbar style={{minHeight: "40px"}}>
-          <Typography variant="body2">
-            {
-              logUserMsg
-            }
-          </Typography>
+        <Toolbar style={{ minHeight: "40px" }}>
+          <Typography variant="body2">{logUserMsg}</Typography>
           <div style={{ flexGrow: 1 }} />
-          <Button variant="contained" color="secondary" startIcon={<LockIcon />} onClick={logoutOnClick}>
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<LockIcon />}
+            onClick={logoutOnClick}
+          >
             {messageI18NResolver("LOGUSER_LOGOUT_LABEL") || "Logout"}
           </Button>
         </Toolbar>
@@ -193,15 +228,14 @@ const AuthenticationCard = (props) => {
 
   // Else
 
-  const requireAuthMsgComp = (requireAuthMsg && !_.isString(requireAuthMsg)) ?
-    (
+  const requireAuthMsgComp =
+    requireAuthMsg && !_.isString(requireAuthMsg) ? (
       requireAuthMsg
-    ) :
-    (
+    ) : (
       <Typography variant="body2">
-        {
-          requireAuthMsg || messageI18NResolver("AUTHCARD_REQUIREAUTH_TEXT") || "You must be logged to use this service."
-        }
+        {requireAuthMsg ||
+          messageI18NResolver("AUTHCARD_REQUIREAUTH_TEXT") ||
+          "You must be logged to use this service."}
       </Typography>
     );
   const explanationText = messageI18NResolver("AUTHCARD_EXPLANATION_TEXT");
@@ -209,43 +243,51 @@ const AuthenticationCard = (props) => {
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        {
-          requireAuthMsgComp
-        }
+        {requireAuthMsgComp}
       </AccordionSummary>
       <AccordionDetails>
         <Card raised={false} elevation={0}>
-          {
-            explanationText && !(_.toString(explanationText).trim() === "") &&
+          {explanationText && !(_.toString(explanationText).trim() === "") && (
             <Box mb={4}>
-              <Typography variant="caption" display="block" align="justify">{explanationText}</Typography>
+              <Typography variant="caption" display="block" align="justify">
+                {explanationText}
+              </Typography>
             </Box>
-          }
+          )}
           <Grid container justify="center" spacing={4} className={classes.grow}>
             <Grid item xs={12} sm={6}>
-              {
-                userRegistrationSent &&
+              {userRegistrationSent && (
                 <Fragment>
                   <Typography variant="body2">
-                    {messageI18NResolver("REGISTRATIONFORM_SUCCESS_TEXT") || "Your registration request has been sent successfully and will be reviewed shortly by our service. You will receive a notification by email once your account is activated."}
+                    {messageI18NResolver("REGISTRATIONFORM_SUCCESS_TEXT") ||
+                      "Your registration request has been sent successfully and will be reviewed shortly by our service. You will receive a notification by email once your account is activated."}
                   </Typography>
                   <Box mt={4}>
-                    <Button variant="contained" color="primary" startIcon={<PersonAddIcon />}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<PersonAddIcon />}
                       onClick={registrationSentMsgReset}
                     >
-                      {messageI18NResolver("REGISTRATIONFORM_SUCCESS_RESET_LABEL") || "New request"}
+                      {messageI18NResolver(
+                        "REGISTRATIONFORM_SUCCESS_RESET_LABEL",
+                      ) || "New request"}
                     </Button>
                   </Box>
                 </Fragment>
-              }
-              {
-                !userRegistrationSent &&
+              )}
+              {!userRegistrationSent && (
                 <Fragment>
-                  <form onSubmit={registrationForm.handleSubmit(registrationOnSubmit)}>
+                  <form
+                    onSubmit={registrationForm.handleSubmit(
+                      registrationOnSubmit,
+                    )}
+                  >
                     <Grid container justify="center" spacing={2}>
                       <Grid item xs={12}>
                         <Typography variant="body2">
-                          {messageI18NResolver("REGISTRATIONFORM_TITLE") || "Not already registered? Register for an access to the service:"}
+                          {messageI18NResolver("REGISTRATIONFORM_TITLE") ||
+                            "Not already registered? Register for an access to the service:"}
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
@@ -254,14 +296,27 @@ const AuthenticationCard = (props) => {
                           as={
                             <TextField
                               id="registration-email"
-                              label={messageI18NResolver("REGISTRATIONFORM_EMAIL_LABEL") || "Email address"}
-                              placeholder={messageI18NResolver("REGISTRATIONFORM_EMAIL_PLACEHOLDER") || "Enter your email address"}
+                              label={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_EMAIL_LABEL",
+                                ) || "Email address"
+                              }
+                              placeholder={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_EMAIL_PLACEHOLDER",
+                                ) || "Enter your email address"
+                              }
                               fullWidth
                               autoComplete="email"
                               required
                               error={_.hasIn(registrationForm.errors, "email")}
-                              helperText={registrationForm.errors.email
-                                && (messageI18NResolver(registrationForm.errors.email.message) || "A valid email address is required")}
+                              helperText={
+                                registrationForm.errors.email &&
+                                (messageI18NResolver(
+                                  registrationForm.errors.email.message,
+                                ) ||
+                                  "A valid email address is required")
+                              }
                             />
                           }
                           control={registrationForm.control}
@@ -274,14 +329,30 @@ const AuthenticationCard = (props) => {
                           as={
                             <TextField
                               id="registration-firstName"
-                              label={messageI18NResolver("REGISTRATIONFORM_FIRSTNAME_LABEL") || "First name"}
-                              placeholder={messageI18NResolver("REGISTRATIONFORM_FIRSTNAME_PLACEHOLDER") || "Enter your first name"}
+                              label={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_FIRSTNAME_LABEL",
+                                ) || "First name"
+                              }
+                              placeholder={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_FIRSTNAME_PLACEHOLDER",
+                                ) || "Enter your first name"
+                              }
                               fullWidth
                               autoComplete="given-name"
                               required
-                              error={_.hasIn(registrationForm.errors, "firstName")}
-                              helperText={registrationForm.errors.firstName
-                                && (messageI18NResolver(registrationForm.errors.firstName.message) || "First name is required")}
+                              error={_.hasIn(
+                                registrationForm.errors,
+                                "firstName",
+                              )}
+                              helperText={
+                                registrationForm.errors.firstName &&
+                                (messageI18NResolver(
+                                  registrationForm.errors.firstName.message,
+                                ) ||
+                                  "First name is required")
+                              }
                             />
                           }
                           control={registrationForm.control}
@@ -294,14 +365,30 @@ const AuthenticationCard = (props) => {
                           as={
                             <TextField
                               id="registration-lastName"
-                              label={messageI18NResolver("REGISTRATIONFORM_LASTNAME_LABEL") || "Last name"}
-                              placeholder={messageI18NResolver("REGISTRATIONFORM_LASTNAME_PLACEHOLDER") || "Enter your last name"}
+                              label={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_LASTNAME_LABEL",
+                                ) || "Last name"
+                              }
+                              placeholder={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_LASTNAME_PLACEHOLDER",
+                                ) || "Enter your last name"
+                              }
                               fullWidth
                               autoComplete="family-name"
                               required
-                              error={_.hasIn(registrationForm.errors, "lastName")}
-                              helperText={registrationForm.errors.lastName
-                                && (messageI18NResolver(registrationForm.errors.lastName.message) || "Last name is required")}
+                              error={_.hasIn(
+                                registrationForm.errors,
+                                "lastName",
+                              )}
+                              helperText={
+                                registrationForm.errors.lastName &&
+                                (messageI18NResolver(
+                                  registrationForm.errors.lastName.message,
+                                ) ||
+                                  "Last name is required")
+                              }
                             />
                           }
                           control={registrationForm.control}
@@ -314,14 +401,30 @@ const AuthenticationCard = (props) => {
                           as={
                             <TextField
                               id="registration-organization"
-                              label={messageI18NResolver("REGISTRATIONFORM_ORGANIZATION_LABEL") || "Organization"}
-                              placeholder={messageI18NResolver("REGISTRATIONFORM_ORGANIZATION_PLACEHOLDER") || "Enter your organization name"}
+                              label={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_ORGANIZATION_LABEL",
+                                ) || "Organization"
+                              }
+                              placeholder={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_ORGANIZATION_PLACEHOLDER",
+                                ) || "Enter your organization name"
+                              }
                               fullWidth
                               autoComplete="organization"
                               required
-                              error={_.hasIn(registrationForm.errors, "organization")}
-                              helperText={registrationForm.errors.organization
-                                && (messageI18NResolver(registrationForm.errors.organization.message) || "Organization name is required")}
+                              error={_.hasIn(
+                                registrationForm.errors,
+                                "organization",
+                              )}
+                              helperText={
+                                registrationForm.errors.organization &&
+                                (messageI18NResolver(
+                                  registrationForm.errors.organization.message,
+                                ) ||
+                                  "Organization name is required")
+                              }
                             />
                           }
                           control={registrationForm.control}
@@ -334,19 +437,51 @@ const AuthenticationCard = (props) => {
                           as={
                             <TextField
                               id="registration-organizationRole"
-                              label={messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_LABEL") || "Role"}
-                              placeholder={messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_PLACEHOLDER") || "Select your role within organization"}
+                              label={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_ORGANIZATIONROLE_LABEL",
+                                ) || "Role"
+                              }
+                              placeholder={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_ORGANIZATIONROLE_PLACEHOLDER",
+                                ) || "Select your role within organization"
+                              }
                               select
                               fullWidth
                               autoComplete="organization-title"
                               required
-                              error={_.hasIn(registrationForm.errors, "organizationRole")}
-                              helperText={registrationForm.errors.organizationRole
-                                && (messageI18NResolver(registrationForm.errors.organizationRole.message) || "Role within organization is required")}
+                              error={_.hasIn(
+                                registrationForm.errors,
+                                "organizationRole",
+                              )}
+                              helperText={
+                                registrationForm.errors.organizationRole &&
+                                (messageI18NResolver(
+                                  registrationForm.errors.organizationRole
+                                    .message,
+                                ) ||
+                                  "Role within organization is required")
+                              }
                             >
-                              <MenuItem key="REPORTER" value="REPORTER">{messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_REPORTER_LABEL") || "Reporter"}</MenuItem>
-                              <MenuItem key="FAKE_NEWS_CHECKER" value="FAKE_NEWS_CHECKER">{messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_FAKENEWSCHECKER_LABEL") || "Fake news checker"}</MenuItem>
-                              <MenuItem key="OTHER" value="OTHER">{messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_OTHER_LABEL") || "Other"}</MenuItem>
+                              <MenuItem key="REPORTER" value="REPORTER">
+                                {messageI18NResolver(
+                                  "REGISTRATIONFORM_ORGANIZATIONROLE_REPORTER_LABEL",
+                                ) || "Reporter"}
+                              </MenuItem>
+                              <MenuItem
+                                key="FAKE_NEWS_CHECKER"
+                                value="FAKE_NEWS_CHECKER"
+                              >
+                                {messageI18NResolver(
+                                  "REGISTRATIONFORM_ORGANIZATIONROLE_FAKENEWSCHECKER_LABEL",
+                                ) || "Fake news checker"}
+                              </MenuItem>
+                              <MenuItem key="OTHER" value="OTHER">
+                                {messageI18NResolver(
+                                  "REGISTRATIONFORM_ORGANIZATIONROLE_OTHER_LABEL",
+                                ) || "Other"}
+                              </MenuItem>
                             </TextField>
                           }
                           control={registrationForm.control}
@@ -359,14 +494,31 @@ const AuthenticationCard = (props) => {
                           as={
                             <TextField
                               id="registration-organizationRoleOther"
-                              label={messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLEOTHER_LABEL") || "Role (other)"}
-                              placeholder={messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLEOTHER_PLACEHOLDER") || "Enter your role within organization"}
+                              label={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_ORGANIZATIONROLEOTHER_LABEL",
+                                ) || "Role (other)"
+                              }
+                              placeholder={
+                                messageI18NResolver(
+                                  "REGISTRATIONFORM_ORGANIZATIONROLEOTHER_PLACEHOLDER",
+                                ) || "Enter your role within organization"
+                              }
                               fullWidth
                               autoComplete="organization-title"
                               // required
-                              error={_.hasIn(registrationForm.errors, "organizationRoleOther")}
-                              helperText={registrationForm.errors.organizationRoleOther
-                                && (messageI18NResolver(registrationForm.errors.organizationRoleOther.message) || "Please fill in your role within organization")}
+                              error={_.hasIn(
+                                registrationForm.errors,
+                                "organizationRoleOther",
+                              )}
+                              helperText={
+                                registrationForm.errors.organizationRoleOther &&
+                                (messageI18NResolver(
+                                  registrationForm.errors.organizationRoleOther
+                                    .message,
+                                ) ||
+                                  "Please fill in your role within organization")
+                              }
                             />
                           }
                           control={registrationForm.control}
@@ -375,46 +527,61 @@ const AuthenticationCard = (props) => {
                       </Grid>
                       <Grid item xs={12}>
                         <Box mt={2}>
-                          <Button variant="contained" color="primary" startIcon={<PersonAddIcon />}
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            startIcon={<PersonAddIcon />}
                             type="submit"
                             disabled={registrationFormSubmitDisabled}
                           >
-                            {messageI18NResolver("REGISTRATIONFORM_SUBMIT_LABEL") || "Register"}
+                            {messageI18NResolver(
+                              "REGISTRATIONFORM_SUBMIT_LABEL",
+                            ) || "Register"}
                           </Button>
                         </Box>
                       </Grid>
                     </Grid>
                   </form>
                 </Fragment>
-              }
+              )}
             </Grid>
             <Grid item xs>
-              <Divider orientation="vertical" style={{ marginRight: "auto", marginLeft: "auto" }} />
+              <Divider
+                orientation="vertical"
+                style={{ marginRight: "auto", marginLeft: "auto" }}
+              />
             </Grid>
             <Grid item xs={12} sm={5}>
-              {
-                accessCodeRequestSent &&
+              {accessCodeRequestSent && (
                 <Fragment>
                   <Typography variant="body2">
-                    {messageI18NResolver("ACCESSCODEFORM_SUCCESS_TEXT") || "Your access code request has been sent successfully. If your account is valid, you should receive your access code by email in a few minutes."}
+                    {messageI18NResolver("ACCESSCODEFORM_SUCCESS_TEXT") ||
+                      "Your access code request has been sent successfully. If your account is valid, you should receive your access code by email in a few minutes."}
                   </Typography>
                   <Box mt={4}>
-                    <Button variant="contained" color="primary" startIcon={<SendIcon />}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<SendIcon />}
                       onClick={accessCodeSentMsgReset}
                     >
-                      {messageI18NResolver("ACCESSCODEFORM_SUCCESS_RESET_LABEL") || "New request"}
+                      {messageI18NResolver(
+                        "ACCESSCODEFORM_SUCCESS_RESET_LABEL",
+                      ) || "New request"}
                     </Button>
                   </Box>
                 </Fragment>
-              }
-              {
-                !accessCodeRequestSent &&
+              )}
+              {!accessCodeRequestSent && (
                 <Fragment>
-                  <form onSubmit={accessCodeForm.handleSubmit(accessCodeOnSubmit)}>
+                  <form
+                    onSubmit={accessCodeForm.handleSubmit(accessCodeOnSubmit)}
+                  >
                     <Grid container justify="center" spacing={2}>
                       <Grid item xs={12}>
                         <Typography variant="body2">
-                          {messageI18NResolver("ACCESSCODEFORM_TITLE") || "Already registered? Get an access code:"}
+                          {messageI18NResolver("ACCESSCODEFORM_TITLE") ||
+                            "Already registered? Get an access code:"}
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
@@ -423,14 +590,27 @@ const AuthenticationCard = (props) => {
                           as={
                             <TextField
                               id="access-code-email"
-                              label={messageI18NResolver("ACCESSCODEFORM_EMAIL_LABEL") || "Email address"}
-                              placeholder={messageI18NResolver("ACCESSCODEFORM_EMAIL_PLACEHOLDER") || "Enter your email address"}
+                              label={
+                                messageI18NResolver(
+                                  "ACCESSCODEFORM_EMAIL_LABEL",
+                                ) || "Email address"
+                              }
+                              placeholder={
+                                messageI18NResolver(
+                                  "ACCESSCODEFORM_EMAIL_PLACEHOLDER",
+                                ) || "Enter your email address"
+                              }
                               fullWidth
                               autoComplete="email"
                               required
                               error={_.hasIn(accessCodeForm.errors, "email")}
-                              helperText={accessCodeForm.errors.email
-                                && (messageI18NResolver(accessCodeForm.errors.email.message) || "Email address is required")}
+                              helperText={
+                                accessCodeForm.errors.email &&
+                                (messageI18NResolver(
+                                  accessCodeForm.errors.email.message,
+                                ) ||
+                                  "Email address is required")
+                              }
                             />
                           }
                           control={accessCodeForm.control}
@@ -439,24 +619,30 @@ const AuthenticationCard = (props) => {
                       </Grid>
                       <Grid item xs={12}>
                         <Box mt={2}>
-                          <Button variant="contained" color="primary" startIcon={<SendIcon />}
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            startIcon={<SendIcon />}
                             type="submit"
                             disabled={accessCodeFormSubmitDisabled}
                           >
-                            {messageI18NResolver("ACCESSCODEFORM_SUBMIT_LABEL") || "Get an access code"}
+                            {messageI18NResolver(
+                              "ACCESSCODEFORM_SUBMIT_LABEL",
+                            ) || "Get an access code"}
                           </Button>
                         </Box>
                       </Grid>
                     </Grid>
                   </form>
                 </Fragment>
-              }
+              )}
               <Box m={8} />
               <form onSubmit={loginForm.handleSubmit(loginOnSubmit)}>
                 <Grid container justify="center" spacing={2}>
                   <Grid item xs={12}>
                     <Typography variant="body2">
-                      {messageI18NResolver("LOGINFORM_TITLE") || "Login using your access code:"}
+                      {messageI18NResolver("LOGINFORM_TITLE") ||
+                        "Login using your access code:"}
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
@@ -465,14 +651,26 @@ const AuthenticationCard = (props) => {
                       as={
                         <TextField
                           id="login-access-code"
-                          label={messageI18NResolver("LOGINFORM_ACCESSCODE_LABEL") || "Access Code"}
-                          placeholder={messageI18NResolver("LOGINFORM_ACCESSCODE_PLACEHOLDER") || "Enter your access code"}
+                          label={
+                            messageI18NResolver("LOGINFORM_ACCESSCODE_LABEL") ||
+                            "Access Code"
+                          }
+                          placeholder={
+                            messageI18NResolver(
+                              "LOGINFORM_ACCESSCODE_PLACEHOLDER",
+                            ) || "Enter your access code"
+                          }
                           fullWidth
                           // autoComplete="email"
                           required
                           error={_.hasIn(loginForm.errors, "accessCode")}
-                          helperText={loginForm.errors.accessCode
-                            && (messageI18NResolver(loginForm.errors.accessCode.message) || "Access code is required")}
+                          helperText={
+                            loginForm.errors.accessCode &&
+                            (messageI18NResolver(
+                              loginForm.errors.accessCode.message,
+                            ) ||
+                              "Access code is required")
+                          }
                         />
                       }
                       control={loginForm.control}
@@ -481,12 +679,16 @@ const AuthenticationCard = (props) => {
                   </Grid>
                   <Grid item xs={12}>
                     <Box mt={2}>
-                      <Button variant="contained" color="primary" startIcon={<LockOpenIcon />}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={<LockOpenIcon />}
                         // onClick={loginOnSubmit}
                         type="submit"
                         disabled={loginFormSubmitDisabled}
                       >
-                        {messageI18NResolver("LOGINFORM_SUBMIT_LABEL") || "Login"}
+                        {messageI18NResolver("LOGINFORM_SUBMIT_LABEL") ||
+                          "Login"}
                       </Button>
                     </Box>
                   </Grid>
@@ -497,7 +699,6 @@ const AuthenticationCard = (props) => {
         </Card>
       </AccordionDetails>
     </Accordion>
-
   );
 };
 
@@ -505,8 +706,8 @@ AuthenticationCard.propTypes = {
   requireAuthMsg: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
-    PropTypes.element
-  ])
+    PropTypes.element,
+  ]),
 };
 
 export default AuthenticationCard;

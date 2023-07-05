@@ -3,9 +3,8 @@ import React from "react";
 import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
-import FactcheckSearch from "../components/Search/FactcheckSearch"
+import FactcheckSearch from "../components/Search/FactcheckSearch";
 const tsv = "/components/NavItems/tools/FactcheckSearch.tsv";
-
 
 const FactCheckInfo = () => {
   const keyword = useLoadLanguage(tsv);
@@ -19,7 +18,7 @@ const FactCheckInfo = () => {
         <FactcheckSearch />
       </main>
       <footer>
-       <Footer type={"afp"}/>
+        <Footer type={"afp"} />
       </footer>
       <style jsx>{`
         main {
@@ -29,7 +28,7 @@ const FactCheckInfo = () => {
           flex-direction: column;
           justify-content: flex-start;
           align-items: center;
-          background-color: #fafafa!important;
+          background-color: #fafafa !important;
         }
         footer {
           width: 100%;

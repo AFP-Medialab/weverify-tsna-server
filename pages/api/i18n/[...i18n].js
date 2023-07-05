@@ -9,7 +9,7 @@ export default (req, res) => {
   const headers = {
     "Content-Type": "text/plain",
   };
-  
+
   const getContent = async (res, headers) => {
     const response = await fetch(url, {
       method: "GET",

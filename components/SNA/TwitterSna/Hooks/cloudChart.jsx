@@ -1,7 +1,7 @@
-addEventListener('message', event =>{
+addEventListener("message", (event) => {
   //console.log("cloud chart worker on message")
-  postMessage(createWordCloud(event.data[0], event.data[1]))
-})
+  postMessage(createWordCloud(event.data[0], event.data[1]));
+});
 
 const includeWordObj = (wordObj, wordsArray) => {
   for (let i = 0; i < wordsArray.length; i++) {

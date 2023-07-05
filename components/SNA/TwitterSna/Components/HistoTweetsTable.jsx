@@ -1,6 +1,6 @@
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 import Button from "@material-ui/core/Button";
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,13 +8,13 @@ import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSna
 import CustomTable from "../../../shared/CustomTable/CustomTable";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import SaveAltIcon from "@material-ui/icons/SaveAlt";
+import { widgetSimpleFilename } from "../Hooks/tsnaUtils";
 
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
-  const sna = useSelector(state => state.sna)
+  const sna = useSelector((state) => state.sna);
   const keyword = useLoadLanguage(sna.tsv);
   const request = useSelector((state) => state.twitterSna.request);
 
@@ -24,10 +24,7 @@ export default function HistoTweetsTable(props) {
     link.setAttribute("href", "data:text/plain;charset=utf-8," + encodedUri);
     link.setAttribute(
       "download",
-      type +
-        name +
-        "_" + widgetSimpleFilename(request) +
-        ".csv"
+      type + name + "_" + widgetSimpleFilename(request) + ".csv",
     );
     document.body.appendChild(link);
     link.click();
@@ -36,7 +33,7 @@ export default function HistoTweetsTable(props) {
 
   let goToTweetAction = [
     {
-      icon: () => <TwitterIcon style={{ color: "#00acee" }}/>,
+      icon: () => <TwitterIcon style={{ color: "#00acee" }} />,
       tooltip: keyword("twittersna_result_go_to_tweet"),
       onClick: (event, rowData) => {
         window.open(rowData.link, "_blank");
@@ -45,13 +42,14 @@ export default function HistoTweetsTable(props) {
   ];
 
   return (
-    <div 
-      style={{ 
+    <div
+      style={{
         padding: "16px",
-        margin: "16px", 
+        margin: "16px",
         backgroundColor: "#fbfbfb",
-        borderRadius: "15px"
-        }}>
+        borderRadius: "15px",
+      }}
+    >
       <Grid
         container
         justifyContent="space-between"
@@ -60,13 +58,13 @@ export default function HistoTweetsTable(props) {
       >
         <Grid item>
           <Box ml={1}>
-          <Button
-            startIcon={<ExpandLessIcon />}
-            color={"primary"}
-            onClick={() => dispatch(setTweetsDetailPanel(props.from, null))}
-          >
-            {keyword("twittersna_result_hide")}
-          </Button>
+            <Button
+              startIcon={<ExpandLessIcon />}
+              color={"primary"}
+              onClick={() => dispatch(setTweetsDetailPanel(props.from, null))}
+            >
+              {keyword("twittersna_result_hide")}
+            </Button>
           </Box>
         </Grid>
         <Grid item>
@@ -77,7 +75,7 @@ export default function HistoTweetsTable(props) {
               downloadClick(
                 props.data.csvArr,
                 props.data.data[0].date.split(" ")[0],
-                true
+                true,
               )
             }
           >

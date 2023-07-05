@@ -1,8 +1,9 @@
 start project:
+
 ```
 npm install
 npm run dev
-````
+```
 
 Build Docker image:
 
@@ -33,7 +34,9 @@ REACT_APP_AUTH_BASE_URL=http://localhost:8080/weverify-wrapper
 
 TSV_SRV_LOCATION_PATH=../InVID-Translations
 ```
+
 ## Docker env support for client page
+
 Some env which are used in client page are also set in .env.production file with a temporary custom key.
 at docker image build, these values are replace by entrypoint.sh script with runtime environement.
 
@@ -42,12 +45,13 @@ REACT_APP_GOOGLE_ANALYTICS_KEY=NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY
 REACT_APP_GEXF_GENERATOR_URL=NEXT_PUBLIC_GEXF_GENERATOR_URL
 ```
 
-
 ## I18N support
-* Clone project https://github.com/AFP-Medialab/InVID-Translations
-* Use react branch
-* Set variable TSV_SRV_LOCATION_PATH to InVID-Translations directory
-* run tsv-server container:
+
+- Clone project https://github.com/AFP-Medialab/InVID-Translations
+- Use react branch
+- Set variable TSV_SRV_LOCATION_PATH to InVID-Translations directory
+- run tsv-server container:
+
 ```
 docker-compose -f docker-compose-tsv-server.yml up -d
 ```

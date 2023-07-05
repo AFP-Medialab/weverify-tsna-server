@@ -6,7 +6,6 @@ import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import CrowdTangleSnaComponent from "../components/SNA/CrowdTangleSna/CrowdTangleSnaComponent";
 const tsv = "/components/NavItems/tools/SNA.tsv";
 
-
 const CsvSnaIndex = () => {
   const keyword = useLoadLanguage(tsv);
   return (
@@ -16,10 +15,10 @@ const CsvSnaIndex = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-       <CrowdTangleSnaComponent />
+        <CrowdTangleSnaComponent />
       </main>
       <footer>
-       <Footer type={"afp"}/>
+        <Footer type={"afp"} />
       </footer>
       <style jsx>{`
         main {
@@ -29,7 +28,7 @@ const CsvSnaIndex = () => {
           flex-direction: column;
           justify-content: flex-start;
           align-items: center;
-          background-color: #fafafa!important;
+          background-color: #fafafa !important;
         }
         footer {
           width: 100%;

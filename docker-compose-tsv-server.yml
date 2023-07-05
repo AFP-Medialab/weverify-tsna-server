@@ -3,8 +3,8 @@ services:
   tsv-server:
     image: nginx:latest
     container_name: tsv-server
-    ports: 
+    ports:
       - 8001:80
-    volumes: 
+    volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - ${TSV_SRV_LOCATION_PATH}:/www/data

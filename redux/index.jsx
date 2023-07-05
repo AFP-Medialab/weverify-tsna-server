@@ -37,7 +37,7 @@ function makeStore(initialState) {
   return createStore(
     persistedReducer,
     initialState,
-    bindMiddleware([thunkMiddleware, loggerMiddleware])
+    bindMiddleware([thunkMiddleware, loggerMiddleware]),
   );
 }
 export const initializeStore = (preloadedState) => {

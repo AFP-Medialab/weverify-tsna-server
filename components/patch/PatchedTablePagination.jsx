@@ -1,6 +1,6 @@
-import { TablePagination } from '@material-ui/core';
+import { TablePagination } from "@material-ui/core";
 
-export const PatchedPagination =(props) => {
+export const PatchedPagination = (props) => {
   const {
     ActionsComponent,
     onChangePage,
@@ -26,4 +26,4 @@ export const PatchedPagination =(props) => {
       }}
     />
   );
-}
+};

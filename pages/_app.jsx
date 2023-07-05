@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import "../styles/global.css";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useStore } from "../redux";
 import { persistStore } from "redux-persist";
 import "react-datetime/css/react-datetime.css";
@@ -72,11 +72,11 @@ const MyApp = ({ Component, pageProps }) => {
   });
   return (
     <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <PersistGate loading={<div>loading</div>} persistor={persistor}>
-            <Component {...pageProps} />
-          </PersistGate>
-        </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <PersistGate loading={<div>loading</div>} persistor={persistor}>
+          <Component {...pageProps} />
+        </PersistGate>
+      </ThemeProvider>
     </Provider>
   );
 };

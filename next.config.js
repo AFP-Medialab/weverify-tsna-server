@@ -9,13 +9,10 @@ function getBasePath() {
     }
   }
 
-  
-
   return basePath;
 }
 
 module.exports = {
-  
   basePath: getBasePath(),
   publicRuntimeConfig: {
     baseFolder: getBasePath(),
@@ -26,21 +23,22 @@ module.exports = {
     config.output.globalObject = `(typeof self !== 'undefined' ? self : this)`;
     config.module.rules.push({
       test: /\.svg$/,
-      issuer: { and: [/\.(js|ts)x?$/] }, 
-      use: ['@svgr/webpack'],
+      issuer: { and: [/\.(js|ts)x?$/] },
+      use: ["@svgr/webpack"],
     });
     return config;
   },
-  async headers(){
-    return [{
-      source: '/api/i18n/:i18n*',
-      headers: [
-        {
-          key: 'Content-Type',
-          value: 'text/tsv',
-        },
-      ]
-    }]
+  async headers() {
+    return [
+      {
+        source: "/api/i18n/:i18n*",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "text/tsv",
+          },
+        ],
+      },
+    ];
   },
-  
 };

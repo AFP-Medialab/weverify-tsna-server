@@ -3,9 +3,8 @@ import React from "react";
 import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
-import XNetworkSearch from "../components/Search/XNetworkSearch"
+import XNetworkSearch from "../components/Search/XNetworkSearch";
 const tsv = "/components/NavItems/tools/XNetwork.tsv";
-
 
 const XNetwork = () => {
   const keyword = useLoadLanguage(tsv);
@@ -19,7 +18,7 @@ const XNetwork = () => {
         <XNetworkSearch />
       </main>
       <footer>
-        <Footer type={"afp"}/>
+        <Footer type={"afp"} />
       </footer>
       <style jsx>{`
         main {
@@ -29,7 +28,7 @@ const XNetwork = () => {
           flex-direction: column;
           justify-content: flex-start;
           align-items: center;
-          background-color: #fafafa!important;
+          background-color: #fafafa !important;
         }
         footer {
           width: 100%;

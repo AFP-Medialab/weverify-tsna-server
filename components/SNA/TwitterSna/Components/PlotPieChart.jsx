@@ -1,5 +1,5 @@
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
 import { Typography } from "@mui/material";
 import plotly from "plotly.js-dist";
 import React, { useEffect, useState } from "react";
@@ -13,13 +13,13 @@ import { displayPosts } from "../../lib/displayTweets";
 import { downloadClick } from "../../lib/downloadClick";
 import HistoTweetsTable from "./HistoTweetsTable";
 import { createCSVFromPieChart } from "../Hooks/pieCharts";
-import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
+import { widgetSimpleFilename } from "../Hooks/tsnaUtils";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 
 export default function PlotPieChart(props) {
   const dispatch = useDispatch();
-  const sna = useSelector(state => state.sna)
+  const sna = useSelector((state) => state.sna);
   const keyword = useLoadLanguage(sna.tsv);
   const request = useSelector((state) => state.twitterSna.request);
   const [pieCharts0, setPieCharts0] = useState(null);
@@ -34,9 +34,7 @@ export default function PlotPieChart(props) {
   const [filesNames, setfilesNames] = useState(null);
   //Set the file name for wordsCloud export
   useEffect(() => {
-    setfilesNames(
-      "PlotChart_" + widgetSimpleFilename(request)
-    );
+    setfilesNames("PlotChart_" + widgetSimpleFilename(request));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.request]);
 
@@ -114,8 +112,7 @@ export default function PlotPieChart(props) {
       let positionInfo = element.getBoundingClientRect();
       let height = positionInfo.height;
       let width = positionInfo.width;
-      let name =
-        keyword(elementId) + "_" + filesNames.replace("WordCloud", "");
+      let name = keyword(elementId) + "_" + filesNames.replace("WordCloud", "");
       plotly.downloadImage(elementId, {
         format: "png",
         width: width * 1.2,
@@ -134,11 +131,11 @@ export default function PlotPieChart(props) {
           .filter(
             (tweet) =>
               tweet._source.user_mentions !== undefined &&
-              tweet._source.user_mentions.length > 0
+              tweet._source.user_mentions.length > 0,
           )
           .filter(function (tweet) {
             let lcMentionArr = tweet._source.user_mentions.map((v) =>
-              v.screen_name.toLowerCase()
+              v.screen_name.toLowerCase(),
             );
             return lcMentionArr.includes(selectedUser.toLowerCase());
           });
@@ -189,84 +186,82 @@ export default function PlotPieChart(props) {
     if (request.userList.length === 0 || index === 3) {
       return (
         <div key={index}>
+          <Card>
+            <div style={{ position: "relative" }}>
+              <span
+                id={"bubble" + index}
+                style={{ position: "absolute", top: "-112px" }}
+              ></span>
 
-        
-        <Card >
-          <div style={{ position: "relative" }}>
-          <span id={"bubble" + index}  style={{ position: "absolute", top: "-112px" }}></span>
-          
-            <CustomCardHeader 
-                title={(index+3) + ". " + keyword(obj.title)} 
-              showHelp={true} 
-              helpText={obj.tip} 
-              showPNG={true} 
-              functionPNG={() =>
-                downloadAsPNG(obj.title, keyword, filesNames)
-              }
-              showCSV={true}
-              functionCSV={() =>
-                downloadClick(
-                  request,
-                  createCSVFromPieChart(obj),
-                  keyword(obj.title),
-                  false,
-                  ""
-                )
-              }
-              showSVG={true}
-              functionSVG={() =>
+              <CustomCardHeader
+                title={index + 3 + ". " + keyword(obj.title)}
+                showHelp={true}
+                helpText={obj.tip}
+                showPNG={true}
+                functionPNG={() =>
+                  downloadAsPNG(obj.title, keyword, filesNames)
+                }
+                showCSV={true}
+                functionCSV={() =>
+                  downloadClick(
+                    request,
+                    createCSVFromPieChart(obj),
+                    keyword(obj.title),
+                    false,
+                    "",
+                  )
+                }
+                showSVG={true}
+                functionSVG={() =>
                   downloadAsSVG(obj.title, keyword, filesNames)
-              }
+                }
               />
-          <Box alignItems="center" justifyContent="center" width={"100%"} className={classes.cardsResults}>
-              {(obj.json === null ||
-                (obj.json[0].values.length === 1 &&
-                  obj.json[0].values[0] === "")) && (
-                <Typography variant={"body2"}>
-                  {keyword("twittersna_no_data")}
-                </Typography>
-              )}
-              {obj.json !== null &&
-                !(
-                  obj.json[0].values.length === 1 &&
-                  obj.json[0].values[0] === ""
-                ) && (
-                  <div>
-                  {}
-                  </div>
+              <Box
+                alignItems="center"
+                justifyContent="center"
+                width={"100%"}
+                className={classes.cardsResults}
+              >
+                {(obj.json === null ||
+                  (obj.json[0].values.length === 1 &&
+                    obj.json[0].values[0] === "")) && (
+                  <Typography variant={"body2"}>
+                    {keyword("twittersna_no_data")}
+                  </Typography>
                 )}
-              {obj.json !== null &&
-                !(
-                  obj.json[0].values.length === 1 &&
-                  obj.json[0].values[0] === ""
-                ) && (
-                  <div>
-                    <Plot
-                      data={obj.json}
-                      layout={obj.layout}
-                      config={obj.config}
-                      onClick={(e) => {
-                        onDonutsClick(e, index, state.result.tweets);
-                      }}
-                      divId={obj.title}
-                    />
-                    <Box m={1} />
-                  </div>
-                )}
-              {
-                charts[index] && 
-                (
+                {obj.json !== null &&
+                  !(
+                    obj.json[0].values.length === 1 &&
+                    obj.json[0].values[0] === ""
+                  ) && <div>{}</div>}
+                {obj.json !== null &&
+                  !(
+                    obj.json[0].values.length === 1 &&
+                    obj.json[0].values[0] === ""
+                  ) && (
+                    <div>
+                      <Plot
+                        data={obj.json}
+                        layout={obj.layout}
+                        config={obj.config}
+                        onClick={(e) => {
+                          onDonutsClick(e, index, state.result.tweets);
+                        }}
+                        divId={obj.title}
+                      />
+                      <Box m={1} />
+                    </div>
+                  )}
+                {charts[index] && (
                   <HistoTweetsTable
                     data={charts[index]}
                     from={from + "_" + index}
                   />
-                )
-              }
-            </Box>
+                )}
+              </Box>
             </div>
-        </Card>
-        <Box m={3}/>
-
+          </Card>
+          <Box m={3} />
         </div>
       );
     } else return null;

@@ -4,7 +4,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
 import { Typography } from "@mui/material";
 import Transition from "react-transition-group/Transition";
 import HelpIcon from "@material-ui/icons/Help";

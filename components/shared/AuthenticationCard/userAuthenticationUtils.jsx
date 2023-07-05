@@ -8,24 +8,24 @@ import jwtDecode from "jwt-decode";
  * @throws
  */
 export function decodeJWTToken(token) {
-    let result = {};
-  
-    // Token
-    result.accessToken = token;
-  
-    // Decode JWT Token
-    const tokenContent = jwtDecode(token);
-  
-    // Token Expiry
-    result.accessTokenExpiry = new Date(tokenContent.exp * 1000);
-  
-    // User
-    result.user = {
-      id: tokenContent.sub,
-      email: tokenContent.email,
-      username: tokenContent.preferred_username,
-      roles: tokenContent.roles
-    };
-  
-    return result;
+  let result = {};
+
+  // Token
+  result.accessToken = token;
+
+  // Decode JWT Token
+  const tokenContent = jwtDecode(token);
+
+  // Token Expiry
+  result.accessTokenExpiry = new Date(tokenContent.exp * 1000);
+
+  // User
+  result.user = {
+    id: tokenContent.sub,
+    email: tokenContent.email,
+    username: tokenContent.preferred_username,
+    roles: tokenContent.roles,
   };
+
+  return result;
+}

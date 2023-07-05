@@ -1,4 +1,4 @@
-import {widgetPieTitle, widgetFilename} from "./tsnaUtils"
+import { widgetPieTitle, widgetFilename } from "./tsnaUtils";
 
 export const createPieCharts = (request, jsonPieCharts, keyword) => {
   let layout = {
@@ -67,11 +67,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
   return pieCharts;
 };
 
-const getJsonDataForPieChart = (
-  dataResponse,
-  title,
-  specificGetCallBack
-) => {
+const getJsonDataForPieChart = (dataResponse, title, specificGetCallBack) => {
   let labels = [];
   let parents = [];
   let value = [];
@@ -89,13 +85,7 @@ const getJsonDataForPieChart = (
 
   if (keys[0]["key"].charAt(0) === "#") keys.shift();
   keys.forEach((key) => {
-    specificGetCallBack(
-      key,
-      value,
-      labels,
-      parents,
-      title
-    );
+    specificGetCallBack(key, value, labels, parents, title);
   });
 
   let obj = [
@@ -113,12 +103,11 @@ const getJsonDataForPieChart = (
 };
 
 export const getJsonDataForPieCharts = (esResponse, title) => {
-
   function topByCount(key, values, labels, parents, mainKey) {
     if (key["doc_count"] > 0) {
       values.push(key["doc_count"]);
       labels.push(key["key"]);
-      parents.push("\""+mainKey+"\"");
+      parents.push('"' + mainKey + '"');
     }
   }
 
@@ -126,7 +115,7 @@ export const getJsonDataForPieCharts = (esResponse, title) => {
     if (key["_1"]["value"] > 10) {
       values.push(key["_1"]["value"]);
       labels.push(key["key"]);
-      parents.push("\""+mainKey+"\"");
+      parents.push('"' + mainKey + '"');
     }
   }
 
@@ -136,8 +125,8 @@ export const getJsonDataForPieCharts = (esResponse, title) => {
       getJsonDataForPieChart(
         esResponse["top_user_retweet"]["buckets"],
         title,
-        topBySum
-      )
+        topBySum,
+      ),
     );
   }
   if (esResponse["top_user_favorite"]) {
@@ -145,8 +134,8 @@ export const getJsonDataForPieCharts = (esResponse, title) => {
       getJsonDataForPieChart(
         esResponse["top_user_favorite"]["buckets"],
         title,
-        topBySum
-      )
+        topBySum,
+      ),
     );
   }
   if (esResponse["top_user"]) {
@@ -154,8 +143,8 @@ export const getJsonDataForPieCharts = (esResponse, title) => {
       getJsonDataForPieChart(
         esResponse["top_user"]["buckets"],
         title,
-        topByCount
-      )
+        topByCount,
+      ),
     );
   }
   if (esResponse["top_user_mentions"]) {
@@ -163,8 +152,8 @@ export const getJsonDataForPieCharts = (esResponse, title) => {
       getJsonDataForPieChart(
         esResponse["top_user_mentions"]["buckets"],
         title,
-        topByCount
-      )
+        topByCount,
+      ),
     );
   }
 

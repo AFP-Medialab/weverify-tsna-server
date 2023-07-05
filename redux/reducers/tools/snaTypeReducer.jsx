@@ -2,25 +2,25 @@ import { SNA_SET_TYPE } from "../../actions/types/snaCommunTypes";
 import { CT_SNA_CLEAN } from "../../actions/types/crowdTangleSnaTypes";
 
 const defaultState = {
-    type : null,
-    tsv: null,
-    tsvInfo: null
-}
+  type: null,
+  tsv: null,
+  tsvInfo: null,
+};
 
 const snaTypeReducer = (state = defaultState, { type, payload }) => {
-    switch (type) {
+  switch (type) {
     case SNA_SET_TYPE:
       return {
         ...state,
-        type : payload.type,
-        tsv : payload.tsv,
-        tsvInfo : payload.tsvInfo
-    };
+        type: payload.type,
+        tsv: payload.tsv,
+        tsvInfo: payload.tsvInfo,
+      };
     case CT_SNA_CLEAN:
-        return (state = defaultState);
+      return (state = defaultState);
     default:
-        return state;
-    }
-}
+      return state;
+  }
+};
 
-export default snaTypeReducer
+export default snaTypeReducer;

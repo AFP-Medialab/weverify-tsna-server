@@ -15,27 +15,30 @@ const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {
 export default function CsvSnaResults(props) {
   const classes = useMyStyles();
   const dispatch = useDispatch();
-  
+
   return (
     <Paper className={classes.root}>
       <CloseResult onClick={() => dispatch(cleanCsvSnaState())} />
-      {<Count result={props.result} 
-      //onClickInfoLabel={"fb_sna_tweetnb_tip"} 
-      />}
+      {
+        <Count
+          result={props.result}
+          //onClickInfoLabel={"fb_sna_tweetnb_tip"}
+        />
+      }
 
       {props.result.histogram && (
         <PlotTimeLine
           result={props.result}
-         // onClickInfoLabel={"fb_sna_tweetnb_tip"}
+          // onClickInfoLabel={"fb_sna_tweetnb_tip"}
         />
       )}
 
-        {props.result && props.result.pieCharts && (
+      {props.result && props.result.pieCharts && (
         <PlotPieChart
           result={props.result}
-         // onClickInfoLabel={"fb_sna_tweetnb_tip"}
+          // onClickInfoLabel={"fb_sna_tweetnb_tip"}
         />
-      )}     
+      )}
     </Paper>
   );
 }

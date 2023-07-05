@@ -24,53 +24,56 @@ import {
   getCloudTweets,
   getESQuery4Gexf,
 } from "./call-elastic";
-import {userLogoutAction} from "../../../../redux/actions/authentificationActions"
+import { userLogoutAction } from "../../../../redux/actions/authentificationActions";
 import { getJsonDataForTimeLineChart } from "./timelineTW";
 import { createTimeLineChart } from "../../Hooks/timeline";
 import { createPieCharts, getJsonDataForPieCharts } from "./pieCharts";
-import {removeUnusedFields} from "../../lib/displayTweets"
+import { removeUnusedFields } from "../../lib/displayTweets";
 
 import { createHeatMap } from "./heatMap";
 
 import { getJsonDataForURLTable } from "../../Hooks/urlList";
 
-import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthenticatedRequest"
+import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthenticatedRequest";
 
 import { setError } from "../../../../redux/actions/errorActions";
 import getConfig from "next/config";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
-import {widgetTitle, widgetPieTitle} from "./tsnaUtils"
+import { widgetTitle, widgetPieTitle } from "./tsnaUtils";
 
 const { publicRuntimeConfig } = getConfig();
-const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
+const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv" };
 
 const useTwitterSnaRequest = (request) => {
+  const tsnaWorkers = useRef();
 
-const tsnaWorkers = useRef()
-
-	const keyword = useLoadLanguage(sna.tsv)
+  const keyword = useLoadLanguage(sna.tsv);
   const dispatch = useDispatch();
   const authenticatedRequest = useAuthenticatedRequest();
   const userAuthenticated = useSelector(
-    (state) => state.userSession && state.userSession.userAuthenticated
+    (state) => state.userSession && state.userSession.userAuthenticated,
   );
   const role = useSelector((state) => state.userSession.user.roles);
-  
+
   useEffect(() => {
-    let cloudWorker = new Worker(new URL('./cloudChart.js', import.meta.url));
-    let hashtagWorker =  new Worker(new URL('./hashtagGraph.js', import.meta.url))
-    let socioWorker = new Worker(new URL('./socioSemGraph.js', import.meta.url))
+    let cloudWorker = new Worker(new URL("./cloudChart.js", import.meta.url));
+    let hashtagWorker = new Worker(
+      new URL("./hashtagGraph.js", import.meta.url),
+    );
+    let socioWorker = new Worker(
+      new URL("./socioSemGraph.js", import.meta.url),
+    );
 
     tsnaWorkers.current = {
       socioWorker: socioWorker,
       cloudWorker: cloudWorker,
-      hashtagWorker: hashtagWorker
-  }
+      hashtagWorker: hashtagWorker,
+    };
     return () => {
-      tsnaWorkers.current.socioWorker.terminate()
-      tsnaWorkers.current.cloudWorker.terminate()
-      tsnaWorkers.current.hashtagWorker.terminate()
-    }
+      tsnaWorkers.current.socioWorker.terminate();
+      tsnaWorkers.current.cloudWorker.terminate();
+      tsnaWorkers.current.hashtagWorker.terminate();
+    };
   }, []);
   useEffect(() => {
     const enableExtraFeatures = () => {
@@ -90,7 +93,7 @@ const tsnaWorkers = useRef()
     // Check request
     const cacheRenderCall = (request) => {
       dispatch(
-        setTwitterSnaLoadingMessage(keyword("twittersna_building_graphs"))
+        setTwitterSnaLoadingMessage(keyword("twittersna_building_graphs")),
       );
       //generateFirstGraph(request);
       (generateSecondGraph(request) && generateThirdGraph(request)).then(() => {
@@ -118,14 +121,14 @@ const tsnaWorkers = useRef()
               //flag
               dispatch(
                 setTwitterSnaLoadingMessage(
-                  keyword("twittersna_counting_words")
-                )
+                  keyword("twittersna_counting_words"),
+                ),
               );
               generateSecondGraph(request);
             }
             setTimeout(
               () => getResultUntilsDone(sessionId, request, "CountingWords"),
-              3000
+              3000,
             );
           } else {
             //running
@@ -133,12 +136,12 @@ const tsnaWorkers = useRef()
               if (lastStep === "Pending")
                 dispatch(
                   setTwitterSnaLoadingMessage(
-                    keyword("twittersna_fetching_tweets")
-                  )
+                    keyword("twittersna_fetching_tweets"),
+                  ),
                 );
               setTimeout(
                 () => getResultUntilsDone(sessionId, request, "Running"),
-                5000
+                5000,
               );
             });
           }
@@ -231,7 +234,7 @@ const tsnaWorkers = useRef()
       buildCoHashTag(lcTweets);
       buildSocioGraph(
         lcTweets,
-        responseArrayOf9[0]["aggregations"].top_user_retweet.buckets
+        responseArrayOf9[0]["aggregations"].top_user_retweet.buckets,
       );
       buidTopUsers(lcTweets);
       buildUrls(responseArrayOf9[0]["aggregations"]);
@@ -241,7 +244,6 @@ const tsnaWorkers = useRef()
       buildHistogram(request, responseAggs);
       buildTweetCount(responseAggs);
       buildPieCharts(request, responseAggs);
-      
     };
 
     const makeThirdResult = (request, responseArrayOf9) => {
@@ -253,7 +255,7 @@ const tsnaWorkers = useRef()
       let tweetCountObj = _.countBy(
         tweets.map((tweet) => {
           return tweet._source.screen_name.toLowerCase();
-        })
+        }),
       );
       let topUsers2DArr = _.sortBy(Object.entries(tweetCountObj), [
         function (o) {
@@ -270,9 +272,8 @@ const tsnaWorkers = useRef()
       tsnaWorkers.current.cloudWorker.onmessage = (evt) => {
         let wordCountResponse = evt.data;
         dispatch(setCloudWordsResult(wordCountResponse));
-      }
+      };
       //const wordCountResponse = await instance.createWordCloud(tweets, request);
-     
     };
     const buildGexf = async (entries) => {
       axios.all([getESQuery4Gexf(entries)]).then((response) => {
@@ -282,11 +283,10 @@ const tsnaWorkers = useRef()
 
     const buildSocioGraph = async (tweets, topUser) => {
       tsnaWorkers.current.socioWorker.postMessage([tweets, topUser]);
-      tsnaWorkers.current.socioWorker.onmessage = (evt) =>{
+      tsnaWorkers.current.socioWorker.onmessage = (evt) => {
         const socioSemantic4ModeGraph = JSON.parse(evt.data);
         dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
-      }
-     
+      };
     };
 
     const buildCoHashTag = async (tweets) => {
@@ -295,25 +295,34 @@ const tsnaWorkers = useRef()
         //console.log("received message hashtag")
         let coHashtagGraph = evt.data;
         dispatch(setCoHashtagResult(coHashtagGraph));
-      }
+      };
     };
 
     const buildPieCharts = async (request, responseAggs) => {
       const pieCharts = createPieCharts(
         request,
         getJsonDataForPieCharts(responseAggs, widgetPieTitle(request)),
-        keyword
+        keyword,
       );
       dispatch(setPieChartsResult(pieCharts));
     };
 
     const buildHistogram = async (request, responseAggs) => {
-      var title = keyword("user_time_chart_title") + "<br>" + widgetTitle(request);
-      var full_fileName = request.keywordList.join("&") + "_" + request["from"] + "_" + request["until"] + "_Timeline";
+      var title =
+        keyword("user_time_chart_title") + "<br>" + widgetTitle(request);
+      var full_fileName =
+        request.keywordList.join("&") +
+        "_" +
+        request["from"] +
+        "_" +
+        request["until"] +
+        "_Timeline";
       const histogram = createTimeLineChart(
-        request.from, request.until,
+        request.from,
+        request.until,
         getJsonDataForTimeLineChart(responseAggs["date_histo"]["buckets"]),
-        title, full_fileName
+        title,
+        full_fileName,
       );
       dispatch(setHistogramResult(histogram));
     };
@@ -341,11 +350,12 @@ const tsnaWorkers = useRef()
       const urls = await getJsonDataForURLTable(
         responseAggs["top_url_keyword"]["buckets"],
         {
-          "url" : keyword("elastic_url"),
-          "count": keyword("elastic_count"), 
-          "credibility" : keyword("sna_credibility")
+          url: keyword("elastic_url"),
+          count: keyword("elastic_count"),
+          credibility: keyword("sna_credibility"),
         },
-        {"url": "key", "count" :"doc_count"}, enableExtraFeatures()
+        { url: "key", count: "doc_count" },
+        enableExtraFeatures(),
       );
       dispatch(setUrlsResult(urls));
     };
@@ -356,7 +366,7 @@ const tsnaWorkers = useRef()
       });
       if (authors.length > 0) {
         getUserAccounts(authors).then((data) =>
-          dispatch(setUserProfileMostActive(data.hits.hits))
+          dispatch(setUserProfileMostActive(data.hits.hits)),
         );
       }
     };
@@ -364,7 +374,7 @@ const tsnaWorkers = useRef()
     if (
       _.isNil(request) ||
       _.isNil(request.keywordList) ||
-      (_.isEmpty(request.keywordList) &&  _.isEmpty(request.keywordAnyList)) ||
+      (_.isEmpty(request.keywordList) && _.isEmpty(request.keywordAnyList)) ||
       // || (_.isNil(request.userList) || _.isEmpty(request.userList))
       _.isNil(request.from) ||
       _.isNil(request.until)
@@ -372,7 +382,7 @@ const tsnaWorkers = useRef()
       dispatch(setTwitterSnaResult(request, null, false, false));
       return;
     }
-    
+
     //TODO premier message à mettre ici
 
     //authentication test to set later
@@ -387,7 +397,7 @@ const tsnaWorkers = useRef()
         .then((response) => {
           if (response.data.status === "Error")
             handleErrors("twitterSnaErrorMessage");
-          else if (response.data.status === "Done") { 
+          else if (response.data.status === "Done") {
             cacheRenderCall(request);
           } else {
             dispatch(setTwitterSnaLoading(true, 5));

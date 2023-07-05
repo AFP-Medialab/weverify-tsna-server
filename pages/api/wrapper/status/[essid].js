@@ -7,9 +7,9 @@ export default (req, res) => {
   const url = wrapperURL + "/status/" + essid;
   const headers = {
     "Content-Type": "application/json",
-    "Authorization": req.headers.authorization,
+    Authorization: req.headers.authorization,
   };
-  
+
   const userAction = async (res, headers) => {
     const response = await fetch(url, {
       method: "GET",

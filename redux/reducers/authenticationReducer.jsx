@@ -3,10 +3,20 @@
  */
 
 import _ from "lodash";
-import {HYDRATE} from 'next-redux-wrapper';
+import { HYDRATE } from "next-redux-wrapper";
 
-
-import { AUTH_USER_REGISTRATION_LOADING, AUTH_USER_REGISTRATION_SENT, AUTH_ACCESS_CODE_REQUEST_LOADING, AUTH_ACCESS_CODE_REQUEST_SENT, AUTH_USER_LOGIN_LOADING, AUTH_USER_LOGIN, AUTH_USER_LOGOUT, AUTH_TOKEN_INVALID, AUTH_TOKEN_REFRESHED, AUTH_USER_SESSION_EXPIRED } from "../actions/authentificationActions";
+import {
+  AUTH_USER_REGISTRATION_LOADING,
+  AUTH_USER_REGISTRATION_SENT,
+  AUTH_ACCESS_CODE_REQUEST_LOADING,
+  AUTH_ACCESS_CODE_REQUEST_SENT,
+  AUTH_USER_LOGIN_LOADING,
+  AUTH_USER_LOGIN,
+  AUTH_USER_LOGOUT,
+  AUTH_TOKEN_INVALID,
+  AUTH_TOKEN_REFRESHED,
+  AUTH_USER_SESSION_EXPIRED,
+} from "../actions/authentificationActions";
 
 const defaultState = {
   userRegistrationLoading: false,
@@ -15,7 +25,7 @@ const defaultState = {
   accessCodeRequestSent: false,
   userLoginLoading: false,
   userAuthenticated: false,
-  accessToken: null,  
+  accessToken: null,
   accessTokenExpiry: null,
   refreshToken: null,
   // user: null
@@ -24,8 +34,8 @@ const defaultState = {
     firstName: null,
     lastName: null,
     email: null,
-    roles: []
-  }
+    roles: [],
+  },
 };
 
 /**
@@ -38,8 +48,8 @@ const defaultState = {
 function authenticationReducer(state = defaultState, action) {
   switch (action.type) {
     case HYDRATE:
-       state = action.payload;
-       return state;  
+      state = action.payload;
+      return state;
     case AUTH_USER_REGISTRATION_LOADING:
       state.userRegistrationLoading = action.payload;
       return state;
@@ -64,31 +74,32 @@ function authenticationReducer(state = defaultState, action) {
 
     case AUTH_USER_LOGIN:
       // State user as logged in and add user authentication information.
-      return {...state, 
-        userLoginLoading:false, 
-        userAuthenticated: true, 
-        accessToken:action.payload.accessToken, 
-        accessTokenExpiry: 
-        action.payload.accessTokenExpiry, 
+      return {
+        ...state,
+        userLoginLoading: false,
+        userAuthenticated: true,
+        accessToken: action.payload.accessToken,
+        accessTokenExpiry: action.payload.accessTokenExpiry,
         refreshToken: action.payload.refreshToken,
-        user:action.payload.user
+        user: action.payload.user,
       };
 
     case AUTH_USER_LOGOUT:
-      // State user as not logged and remove user authentication information.      
-      return {...state, 
+      // State user as not logged and remove user authentication information.
+      return {
+        ...state,
         userAuthenticated: false,
         accessToken: null,
         accessTokenExpiry: null,
         refreshToken: null,
-        user:{
+        user: {
           id: null,
           firstName: null,
           lastName: null,
           email: null,
-          roles: []
-          }
-        };
+          roles: [],
+        },
+      };
 
     case AUTH_TOKEN_INVALID:
       // TODO
@@ -105,24 +116,23 @@ function authenticationReducer(state = defaultState, action) {
 
     case AUTH_USER_SESSION_EXPIRED:
       // TODO
-      return {...state, 
+      return {
+        ...state,
         userAuthenticated: false,
         accessToken: null,
         accessTokenExpiry: null,
         refreshToken: null,
-        user:{
+        user: {
           id: null,
           firstName: null,
           lastName: null,
           email: null,
-          roles: []
-          }
-        };
+          roles: [],
+        },
+      };
     default:
       return state;
   }
-
-  
-};
+}
 
 export default authenticationReducer;
