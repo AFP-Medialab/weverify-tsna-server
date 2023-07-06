@@ -58,12 +58,8 @@ const useTwitterSnaRequest = (request) => {
 
   useEffect(() => {
     let cloudWorker = new Worker(new URL("./cloudChart", import.meta.url));
-    let hashtagWorker = new Worker(
-      new URL("./hashtagGraph", import.meta.url),
-    );
-    let socioWorker = new Worker(
-      new URL("./socioSemGraph", import.meta.url),
-    );
+    let hashtagWorker = new Worker(new URL("./hashtagGraph", import.meta.url));
+    let socioWorker = new Worker(new URL("./socioSemGraph", import.meta.url));
 
     tsnaWorkers.current = {
       socioWorker: socioWorker,

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import CloseResult from "../../../shared/CloseResult/CloseResult";
 import { cleanTwitterSnaState } from "../../../../redux/actions/tools/twitterSnaActions";
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
@@ -11,7 +11,7 @@ import TweetCount from "../Components/TweetCount";
 import UrlList from "../../Components/UrlList";
 import GexfExport from "../Components/GexfExport";
 import Grid from "@mui/material/Grid";
-import CardHeader from '@mui/material/CardHeader';
+import CardHeader from "@mui/material/CardHeader";
 import Card from "@mui/material/Card";
 import { Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -72,7 +72,6 @@ export default function TwitterSnaResult(props) {
   }, [resultStore]);
   useEffect(() => {
     setHistogram(resultStore.histogram);
-
   }, [resultStore.histogram]);
 
   if (result === null) return <div />;
