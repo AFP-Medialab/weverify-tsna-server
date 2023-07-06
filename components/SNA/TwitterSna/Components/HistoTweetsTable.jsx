@@ -1,15 +1,15 @@
 import Box from "@mui/material/Box";
-import Button from "@material-ui/core/Button";
+import { Button } from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 import CustomTable from "../../../shared/CustomTable/CustomTable";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import SaveAltIcon from "@material-ui/icons/SaveAlt";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import { widgetSimpleFilename } from "../Hooks/tsnaUtils";
 
 export default function HistoTweetsTable(props) {

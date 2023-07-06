@@ -1,7 +1,7 @@
 import useMyStyles from "../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
-import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Linkify from "react-linkify";
 

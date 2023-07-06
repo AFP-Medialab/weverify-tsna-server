@@ -426,21 +426,6 @@ const useMyStyles = makeStyles((theme) => ({
     marginRight: 3,
     marginLeft: 5,
   },
-  customAllToolsButton: {
-    padding: 0,
-    minHeight: 0,
-    minWidth: 0,
-    backgroundColor: "transparent",
-    fontSize: 40,
-  },
-  customAllToolsIconDeselected: {
-    fontSize: "inherit",
-    color: "#9A9A9A",
-  },
-  customAllToolsIconSelected: {
-    fontSize: "inherit",
-    color: theme.palette.primary.main,
-  },
 
   height100: {
     height: "100%",

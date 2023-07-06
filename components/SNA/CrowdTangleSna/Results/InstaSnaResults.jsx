@@ -1,4 +1,4 @@
-import { Paper } from "@material-ui/core";
+import { Paper } from "@mui/material";
 import CloseResult from "../../CloseResult/CloseResult";
 import useMyStyles from "../../styles/useMyStyles";
 import Count from "../Components/Count";

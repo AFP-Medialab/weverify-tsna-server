@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-import CloseIcon from "@material-ui/icons/Close";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import CloseIcon from "@mui/icons-material/Close";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import { Typography } from "@mui/material";
 import Transition from "react-transition-group/Transition";
-import HelpIcon from "@material-ui/icons/Help";
+import HelpIcon from "@mui/icons-material/Help";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
 //const tsv = "/localDictionary/components/Shared/aboutTsna.tsv";

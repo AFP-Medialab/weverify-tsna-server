@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import CloseResult from "../../../shared/CloseResult/CloseResult";
 import { cleanTwitterSnaState } from "../../../../redux/actions/tools/twitterSnaActions";
-import { IconButton, Paper } from "@material-ui/core";
+import IconButton from '@mui/material/IconButton';
 import useMyStyles from "../../../shared/styles/useMyStyles";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 
 import dynamic from "next/dynamic";
@@ -11,11 +11,11 @@ import TweetCount from "../Components/TweetCount";
 import UrlList from "../../Components/UrlList";
 import GexfExport from "../Components/GexfExport";
 import Grid from "@mui/material/Grid";
-import { CardHeader } from "@material-ui/core";
+import CardHeader from '@mui/material/CardHeader';
 import Card from "@mui/material/Card";
 import { Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
@@ -69,11 +69,10 @@ export default function TwitterSnaResult(props) {
   //Set result
   useEffect(() => {
     setResult(resultStore);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultStore]);
   useEffect(() => {
     setHistogram(resultStore.histogram);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [resultStore.histogram]);
 
   if (result === null) return <div />;

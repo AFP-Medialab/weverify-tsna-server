@@ -102,6 +102,7 @@ export default withIronSessionApiRoute(
           //console.log("Invalid verifier or access tokens! ", err);
           if (err.code === 401) res.redirect("/api/twitter/twitterAuth");
         }
+        break;
       }
       case "postTweetBot": {
         const client = new TwitterApi({

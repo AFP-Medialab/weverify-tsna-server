@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { CircularProgress } from "@mui/material/CircularProgress";
 import { Typography } from "@mui/material";
 import { select } from "d3-selection";
 import Plotly from "plotly.js-dist";

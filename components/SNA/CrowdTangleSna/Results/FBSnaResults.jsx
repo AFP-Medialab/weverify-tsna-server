@@ -1,4 +1,4 @@
-import { Paper } from "@material-ui/core";
+import { Paper } from "@mui/material";
 import dynamic from "next/dynamic";
 import { useDispatch } from "react-redux";
 import { cleanCsvSnaState } from "../../../../redux/actions/tools/crowdTangleSnaActions";

@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
-import Button from "@material-ui/core/Button";
+import { Button } from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import React from "react";
 import CustomTable from "../../shared/CustomTable/CustomTable";
 import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
@@ -14,8 +14,8 @@ import {
   TW_SNA_TYPE,
   INSTA_SNA_TYPE,
 } from "../../shared/hooks/SnaTypes";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import SaveAltIcon from "@material-ui/icons/SaveAlt";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
 function getIcon(snaType) {
   switch (snaType) {

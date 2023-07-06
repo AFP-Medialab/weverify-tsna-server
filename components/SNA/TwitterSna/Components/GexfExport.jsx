@@ -1,11 +1,11 @@
-import { Card } from "@material-ui/core";
+import { Card } from "@mui/material/Card";
 import Box from "@mui/material/Box";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { Button } from "@mui/material/Button";
+import { CircularProgress } from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
-import Typography from "@material-ui/core/Typography";
-import BubbleChartIcon from "@material-ui/icons/BubbleChart";
-import SaveIcon from "@material-ui/icons/Save";
+import { Typography } from "@mui/material/Typography";
+import BubbleChartIcon from '@mui/icons-material/BubbleChart';
+import SaveIcon from '@mui/icons-material/Save';
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import BigButton from "../../../shared/BigButon/BigButton";

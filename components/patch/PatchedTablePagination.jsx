@@ -1,4 +1,5 @@
-import { TablePagination } from "@material-ui/core";
+import React from "react";
+import { TablePagination } from "@mui/material";
 
 export const PatchedPagination = (props) => {
   const {

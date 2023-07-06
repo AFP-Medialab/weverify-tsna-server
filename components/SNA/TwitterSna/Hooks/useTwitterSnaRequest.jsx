@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
@@ -56,12 +57,12 @@ const useTwitterSnaRequest = (request) => {
   const role = useSelector((state) => state.userSession.user.roles);
 
   useEffect(() => {
-    let cloudWorker = new Worker(new URL("./cloudChart.js", import.meta.url));
+    let cloudWorker = new Worker(new URL("./cloudChart", import.meta.url));
     let hashtagWorker = new Worker(
-      new URL("./hashtagGraph.js", import.meta.url),
+      new URL("./hashtagGraph", import.meta.url),
     );
     let socioWorker = new Worker(
-      new URL("./socioSemGraph.js", import.meta.url),
+      new URL("./socioSemGraph", import.meta.url),
     );
 
     tsnaWorkers.current = {

@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
-import Button from "@material-ui/core/Button";
+import { Button } from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import InstagramIcon from "@material-ui/icons/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCSVHistoview } from "../../../../redux/actions/tools/crowdTangleSnaActions";

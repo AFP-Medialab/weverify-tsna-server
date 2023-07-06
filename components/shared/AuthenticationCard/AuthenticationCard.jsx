@@ -14,23 +14,23 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import _ from "lodash";
 
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@mui/material/Typography";
 import Box from "@mui/system/Box";
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import Divider from "@material-ui/core/Divider";
-import SendIcon from "@material-ui/icons/Send";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import Divider from "@mui/material/Divider";
+import SendIcon from "@mui/icons-material/Send";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import LockIcon from "@mui/icons-material/Lock";
-import Toolbar from "@material-ui/core/Toolbar";
+import Toolbar from "@mui/material/Toolbar";
 
 import {
   userRegistrationSentAction,

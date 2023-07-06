@@ -1,4 +1,4 @@
-import { Card } from "@material-ui/core";
+import { Card } from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import React from "react";
 import { useSelector } from "react-redux";

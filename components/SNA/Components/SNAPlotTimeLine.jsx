@@ -1,7 +1,7 @@
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import OnClickInfo from "../../shared/OnClickInfo/OnClickInfo";
 import { Typography } from "@mui/material";
 import useMyStyles from "../../shared/styles/useMyStyles";

@@ -1,10 +1,10 @@
-import { CardHeader, IconButton } from "@material-ui/core";
+import { CardHeader, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

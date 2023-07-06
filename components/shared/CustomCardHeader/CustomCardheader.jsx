@@ -1,8 +1,8 @@
-import { CardHeader, IconButton, Popover } from "@material-ui/core";
+import { CardHeader, IconButton, Popover } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
-import CloseIcon from "@material-ui/icons/Close";
+import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import IconCSV from "../../../images/SVG/CardHeader/CSV.svg";
 import IconHelp from "../../../images/SVG/CardHeader/Help.svg";

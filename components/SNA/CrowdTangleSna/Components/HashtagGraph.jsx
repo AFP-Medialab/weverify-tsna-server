@@ -1,6 +1,6 @@
-import AccordionDetails from "@material-ui/core/AccordionDetails";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Card from "@mui/material/Card";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { CircularProgress } from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";

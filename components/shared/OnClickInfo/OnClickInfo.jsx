@@ -1,7 +1,7 @@
 import useMyStyles from "../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
-import WbIncandescentIcon from "@material-ui/icons/WbIncandescent";
+import WbIncandescentIcon from "@mui/icons-material/WbIncandescent";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Linkify from "react-linkify";
 import { useSelector } from "react-redux";

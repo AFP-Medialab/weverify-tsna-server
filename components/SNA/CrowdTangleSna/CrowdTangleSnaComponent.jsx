@@ -1,15 +1,12 @@
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import CardHeader from "@mui/material/CardHeader";
+import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
-import {
-  createTheme,
-  StylesProvider,
-  ThemeProvider,
-} from "@material-ui/core/styles";
-import { Typography } from "@mui/material";
-import { useRef, useState } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { StylesProvider } from "@mui/styles";
+import Typography from "@mui/material/Typography";
+import React, { useRef, useState } from "react";
 import CSVReader from "react-csv-reader";
 import { useDispatch, useSelector } from "react-redux";
 import CSVIcon from "../../../images/SVG/DataAnalysis/CSV_SNA_big.svg";
@@ -27,7 +24,7 @@ import {
 } from "../../../redux/actions/tools/crowdTangleSnaActions";
 import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
 import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
-import FeedBack from "../../shared/FeedBack/FeedBack";
+// import FeedBack from "../../shared/FeedBack/FeedBack";
 import HeaderTool from "../../shared/HeaderTool/HeaderTool";
 import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles, { myCardStyles } from "../../shared/styles/useMyStyles";
@@ -120,19 +117,19 @@ const CrowdTangleSnaComponent = () => {
     dispatch(setSocioGraphResult(null));
     //Create Workers
     let timelineWorker = new Worker(
-      new URL("./Components/hooks/timelineCT.js", import.meta.url),
+      new URL("./Components/hooks/timelineCT.jsx", import.meta.url),
     );
     let pieChartsWorker = new Worker(
-      new URL("./Components/hooks/pieCharts.js", import.meta.url),
+      new URL("./Components/hooks/pieCharts.jsx", import.meta.url),
     );
     let socioWorker = new Worker(
-      new URL("./Components/hooks/socioSemGraph.js", import.meta.url),
+      new URL("./Components/hooks/socioSemGraph.jsx", import.meta.url),
     );
     let cloudWorker = new Worker(
-      new URL("./Components/hooks/cloudChart.js", import.meta.url),
+      new URL("./Components/hooks/cloudChart.jsx", import.meta.url),
     );
     let hashtagWorker = new Worker(
-      new URL("./Components/hooks/hashtagGraph.js", import.meta.url),
+      new URL("./Components/hooks/hashtagGraph.jsx", import.meta.url),
     );
     //console.log("create workers ...")
     workers.current = {
@@ -223,7 +220,7 @@ const CrowdTangleSnaComponent = () => {
         {resultRedux && (
           <CrowdTangleSnaResults result={resultRedux} workers={workers} />
         )}
-        <FeedBack />
+        {/* <FeedBack /> */}
       </ThemeProvider>
     </div>
   );

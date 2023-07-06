@@ -21,6 +21,7 @@ export async function userGexfAction(res, url, body) {
 }
 
 export async function userPostAction(res, url, body, headers, type = "json") {
+  console.log(url);
   const response = await fetch(url, {
     method: "POST",
     headers: headers,
@@ -30,7 +31,7 @@ export async function userPostAction(res, url, body, headers, type = "json") {
 
   if (response.ok) {
     if (status === 200) {
-      if ((type = "text")) {
+      if ((type == "text")) {
         const data = await response.text();
         res.send(data);
       } else {
