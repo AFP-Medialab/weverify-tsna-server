@@ -28,7 +28,7 @@
     "js-cookie": "^2.2.1",
     "jwt-decode": "^3.0.0",
     "moment": "^2.29.0",
-    "next": "^12.1.5",
+    "next": "^12.3",
     "next-cookie": "^2.4.2",
     "next-redux-wrapper": "^6.0.2",
     "plotly.js-dist": "^1.56.0",
