@@ -17,7 +17,6 @@ const FactcheckSearch = () => {
 
   useEffect(() => {
     const script = document.createElement('script');
-    console.log("key", keyword("factcheck_search_engines"))
     script.src = "https://cse.google.com/cse.js?cx=" + keyword("factcheck_search_engines");
     script.async = true;
 
