@@ -23,10 +23,6 @@ pipeline {
                     version = "${env.BUILD_ID}-${GIT_COMMIT}"
                     println "version ${version}"
                     dockerImage = "registry-medialab.afp.com/tsna-server:${version}"
-                    /*sh "npm ci --only=production"
-                    sh "npx next telemetry disable"
-                    sh "npm run build"
-                    sh "npm prune --production"*/
                 }
             }
         }
