@@ -7,7 +7,6 @@ pipeline {
         sshCredentialKey = "afp-dis-medialab_key"
         SSH_CONNECTION_ENV = "tsna-server-pre-master-env"
         dockerImage = "registry-medialab.afp.com/tsna-server"
-        version = ""
         
     }
     agent any
