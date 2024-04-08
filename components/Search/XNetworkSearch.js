@@ -30,7 +30,7 @@ const XNetwork = () => {
 
   return (
     <div className={classes.all}>
-      <HeaderTool name={keywordAllTools("navbar_xnetwork")} description={keywordAllTools("navbar_xnetwork_description")} icon={<XNetworkIcon style={{ fill: "#51A5B2" }} />} />
+      <HeaderTool name={keywordAllTools("navbar_xnetwork")} description={keywordAllTools("navbar_xnetwork_description")} icon={<XNetworkIcon style={{ fill: "#00926c" }} />} />
 
       <Card>
         <CardHeader

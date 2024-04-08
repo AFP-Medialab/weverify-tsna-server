@@ -64,7 +64,7 @@ const TwitterSna = () => {
 
 			MuiCardHeader: {
 				root: {
-					backgroundColor: "#05A9B4",
+					backgroundColor: "#00926c",
 					paddingTop: "11px!important",
 					paddingBottom: "11px!important",
 				},
@@ -90,7 +90,7 @@ const TwitterSna = () => {
 					'&:before': {
 						width: "0px",
 					},
-					border: "1px solid #51A5B2",			
+					border: "1px solid #00926c",			
 				},
 				rounded:{
 					borderRadius: "15px",
@@ -101,9 +101,9 @@ const TwitterSna = () => {
 		},
 		palette: {
 			primary: {
-				light: '#5cdbe6',
-				main: '#05a9b4',
-				dark: '#007984',
+				light: '#00926c',
+				main: '#00926c',
+				dark: '#00926c',
 				contrastText: '#fff',
 			},
 		},
@@ -419,7 +419,7 @@ const TwitterSna = () => {
 					alignItems="center">
 
 					<Grid item xs>
-						<HeaderTool name={keyword("navbar_twitter_sna")} description={keyword("navbar_twitter_sna_description")} icon={<TwitterSNAIcon style={{ fill: "#51A5B2" }} />} />
+						<HeaderTool name={keyword("navbar_twitter_sna")} description={keyword("navbar_twitter_sna_description")} icon={<TwitterSNAIcon style={{ fill: "#00926c" }} />} />
 					</Grid>
 					<Grid item>
 						<AdvancedTools />
@@ -651,14 +651,13 @@ const TwitterSna = () => {
 							<Box m={2} />
 		
 							<Accordion>
-								
 								<AccordionSummary
-									expandIcon={<ExpandMoreIcon style={{ color: "#17717e"}}/>}
+									expandIcon={<ExpandMoreIcon style={{ color: "#00926c"}}/>}
 									aria-controls="panel1a-content"
 									id="panel1a-header"
 								>
 									<Box pl={3} pr={3} pt={1} pb={1}>
-									<Typography variant="h6" align="left" style={{ color: "#17717e"}}>
+									<Typography variant="h6" align="left" style={{ color: "#00926c"}}>
 										{keyword("twittersna_title_optional")}
 									</Typography>
 									</Box>
@@ -952,7 +951,7 @@ const TwitterSna = () => {
 
 											<Grid item xs={4} container direction="row" justifyContent="flex-start" alignItems="center">
 												<Grid item>
-													<LaptopIcon style={{ color: "#757575" }} />
+													<LaptopIcon style={{ color: "#757575" }} />Fee
 												</Grid>
 												<Grid>
 													<Box m={1} />

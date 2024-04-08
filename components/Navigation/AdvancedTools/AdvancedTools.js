@@ -276,7 +276,7 @@ const AdvancedTools = () => {
                 {dialogState === 0 &&
                     <Box p={2}>
                         <DialogTitle id="max-width-dialog-title">
-                            <Typography gutterBottom style={{ color: "#51A5B2", fontSize: "24px" }}>
+                            <Typography gutterBottom style={{ color: "#00926c", fontSize: "24px" }}>
                                 {keyword("title")}
                             </Typography>
                         </DialogTitle>
@@ -359,7 +359,7 @@ const AdvancedTools = () => {
                                 </Grid>
 
                                 <Grid item>
-                                    <Typography style={{ color: "#51A5B2", fontSize: "24px" }}>
+                                    <Typography style={{ color: "#00926c", fontSize: "24px" }}>
                                         {messageI18NResolver("ACCESSCODEFORM_EMAIL_CHECK")}
                                     </Typography>
                                 </Grid>
@@ -412,7 +412,7 @@ const AdvancedTools = () => {
                 {dialogState === 2 &&
                     <Box p={2}>
                         <DialogTitle id="max-width-dialog-title">
-                            <Typography gutterBottom style={{ color: "#51A5B2", fontSize: "24px" }}>
+                            <Typography gutterBottom style={{ color: "#00926c", fontSize: "24px" }}>
                                 {keyword("title_tools_unlocked")}
                             </Typography>
                         </DialogTitle>
@@ -434,7 +434,7 @@ const AdvancedTools = () => {
                 {dialogState === 3 &&
                     <Box p={2}>
                         <DialogTitle id="max-width-dialog-title">
-                            <Typography gutterBottom style={{ color: "#51A5B2", fontSize: "24px" }}>
+                            <Typography gutterBottom style={{ color: "#00926c", fontSize: "24px" }}>
                                 {messageI18NResolver("REGISTRATIONFORM_TITLE")}
                             </Typography>
                         </DialogTitle>
@@ -597,7 +597,7 @@ const AdvancedTools = () => {
                 {dialogState === 4 &&
                     <Box p={2}>
                         <DialogTitle id="max-width-dialog-title">
-                            <Typography gutterBottom style={{ color: "#51A5B2", fontSize: "24px" }}>
+                            <Typography gutterBottom style={{ color: "#00926c", fontSize: "24px" }}>
                                 {messageI18NResolver("REGISTRATIONFORM_SUCCESS_TITLE")}
                             </Typography>
                         </DialogTitle>

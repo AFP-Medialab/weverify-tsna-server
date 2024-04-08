@@ -39,7 +39,7 @@ const CrowdTangleSnaComponent = () => {
         overrides: {
             MuiCardHeader: {
                 root: {
-                    backgroundColor: "#05A9B4",
+                    backgroundColor: "#00926c",
                     paddingTop: "11px!important",
                     paddingBottom: "11px!important",
                 },
@@ -63,7 +63,7 @@ const CrowdTangleSnaComponent = () => {
                     '&:before': {
                         width: "0px",
                     },
-                    border: "1px solid #51A5B2",
+                    border: "1px solid #00926c",
                 },
                 rounded: {
                     borderRadius: "15px",
@@ -77,9 +77,9 @@ const CrowdTangleSnaComponent = () => {
         },
         palette: {
             primary: {
-                light: '#5cdbe6',
-                main: '#05a9b4',
-                dark: '#007984',
+                light: '#00926c',
+                main: '#00926c',
+                dark: '#00926c',
                 contrastText: '#fff',
             },
         },
@@ -159,7 +159,7 @@ const CrowdTangleSnaComponent = () => {
                 alignItems="center">
 
                 <Grid item xs>
-                        <HeaderTool name={keyword("navbar_ct_sna")} description={keyword("navbar_ct_sna_description")} icon={<CSVIcon style={{ fill: "#51A5B2" }} />} />
+                        <HeaderTool name={keyword("navbar_ct_sna")} description={keyword("navbar_ct_sna_description")} icon={<CSVIcon style={{ fill: "#00926c" }} />} />
                 </Grid>
                 <Grid item>
                     <AdvancedTools />

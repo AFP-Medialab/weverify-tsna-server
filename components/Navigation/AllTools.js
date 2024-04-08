@@ -131,7 +131,7 @@ const AllTools = (props) => {
                 alignItems="center">
 
                 <Grid item xs>
-                    <HeaderTool name={keyword("navbar_tools")} icon={<IconTools width="45px" height="45px" style={{ fill: "#51A5B2" }} />} />
+                    <HeaderTool name={keyword("navbar_tools")} icon={<IconTools width="45px" height="45px" style={{ fill: "#00926c" }} />} />
                 </Grid>
 
                 <Grid item>
