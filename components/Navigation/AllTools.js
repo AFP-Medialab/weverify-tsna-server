@@ -140,8 +140,9 @@ const AllTools = (props) => {
 
             </Grid>
             <Card>
+                        
                 <Tabs value={value} onChange={handleChange} indicatorColor={'primary'}>
-                    <ThemeProvider theme={theme}>
+                    
                     <Tab label={
                         <Box mt={1}>
                             <Grid
@@ -165,7 +166,6 @@ const AllTools = (props) => {
                             </Grid>
                         </Box>
                     } />
-                    </ThemeProvider>
                     <Tab label={
                         <Box mt={1}>
                             <Grid
@@ -243,9 +243,9 @@ const AllTools = (props) => {
                             }
 
                         </Grid>
-                    </TabPanel>
+                    </TabPanel> 
                 </div>
-            </Card>
+            </Card> 
         </div>
     );
 
