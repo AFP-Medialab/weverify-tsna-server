@@ -8,6 +8,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import CustomTitle from "../components/shared/CustomTitle/CustomTitle";
 import WeVerifyIcon from "../images/SVG/NavBar/WeVerify.svg";
+import InVIDIcon from "../images/SVG/NavBar/InVID.svg";
+import VeraIcon from "../images/SVG/NavBar/vera-logo_black.svg";
 import styles from './layout.module.css';
 import Languages from './shared/languages/languages';
 import useMyStyles from './shared/styles/useMyStyles';
@@ -51,10 +53,16 @@ function Layout(props) {
                             justifyContent="space-between"
                             alignItems="center"
                         >
-
-                            <Box display={{ xs: 'none', md: 'block' }}>
-                                <WeVerifyIcon style={{ cursor: 'pointer' }} onClick={() => handlePush()}/>
+                            <Box display={{ xs: 'none', md: 'block' }} p={1}>
+                                <WeVerifyIcon style={{ height: "auto", minWidth: "48px", width: { sm: "48px", md: "80px" } }} onClick={() => handlePush()}/>
                             </Box>
+                            <Box display={{ xs: 'none', md: 'block' }} p={1}>
+                                <InVIDIcon style={{ height: "auto", minWidth: "48px", width: { sm: "48px", md: "80px" }}} onClick={() => handlePush()}/>
+                            </Box>
+                            <Box display={{ xs: 'none', md: 'block' }} p={1}>
+                                <VeraIcon style={{ height: "auto", minWidth: "48px", width: { sm: "48px", md: "80px" }}} onClick={() => handlePush()}/>
+                            </Box>
+                            
                             <Grid item xs>
                                 <CustomTitle text={props.title} />
                             </Grid>
