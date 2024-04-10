@@ -1,7 +1,7 @@
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Typography from "@material-ui/core/Typography";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
 import plotly from 'plotly.js-dist';
 import React, { useEffect, useState } from 'react';
 import createPlotComponent from 'react-plotly.js/factory';

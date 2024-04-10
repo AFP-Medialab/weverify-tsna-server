@@ -1,10 +1,10 @@
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Grid from "@material-ui/core/Grid";
-import { createTheme, StylesProvider, ThemeProvider } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import { useRef, useState } from "react";
 import CSVReader from "react-csv-reader";
 import { useDispatch, useSelector } from "react-redux";
@@ -166,7 +166,7 @@ const CrowdTangleSnaComponent = () => {
                 </Grid>
             </Grid>
 
-        <StylesProvider injectFirst>
+        {/* <StylesProvider injectFirst> */}
             <Card className={cardClasses.root}>
                 <CardHeader
                 title={keyword("cardheader_ct_parameters")}
@@ -194,7 +194,7 @@ const CrowdTangleSnaComponent = () => {
                     }
                 </div>
             </Card>
-        </StylesProvider>
+        {/* </StylesProvider> */}
         {
             resultRedux && <CrowdTangleSnaResults result={resultRedux} workers={workers}/>
         }

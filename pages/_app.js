@@ -1,8 +1,7 @@
 import React from 'react';
 import {Provider} from "react-redux"
 import '../styles/global.css';
-import {createTheme} from "@material-ui/core/styles";
-import { MuiThemeProvider } from "@material-ui/core";
+import {ThemeProvider, createTheme} from '@mui/material/styles';
 import { useStore } from "../redux";
 import { persistStore } from 'redux-persist'
 import "react-datetime/css/react-datetime.css";
@@ -74,11 +73,11 @@ const MyApp = ({ Component, pageProps }) => {
     })
         return (
             <Provider store={store}>
-              <MuiThemeProvider theme={theme} >
+              <ThemeProvider theme={theme} >
                 <PersistGate loading={<div>loading</div>} persistor={persistor}>
                     <Component {...pageProps} />
                   </PersistGate>
-              </MuiThemeProvider>
+              </ThemeProvider>
             </Provider>
         );
 };

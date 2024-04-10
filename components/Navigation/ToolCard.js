@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import FiberNewIcon from '@material-ui/icons/FiberNew';
 import AuthenticationIcon from "./AdvancedTools/AuthenticationIcon";
 import ImprovedIcon from "../../images/SVG/Improved.svg";

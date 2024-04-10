@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import useMyStyles from "../shared/styles/useMyStyles";
-import Box from "@material-ui/core/Box";
+import Box from "@mui/material/Box";
 import useLoadLanguage from "../shared/hooks/useRemoteLoadLanguage";
 import OnClickInfo from "../shared/OnClickInfo/OnClickInfo"
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
 import XNetworkIcon from '../../images/SVG/Search/Xnetwork_big.svg'
 import HeaderTool from "../shared/HeaderTool/HeaderTool";
 

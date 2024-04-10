@@ -1,6 +1,6 @@
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from "@material-ui/icons/Twitter";
@@ -72,7 +72,6 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
                     <Grid item>
                         <Button
                             startIcon={<SaveAltIcon />}
-                            color={"primary"}
                             color={"primary"}
                             onClick={() => downloadClick(request, csvArr, selected)}>
                             {

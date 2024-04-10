@@ -1,7 +1,7 @@
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";

@@ -1,8 +1,8 @@
 import React from "react";
 import useMyStyles from "../styles/useMyStyles";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
-import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 //const tsv = "/localDictionary/components/Shared/Footer.tsv";
 

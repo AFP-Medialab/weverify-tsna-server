@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 import {mergeUrlsAndourceCredibilityResults} from '../lib/gateProcessingApi';
-import Link from "@material-ui/core/Link";
+import Link from "@mui/material/Link";
 
 const { publicRuntimeConfig } = getConfig();
   

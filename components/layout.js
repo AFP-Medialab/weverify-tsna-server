@@ -1,8 +1,8 @@
-import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 //import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@mui/material/Grid';
+import Toolbar from '@mui/material/Toolbar';
 import getConfig from 'next/config';
 import Head from 'next/head';
 import { useRouter } from 'next/router';

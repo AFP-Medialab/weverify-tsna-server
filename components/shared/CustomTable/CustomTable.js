@@ -1,5 +1,5 @@
 import MaterialTable from '@material-table/core';
-import { createTheme, MuiThemeProvider } from '@material-ui/core';
+import { createTheme, MuiThemeProvider } from '@mui/material';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';

@@ -1,8 +1,8 @@
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import { select } from 'd3-selection';
 import Plotly from 'plotly.js-dist';
 import React, { useCallback, useEffect, useState } from 'react';

@@ -1,10 +1,10 @@
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import Grid from "@material-ui/core/Grid";
-import Snackbar from '@material-ui/core/Snackbar';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
-import Typography from "@material-ui/core/Typography";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import Snackbar from '@mui/material/Snackbar';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from "@mui/material/Typography";
 import Alert from '@material-ui/lab/Alert';
 import { useRouter } from 'next/router';
 import React from "react";
@@ -17,7 +17,7 @@ import useLoadLanguage from '../shared/hooks/useRemoteLoadLanguage';
 import useMyStyles from '../shared/styles/useMyStyles';
 import AdvancedTools from './AdvancedTools/AdvancedTools';
 import ToolCard from "./ToolCard";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;

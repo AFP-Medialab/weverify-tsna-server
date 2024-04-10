@@ -1,9 +1,9 @@
 
-import { CardHeader, IconButton } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { CardHeader, IconButton } from "@mui/material";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import dynamic from "next/dynamic";

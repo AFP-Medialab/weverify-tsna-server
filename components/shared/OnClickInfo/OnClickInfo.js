@@ -1,6 +1,6 @@
 import useMyStyles from "../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Linkify from 'react-linkify';

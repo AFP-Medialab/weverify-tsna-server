@@ -1,26 +1,26 @@
 import React from 'react';
 import { useEffect } from "react";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
 import LockIcon from '@material-ui/icons/Lock';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from "@material-ui/core/TextField";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from "@mui/material/TextField";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import useAuthenticationAPI from '../../shared/AuthenticationCard/useAuthenticationAPI';
 import { useSelector, useDispatch } from 'react-redux';
 import { ERR_AUTH_UNKNOWN_ERROR } from '../../shared/AuthenticationCard/authenticationErrors'
 import { setError } from '../../../redux/actions/errorActions';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@mui/material/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import _ from "lodash";
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from '@mui/material/MenuItem';
 
 import useLoadLanguage from '../../shared/hooks/useRemoteLoadLanguage';
 

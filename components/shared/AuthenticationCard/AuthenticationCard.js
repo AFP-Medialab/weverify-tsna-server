@@ -14,23 +14,23 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import _ from "lodash";
 
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Card from "@material-ui/core/Card";
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
+import Card from "@mui/material/Card";
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import Divider from '@material-ui/core/Divider';
+import Divider from '@mui/material/Divider';
 import SendIcon from '@material-ui/icons/Send';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
-import Toolbar from "@material-ui/core/Toolbar";
+import Toolbar from "@mui/material/Toolbar";
 
 import { userRegistrationSentAction, userAccessCodeRequestSentAction } from "../../../redux/actions/authentificationActions";
 
