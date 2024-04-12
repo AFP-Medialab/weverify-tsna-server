@@ -1,8 +1,6 @@
 import allReducers from "./reducers";
-import { createWrapper } from "next-redux-wrapper";
-import { createStore, applyMiddleware } from "redux";
+import { applyMiddleware } from "redux";
 import { configureStore, Tuple } from "@reduxjs/toolkit";
-import thunkMiddleware from "redux-thunk";
 import { useMemo } from "react";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
@@ -35,11 +33,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, allReducers);
 
 function makeStore(initialState) {
-  // return createStore(
-  //   persistedReducer,
-  //   initialState,
-  //   bindMiddleware([thunkMiddleware, loggerMiddleware])
-  // );
+
   return configureStore({
     reducer: persistedReducer,
     initialState: initialState,
