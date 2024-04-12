@@ -1,3 +1,5 @@
+'use client'
+
 import Card from "@mui/material/Card";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
