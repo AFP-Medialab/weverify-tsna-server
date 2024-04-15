@@ -38,29 +38,22 @@ const defaultState = {
 function authenticationReducer(state = defaultState, action) {
   switch (action.type) {
     case HYDRATE:
-       state = action.payload;
-       return state;  
+       return action.payload;
+
     case AUTH_USER_REGISTRATION_LOADING:
-      state.userRegistrationLoading = action.payload;
-      return state;
+      return { ... state, userRegistrationLoading: action.payload};
 
     case AUTH_USER_REGISTRATION_SENT:
-      state.userRegistrationLoading = false;
-      state.userRegistrationSent = action.payload;
-      return state;
+      return {... state, userRegistrationLoading: false, userRegistrationSent: action.payload};
 
     case AUTH_ACCESS_CODE_REQUEST_LOADING:
-      state.accessCodeRequestLoading = action.payload;
-      return state;
+      return {...state, accessCodeRequestLoading: action.payload};
 
     case AUTH_ACCESS_CODE_REQUEST_SENT:
-      state.accessCodeRequestLoading = false;
-      state.accessCodeRequestSent = action.payload;
-      return state;
+      return {...state, accessCodeRequestLoading: false, accessCodeRequestSent: action.payload};
 
     case AUTH_USER_LOGIN_LOADING:
-      state.userLoginLoading = action.payload;
-      return state;
+      return {...state, userLoginLoading: action.payload};
 
     case AUTH_USER_LOGIN:
       // State user as logged in and add user authentication information.

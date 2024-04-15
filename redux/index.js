@@ -37,7 +37,7 @@ function makeStore(initialState) {
   return configureStore({
     reducer: persistedReducer,
     initialState: initialState,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(loggerMiddleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}),
   })
 }
 export const initializeStore = (preloadedState) => {
