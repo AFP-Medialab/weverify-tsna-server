@@ -257,7 +257,7 @@ const AdvancedTools = () => {
                 </Grid>
 
                 <Grid item>
-                    <Button variant="outlined" color={colorButton} onClick={handleClickOpen} style={{ border: "2px solid", heigth: "40px" }}>
+                    <Button variant="outlined" color="primary" onClick={handleClickOpen} style={{ border: "2px solid", heigth: "40px" }}>
                         {userAuthenticated ? messageI18NResolver("LOGUSER_LOGOUT_LABEL") : messageI18NResolver("LOGINFORM_SUBMIT_LABEL")}
                     </Button>
                 </Grid>
