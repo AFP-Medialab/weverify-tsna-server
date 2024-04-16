@@ -264,7 +264,7 @@ const AdvancedTools = () => {
 
             </Grid>
 
-
+        
             <Dialog
                 fullWidth
                 maxWidth={'xs'}
@@ -309,9 +309,15 @@ const AdvancedTools = () => {
                                         setStateGetCode(true);
                                     }
                                 }}
+                                onKeyUp= {(e) => {
+                                    if (e.key === 'Enter') {
+
+                                        handleGetCode();
+                                    }
+                            }}
                             />
                             <Box m={2} />
-                            <Button variant="contained" color="primary" fullWidth disabled={stateGetCode} onClick={handleGetCode}>
+                            <Button variant="contained" color="primary" fullWidth disabled={stateGetCode} onClick={handleGetCode} >
                                 {messageI18NResolver("ACCESSCODEFORM_SUBMIT_LABEL")}
                             </Button>
 
@@ -389,6 +395,12 @@ const AdvancedTools = () => {
                                         setStateUnlockTools(true);
                                     }
                                 }}
+                                onKeyUp= {(e) => {
+                                    if (e.key === 'Enter') {
+
+                                        handleClickUnlock();
+                                    }
+                                }}
                             />
 
                             <Box m={2} />
@@ -423,7 +435,7 @@ const AdvancedTools = () => {
 
                         </DialogContent>
                         <DialogActions>
-                            <Button color="default" onClick={handleCloseFinish} fullWidth >
+                            <Button color="primary" onClick={handleCloseFinish} fullWidth >
                                 {messageI18NResolver("AUTHENTICATION_FORM_CLOSE")}
                             </Button>
                         </DialogActions>
@@ -608,7 +620,7 @@ const AdvancedTools = () => {
 
                         </DialogContent>
                         <DialogActions>
-                            <Button v color="default" onClick={handleCloseRegistration} fullWidth >
+                            <Button v color="primary" onClick={handleCloseRegistration} fullWidth >
                                 {messageI18NResolver("AUTHENTICATION_FORM_CLOSE")}
                             </Button>
                         </DialogActions>
