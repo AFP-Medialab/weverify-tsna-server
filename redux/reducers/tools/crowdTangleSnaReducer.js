@@ -1,3 +1,4 @@
+
 import {
   CT_SNA_CLEAN,
   CT_COUNT_SET_RESULTS,
@@ -28,8 +29,8 @@ const defaultState = {
 const crowdTangleSnaReducer = (state = defaultState, { type, payload }) => {
   switch (type) {
     case CT_SNA_CLEAN:
-      return (state = defaultState);
-
+      return (defaultState);
+      Non-Serializable
     case CT_PARSING_RESULT:
       return {
           ...state,
@@ -46,21 +47,21 @@ const crowdTangleSnaReducer = (state = defaultState, { type, payload }) => {
         return {
           ...state,
         result: { ...state.result, cloudChart: payload },
-        stage: ++state.stage,
+        // stage: state.stage + 1,
       }; 
         //OK
       case SET_CT_URLS_RESULTS:
         return {
           ...state,
         result: { ...state.result, urls: payload },
-        stage: ++state.stage,
+        stage: state.stage + 1,
       }; 
         //OK
       case SET_CT_COHASHTAG_RESULTS:
         return {
           ...state,
           result: { ...state.result, coHashtagGraph: payload },
-          stage: ++state.stage,
+          stage: state.stage + 1,
         }; 
     
       case CT_PIE_CHART_RESULT:
@@ -73,7 +74,7 @@ const crowdTangleSnaReducer = (state = defaultState, { type, payload }) => {
         return {
           ...state,
           result: { ...state.result, socioSemantic4ModeGraph: payload },
-          stage: ++state.stage,
+          stage: state.stage + 1,
       }; 
 
     case CT_BUBBLE_CHART_RESULT: 
@@ -86,7 +87,7 @@ const crowdTangleSnaReducer = (state = defaultState, { type, payload }) => {
       return {
         ...state,
         result: { ...state.result, heatMap: payload },
-        stage: ++state.stage,
+        stage: state.stage + 1,
       };
 
     case CT_IS_LOADING:
@@ -100,19 +101,19 @@ const crowdTangleSnaReducer = (state = defaultState, { type, payload }) => {
       return {
         ...state,
         result: { ...state.result, countSna: payload },
-        stage: ++state.stage,
+        stage: state.stage + 1,
       };
       //OK
     case CT_HISTOGRAM_SET_RESULTS:
       return {...state,
         result: { ...state.result, histogram: payload },
-        stage: ++state.stage,
+        stage: state.stage + 1,
       };
       //OK
     case CT_PIECHART_SET_RESULTS:
       return {...state,
         result: { ...state.result, pieCharts: payload },
-        stage: ++state.stage,
+        stage: state.stage + 1,
       };
     case CT_PROCESS_MAX_STAGE:
       return {...state,

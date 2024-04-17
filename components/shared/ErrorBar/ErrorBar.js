@@ -99,11 +99,14 @@ const MyErrorbar = (props) => {
                 open={open}
                 onClose={handleClose}
             >
+                <div>
                 <MySnackbarContentWrapper
                     onClose={handleClose}
                     variant={props.variant}
                     message={props.message}
                 />
+                </div>
+                
             </Snackbar>
         </div>
     );
