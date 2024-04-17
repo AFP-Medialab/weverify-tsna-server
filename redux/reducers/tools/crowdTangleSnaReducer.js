@@ -1,4 +1,4 @@
-
+import {produce} from "immer";
 import {
   CT_SNA_CLEAN,
   CT_COUNT_SET_RESULTS,
@@ -26,7 +26,7 @@ const defaultState = {
   stage : 0
 };
 
-const crowdTangleSnaReducer = (state = defaultState, { type, payload }) => {
+const crowdTangleSnaReducer = produce((state = defaultState, { type, payload }) => {
   switch (type) {
     case CT_SNA_CLEAN:
       return (defaultState);
@@ -123,5 +123,5 @@ const crowdTangleSnaReducer = (state = defaultState, { type, payload }) => {
     default:
       return state;
   }
-};
+});
 export default crowdTangleSnaReducer;

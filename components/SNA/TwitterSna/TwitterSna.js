@@ -346,15 +346,15 @@ const TwitterSna = () => {
 		if (JSON.stringify(newRequest) !== JSON.stringify(request)) {
 			
 			let prevResult = reduxResult;
-			if (prevResult && prevResult.coHashtagGraph) {
-				delete prevResult.coHashtagGraph;
-			}
-			if (prevResult && prevResult.socioSemanticGraph) {
-				delete prevResult.socioSemanticGraph;
-			}
-			if (prevResult && prevResult.socioSemantic4ModeGraph) {
-				delete prevResult.socioSemantic4ModeGraph;
-			}
+			// if (prevResult && prevResult.coHashtagGraph) {
+			// 	delete prevResult.coHashtagGraph;
+			// }
+			// if (prevResult && prevResult.socioSemanticGraph) {
+			// 	delete prevResult.socioSemanticGraph;
+			// }
+			// if (prevResult && prevResult.socioSemantic4ModeGraph) {
+			// 	delete prevResult.socioSemantic4ModeGraph;
+			// }
 			setSubmittedRequest(newRequest);
 			dispatch(setTwitterSnaNewRequest(newRequest));
 			dispatch(setSnaType(sna));

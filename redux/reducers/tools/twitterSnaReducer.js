@@ -1,3 +1,4 @@
+import {produce} from "immer";
 import {HYDRATE} from 'next-redux-wrapper';
 import { 
         SET_TWITTER_SNA_NEW_REQUEST,
@@ -26,7 +27,7 @@ const defaultState = {
     redirect: false
 };
 
-const twitterSnaReducer = (state = defaultState, {type, payload}) => {
+const twitterSnaReducer = produce((state = defaultState, {type, payload}) => {
     switch (type) {
         case HYDRATE:
             return {...state, ...payload};
@@ -73,17 +74,17 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
         case "SET_TWITTER_TWEETS_RESULTS":
             return {...state, result: {...state.result, tweets: payload}} 
         case SET_TWITTER_SNA_CLOUD_WORDS_RESULTS:
-            return {...state, result: {...state.result, cloudChart: payload}, stage: ++state.stage} 
+            return {...state, result: {...state.result, cloudChart: payload}, stage: state.stage + 1} 
         case SET_TWITTER_SNA_SOCIO_GRAPH_RESULTS:
-            return {...state, result: {...state.result, socioSemantic4ModeGraph: payload}, stage: ++state.stage}
+            return {...state, result: {...state.result, socioSemantic4ModeGraph: payload}, stage: state.stage + 1}
         case SET_TWITTER_SNA_HEATMAP_RESULTS:
-            return {...state, result: {...state.result, heatMap: payload}, stage: ++state.stage}
+            return {...state, result: {...state.result, heatMap: payload}, stage: state.stage + 1}
         case "SET_TWITTER_PIE_CHARTS_RESULTS":
             return {...state, result: {...state.result, pieCharts: payload}}
         case SET_TWITTER_COHASHTAG_RESULTS:
-            return {...state, result: {...state.result, coHashtagGraph: payload}, stage: ++state.stage}
+            return {...state, result: {...state.result, coHashtagGraph: payload}, stage: state.stage + 1}
         case SET_TWITTER_URLS_RESULTS:
-            return {...state, result: {...state.result, urls: payload}, stage: ++state.stage}
+            return {...state, result: {...state.result, urls: payload}, stage: state.stage + 1}
         case "SET_TWITTER_SNA_BUBBLE_CHART_RESULTS":
             return {...state, result: {...state.result, topUser: payload}}
         case TSNA_PROCESS_MAX_STAGE:
@@ -93,5 +94,5 @@ const twitterSnaReducer = (state = defaultState, {type, payload}) => {
         default:
             return state;
     }
-};
+});
 export default twitterSnaReducer;
