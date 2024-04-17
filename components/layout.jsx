@@ -1,5 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import { Stack  } from '@mui/material';
 //import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
@@ -44,7 +45,7 @@ function Layout(props) {
             </Head>
 
             <div className={classes.flex}>
-                <AppBar position="fixed" color="default" className={classes.appBar}>
+                <AppBar position="fixed" color="default" width={"100%"}>
                     <Toolbar className={classes.toolbar}>
 
                         <Grid
@@ -52,16 +53,42 @@ function Layout(props) {
                             direction="row"
                             justifyContent="space-between"
                             alignItems="center"
+                            spacing={{ sm: 1, md: 2 }}
                         >
-                            <Box display={{ xs: 'none', md: 'block' }} p={1}>
-                                <WeVerifyIcon style={{ height: "auto", minWidth: "48px", width: { sm: "48px", md: "80px" } }} onClick={() => handlePush()}/>
-                            </Box>
-                            <Box display={{ xs: 'none', md: 'block' }} p={1}>
-                                <InVIDIcon style={{ height: "auto", minWidth: "48px", width: { sm: "48px", md: "80px" }}} onClick={() => handlePush()}/>
-                            </Box>
-                            <Box display={{ xs: 'none', md: 'block' }} p={1}>
-                                <VeraIcon style={{ height: "auto", minWidth: "48px", width: { sm: "48px", md: "80px" }}} onClick={() => handlePush()}/>
-                            </Box>
+                            <Grid item xs={2}>
+                                <Stack
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="center"
+                                spacing={{ sm: 1, md: 2 }}
+                                >
+                                    <WeVerifyIcon
+                                        style={{
+                                        height: "auto",
+                                        width: "48px",
+                                        }}
+                                        alt="logo"
+                                        //className={classes.logoLeft}
+                                    />
+                                    
+                                    <InVIDIcon
+                                        style={{
+                                        height: "auto",
+                                        width: "48px",
+                                        }}
+                                        alt="logo"
+                                        className={classes.logoRight}
+                                    />
+                                    <VeraIcon
+                                        style={{
+                                        height: "auto",
+                                        width: "48px",
+                                        }}
+                                        alt="logo"
+                                        className={classes.logoRight}
+                                    />
+                                </Stack>
+                            </Grid>
                             
                             <Grid item xs>
                                 <CustomTitle text={props.title} />

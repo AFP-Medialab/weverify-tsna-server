@@ -178,7 +178,7 @@ const useMyStyles = makeStyles(theme => ({
     logoRight: {
         cursor: "pointer",
         marginLeft: theme.spacing(1),
-        maxHeight: "70px",
+        maxHeight: "60px",
     },
     selectedApp: {
         color: theme.palette.primary.main,
