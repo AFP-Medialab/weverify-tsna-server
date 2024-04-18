@@ -995,7 +995,7 @@ const TwitterSna = () => {
 							)}
 							<Box m={1} />
 							<Typography>{loadingMessage}</Typography>
-							<LinearProgress hidden={!loading} />
+							{loading ? <LinearProgress /> : null}
 							{!userAuthenticated && <OnWarningInfo keyword={"warning_sna"} />}
 							</Grid>
 						</Box>		
