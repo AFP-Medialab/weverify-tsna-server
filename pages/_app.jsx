@@ -3,12 +3,12 @@ import {Provider} from "react-redux"
 import '../styles/global.css';
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import { useStore } from "../redux";
-import { persistStore } from 'redux-persist'
+import { persistStore } from 'redux-persist';
 import "react-datetime/css/react-datetime.css";
-import { PersistGate } from 'redux-persist/integration/react'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import * as ga from '../lib/ga'
+import { PersistGate } from 'redux-persist/integration/react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import * as ga from '../lib/ga';
 
 const theme = createTheme({
     palette: {
@@ -72,13 +72,13 @@ const MyApp = ({ Component, pageProps }) => {
       persistor.persist()
     })
         return (
-            <Provider store={store}>
+          <Provider store={store}>
               <ThemeProvider theme={theme} >
                 <PersistGate loading={<div>loading</div>} persistor={persistor}>
                     <Component {...pageProps} />
                   </PersistGate>
               </ThemeProvider>
-            </Provider>
+          </Provider>
         );
 };
 

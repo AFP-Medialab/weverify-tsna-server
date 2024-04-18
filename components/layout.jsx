@@ -15,6 +15,12 @@ import styles from './layout.module.css';
 import Languages from './shared/languages/languages';
 import useMyStyles from './shared/styles/useMyStyles';
 const { publicRuntimeConfig } = getConfig();
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { prefixer } from "stylis";
+import stylisRTLPlugin from "stylis-plugin-rtl";
 
 export const siteTitle = 'Weverify'
 
@@ -23,84 +29,105 @@ function Layout(props) {
     const router = useRouter();
     //keyword from /components/NavItems/tools/TwitterSna.ts
 
+
+    const currentLang = useSelector((state) => state.language);
+
+    const direction = currentLang !== "ar" ? "ltr" : "rtl";
+
+    useEffect(() => {
+        document.dir = direction;
+    }, [direction]);
+
+    const cacheRtl = createCache({
+        key: "muirtl",
+        stylisPlugins: [prefixer, stylisRTLPlugin],
+    });
+
+    const emptyCache = createCache({
+        key: "empty",
+    });
+
     const handlePush = () => {
         router.push('/', undefined, { shallow: true })
     };
 
     return (
-        <div className={styles.container}>
-            <Head>
-                <link rel="icon" href="/favicon.ico" />
-                <meta name="description"
-                        content="Weverify tools for FakeNews debunking" />
-                <meta
-                    property="og:image"
-                        content={`https://og-image.now.sh/${encodeURI(
-                            siteTitle
-                            )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-                />
-                <meta name="og:title" content={siteTitle} />
-                <meta name="twitter:card" content="summary_large_image" />
+        <CacheProvider value={direction === "rtl" ? cacheRtl : emptyCache}>
+            <div className={styles.container}>
+                <Head>
+                    <link rel="icon" href="/favicon.ico" />
+                    <meta name="description"
+                            content="Weverify tools for FakeNews debunking" />
+                    <meta
+                        property="og:image"
+                            content={`https://og-image.now.sh/${encodeURI(
+                                siteTitle
+                                )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
+                    />
+                    <meta name="og:title" content={siteTitle} />
+                    <meta name="twitter:card" content="summary_large_image" />
 
-            </Head>
+                </Head>
+                <div className={classes.flex}>
+                    <AppBar position="fixed" color="default" width={"100%"}>
+                        <Toolbar className={classes.toolbar}>
 
-            <div className={classes.flex}>
-                <AppBar position="fixed" color="default" width={"100%"}>
-                    <Toolbar className={classes.toolbar}>
-
-                        <Grid
-                            container
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="center"
-                            spacing={{ sm: 1, md: 2 }}
-                        >
-                            <Grid item xs={2}>
-                                <Stack
+                            <Grid
+                                container
                                 direction="row"
-                                justifyContent="flex-start"
+                                justifyContent="space-between"
                                 alignItems="center"
                                 spacing={{ sm: 1, md: 2 }}
-                                >
-                                    <WeVerifyIcon
-                                        style={{
-                                        height: "auto",
-                                        width: "48px",
-                                        }}
-                                        alt="logo"
-                                        //className={classes.logoLeft}
-                                    />
-                                    
-                                    <InVIDIcon
-                                        style={{
-                                        height: "auto",
-                                        width: "48px",
-                                        }}
-                                        alt="logo"
-                                        className={classes.logoRight}
-                                    />
-                                    <VeraIcon
-                                        style={{
-                                        height: "auto",
-                                        width: "48px",
-                                        }}
-                                        alt="logo"
-                                        className={classes.logoRight}
-                                    />
-                                </Stack>
+                            >
+                                <Grid item xs={2}>
+                                    <Stack
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    spacing={{ sm: 1, md: 2 }}
+                                    >
+                                        <WeVerifyIcon
+                                            style={{
+                                            height: "auto",
+                                            width: "48px",
+                                            }}
+                                            alt="logo"
+                                            //className={classes.logoLeft}
+                                        />
+                                        
+                                        <InVIDIcon
+                                            style={{
+                                            height: "auto",
+                                            width: "48px",
+                                            }}
+                                            alt="logo"
+                                            className={classes.logoRight}
+                                        />
+                                        <VeraIcon
+                                            style={{
+                                            height: "auto",
+                                            width: "48px",
+                                            }}
+                                            alt="logo"
+                                            className={classes.logoRight}
+                                        />
+                                    </Stack>
+                                </Grid>
+                                
+                                <Grid item xs>
+                                    <CustomTitle text={props.title} />
+                                </Grid>
+                                <Languages />
                             </Grid>
-                            
-                            <Grid item xs>
-                                <CustomTitle text={props.title} />
-                            </Grid>
-                            <Languages />
-                        </Grid>
 
-                    </Toolbar>
-                </AppBar>
+                        </Toolbar>
+                    </AppBar>
 
+                </div>
+                {props.children}
             </div>
-        {props.children}</div>
+        </CacheProvider>
+        
     )
   }
   
