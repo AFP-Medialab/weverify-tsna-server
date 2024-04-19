@@ -15,8 +15,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
-import { connectionEnable, connectionWindow } from "../../../redux/actions/connectionAction";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+import { connectionEnabled, connectionWindowsOpened } from '../../../redux/slices/connectionSlice';
 const { publicRuntimeConfig } = getConfig();
 
 
@@ -54,7 +54,7 @@ const TweetDialog = (props) => {
             //console.log("connection is false")
             postUserTweetContent();
         }
-        return () => dispatch(connectionEnable(false))  
+        return () => dispatch(connectionEnabled(false))  
     }, [windowConnection])
    
     /*useEffect(() => {
@@ -105,8 +105,8 @@ const TweetDialog = (props) => {
             //console.log("status ", status)
             if(status === 301){
                 window.open(data.authLink, '', 'width=600,height=400,left=200,top=200');
-                dispatch(connectionEnable(true)) 
-                dispatch(connectionWindow(true))
+                dispatch(connectionEnabled(true)) 
+                dispatch(connectionWindowsOpened(true))
             }else if (status === 200){
                 props.handleClose()
             }

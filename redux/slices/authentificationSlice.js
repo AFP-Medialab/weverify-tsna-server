@@ -48,7 +48,6 @@ const authentificationSlice = createSlice({
             state.userLoginLoading = action.payload;
         },
 
-        //broken
         authUserLoggedIn (state, action) {
             state.userLoginLoading = false;
             state.userAuthenticated = true;
@@ -58,7 +57,6 @@ const authentificationSlice = createSlice({
             state.user = action.payload.userInfo;
         },
 
-        //broken 
         authUserLoggedOut (state, action) {
             state.userAuthenticated = false;
             state.accessToken = null;
@@ -105,9 +103,6 @@ const authentificationSlice = createSlice({
     //         return action.payload;
     //     }
     // },
-    // selectors: {
-    //     selectUserAuthentificated: (state) => state.userAuthenticated,
-    // }
 })
 
 

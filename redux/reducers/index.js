@@ -8,7 +8,7 @@ import authenticationReducer from "../slices/authentificationSlice";
 import errorReducer from "./errorReducer";
 import toolReducer from "./tools/toolReducer";
 import snaTypeReducer from "./tools/snaTypeReducer";
-import connectionReducer from './connectionReducer'
+import connectionReducer from '../slices/connectionSlice'
 
 const allReducers = combineReducers({
     language : languageReducer,
