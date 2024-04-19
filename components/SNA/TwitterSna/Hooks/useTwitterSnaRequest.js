@@ -24,7 +24,6 @@ import {
   getCloudTweets,
   getESQuery4Gexf,
 } from "./call-elastic";
-import {userLogoutAction} from "../../../../redux/actions/authentificationActions"
 import { getJsonDataForTimeLineChart } from "./timelineTW";
 import { createTimeLineChart } from "../../Hooks/timeline";
 import { createPieCharts, getJsonDataForPieCharts } from "./pieCharts";

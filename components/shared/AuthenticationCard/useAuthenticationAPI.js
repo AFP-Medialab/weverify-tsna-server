@@ -19,16 +19,6 @@ import { ERR_AUTH_INVALID_PARAMS,
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { userRegistrationSentAction, 
-  userAccessCodeRequestSentAction, 
-  userLoginAction, 
-  userTokenRefreshedAction, 
-  userSessionExpiredAction, 
-  userRegistrationLoadingAction, 
-  userAccessCodeRequestLoadingAction, 
-  userLoginLoadingAction, 
-  userLogoutAction } from '../../../redux/actions/authentificationActions';
-
 import { decodeJWTToken } from "./userAuthenticationUtils";
 import getConfig from 'next/config';
 import { authAccessCodeRequestLoading, authAccessCodeRequestSent, authTokenRefreshed, authUserLoggedIn, authUserLoggedOut, authUserLoginLoading, authUserRegistrationLoading, authUserRegistrationSent, authUserSessionExpired, selectUserAuthentificated, selectUserSession } from "../../../redux/slices/authentificationSlice";
