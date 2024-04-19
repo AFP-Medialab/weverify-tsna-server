@@ -33,6 +33,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import Toolbar from "@mui/material/Toolbar";
 
 import { userRegistrationSentAction, userAccessCodeRequestSentAction } from "../../../redux/actions/authentificationActions";
+import { authAccessCodeRequestSent, authUserRegistrationSent } from "../../../redux/slices/authentificationSlice";
 
 
 const registrationValidationSchema = yup.object().shape({
@@ -127,7 +128,7 @@ const AuthenticationCard = (props) => {
   };
   const registrationFormSubmitDisabled = registrationForm.formState.isSubmitting || userRegistrationLoading;
   const registrationSentMsgReset = (e) => {
-    dispatch(userRegistrationSentAction(false));
+    dispatch(authUserRegistrationSent(false));
   };
 
   // Access Code form
@@ -146,7 +147,7 @@ const AuthenticationCard = (props) => {
   };
   const accessCodeFormSubmitDisabled = accessCodeForm.formState.isSubmitting || accessCodeRequestLoading;
   const accessCodeSentMsgReset = (e) => {
-    dispatch(userAccessCodeRequestSentAction(false));
+    dispatch(authAccessCodeRequestSent(false));
   };
 
   // Login form

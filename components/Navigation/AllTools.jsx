@@ -48,7 +48,11 @@ const AllTools = (props) => {
     const userAuthenticated = useSelector(
         (state) => state.userSession && state.userSession.userAuthenticated
     );
+    console.log("authentication: " + userAuthenticated)
+    const user = useSelector((state) => state.userSession.user);
+    console.log("user: " + user);
     const role = useSelector((state) => state.userSession.user.roles);
+
     const betaTester = role.includes('BETA_TESTER')
 
     const handleClick = (path, mediaTool, restrictions) => {

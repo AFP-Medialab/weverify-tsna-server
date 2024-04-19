@@ -52,7 +52,7 @@ const AdvancedTools = () => {
     // Redux store
     const dispatch = useDispatch();
     const userAuthenticated = useSelector(
-        (state) => state.userSession && state.userSession.userAuthenticated
+        (state) =>  state.userSession.userAuthenticated
     );
 
     // i18n
@@ -157,7 +157,7 @@ const AdvancedTools = () => {
             accessCode: codeInput
         }).then(result => {
             setDialogState(2);
-            //console.log(result);
+            console.log(result);
         }).catch(error => {
             handleError(error.error ? error.error.code : ERR_AUTH_UNKNOWN_ERROR);
             setStateUnlockTools(false);
@@ -257,6 +257,7 @@ const AdvancedTools = () => {
                 </Grid>
 
                 <Grid item>
+                    {console.log(userAuthenticated)}
                     <Button variant="outlined" color="primary" onClick={handleClickOpen} style={{ border: "2px solid", heigth: "40px" }}>
                         {userAuthenticated ? messageI18NResolver("LOGUSER_LOGOUT_LABEL") : messageI18NResolver("LOGINFORM_SUBMIT_LABEL")}
                     </Button>

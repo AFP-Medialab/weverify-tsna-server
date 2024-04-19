@@ -40,6 +40,7 @@ import { setError } from "../../../../redux/actions/errorActions";
 import getConfig from "next/config";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {widgetTitle, widgetPieTitle} from "./tsnaUtils"
+import { authUserLoggedOut } from "../../../../redux/slices/authentificationSlice";
 
 const { publicRuntimeConfig } = getConfig();
 const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
@@ -144,7 +145,7 @@ const tsnaWorkers = useRef()
           }
         })
         .catch(() => {
-          dispatch(userLogoutAction());
+          dispatch(authUserLoggedOut());
           handleErrors("twittersna_invalid_credentials");
         });
     };
