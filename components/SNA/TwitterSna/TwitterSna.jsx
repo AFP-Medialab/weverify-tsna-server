@@ -34,7 +34,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TwitterSNAIcon from '../../../images/SVG/DataAnalysis/Twitter_sna_big.svg';
 import { changeLanguage } from "../../../redux/actions";
-import { cleanError, setError } from "../../../redux/actions/errorActions";
 import "../../../redux/actions/tools/twitterSnaActions";
 import {
 	cleanTwitterSnaState,
@@ -55,6 +54,7 @@ import OnWarningInfo from "../../shared/OnClickInfo/OnWarningInfo";
 import useMyStyles, { myCardStyles } from "../../shared/styles/useMyStyles";
 import useTwitterSnaRequest from "./Hooks/useTwitterSnaRequest";
 import TwitterSnaResult from "./Results/TwitterSnaResult";
+import { errorCleaned, errorSet } from '../../../redux/slices/errorSlice';
 
 
 //keyword from /components/NavItems/tools/TwitterSna.tsv
@@ -255,7 +255,7 @@ const TwitterSna = () => {
 		request && request.lang ? "lang_" + request.lang : "lang_all"
 	);
 	const handleErrors = (e) => {
-		dispatch(setError(e));
+		dispatch(errorSet(e));
 	};
 
 	const makeRequest = () => {
@@ -990,7 +990,7 @@ const TwitterSna = () => {
 								<MyErrorbar
 									variant="error"
 									message={error}
-									onClick={() => dispatch(cleanError())}
+									onClick={() => dispatch(errorCleaned())}
 								/>
 							)}
 							<Box m={1} />

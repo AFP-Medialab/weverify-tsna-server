@@ -7,7 +7,6 @@ import useMyStyles from "../styles/useMyStyles";
 
 import useAuthenticationAPI from './useAuthenticationAPI';
 import { ERR_AUTH_UNKNOWN_ERROR } from './authenticationErrors';
-import { setError } from "../../../redux/actions/errorActions";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
 import { useForm, Controller } from "react-hook-form";
@@ -34,6 +33,7 @@ import Toolbar from "@mui/material/Toolbar";
 
 import { userRegistrationSentAction, userAccessCodeRequestSentAction } from "../../../redux/actions/authentificationActions";
 import { authAccessCodeRequestSent, authUserRegistrationSent } from "../../../redux/slices/authentificationSlice";
+import { errorSet } from "../../../redux/slices/errorSlice";
 
 
 const registrationValidationSchema = yup.object().shape({
@@ -102,7 +102,7 @@ const AuthenticationCard = (props) => {
     if (errMsg === "") {
       errMsg = messageI18NResolver(ERR_AUTH_UNKNOWN_ERROR);
     }
-    dispatch(setError(errMsg));
+    dispatch(errorSet(errMsg));
   };
 
   // Forms

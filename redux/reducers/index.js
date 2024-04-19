@@ -5,7 +5,7 @@ import dictionaryReducer from "./dictionaryReducer";
 import twitterSnaReducer from "./tools/twitterSnaReducer";
 import crowdTangleSnaReducer from "./tools/crowdTangleSnaReducer";
 import authenticationReducer from "../slices/authentificationSlice";
-import errorReducer from "./errorReducer";
+import errorReducer from "../slices/errorSlice";
 import toolReducer from "./tools/toolReducer";
 import snaTypeReducer from "./tools/snaTypeReducer";
 import connectionReducer from '../slices/connectionSlice'

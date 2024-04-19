@@ -9,7 +9,6 @@ import { useRef, useState } from "react";
 import CSVReader from "react-csv-reader";
 import { useDispatch, useSelector } from "react-redux";
 import CSVIcon from "../../../images/SVG/DataAnalysis/CSV_SNA_big.svg";
-import { cleanError } from "../../../redux/actions/errorActions";
 import {
     cleanCsvSnaState, 
     setCloudWordsResult, 
@@ -31,6 +30,7 @@ import { CT_TSV } from "../lib/CrowdTangleConstant";
 import { useFacebookResult } from './Components/hooks/buildFBResult';
 import { useInstagramResult } from './Components/hooks/buildInstaResult';
 import CrowdTangleSnaResults from "./Results/CrowdTangleSnaResults";
+import { errorCleaned } from "../../../redux/slices/errorSlice";
 
 
 const CrowdTangleSnaComponent = () => {
@@ -183,7 +183,7 @@ const CrowdTangleSnaComponent = () => {
                     <Box m={2} />
                     {
                     (error !== null) &&
-                    <MyErrorbar variant="error" message={error} onClick={() => dispatch(cleanError())}/>
+                    <MyErrorbar variant="error" message={error} onClick={() => dispatch(errorCleaned())}/>
                     }
                     <Box m={2} />
                     

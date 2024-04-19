@@ -14,7 +14,6 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import useAuthenticationAPI from '../../shared/AuthenticationCard/useAuthenticationAPI';
 import { useSelector, useDispatch } from 'react-redux';
 import { ERR_AUTH_UNKNOWN_ERROR } from '../../shared/AuthenticationCard/authenticationErrors'
-import { setError } from '../../../redux/actions/errorActions';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useForm, Controller } from "react-hook-form";
@@ -23,6 +22,7 @@ import _ from "lodash";
 import MenuItem from '@mui/material/MenuItem';
 
 import useLoadLanguage from '../../shared/hooks/useRemoteLoadLanguage';
+import { errorSet } from '../../../redux/slices/errorSlice';
 
 const registrationValidationSchema = yup.object().shape({
     email: yup.string()
@@ -204,7 +204,7 @@ const AdvancedTools = () => {
         if (errMsg === "") {
             errMsg = messageI18NResolver(ERR_AUTH_UNKNOWN_ERROR);
         }
-        dispatch(setError(errMsg));
+        dispatch(errorSet(errMsg));
     };
 
     return (

@@ -35,11 +35,11 @@ import { getJsonDataForURLTable } from "../../Hooks/urlList";
 
 import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthenticatedRequest"
 
-import { setError } from "../../../../redux/actions/errorActions";
 import getConfig from "next/config";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {widgetTitle, widgetPieTitle} from "./tsnaUtils"
 import { authUserLoggedOut } from "../../../../redux/slices/authentificationSlice";
+import { errorSet } from "../../../../redux/slices/errorSlice";
 
 const { publicRuntimeConfig } = getConfig();
 const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
@@ -83,8 +83,8 @@ const tsnaWorkers = useRef()
     };
     const handleErrors = (e) => {
       if (keyword(e) !== "") {
-        dispatch(setError(keyword(e)));
-      } else dispatch(setError(keyword("default_sna_error")));
+        dispatch(errorSet(keyword(e)));
+      } else dispatch(errorSet(keyword("default_sna_error")));
       dispatch(setTwitterSnaLoading(false));
     };
     // Check request
