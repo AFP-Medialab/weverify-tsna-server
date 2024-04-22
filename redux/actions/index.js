@@ -1,10 +1,10 @@
-export const changeLanguage = (lang) => {
-    //console.log("lang ", lang)
-    return {
-        type : 'CHANGE',
-        payload : lang
-    };
-};
+// export const changeLanguage = (lang) => {
+//     //console.log("lang ", lang)
+//     return {
+//         type : 'CHANGE',
+//         payload : lang
+//     };
+// };
 
 export const setDictionary = (text) => {
     return {

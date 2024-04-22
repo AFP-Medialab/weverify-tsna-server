@@ -6,7 +6,7 @@ import Tooltip from "@mui/material/Tooltip";
 import {useSelector, useDispatch} from "react-redux";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
-import {changeLanguage} from "../../../redux/actions"
+import {changeLanguage} from "../../../redux/slices/langugagesSlice"
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import TranslateIcon from '@mui/icons-material/Translate';

@@ -33,7 +33,7 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TwitterSNAIcon from '../../../images/SVG/DataAnalysis/Twitter_sna_big.svg';
-import { changeLanguage } from "../../../redux/actions";
+import { changeLanguage } from "../../../redux/slices/langugagesSlice";
 import "../../../redux/actions/tools/twitterSnaActions";
 import {
 	cleanTwitterSnaState,
