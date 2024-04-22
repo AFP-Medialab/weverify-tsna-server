@@ -13,7 +13,7 @@ const languageSlice = createSlice ({
         builder.addCase (HYDRATE, (state, action) => {
             state = {
                 ...state,
-                ...action.payload.category
+                ...action.payload
             };
         })
     },
