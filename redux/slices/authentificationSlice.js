@@ -98,11 +98,14 @@ const authentificationSlice = createSlice({
             };
         }
     },
-    // extraReducers: {
-    //     [HYDRATE]: (state, action) => {
-    //         return action.payload;
-    //     }
-    // },
+    extraReducers: builder => {
+        builder.addCase (HYDRATE, (state, action) => {
+            state = {
+                ...state,
+                ...action.payload.category
+            };
+        })
+    },
 })
 
 
