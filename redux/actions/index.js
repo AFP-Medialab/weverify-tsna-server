@@ -6,22 +6,22 @@
 //     };
 // };
 
-export const setDictionary = (text) => {
-    return {
-        type : "SET",
-        payload : text
-    };
-};
+// export const setDictionary = (text) => {
+//     return {
+//         type : "SET",
+//         payload : text
+//     };
+// };
 
-export const addDictionary = (label, json) => {
-    return {
-        type : "ADD",
-        payload : {
-            label: label,
-            json: json
-        }
-    };
-};
+// export const addDictionary = (label, json) => {
+//     return {
+//         type : "ADD",
+//         payload : {
+//             label: label,
+//             json: json
+//         }
+//     };
+// };
 
 export const selectPage = (number) => {
     return {

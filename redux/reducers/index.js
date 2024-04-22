@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 import languageReducer from "../slices/langugagesSlice";
-import dictionaryReducer from "./dictionaryReducer";
+import dictionaryReducer from "../slices/dictionarySlice";
 import twitterSnaReducer from "./tools/twitterSnaReducer";
 import crowdTangleSnaReducer from "./tools/crowdTangleSnaReducer";
 import authenticationReducer from "../slices/authentificationSlice";

@@ -1,8 +1,8 @@
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
-import {addDictionary} from "../../../redux/actions";
 import getConfig from 'next/config';
+import { dictionaryElementAdded } from "../../../redux/slices/dictionarySlice";
 const { publicRuntimeConfig } = getConfig();
 /**
  * @func transform array in json representation of translation (access this way: json[global_language][id_translate])
@@ -50,6 +50,7 @@ const useLoadLanguage = (tsv) => {
     const localTsv = `${publicRuntimeConfig.baseFolder}/api/i18n`+tsv;
     const lang = useSelector(state => state.language);
     const dictionary = useSelector(state => state.dictionary[tsv]);
+    const dict = useSelector(state => state.dictionary);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -58,7 +59,10 @@ const useLoadLanguage = (tsv) => {
 
         axios.get(localTsv)
                 .then(result => {
-                    dispatch(addDictionary(tsv, translate_csv(result.data)));
+                    console.log(dict);
+                    console.log("tsv: " + tsv);
+                    console.log(translate_csv(result.data));
+                    dispatch(dictionaryElementAdded({label: tsv, json: translate_csv(result.data)}));
                 })
                 .catch(error => console.error(error))
 
