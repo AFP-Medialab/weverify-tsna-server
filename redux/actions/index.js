@@ -30,12 +30,12 @@ export const selectPage = (number) => {
     }
 };
 
-export const selectTool = (number) => {
-    return {
-        type : "SELECT_TOOL",
-        payload : number,
-    }
-};
+// export const selectTool = (number) => {
+//     return {
+//         type : "SELECT_TOOL",
+//         payload : number,
+//     }
+// };
 
 export const toggleHumanRightsCheckBox = () => {
     return {
