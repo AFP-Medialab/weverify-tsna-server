@@ -206,9 +206,7 @@ export default function useAuthenticationAPI() {
       try {
         const tokenContent = decodeJWTToken(accessToken);
         _.merge(userInfo, tokenContent.user);
-        console.log(userInfo);
         dispatch(authUserLoggedIn({accessToken, tokenExpiry: tokenContent.accessTokenExpiry, refreshToken, userInfo}));
-        console.log("dispatched the login");
         return Promise.resolve({
           status: response.status,
           data: {

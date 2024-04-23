@@ -59,9 +59,6 @@ const useLoadLanguage = (tsv) => {
 
         axios.get(localTsv)
                 .then(result => {
-                    console.log(dict);
-                    console.log("tsv: " + tsv);
-                    console.log(translate_csv(result.data));
                     dispatch(dictionaryElementAdded({label: tsv, json: translate_csv(result.data)}));
                 })
                 .catch(error => console.error(error))
