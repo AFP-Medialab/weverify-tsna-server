@@ -29,6 +29,7 @@ export const setTwitterSnaNewRequest = (request) => {
     }
 };
 
+// wrong number of arguments when calling the function
 export const setTwitterSnaLoading = (loading, maxStage) => {
     return {
         type : SET_TWITTER_SNA_LOADING,
@@ -130,6 +131,7 @@ export const setGexfExport = (gexfData) => {
         payload : gexfData
     }
 };
+
 export const setSnaType = (snaType) => {
     return {
         type : SNA_SET_TYPE,

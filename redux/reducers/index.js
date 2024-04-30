@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 import languageReducer from "../slices/langugagesSlice";
 import dictionaryReducer from "../slices/dictionarySlice";
-import twitterSnaReducer from "./tools/twitterSnaReducer";
+import twitterSnaReducer from "../slices/tools/twitterSnaSlice";
 import crowdTangleSnaReducer from "../slices/tools/crowdTangleSnaSlice";
 import authenticationReducer from "../slices/authentificationSlice";
 import errorReducer from "../slices/errorSlice";

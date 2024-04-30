@@ -4,13 +4,13 @@ import Grid from "@mui/material/Grid";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 import CustomTable from "../../../shared/CustomTable/CustomTable";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
+import { setTweetsDetail } from "../TwitterSna";
 
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ export default function HistoTweetsTable(props) {
           <Button
             startIcon={<ExpandLessIcon />}
             color={"primary"}
-            onClick={() => dispatch(setTweetsDetailPanel(props.from, null))}
+            onClick={() => setTweetsDetail(props.from, null, dispatch)}
           >
             {keyword("twittersna_result_hide")}
           </Button>

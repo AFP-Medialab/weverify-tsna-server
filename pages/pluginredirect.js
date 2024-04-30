@@ -4,9 +4,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { decodeJWTToken } from "../components/shared/AuthenticationCard/userAuthenticationUtils";
 import { userLoginAction, userLoginLoadingAction } from "../redux/actions/authentificationActions";
-import { redirectFromPlugin} from "../redux/actions/tools/twitterSnaActions";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage"
 import { authUserLoggedIn } from "../redux/slices/authentificationSlice";
+import { twitterSnaRedirectRequestSet } from "../redux/slices/tools/twitterSnaSlice";
 //Redirect page for SSO connection from WeverifyPlugin
 //TODO error management in case of URL manupilation
 const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
@@ -21,7 +21,7 @@ const PluginRedirect = () => {
         const {data, token, refreshToken, user} = query;
         const loadData = decodeURIComponent(data);
         const request =  JSON.parse(loadData);
-        dispatch(redirectFromPlugin(request));
+        dispatch(twitterSnaRedirectRequestSet(request));
         //token
         const userData = decodeURIComponent(user);
         const userInfo = JSON.parse(userData);

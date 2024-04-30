@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import CloseResult from "../../../shared/CloseResult/CloseResult";
-import { cleanTwitterSnaState } from "../../../../redux/actions/tools/twitterSnaActions";
 import { IconButton, Paper } from "@mui/material";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, { useEffect, useState, useCallback } from "react";
@@ -19,6 +18,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
+import { twitterSnaCleanedState } from "../../../../redux/slices/tools/twitterSnaSlice";
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), { ssr: false });
@@ -76,7 +76,7 @@ export default function TwitterSnaResult(props) {
 
 
         <Box>
-            <CloseResult onClick={() => dispatch(cleanTwitterSnaState())} />
+            <CloseResult onClick={() => dispatch(twitterSnaCleanedState())} />
 
             <Box m={4} />
 

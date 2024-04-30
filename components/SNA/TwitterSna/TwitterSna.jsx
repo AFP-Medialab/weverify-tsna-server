@@ -34,12 +34,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TwitterSNAIcon from '../../../images/SVG/DataAnalysis/Twitter_sna_big.svg';
 import { changeLanguage } from "../../../redux/slices/langugagesSlice";
-import "../../../redux/actions/tools/twitterSnaActions";
-import {
-	cleanTwitterSnaState,
-	setSnaType,
-	setTwitterSnaLoading, setTwitterSnaNewRequest} 
-	from "../../../redux/actions/tools/twitterSnaActions";
 import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
 import CustomCardHeader from "../../shared/CustomCardHeader/CustomCardheader";
 import convertToGMT from "../../shared/DateTimePicker/convertToGMT";
@@ -55,7 +49,47 @@ import useMyStyles, { myCardStyles } from "../../shared/styles/useMyStyles";
 import useTwitterSnaRequest from "./Hooks/useTwitterSnaRequest";
 import TwitterSnaResult from "./Results/TwitterSnaResult";
 import { errorCleaned, errorSet } from '../../../redux/slices/errorSlice';
+import { tweetsDetailBubbleChartResultSet, tweetsDetailHistogramResultSet, tweetsDetailPieChartResultSet, twitterSnaCleanedState, twitterSnaLoadingSet, twitterSnaNewRequestSet } from '../../../redux/slices/tools/twitterSnaSlice';
+import { snaTypeSet } from '../../../redux/slices/tools/snaTypeSlice';
 
+export function setTweetsDetail (from, data, dispatch) {
+	
+	let payload;
+
+	switch (from) {
+		case "PLOT_LINE":
+            
+			dispatch(tweetsDetailHistogramResultSet(data));
+
+        case "PLOT_PIE_CHART_0":
+
+			payload = data != null ? null : 0;
+			dispatch(tweetsDetailPieChartResultSet(payload));
+
+        case "PLOT_PIE_CHART_1":
+            
+			payload = data != null ? null : 1;
+			dispatch(tweetsDetailPieChartResultSet(payload));
+
+        case "PLOT_PIE_CHART_2":
+
+            payload = data != null ? null : 2;
+			dispatch(tweetsDetailPieChartResultSet(payload));
+
+        case "PLOT_PIE_CHART_3":
+
+            payload = data != null ? null : 3;
+			dispatch(tweetsDetailPieChartResultSet(payload));
+
+        case "PLOT_BUBBLE_CHART":
+
+			dispatch(tweetsDetailBubbleChartResultSet(data));
+
+        default:
+
+            // There were other non implemented cases in the previous actions class, such as "PLOT_HEAT_MAP" and "PLOT_HASHTAG_GRAPH" that had no corresponding reducers
+		}
+}
 
 //keyword from /components/NavItems/tools/TwitterSna.tsv
 const TwitterSna = () => {
@@ -357,8 +391,8 @@ const TwitterSna = () => {
 			// 	delete prevResult.socioSemantic4ModeGraph;
 			// }
 			setSubmittedRequest(newRequest);
-			dispatch(setTwitterSnaNewRequest(newRequest));
-			dispatch(setSnaType(sna));
+			dispatch(twitterSnaNewRequestSet(newRequest));
+			dispatch(snaTypeSet(sna));
 		}
 	};
 	
@@ -366,8 +400,8 @@ const TwitterSna = () => {
 	if(isRedirect){
 		let newRequest = makeRequest();
 		setSubmittedRequest(newRequest)
-		dispatch(setTwitterSnaNewRequest(newRequest));
-		dispatch(setSnaType(sna));
+		dispatch(twitterSnaNewRequestSet(newRequest));
+		dispatch(snaTypeSet(sna));
 	}
 
 	
@@ -387,7 +421,7 @@ const TwitterSna = () => {
 		}
 		if (maxStage != 0 && stage === maxStage) {
 			setLoading(false);
-			dispatch(setTwitterSnaLoading(false))
+			dispatch(twitterSnaLoadingSet(false))
 		}
 	}, [isLoading, stage]);
 
@@ -395,7 +429,7 @@ const TwitterSna = () => {
 	useEffect(() => {
 		//console.log("use effect TNSA ... ")
 		if (!userAuthenticated) {
-			dispatch(cleanTwitterSnaState());
+			dispatch(twitterSnaCleanedState());
 			setSubmittedRequest(null);
 		}
 	}, [userAuthenticated]);

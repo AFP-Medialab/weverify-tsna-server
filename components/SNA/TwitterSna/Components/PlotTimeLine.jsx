@@ -6,13 +6,13 @@ import plotly from "plotly.js-dist";
 import React, { useEffect, useState } from "react";
 import createPlotComponent from "react-plotly.js/factory";
 import { useDispatch, useSelector } from "react-redux";
-import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import { filterForTimeLine } from "../../Hooks/timeline";
 import HistoTweetsTable from "../Components/HistoTweetsTable";
+import { setTweetsDetail } from "../TwitterSna";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
@@ -43,9 +43,7 @@ export default function PlotTimeLine(props) {
         let tweetDate = new Date(tweet._source.datetimestamp * 1000);
         return filterForTimeLine(tweetDate, selectedPoints);
       });
-      dispatch(
-        setTweetsDetailPanel(from, displayPosts(filteredTweets, keyword))
-      );
+      setTweetsDetail(from, displayPosts(filteredTweets, keyword), dispatch);
     }
   };
 

@@ -5,7 +5,6 @@ import plotly from "plotly.js-dist";
 import React, { useEffect, useState } from "react";
 import createPlotComponent from "react-plotly.js/factory";
 import { useDispatch, useSelector } from "react-redux";
-import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
@@ -14,6 +13,7 @@ import { downloadClick } from "../../lib/downloadClick";
 import HistoTweetsTable from "../Components/HistoTweetsTable";
 import { createCSVFromPieChart } from "../Hooks/pieCharts";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
+import { setTweetsDetail } from "../TwitterSna";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 
@@ -145,7 +145,7 @@ export default function PlotPieChart(props) {
         let dataToDisplay = displayPosts(filteredTweets, keyword);
         dataToDisplay["selected"] = selectedUser;
         setPieCharts3(dataToDisplay);
-        dispatch(setTweetsDetailPanel(from + "_" + index, "dataToDisplay"));
+        setTweetsDetail(from + "_" + index, "dataToDisplay", dispatch);
       }
     }
     // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
@@ -169,15 +169,15 @@ export default function PlotPieChart(props) {
         switch (index) {
           case 0:
             setPieCharts0(dataToDisplay);
-            dispatch(setTweetsDetailPanel(from + "_" + index, "dataToDisplay"));
+            setTweetsDetail(from + "_" + index, "dataToDisplay", dispatch);
             break;
           case 1:
             setPieCharts1(dataToDisplay);
-            dispatch(setTweetsDetailPanel(from + "_" + index, "dataToDisplay"));
+            setTweetsDetail(from + "_" + index, "dataToDisplay", dispatch);
             break;
           case 2:
             setPieCharts2(dataToDisplay);
-            dispatch(setTweetsDetailPanel(from + "_" + index, "dataToDisplay"));
+            setTweetsDetail(from + "_" + index, "dataToDisplay", dispatch);
             break;
           default:
             break;

@@ -29,7 +29,7 @@ const twitterSnaSlice = createSlice ({
         twitterSnaNewRequestSet (state, action) {
             state.notification = false;
             state.loading = false;
-            state.request = action.payload.request;
+            state.request = action.payload;
             state.result = null;
             state.pieCharts = [null,null,null,null];
             state.donutIndex = null;
@@ -42,7 +42,7 @@ const twitterSnaSlice = createSlice ({
         twitterSnaLoadingSet (state, action) {
             state.loading = action.payload.load;
             state.loadingMessage = ((action.payload.load)? state.loadingMessage:"");
-            state.maxStage = state.payload.maxStage;
+            state.maxStage = action.payload.maxStage;
             state.stage = !(action.payload.load) ? state.maxStage: 0;
         },
         twitterSnaLoadingMessageSet (state, action) {
@@ -76,6 +76,9 @@ const twitterSnaSlice = createSlice ({
             state.stage ++;
         },
         twitterSnaHistogramResultSet (state, action) {
+            if (state.result === null) {
+                state.result = {};
+            }
             state.result.histogram = action.payload;
         },
         twitterSnaCountResultSet (state, action) {
@@ -100,6 +103,15 @@ const twitterSnaSlice = createSlice ({
         },
         twitterSnaMaxStorageProcessed (state, action) {
             state.maxStage = action.payload;
+        },
+        tweetsDetailHistogramResultSet (state, action) {
+            state.histoview = action.payload;
+        },
+        tweetsDetailPieChartResultSet (state, action) {
+            state.donutIndex = action.payload;
+        },
+        tweetsDetailBubbleChartResultSet (state, action) {
+            state.bubbleChart = action.payload;
         }
     }
 });
@@ -123,7 +135,10 @@ export const {
     twitterSnaCoHashtagResultSet,
     twitterSnaUrlsResultSet,
     twitterSnaGexfExportSet,
-    twitterSnaMaxStorageProcessed
+    twitterSnaMaxStorageProcessed,
+    tweetsDetailHistogramResultSet,
+    tweetsDetailPieChartResultSet,
+    tweetsDetailBubbleChartResultSet
 } = twitterSnaSlice.actions;
 
 export default twitterSnaSlice.reducer;
