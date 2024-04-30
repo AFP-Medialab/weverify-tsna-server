@@ -5,10 +5,10 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCSVHistoview } from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import CustomTable from "../../../shared/CustomTable/CustomTable";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
+import { setHistoview } from "../CrowdTangleSnaComponent";
 
 export default function HistoTweetsTable(props) {
   
@@ -43,7 +43,7 @@ export default function HistoTweetsTable(props) {
             variant={"contained"}
             color={"secondary"}
             onClick={() =>  
-              dispatch(setCSVHistoview(props.from, null)) 
+              setHistoview(props.from, null, dispatch) 
             }
             >
             {keywordSNA("sna_result_hide")}

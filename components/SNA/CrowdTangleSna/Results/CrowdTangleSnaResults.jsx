@@ -9,12 +9,13 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cleanCsvSnaState } from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import CloseResult from "../../../shared/CloseResult/CloseResult";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import UrlList from "../../Components/UrlList";
 import Count from "../Components/Count";
+import { snaTypeCleaned } from "../../../../redux/slices/tools/snaTypeSlice";
+import { csvSnaStateCleaned } from "../../../../redux/slices/tools/crowdTangleSnaSlice";
 
 const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 const tsv2 = "/components/NavItems/tools/CrowdTangle.tsv";
@@ -70,7 +71,9 @@ export default function CrowdTangleSnaResults(props) {
 	return (
 
 		<Box>
-			<CloseResult onClick={() => dispatch(cleanCsvSnaState())} />
+			<CloseResult onClick={() => {
+				dispatch(csvSnaStateCleaned());
+				dispatch(snaTypeCleaned());}} />
 			<Box m={4} />
 
 			<Grid

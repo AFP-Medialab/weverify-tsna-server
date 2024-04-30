@@ -3,7 +3,6 @@ import CloseResult from "../../CloseResult/CloseResult";
 import useMyStyles from "../../styles/useMyStyles";
 import Count from "../Components/Count";
 import { useDispatch} from "react-redux";
-import {cleanCsvSnaState} from "../../../../redux/actions/tools/crowdTangleSnaActions"
 import dynamic from "next/dynamic"
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {ssr: false});
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), {ssr: false});
@@ -16,7 +15,10 @@ export default function InstaSnaResults(props) {
 
   return (
     <Paper className={classes.root}>
-      <CloseResult onClick={() => dispatch(cleanCsvSnaState())} />
+      <CloseResult onClick={() => {
+        dispatch(csvSnaStateCleaned());
+				dispatch(snaTypeCleaned());
+      }} />
       {<Count result={props.result} 
       //onClickInfoLabel={"insta_sna_tweetnb_tip"}
       />}

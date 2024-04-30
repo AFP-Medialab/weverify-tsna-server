@@ -9,17 +9,6 @@ import { useRef, useState } from "react";
 import CSVReader from "react-csv-reader";
 import { useDispatch, useSelector } from "react-redux";
 import CSVIcon from "../../../images/SVG/DataAnalysis/CSV_SNA_big.svg";
-import {
-    cleanCsvSnaState, 
-    setCloudWordsResult, 
-    setCoHashtagResult, 
-    setCSVHistoview, 
-    setCSVLoading,
-    setCSVResult,
-    setHeatMapResult,
-    setSocioGraphResult, 
-    setUrlsResult} 
-    from "../../../redux/actions/tools/crowdTangleSnaActions";
 import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
 import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
 import FeedBack from "../../shared/FeedBack/FeedBack";
@@ -31,8 +20,46 @@ import { useFacebookResult } from './Components/hooks/buildFBResult';
 import { useInstagramResult } from './Components/hooks/buildInstaResult';
 import CrowdTangleSnaResults from "./Results/CrowdTangleSnaResults";
 import { errorCleaned } from "../../../redux/slices/errorSlice";
+import { csvSnaBubbleChartResultHistoViewSet, 
+    csvSnaCloudWordsResultSet, 
+    csvSnaCohashtagResultSet, 
+    csvSnaHeatMapResultSet, 
+    csvSnaHistoviewResultSet, 
+    csvSnaLoadingSet, 
+    csvSnaPieChartResultHistoViewSet, 
+    csvSnaResultSet, 
+    csvSnaSocioGraphResultSet, 
+    csvSnaStateCleaned, 
+    csvSnaUrlsResultSet } from "../../../redux/slices/tools/crowdTangleSnaSlice";
+import { snaTypeCleaned } from "../../../redux/slices/tools/snaTypeSlice";
 
 
+export function setHistoview (from, data, dispatch) {
+
+    let payload;
+
+    switch (from) {
+        case "PLOT_LINE":
+            dispatch(csvSnaHistoviewResultSet(data));
+        case "PLOT_PIE_CHART_0":
+            payload = data != null ? null : 0;
+            dispatch(csvSnaPieChartResultHistoViewSet(payload));
+        case "PLOT_PIE_CHART_1":
+            payload = data != null ? null : 1;
+            dispatch(csvSnaPieChartResultHistoViewSet(payload));
+        case "PLOT_PIE_CHART_2":
+            payload = data != null ? null : 2;
+            dispatch(csvSnaPieChartResultHistoViewSet(payload));
+        case "PLOT_PIE_CHART_3":
+            payload = data != null ? null : 3;
+            dispatch(csvSnaPieChartResultHistoViewSet(payload));
+        case "PLOT_BUBBLE_CHART":
+            dispatch(csvSnaBubbleChartResultHistoViewSet(data));
+        default:
+            // There were other non implemented cases in the previous actions class, such as "PLOT_HEAT_MAP" and "PLOT_HASHTAG_GRAPH" that had no corresponding reducers
+    }
+}
+    
 const CrowdTangleSnaComponent = () => {
 
     const theme = createTheme({
@@ -102,14 +129,14 @@ const CrowdTangleSnaComponent = () => {
    
         for(var i=0; i<from.length;i++)
         {
-            dispatch(setCSVHistoview(from[i], null)) 
+            setHistoview(from[i], null, dispatch); 
         }
-        dispatch(setCSVLoading(true, "processing"));
-        dispatch(setHeatMapResult(null))
-        dispatch(setCoHashtagResult(null))
-        dispatch(setUrlsResult(null))
-        dispatch(setCloudWordsResult(null))
-        dispatch(setSocioGraphResult(null))
+        dispatch(csvSnaLoadingSet({loading: true, loadingMessage: "processing"}));
+        dispatch(csvSnaHeatMapResultSet(null))
+        dispatch(csvSnaCohashtagResultSet(null))
+        dispatch(csvSnaUrlsResultSet(null))
+        dispatch(csvSnaCloudWordsResultSet(null))
+        dispatch(csvSnaSocioGraphResultSet(null))
         //Create Workers 
         let timelineWorker = new Worker(new URL('./Components/hooks/timelineCT.js', import.meta.url));
         let pieChartsWorker = new Worker(new URL('./Components/hooks/pieCharts.js', import.meta.url));
@@ -135,9 +162,10 @@ const CrowdTangleSnaComponent = () => {
     };
 
     const completeCsvParse = (results, file) => {
-        dispatch(cleanCsvSnaState());
+        dispatch(snaTypeCleaned());
+        dispatch(csvSnaStateCleaned());
         //console.log("Parsing complete:", results, file);
-        dispatch(setCSVResult(results.data));
+        dispatch(csvSnaResultSet(results.data));
       }
     const parseOptions = {
         header: true,

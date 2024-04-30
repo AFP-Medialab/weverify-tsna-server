@@ -5,13 +5,13 @@ import plotly from 'plotly.js-dist';
 import React, { useEffect, useState } from 'react';
 import createPlotComponent from 'react-plotly.js/factory';
 import { useDispatch, useSelector } from "react-redux";
-import { setCSVHistoview } from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import { setTweetsDetailPanel } from "../../../../redux/actions/tools/twitterSnaActions";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import HistoTweetsTable from "./HistoTweetsTableCSV";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
+import { setHistoview } from "../CrowdTangleSnaComponent";
 
 
 
@@ -143,7 +143,7 @@ export default function PlotPieChart (props) {
                     let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
                     dataToDisplay["selected"] = selectedUser;
                     setPieCharts3(dataToDisplay);
-                    dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                    setHistoview(from+"_"+index, "dataToDisplay", dispatch);
                 
             }
             // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
@@ -170,17 +170,17 @@ export default function PlotPieChart (props) {
                         case 0:
                             setPieCharts0(dataToDisplay);
                            // dispatch(setTweetsDetailPanel(from+"_"+index, "dataToDisplay"));
-                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                            setHistoview(from+"_"+index, "dataToDisplay", dispatch);
 
                             break;
                         case 1:
                             setPieCharts1(dataToDisplay);
-                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                            setHistoview(from+"_"+index, "dataToDisplay", dispatch);
     
                             break;
                         case 2:
                             setPieCharts2(dataToDisplay);
-                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                            setHistoview(from+"_"+index, "dataToDisplay", dispatch);
                             break;
                         default:
                             break;
@@ -213,7 +213,7 @@ export default function PlotPieChart (props) {
                     let dataToDisplay = displayPostsFb(filteredTweets, keyword);
                     dataToDisplay["selected"] = selectedUser;
                     setPieCharts3(dataToDisplay);
-                    dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                    setHistoview(from+"_"+index, "dataToDisplay", dispatch);
                 
             }
             // For retweets, likes, top_user donut; typeof condition to avoid error when click on the center
@@ -242,17 +242,17 @@ export default function PlotPieChart (props) {
                     switch (index) {
                         case 0:
                             setPieCharts0(dataToDisplay);
-                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                            setHistoview(from+"_"+index, "dataToDisplay", dispatch);
                             
                             break;
                         case 1:
                             setPieCharts1(dataToDisplay);
-                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                            setHistoview(from+"_"+index, "dataToDisplay", dispatch);
     
                             break;
                         case 2:
                             setPieCharts2(dataToDisplay);
-                            dispatch(setCSVHistoview(from+"_"+index, "dataToDisplay"));
+                            setHistoview(from+"_"+index, "dataToDisplay", dispatch);
                             break;
                         default:
                             break;

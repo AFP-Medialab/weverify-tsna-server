@@ -8,7 +8,6 @@ import dynamic from "next/dynamic";
 import React, { useEffect, useState } from 'react';
 import createPlotComponent from 'react-plotly.js/factory';
 import { useDispatch, useSelector } from "react-redux";
-import { setCSVHistoview } from "../../../../redux/actions/tools/crowdTangleSnaActions";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
@@ -16,6 +15,7 @@ import { filterForTimeLine } from '../../Hooks/timeline';
 import HistoTweetsTable from "./HistoTweetsTableCSV";
 import { getEpochMillis } from "./hooks/timelineCT";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
+import { setHistoview } from "../CrowdTangleSnaComponent";
 
 const plotly = dynamic(() => import("react-plotly.js"), { ssr: false, });
 const Plot = createPlotComponent(plotly);
@@ -61,15 +61,15 @@ export default function PlotTimeLine(props){
             
             if (filteredPost[0].facebook_id){
                 //console.log("FACEBOOK")
-                dispatch(
-                    setCSVHistoview(from, displayPostsFb(filteredPost)));
+                
+                setHistoview(from, displayPostsFb(filteredPost), dispatch);
 
             }
             else
             {
                 //console.log("INSTA")
-                dispatch(
-                    setCSVHistoview(from, displayPostsInsta(filteredPost)));
+                
+                setHistoview(from, displayPostsInsta(filteredPost), dispatch);
 
  
             }

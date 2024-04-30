@@ -12,69 +12,82 @@ const crowdTangleSnaSlice = createSlice ({
     name: "crowdTangleSna",
     initialState: defaultState,
     reducers: {
-        CsvSnaStateCleaned (state, action) {
+        csvSnaStateCleaned (state, action) {
             state = defaultState;
         },
-        CsvSnaResultSet (state, action) {
+        csvSnaResultSet (state, action) {
+            if(state.result === null) {
+                state.result = {}
+            }
             state.result.data = action.payload;
         },
-        CsvSnaResultHistoviewSet (state, action) {
+        csvSnaHistoviewResultSet (state, action) {
             state.result.histoview = action.payload;
         },
-        CsvSnaCloudWordsResultSet (state, action) {
+        csvSnaCloudWordsResultSet (state, action) {
             state.result.cloudChart = action.payload;
             state.stage ++;
         },
-        CsvSnaUrlsResultSet (state, action) {
+        csvSnaUrlsResultSet (state, action) {
             state.result.urls = action.payload;
             state.stage ++;
         },
-        CsvSnaCohashtagResultSet (state, action) {
+        csvSnaCohashtagResultSet (state, action) {
             state.result.coHashtagGraph = action.payload;
             state.stage ++;
         },
     
-        CsvSnaSocioGraphResultSet (state, action) {
+        csvSnaSocioGraphResultSet (state, action) {
             state.result.socioSemantic4ModeGraph = action.payload;
             state.stage++;
         },
-        CsvSnaHeatMapResultSet (state, action) {
+        csvSnaHeatMapResultSet (state, action) {
             state.result.heatMap = action.payload;
             state.stage ++;
         },
-        CsvSnaLoadingSet (state, action) {
+        csvSnaLoadingSet (state, action) {
             state.loading = action.payload.loading;
             state.loadingMessage = action.payload.loadingMessage;
         },
-        CsvSnaCountResultSet (state, action) {
+        csvSnaCountResultSet (state, action) {
             state.result.countSna = action.payload;
             state.stage ++;
         },
-        CsvSnaHistogramResultSet (state, action) {
+        csvSnaHistogramResultSet (state, action) {
             state.result.histogram = action.payload;
             state.stage ++;
         },
-        CsvSnaPieChartResultSet (state, action) {
+        csvSnaPieChartResultSet (state, action) {
             state.result.pieCharts = action.payload;
             state.stage ++;
         },
-        CsvSnaMaxProcessStageSet (state, action) {
+        csvSnaMaxProcessStageSet (state, action) {
             state.maxStage = action.payload;
-        }
+        },
+        csvSnaPieChartResultHistoViewSet (state, action) {
+            state.result.donutIndex = action.payload;
+        },
+        csvSnaBubbleChartResultHistoViewSet (state, action) {
+            state.result.bubbleChart = action.payload;
+        },
+        
     }
 })
-export const {CsvSnaStateCleaned,
-    CsvSnaResultSet,
-    CsvSnaCloudWordsResult,
-    CsvSnaUrlsResultSet,
-    CsvSnaCohashtagResultSet,
-    CsvSnaSocioGraphResultSet,
-    CsvSnaHeatMapResultSet,
-    CsvSnaLoadingSet,
-    CsvSnaCountResultSet,
-    CsvSnaHistogramResultSet,
-    CsvSnaPieChartResultSet,
-    CsvSnaMaxProcessStageSet
+export const {csvSnaStateCleaned,
+    csvSnaResultSet,
+    csvSnaHistoviewResultSet,
+    csvSnaCloudWordsResultSet,
+    csvSnaUrlsResultSet,
+    csvSnaCohashtagResultSet,
+    csvSnaSocioGraphResultSet,
+    csvSnaHeatMapResultSet,
+    csvSnaLoadingSet,
+    csvSnaCountResultSet,
+    csvSnaHistogramResultSet,
+    csvSnaPieChartResultSet,
+    csvSnaMaxProcessStageSet,
+    csvSnaPieChartResultHistoViewSet,
+    csvSnaBubbleChartResultHistoViewSet
     } = crowdTangleSnaSlice.actions;
 
 export default crowdTangleSnaSlice.reducer;
