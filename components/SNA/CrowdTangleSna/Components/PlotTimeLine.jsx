@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import dynamic from "next/dynamic";
-// import plotly from 'plotly.js-dist';
+import plotly from 'plotly.js-dist';
 import React, { useEffect, useState } from 'react';
 import createPlotComponent from 'react-plotly.js/factory';
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,8 @@ import { getEpochMillis } from "./hooks/timelineCT";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { setHistoview } from "../CrowdTangleSnaComponent";
 
-const plotly = dynamic(() => import("react-plotly.js"), { ssr: false, });
+// const plotly = dynamic(() => import("react-plotly.js"), { ssr: false, });
+// const plotly = dynamic(() => import("plotly.js"));
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
 
@@ -88,21 +89,24 @@ export default function PlotTimeLine(props){
             <CustomCardHeader title={keyword(state.result.histogram.title)} showHelp={true} helpText={"ct_sna_timeline_tip"} />
                 {
                 <div style={{ width: '100%', }} className={classes.cardsResults}>
+                    {console.log(state.result.histogram.json)}
+                    {console.log(state.result.histogram.layout)}
                     {(state.result.histogram.json && (state.result.histogram.json.length === 0) &&
                         <Typography variant={"body2"}>{keyword("ct_sna_no_data")}</Typography>)}
                     {(state.result.histogram.json && state.result.histogram.json.length !== 0) &&
-                    <Plot useResizeHandler
-                        style={{ width: '100%', height: "450px" }}
-                        
+                    <Plot 
                         data={state.result.histogram.json}
-                        layout={state.result.histogram.layout}
+                        // layout={state.result.histogram.layout}
+                        useResizeHandler={true}
                         config={state.result.histogram.config}
+                        style={{width: '100%', height: '450px'}}
                         onClick={(e) => onHistogramClick(e)}
                         onPurge={(a, b) => {
                         }}
                     />
-                    }
                     
+                    }
+                    {console.log("histo posts: " + histoPosts)}
                     {
                         
                         histoPosts &&
