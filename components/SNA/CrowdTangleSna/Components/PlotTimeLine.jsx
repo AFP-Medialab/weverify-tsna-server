@@ -89,8 +89,8 @@ export default function PlotTimeLine(props){
             <CustomCardHeader title={keyword(state.result.histogram.title)} showHelp={true} helpText={"ct_sna_timeline_tip"} />
                 {
                 <div style={{ width: '100%', }} className={classes.cardsResults}>
-                    {console.log(state.result.histogram.json)}
-                    {console.log(state.result.histogram.layout)}
+                    {/* {console.log(state.result.histogram.json)} */}
+                    {/* {console.log("layout: ", state.result.histogram.layout)} */}
                     {(state.result.histogram.json && (state.result.histogram.json.length === 0) &&
                         <Typography variant={"body2"}>{keyword("ct_sna_no_data")}</Typography>)}
                     {(state.result.histogram.json && state.result.histogram.json.length !== 0) &&
@@ -106,7 +106,7 @@ export default function PlotTimeLine(props){
                     />
                     
                     }
-                    {console.log("histo posts: " + histoPosts)}
+                    {/* {console.log("histo posts: " + histoPosts)} */}
                     {
                         
                         histoPosts &&

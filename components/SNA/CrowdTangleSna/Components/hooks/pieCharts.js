@@ -97,7 +97,6 @@ const createPieCharts = (jsonPieCharts,keywordTitles) => {
         parents: parents,
         values: value,
         textinfo: "label+value",
-        outsidetextfont: {size: 20, color: "#377eb8"},
     }];
 
     return obj;
@@ -136,10 +135,6 @@ const createPieCharts = (jsonPieCharts,keywordTitles) => {
       parents: [""],
       values: [""],
       textinfo: "label+value",
-      outsidetextfont: {
-        size: 20,
-        color: "#377eb8"
-      },
     }]);
   }
   //most shares
@@ -207,10 +202,6 @@ const getJsonDataForPieChartsInsta = (esResponse, paramKeywordList) => {
       parents: [""],
       values: [""],
       textinfo: "label+value",
-      outsidetextfont: {
-        size: 20,
-        color: "#377eb8"
-      },
     }]);
   }
 

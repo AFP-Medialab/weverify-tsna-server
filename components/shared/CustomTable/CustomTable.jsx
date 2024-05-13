@@ -1,5 +1,6 @@
 import MaterialTable from '@material-table/core';
-import { createTheme, MuiThemeProvider } from '@mui/material';
+import { createTheme } from '@mui/material';
+import { ThemeProvider} from '@mui/material/styles';
 import AddBox from '@mui/icons-material/AddBox';
 import ArrowUpward from '@mui/icons-material/ArrowUpward';
 import Check from '@mui/icons-material/Check';
@@ -141,7 +142,7 @@ export default function CustomTable(props) {
     }, [JSON.stringify(props.data)]);
     
     return (
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
         <MaterialTable
             //components={{Pagination: PatchedPagination}}
             //more custom info at https://material-table.com/#/docs/features/localization
@@ -209,6 +210,6 @@ export default function CustomTable(props) {
                 searchFieldVariant: 'outlined',
             }}
         />
-        </MuiThemeProvider>
+        </ThemeProvider>
     );
 }
