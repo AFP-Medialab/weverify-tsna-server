@@ -13,7 +13,7 @@ const crowdTangleSnaSlice = createSlice ({
     initialState: defaultState,
     reducers: {
         csvSnaStateCleaned (state, action) {
-            state = defaultState;
+            return defaultState;
         },
         csvSnaResultSet (state, action) {
             if(state.result === null) {

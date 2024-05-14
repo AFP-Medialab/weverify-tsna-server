@@ -49,7 +49,7 @@ const twitterSnaSlice = createSlice ({
             state.loadingMessage = action.payload;
         },
         twitterSnaCleanedState (state, action) {
-            state = defaultState;
+            return defaultState;
         },
         twitterSnaUserProfileMostActiveSet (state, action) {
             state.topUser = action.payload;
