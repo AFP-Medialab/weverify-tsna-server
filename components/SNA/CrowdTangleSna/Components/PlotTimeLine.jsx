@@ -108,7 +108,6 @@ export default function PlotTimeLine(props){
                     />
                     
                     }
-                    {console.log("histo posts: ", histoPosts)}
                     {
                         
                         histoPosts &&
