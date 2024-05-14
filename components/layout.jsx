@@ -92,7 +92,8 @@ function Layout(props) {
                                             width: "48px",
                                             }}
                                             alt="logo"
-                                            //className={classes.logoLeft}
+                                            className={classes.logoLeft}
+                                            onClick = {handlePush}
                                         />
                                         
                                         <InVIDIcon
@@ -102,6 +103,7 @@ function Layout(props) {
                                             }}
                                             alt="logo"
                                             className={classes.logoRight}
+                                            onClick = {handlePush}
                                         />
                                         <VeraIcon
                                             style={{
@@ -110,6 +112,7 @@ function Layout(props) {
                                             }}
                                             alt="logo"
                                             className={classes.logoRight}
+                                            onClick = {handlePush}
                                         />
                                     </Stack>
                                 </Grid>
