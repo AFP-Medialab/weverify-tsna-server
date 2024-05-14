@@ -60,34 +60,41 @@ export function setTweetsDetail (from, data, dispatch) {
 		case "PLOT_LINE":
             
 			dispatch(tweetsDetailHistogramResultSet(data));
+			break;
 
         case "PLOT_PIE_CHART_0":
 
 			payload = data != null ? null : 0;
 			dispatch(tweetsDetailPieChartResultSet(payload));
+			break;
 
         case "PLOT_PIE_CHART_1":
             
 			payload = data != null ? null : 1;
 			dispatch(tweetsDetailPieChartResultSet(payload));
+			break;
 
         case "PLOT_PIE_CHART_2":
 
             payload = data != null ? null : 2;
 			dispatch(tweetsDetailPieChartResultSet(payload));
+			break;
 
         case "PLOT_PIE_CHART_3":
 
             payload = data != null ? null : 3;
 			dispatch(tweetsDetailPieChartResultSet(payload));
+			break;
 
         case "PLOT_BUBBLE_CHART":
 
 			dispatch(tweetsDetailBubbleChartResultSet(data));
+			break;
 
         default:
 
             // There were other non implemented cases in the previous actions class, such as "PLOT_HEAT_MAP" and "PLOT_HASHTAG_GRAPH" that had no corresponding reducers
+			break;
 		}
 }
 

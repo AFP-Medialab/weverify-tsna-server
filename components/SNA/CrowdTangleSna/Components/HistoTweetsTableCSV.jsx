@@ -9,6 +9,7 @@ import CustomTable from "../../../shared/CustomTable/CustomTable";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 import { setHistoview } from "../CrowdTangleSnaComponent";
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 export default function HistoTweetsTable(props) {
   
@@ -40,8 +41,8 @@ export default function HistoTweetsTable(props) {
       >
         <Grid item>
           <Button
-            variant={"contained"}
-            color={"secondary"}
+            startIcon={<ExpandLessIcon />}
+            color={"primary"}
             onClick={() =>  
               setHistoview(props.from, null, dispatch) 
             }

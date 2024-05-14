@@ -41,21 +41,28 @@ export function setHistoview (from, data, dispatch) {
     switch (from) {
         case "PLOT_LINE":
             dispatch(csvSnaHistoviewResultSet(data));
+            break;
         case "PLOT_PIE_CHART_0":
             payload = data != null ? null : 0;
             dispatch(csvSnaPieChartResultHistoViewSet(payload));
+            break;
         case "PLOT_PIE_CHART_1":
             payload = data != null ? null : 1;
             dispatch(csvSnaPieChartResultHistoViewSet(payload));
+            break;
         case "PLOT_PIE_CHART_2":
             payload = data != null ? null : 2;
             dispatch(csvSnaPieChartResultHistoViewSet(payload));
+            break;
         case "PLOT_PIE_CHART_3":
             payload = data != null ? null : 3;
             dispatch(csvSnaPieChartResultHistoViewSet(payload));
+            break;
         case "PLOT_BUBBLE_CHART":
             dispatch(csvSnaBubbleChartResultHistoViewSet(data));
+            break;
         default:
+            break;
             // There were other non implemented cases in the previous actions class, such as "PLOT_HEAT_MAP" and "PLOT_HASHTAG_GRAPH" that had no corresponding reducers
     }
 }
