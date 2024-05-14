@@ -42,8 +42,9 @@ export default function HeatMap (props) {
     }, [props.request])
     var dayHourStr = "";
     useEffect (()=> {
-        if(heatMapTweets)
+        if(heatMapTweets && heatMapTweets.data[0])
         {
+            console.log(heatMapTweets.data);
             let date = new Date(heatMapTweets.data[0].date);
             dayHourStr = getDayAsString(date.getDay()) + date.getHours() + "h_";
         }
