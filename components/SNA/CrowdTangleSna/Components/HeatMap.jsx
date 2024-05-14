@@ -52,7 +52,6 @@ export default function HeatMap (props) {
                             ((props.result.heatMap.isAllnul) &&
                                 <Typography variant={"body2"}>{keyword("ct_sna_no_data")}</Typography>) ||
                             <div>
-                                {console.log("trying to show heatmap")}
                                 <Plot
                                     style={{ width: '100%', height: "450px" }}
                                     data={props.result.heatMap.plot}

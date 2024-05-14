@@ -66,7 +66,7 @@ export default function HeatMap (props) {
                                     style={{ width: '100%', height: "450px" }}
                                     data={props.result.heatMap.plot}
                                     config={props.result.heatMap.config}
-                                    layout={props.result.heatMap.layout}
+                                    // layout={props.result.heatMap.layout}
                                     onClick={(e) => onHeatMapClick(e, props.result, setheatMapTweets, keyword)}
                                 />
                                 <Box m={1}/>
