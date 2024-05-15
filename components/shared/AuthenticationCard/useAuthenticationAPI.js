@@ -21,7 +21,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { decodeJWTToken } from "./userAuthenticationUtils";
 import getConfig from 'next/config';
-import { authAccessCodeRequestLoading, authAccessCodeRequestSent, authTokenRefreshed, authUserLoggedIn, authUserLoggedOut, authUserLoginLoading, authUserRegistrationLoading, authUserRegistrationSent, authUserSessionExpired, selectUserAuthentificated, selectUserSession } from "../../../redux/slices/authentificationSlice";
+import { authAccessCodeRequestLoading, 
+  authAccessCodeRequestSent, 
+  authTokenRefreshed, 
+  authUserLoggedIn, 
+  authUserLoggedOut, 
+  authUserLoginLoading, 
+  authUserRegistrationLoading, 
+  authUserRegistrationSent, 
+  authUserSessionExpired, 
+  selectUserAuthentificated, 
+  selectUserSession } from "../../../redux/slices/authentificationSlice";
 const { publicRuntimeConfig } = getConfig();
 
 /**
@@ -319,7 +329,7 @@ export default function useAuthenticationAPI() {
       // Decode JWT token
       try {
         const tokenContent = decodeJWTToken(accessToken);
-        dispatch(authTokenRefreshed(accessToken, tokenContent.accessTokenExpiry, tokenContent.user));
+        dispatch(authTokenRefreshed({accessToken, accessTokenExpiry: tokenContent.accessTokenExpiry, user: tokenContent.user}));
         return Promise.resolve({
           status: response.status,
           data: {

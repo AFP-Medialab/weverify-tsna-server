@@ -76,15 +76,15 @@ const authentificationSlice = createSlice({
             
         },
 
-        authTokenRefreshed (state, payload) {
+        authTokenRefreshed (state, action) {
             // TODO Make token compatible with redux-persist
             state.userAuthenticated = true;
             state.accessToken = action.payload.accessToken;
             state.accessTokenExpiry = action.payload.accessTokenExpiry;
-            _.merge(state.user, action.payload.user);
+            state.user = action.payload.user;
         },
 
-        authUserSessionExpired (state, payload) {
+        authUserSessionExpired (state, action) {
             state.userAuthenticated = false;
             state.accessToken = null;
             state.accessTokenExpiry = null;
