@@ -30,7 +30,7 @@ const useMyStyles = makeStyles(theme => ({
     },
 
     headerCard:{
-        textAlign: "left",
+        textAlign: "auto",
     },
 
     circularProgress: {
