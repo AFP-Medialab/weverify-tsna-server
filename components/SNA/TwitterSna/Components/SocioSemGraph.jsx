@@ -169,7 +169,7 @@ export default function SocioSemGraph (props) {
             }
         {
             props.result.socioSemantic4ModeGraph && props.result.socioSemantic4ModeGraph.data.nodes.length !== 0 &&
-                <div style={{ width: '100%' }} className={classes.cardsResults}>
+                <div style={{ width: '100%' }} justifycontent="center" className={classes.cardsResults}>
                     <Box pb={3}>
                     </Box>
                     {
@@ -177,7 +177,7 @@ export default function SocioSemGraph (props) {
                         <div>
                             <Sigma graph={props.result.socioSemantic4ModeGraph.data}
                                 renderer={"canvas"}
-                                style={{ textAlign: 'left', width: '100%', height: '800px' }}
+                                style={{ textAlign: 'justify', width: '100%', height: '800px' }}
                                 onClickNode={(e) => onClickNodeSocioSemantic4ModeGraph(e)}
                                 settings={{
                                     drawEdges: true,
@@ -202,7 +202,7 @@ export default function SocioSemGraph (props) {
                         <div>
                             <Sigma graph={socioSemantic4ModeGraphClickNode}
                                 renderer={"canvas"}
-                                style={{ textAlign: 'left', width: '100%', height: '700px' }}
+                                style={{ textAlign: 'justify', width: '100%', height: '700px'  }}
                                 onClickStage={(e) => onClickStageSocioSemantic4ModeGraph(e)}
                                 settings={{
                                     drawEdges: true,
@@ -224,7 +224,7 @@ export default function SocioSemGraph (props) {
                         <div>
                             <Sigma graph={socioSemantic4ModeGraphReset}
                                 renderer={"canvas"}
-                                style={{ textAlign: 'left', width: '100%', height: '700px' }}
+                                style={{ textAlign: 'justify', width: '100%', height: '700px'  }}
                                 onClickNode={(e) => onClickNodeSocioSemantic4ModeGraph(e)}
                                 settings={{
                                     drawEdges: true,

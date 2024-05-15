@@ -139,7 +139,7 @@ export default function HashtagGraph (props) {
                         <div>
                             <Sigma graph={props.result.coHashtagGraph.data}
                                 renderer={"canvas"}
-                                style={{ textAlign: 'left', width: '100%', height: '700px' }}
+                                style={{ textAlign: 'justify', width: '100%', height: '700px' }}
                                 onClickNode={(e) => onClickNodeCoHashtagGraph(e)}
                                 settings={{
                                     drawEdges: true,
@@ -164,7 +164,7 @@ export default function HashtagGraph (props) {
                         <div>
                             <Sigma graph={coHashtagGraphClickNode}
                                 renderer={"canvas"}
-                                style={{ textAlign: 'left', width: '100%', height: '700px' }}
+                                style={{ textAlign: 'justify', width: '100%', height: '700px' }}
                                 onClickStage={(e) => onClickStageCoHashtagGraph(e)}
                                 settings={{
                                     drawEdges: true,
@@ -186,7 +186,7 @@ export default function HashtagGraph (props) {
                         <div>
                             <Sigma graph={coHashtagGraphReset}
                                 renderer={"canvas"}
-                                style={{ textAlign: 'left', width: '100%', height: '700px' }}
+                                style={{ textAlign: 'justify', width: '100%', height: '700px' }}
                                 onClickNode={(e) => onClickNodeCoHashtagGraph(e)}
                                 settings={{
                                     drawEdges: true,
