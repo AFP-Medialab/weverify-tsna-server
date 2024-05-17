@@ -17,6 +17,7 @@ import { displayPosts } from "../../../SNA/lib/displayTweets";
 import PostViewTable from "../../Components/PostViewTable";
 import { getDomain } from "../../../SNA/lib/displayTweets";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
+import { IconButton } from "@mui/material";
 
 
 
@@ -149,10 +150,10 @@ export default function SocioSemGraph (props) {
                         data={props.result.socioSemantic4ModeGraph.data.nodes}
                         filename={"Nodes_" + keyword("sosem_4mode_graph_title") + '_' + widgetSimpleFilename(request) + ".csv"}
                         className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                        {
-                            <IconNodes />
-                        }
-                    </CSVLink>
+                            <IconButton>
+                                <IconNodes />
+                            </IconButton>
+                        </CSVLink>
                     </Grid>
                     
                 }
@@ -163,9 +164,11 @@ export default function SocioSemGraph (props) {
                             data={props.result.socioSemantic4ModeGraph.data.edges}
                             filename={"Edges_" + keyword("sosem_4mode_graph_title") + '_' + widgetSimpleFilename(request) + ".csv"}
                             className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                            {
-                                <IconEdges />
-                            }
+                                <IconButton>
+                                    <IconEdges />
+                                </IconButton>
+                                
+                            
                         </CSVLink>
                     </Grid>
                 } />

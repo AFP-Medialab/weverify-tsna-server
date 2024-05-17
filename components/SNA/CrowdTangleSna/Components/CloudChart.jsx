@@ -18,6 +18,7 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
+import { IconButton } from "@mui/material";
 
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
@@ -272,12 +273,15 @@ export default function cloudChart(props) {
                     }
                     showSpecialCSV={true}
                     functionSpecialCSV={
-                        <CSVLink
+                        <Grid item>
+                            <CSVLink
                             data={getCSVData()} headers={CSVheaders} filename={filesNames + ".csv"} className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                            {
-                                <IconCSV style={{ marginRight: "10px", marginTop: "2px" }} />
-                            }
-                        </CSVLink>
+                                <IconButton>
+                                    <IconCSV />
+                                </IconButton>
+                            </CSVLink>
+                        </Grid>
+                        
 
                     }
                 />

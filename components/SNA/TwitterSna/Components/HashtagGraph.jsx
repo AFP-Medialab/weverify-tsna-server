@@ -18,6 +18,7 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import PostViewTable from "../../Components/PostViewTable";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
+import { IconButton } from "@mui/material";
 
 
 export default function HashtagGraph (props) {
@@ -103,9 +104,11 @@ export default function HashtagGraph (props) {
                             data={props.result.coHashtagGraph.data.nodes}
                             filename={"Nodes_" + keyword("hashtag_graph_title") + '_' + widgetSimpleFilename(props.request) + ".csv"}
                             className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                            {
-                                <IconNodes/>
-                            }
+                                <IconButton>
+                                    <IconNodes/>
+                                </IconButton>
+                                
+                            
                         </CSVLink>
                     </Grid>
                 }
@@ -117,9 +120,11 @@ export default function HashtagGraph (props) {
                             data={props.result.coHashtagGraph.data.edges}
                             filename={"Edges_" + keyword("hashtag_graph_title") + '_' + widgetSimpleFilename(props.request) + ".csv"}
                             className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                            {
-                                <IconEdges />
-                            }
+                                <IconButton>
+                                    <IconEdges />
+                                </IconButton>
+                                
+                            
                         </CSVLink>
                     </Grid>
                 }/>

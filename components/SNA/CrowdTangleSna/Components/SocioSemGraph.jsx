@@ -14,6 +14,7 @@ import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
+import { IconButton } from "@mui/material";
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function SocioSemGraph (props) {
@@ -272,9 +273,10 @@ export default function SocioSemGraph (props) {
                                 data={props.result.socioSemantic4ModeGraph.data.nodes}
                                 filename={"Nodes_" + keyword("ct_sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
                                 className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                                {
-                                    <IconNodes />
-                                }
+                                    <IconButton>
+                                        <IconNodes />
+                                    </IconButton>
+                                    
                             </CSVLink>
                         </Grid>
                     }
@@ -285,9 +287,10 @@ export default function SocioSemGraph (props) {
                                 data={props.result.socioSemantic4ModeGraph.data.edges}
                                 filename={"Edges_" + keyword("ct_sosem_4mode_graph_title") + '_' /*+ request.keywordList.join('&') + '_' + request.from + "_" + request.until */ + ".csv"} 
                                 className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                                {
-                                    <IconEdges style={{  marginLeft: "6px" }} />
-                                }
+                                    <IconButton>
+                                        <IconEdges />
+                                    </IconButton>
+                                    
                             </CSVLink>
                         </Grid>
                     } />

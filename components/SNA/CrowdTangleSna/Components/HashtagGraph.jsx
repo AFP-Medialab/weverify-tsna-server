@@ -16,6 +16,7 @@ import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
+import { IconButton } from "@mui/material";
 
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
@@ -174,30 +175,33 @@ export default function HashtagGraph (props) {
                     helpText={"twittersna_hashtag_graph_tip"}
                     showNodes={true}
                     functionNodes={
-                        <CSVLink
+                        <Grid item>
+                            <CSVLink
                             data={props.result.coHashtagGraph.data.nodes}
                             filename={"Nodes_" + keyword("ct_hashtag_graph_title") + ".csv"}
                             className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                            {
-                                <IconNodes />
-                            }
-                        </CSVLink>
+                                <IconButton>
+                                    <IconNodes />
+                                </IconButton>
+                            
+                            </CSVLink>
+                        </Grid>
+                        
                     }
                     showEdges={true}
                     functionEdges={
 
-                        <Grid item>
                             <Grid item>
                                 <CSVLink
                                     data={props.result.coHashtagGraph.data.edges}
                                     filename={"Edges_" + keyword("ct_hashtag_graph_title") + ".csv"}
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                                    {
-                                        <IconEdges style={{ marginBottom: "2px", marginLeft: "10px" }}/>
-                                    }
+                                        <IconButton>
+                                            <IconEdges/>
+                                        </IconButton>
+                                        
                                 </CSVLink>
                             </Grid>
-                        </Grid>
                     } />
             }
 
