@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import { select } from 'd3-selection';
 import Plotly from 'plotly.js-dist';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -173,12 +174,16 @@ export default function cloudChart (props) {
                     }
                     showSpecialCSV={true}
                     functionSpecialCSV={
-                        <CSVLink
-                            data={getCSVData()} headers={CSVheaders} filename={filesNames + ".csv"} className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
-                            {
-                                <IconCSV style={{ marginRight: "10px", marginTop: "2px" }}/>
-                            }
-                        </CSVLink>
+                        <Grid item>
+                            <CSVLink
+                                data={getCSVData()} headers={CSVheaders} filename={filesNames + ".csv"} className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
+                                {
+                                    <IconCSV />
+                                }
+                            </CSVLink>
+                            
+                        </Grid>
+                        
                     }
                     />
                 }

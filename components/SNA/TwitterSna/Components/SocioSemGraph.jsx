@@ -144,14 +144,17 @@ export default function SocioSemGraph (props) {
                 helpText={"twittersna_sosem_4mode_graph_tip"}
                 showNodes={true}
                 functionNodes={
-                    <CSVLink
+                    <Grid item>
+                        <CSVLink
                         data={props.result.socioSemantic4ModeGraph.data.nodes}
                         filename={"Nodes_" + keyword("sosem_4mode_graph_title") + '_' + widgetSimpleFilename(request) + ".csv"}
                         className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary">
                         {
-                            <IconNodes style={{marginRight: "8px", marginTop: "2px"}} />
+                            <IconNodes />
                         }
                     </CSVLink>
+                    </Grid>
+                    
                 }
                 showEdges={true}
                 functionEdges={
