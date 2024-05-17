@@ -48,6 +48,7 @@ export default function CustomCardHeader(props) {
         <div>
             <CardHeader
                 className={classes.headerCard}
+                style = {{backgroundColor: "#00926c"}}
                 title={
                     <Grid
                         container
@@ -57,7 +58,7 @@ export default function CustomCardHeader(props) {
                         spacing={2}>
 
                         <Grid item xs>
-                            <span >{title}</span>
+                            <span style = {{color: "white"}}>{title}</span>
                         </Grid>
 
 
