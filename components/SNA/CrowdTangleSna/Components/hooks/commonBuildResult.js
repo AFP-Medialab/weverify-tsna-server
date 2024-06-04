@@ -1,19 +1,12 @@
 import { createHeatMap } from "./heatMap";
-import {
-    setCoHashtagResult,
-    setCloudWordsResult,
-    setSocioGraphResult,
-    setHeatMapResult,
-    setPieChartsResult,
-    setHistogramResult
-  } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
 import { INSTA_SNA_TYPE } from "../../../../shared/hooks/SnaTypes";
+import { csvSnaCloudWordsResultSet, csvSnaCohashtagResultSet, csvSnaHeatMapResultSet, csvSnaHistogramResultSet, csvSnaPieChartResultSet, csvSnaSocioGraphResultSet } from "../../../../../redux/slices/tools/crowdTangleSnaSlice";
 
 export const buildCoHashTag = async (hashtagWorker, data, dispatch) => {
     hashtagWorker.postMessage(data)
     hashtagWorker.onmessage = (evt) => {
       let coHashtagGraph = evt.data
-      dispatch(setCoHashtagResult(coHashtagGraph));
+      dispatch(csvSnaCohashtagResultSet(coHashtagGraph));
     }
     
 };
@@ -22,7 +15,7 @@ export const wordCount = async (cloudWorker, data, dispatch) => {
   cloudWorker.postMessage(data);
   cloudWorker.onmessage = (evt) => {
     let wordCountResponse = evt.data
-    dispatch(setCloudWordsResult(wordCountResponse));
+    dispatch(csvSnaCloudWordsResultSet(wordCountResponse));
   }
 };
 
@@ -30,7 +23,7 @@ export const buildSocioGraph = async (socioWorker, data, dispatch) => {
     socioWorker.postMessage(data);
     socioWorker.onmessage = (evt) => {
       let socioSemantic4ModeGraph = JSON.parse(evt.data);
-      dispatch(setSocioGraphResult(socioSemantic4ModeGraph));
+      dispatch(csvSnaSocioGraphResultSet(socioSemantic4ModeGraph));
     } 
     
 };
@@ -49,7 +42,7 @@ export const buildPieCharts = async (pieChartsWorker, data, keywordTitles, dispa
       }
       else {
         let pieCharts = evt.data.response
-        dispatch(setPieChartsResult(pieCharts));
+        dispatch(csvSnaPieChartResultSet(pieCharts));
       }
     }    
 }
@@ -66,11 +59,11 @@ export const buildHistogramHeatMap = async (timelineWorker, data, dispatch, titl
     timelineWorker.onmessage = (evt) => {
       if(evt.data.type === "TIME_LINE"){
         let histogram = evt.data.response;
-        dispatch(setHistogramResult(histogram));
+        dispatch(csvSnaHistogramResultSet(histogram));
       }
       if(evt.data.type === "TIME_LINE_HEATMAP"){
         let heatMap = createHeatMap(data, evt.data.data, heatMapTitle);
-        dispatch(setHeatMapResult(heatMap));
+        dispatch(csvSnaHeatMapResultSet(heatMap));
       }
     }
   };

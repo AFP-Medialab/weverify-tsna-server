@@ -1,9 +1,4 @@
-import {
-    setCountResult,
-    setSnaType,
-    setMaxProcessStage,
-    setUrlsResult
-  } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
+
 
   import {
     buildCoHashTag, 
@@ -14,16 +9,18 @@ import {
   } from './commonBuildResult'
 import { INSTA_SNA_TYPE } from "../../../../shared/hooks/SnaTypes";
 import { getJsonDataForURLTable } from "../../../Hooks/urlList";
+import { csvSnaCountResultSet, csvSnaMaxProcessStageSet, csvSnaUrlsResultSet } from "../../../../../redux/slices/tools/crowdTangleSnaSlice";
+import { snaTypeSet } from "../../../../../redux/slices/tools/snaTypeSlice";
 
 const INSTA_SNA = {type:INSTA_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv" , tsvInfo : "/components/insta/OnClickInfo.tsv"}
 export const useInstagramResult = (workers, data, keyword, dispatch) => {
-    dispatch(setSnaType(INSTA_SNA));
+    dispatch(snaTypeSet(INSTA_SNA));
     buildFirstInstaResult(workers, data, dispatch, keyword);
 }
 
 const buildFirstInstaResult = (workers, data, dispatch, keyword) => {
  
-  dispatch(setMaxProcessStage(13));
+  dispatch(csvSnaMaxProcessStageSet(13));
   let titleLabel = keyword("sna_time_chart_title");
   let timeLabel = keyword('sna_local_time');
   let heatMapTitle = keyword("ct_heatmap_chart_title")
@@ -50,7 +47,7 @@ const buildPieChartsInsta = async (pieChartsWorker, data, dispatch, keyword) => 
 
 const buildCountInsta = (data, dispatch) => {
   const instaCount = countInsta(data)
-  dispatch(setCountResult(instaCount));
+  dispatch(csvSnaCountResultSet(instaCount));
 };
 
 const buildUrls = async (data, keyword, dispatch) => {
@@ -69,7 +66,7 @@ const buildUrls = async (data, keyword, dispatch) => {
       "count" :"total_interactions"
     }
   );
-  dispatch(setUrlsResult(urls));
+  dispatch(csvSnaUrlsResultSet(urls));
 };
 
 function countInsta(data) {

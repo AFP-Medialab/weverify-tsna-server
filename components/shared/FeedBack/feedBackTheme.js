@@ -39,8 +39,8 @@ export default {
     '-apple-system, BlinkMacSystemFont, Arial, Arial Unicode, "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif',
   colors: {
     border: '#d0d8e1',
-    primary: 'rgb(0,170,180)',
-    secondary: 'rgb(0,170,180)',
+    primary: '#00926c',
+    secondary: '#00926c',
     background: '#ffffff',
     success: '#3dc86f',
     error: '#ec3c3c',
@@ -57,7 +57,7 @@ export default {
   header: {
     color: 'white',
     fontWeight: 400,
-    backgroundColor: 'rgb(0,170,180)'
+    backgroundColor: '#00926c'
   },
   loader: {
     color: '#ffffff',
@@ -72,7 +72,7 @@ export default {
   trigger: {
     color: '#ffffff',
     hoverColor: 'white',
-    backgroundColor: 'rgb(0,170,180)',
+    backgroundColor: '#00926c',
     border: 'none',
     padding: '17px 1.25em',
     borderRadius: '50px',
@@ -80,7 +80,7 @@ export default {
     fontWeight: '400',
     boxShadow: '0 3px 12px 1px rgba(34, 44, 79, 0.1)',
     hoverBoxShadow: '0 6px 16px 2px rgba(0, 0, 0, 0.2)',
-    hoverBackgroundColor: 'rgba(0, 170, 180, 1)',
+    hoverBackgroundColor: '#00926c',
   },
   input: {
     backgroundColor: 'white',
@@ -89,7 +89,7 @@ export default {
     fontSize: '14px',
     borderRadius: '4px',
     border: '1px solid #d0d8e1',
-    boxShadow: `0 0 8px ${rgba('#00aaa0', 0.3)}`
+    boxShadow: `0 0 8px ${rgba('#00926c', 0.3)}`
   },
   label: {
     color: '#222c4f',
@@ -112,11 +112,11 @@ export default {
     color: '#333333',
     hoverColor: '#333333',
     backgroundColor: 'white',
-    hoverBackgroundColor: 'rgba(0, 170, 160, 0.6)',
+    hoverBackgroundColor: '#00926c',
     border: '1px solid #d0d8e1'
   },
   overlay: {
-    backgroundColor: rgba('#00aaa0', 0.3)
+    backgroundColor: rgba('#00926c', 0.3)
   },
 
 
