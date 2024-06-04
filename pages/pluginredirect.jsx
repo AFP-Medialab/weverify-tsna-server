@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { decodeJWTToken } from "../components/shared/AuthenticationCard/userAuthenticationUtils";
-import { userLoginAction, userLoginLoadingAction } from "../redux/actions/authentificationActions";
 import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage"
 import { authUserLoggedIn } from "../redux/slices/authentificationSlice";
 import { twitterSnaRedirectRequestSet } from "../redux/slices/tools/twitterSnaSlice";
