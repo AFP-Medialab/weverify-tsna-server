@@ -1,9 +1,4 @@
-import {
-    setCountResult,
-    setSnaType, 
-    setMaxProcessStage,
-    setUrlsResult
-  } from "../../../../../redux/actions/tools/crowdTangleSnaActions";
+
 
 import {
   buildCoHashTag, 
@@ -14,16 +9,18 @@ import {
 } from './commonBuildResult'
 import{FB_SNA_TYPE} from "../../../../shared/hooks/SnaTypes"
 import { getJsonDataForURLTable } from "../../../Hooks/urlList";
+import { csvSnaCountResultSet, csvSnaMaxProcessStageSet, csvSnaUrlsResultSet } from "../../../../../redux/slices/tools/crowdTangleSnaSlice";
+import { snaTypeSet } from "../../../../../redux/slices/tools/snaTypeSlice";
 
 const FB_SNA = {type:FB_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv", tsvInfo : "/components/fb/OnClickInfo.tsv" }
 
 export const useFacebookResult = (workers, data, keyword, dispatch) => {
-    dispatch(setSnaType(FB_SNA));
+    dispatch(snaTypeSet(FB_SNA));
     buildFirstFbResult(workers, data, dispatch, keyword);
 };
 
 const buildFirstFbResult = (workers, data, dispatch, keyword) => {
-  dispatch(setMaxProcessStage(13));
+  dispatch(csvSnaMaxProcessStageSet(13));
   let titleLabel = keyword("sna_time_chart_title");
   let timeLabel = keyword('sna_local_time');
   let heatMapTitle = keyword("ct_heatmap_chart_title")
@@ -38,7 +35,7 @@ const buildFirstFbResult = (workers, data, dispatch, keyword) => {
 
   const buildCountFb = async (data, dispatch) => {
     const countFb = countFB(data)
-    dispatch(setCountResult(countFb));
+    dispatch(csvSnaCountResultSet(countFb));
 };
 
 const buildPieChartsFB = async (pieChartsWorker, data, dispatch, keyword) => {
@@ -66,7 +63,7 @@ const buildUrls = async (data, keyword, dispatch) => {
       "count" :"shares"
     }
   );
-  dispatch(setUrlsResult(urls));
+  dispatch(csvSnaUrlsResultSet(urls));
 };
 
 function countFB(data) {

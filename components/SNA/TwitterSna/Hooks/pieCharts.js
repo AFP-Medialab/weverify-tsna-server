@@ -105,7 +105,7 @@ const getJsonDataForPieChart = (
       parents: parents,
       values: value,
       textinfo: "label+value",
-      outsidetextfont: { size: 20, color: "#377eb8" },
+      // outsidetextfont: { size: 20, color: "#377eb8" },
     },
   ];
 

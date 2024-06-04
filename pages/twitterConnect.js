@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import { connectionWindow } from "../redux/actions/connectionAction";
+import { connectionWindowsOpened } from "../redux/slices/connectionSlice";
 
 const TwitterConnect = () => {
     const dispatch = useDispatch();
     //console.log("close windownd ")
     window.close();
-    dispatch(connectionWindow(false))
+    dispatch(connectionWindowsOpened(false))
 }
 export default TwitterConnect;

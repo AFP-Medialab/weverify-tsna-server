@@ -20,35 +20,35 @@ export function filterForTimeLine(postDate, selectedPoints) {
 
     //console.log("JSON 2", json);
   
-      let layout = {
-        title: titleLabel,
-        automargin: true,
-          xaxis: {
-            range: [range_min, range_max],
-            rangeslider: { range: [range_min, range_max] },
-          },
-          annotations: [{
-          xref: 'paper',
-          yref: 'paper',
-          x: 1.15,
-          xanchor: 'right',
-          y: -0.4,
-          yanchor: 'top',
-          text: 'weverify.eu',
-          showarrow: false
-          },
-          {
-          xref: 'paper',
-          yref: 'paper',
-          x: 1.15,
-          xanchor: 'right',
-          y: -0.6,
-          yanchor: 'top',
-          text: timeLabel,
-                  showarrow: false
-          }],
-          autosize: true,
-      };
+      // let layout = {
+      //   title: titleLabel,
+      //   automargin: true,
+      //     // xaxis: {
+      //     //   // range: [range_min, range_max],
+      //     //   rangeslider: { range: [range_min, range_max] },
+      //     // },
+      //     // annotations: [{
+      //     // xref: 'paper',
+      //     // yref: 'paper',
+      //     // x: 1.15,
+      //     // xanchor: 'right',
+      //     // y: -0.4,
+      //     // yanchor: 'top',
+      //     // text: 'weverify.eu',
+      //     // showarrow: false
+      //     // },
+      //     // {
+      //     // xref: 'paper',
+      //     // yref: 'paper',
+      //     // x: 1.15,
+      //     // xanchor: 'right',
+      //     // y: -0.6,
+      //     // yanchor: 'top',
+      //     // text: timeLabel,
+      //     //         showarrow: false
+      //     // }],
+      //     // autosize: true,
+      // };
       let config = {
           displayModeBar: true,
           toImageButtonOptions: {
@@ -74,7 +74,7 @@ export function filterForTimeLine(postDate, selectedPoints) {
       return {
           title: "ct_user_time_chart_title",
           json: json,
-          layout: layout,
+          // layout: layout,
           config: config,
           tweetsView: null,
       };
