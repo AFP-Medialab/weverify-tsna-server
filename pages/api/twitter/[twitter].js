@@ -1,5 +1,4 @@
 import TwitterApi from 'twitter-api-v2';
-import { withIronSessionApiRoute } from "iron-session/next";
 
 const TOKENS = {
     appKey: process.env.TWITTER_CONSUMER_KEY,
