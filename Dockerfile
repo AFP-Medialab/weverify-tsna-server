@@ -1,26 +1,35 @@
-FROM node:14.18.0-slim as builder
-RUN mkdir -p /home/node/app/build
-WORKDIR /home/node/app/build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} node:18-alpine AS base
 
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+
+WORKDIR /app
+COPY package.json package-lock.json*  ./
+RUN  npm ci --legacy-peer-deps
+
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm ci --only=production
-RUN npx next telemetry disable
-RUN npm run build
-RUN npm prune --production
-
-FROM node:14.18.0-slim
-RUN mkdir -p /home/node/app
-WORKDIR /home/node/app
-
-ENV NODE_ENV production
-RUN groupadd -r nodejs && useradd -r -g nodejs nextjs
-
-
-COPY --from=builder --chown=nextjs:nodejs /home/node/app/build/.next ./.next
-COPY --from=builder /home/node/app/build/public ./public
-COPY --from=builder /home/node/app/build/node_modules ./node_modules
 COPY entrypoint.sh .
 COPY .env.production .
+
+ENV NEXT_TELEMETRY_DISABLED 1
+RUN npm run build
+
+FROM base AS runner
+RUN apk add --no-cache bash
+#RUN mkdir -p /home/node/app/build
+WORKDIR /app
+ENV NODE_ENV=production
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/entrypoint.sh ./
+
 
 RUN ["chmod", "+x", "./entrypoint.sh"]
 ENTRYPOINT ["./entrypoint.sh"]
@@ -29,7 +38,5 @@ USER nextjs
 
 EXPOSE 3000
 
-CMD ["node_modules/.bin/next", "start"]
-
-
+CMD ["node", "server.js"]
 
