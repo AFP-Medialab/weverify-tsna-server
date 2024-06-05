@@ -24,6 +24,8 @@ import stylisRTLPlugin from "stylis-plugin-rtl";
 
 export const siteTitle = 'Weverify'
 
+import "./i18n"
+
 function Layout(props) {
     const classes = useMyStyles();
     const router = useRouter();

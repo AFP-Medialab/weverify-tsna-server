@@ -28,7 +28,7 @@ i18next
 
       backendOptions: [
         {
-          loadPath: `${process.env.REACT_APP_I18N_CONTENT}/dictionaries/{{ns}}.tsv?lang={{lng}}&tag=${process.env.REACT_APP_TRANSLATION_TAG}`,
+          loadPath: `${process.env.NEXT_PUBLIC_I18N_CONTENT}/dictionaries/{{ns}}.tsv?lang={{lng}}&tag=${process.env.NEXT_PUBLIC_TRANSLATION_TAG}`,
           crossDomain: true,
           requestOptions: {
             // used for fetch, can also be a function (payload) => ({ method: 'GET' })
