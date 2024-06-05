@@ -428,7 +428,7 @@ const TwitterSna = () => {
 		}
 		if (maxStage != 0 && stage === maxStage) {
 			setLoading(false);
-			dispatch(twitterSnaLoadingSet(false))
+			dispatch(twitterSnaLoadingSet({load: false}))
 		}
 	}, [isLoading, stage]);
 
@@ -1035,7 +1035,7 @@ const TwitterSna = () => {
 								/>
 							)}
 							<Box m={1} />
-							<Typography>{loadingMessage}</Typography>
+							{loading? <Typography>{loadingMessage}</Typography>: null}
 							{loading ? <LinearProgress /> : null}
 							{!userAuthenticated && <OnWarningInfo keyword={"warning_sna"} />}
 							</Grid>
