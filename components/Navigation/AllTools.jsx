@@ -18,6 +18,7 @@ import useMyStyles from '../shared/styles/useMyStyles';
 import AdvancedTools from './AdvancedTools/AdvancedTools';
 import ToolCard from "./ToolCard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { i18nLoadNamespace } from "../shared/languages/i18nLoadNamespace";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -41,9 +42,9 @@ function TabPanel(props) {
 const AllTools = (props) => {
     const router = useRouter();
     const classes = useMyStyles();
-    const keyword = useLoadLanguage("/components/NavItems/tools/AllTools.tsv");
-    const keywordNavbar = useLoadLanguage("/components/NavBar.tsv");
-    const keywordWarning = useLoadLanguage("/components/Shared/OnWarningInfo.tsv");
+    const keyword = i18nLoadNamespace("/components/NavItems/tools/AllTools");
+    const keywordNavbar = i18nLoadNamespace("/components/NavBar");
+    const keywordWarning = i18nLoadNamespace("/components/Shared/OnWarningInfo");
     const [openAlert, setOpenAlert] = React.useState(false);
     const userAuthenticated = useSelector(
         (state) => state.userSession && state.userSession.userAuthenticated

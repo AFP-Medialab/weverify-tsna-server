@@ -12,6 +12,7 @@ const { publicRuntimeConfig } = getConfig();
 import TranslateIcon from '@mui/icons-material/Translate';
 import { useRouter } from 'next/router'
 import _ from 'lodash'
+import { useTranslation } from 'react-i18next';
 
 //const tsv = "/localDictionary/components/languages.tsv";
 const tsv = "/components/NavItems/languages.tsv";
@@ -24,6 +25,8 @@ const Languages = () => {
     const dispatch = useDispatch();
     const lang = router.query.lang
     const language_list = (dictionary && dictionary[tsv])? Object.keys(dictionary[tsv]) : [];
+    const { t, i18n } = useTranslation("components/NavItems/languages");
+
     useEffect(() => {
         if(!_.isUndefined(lang)){
             if(language_list.includes(lang))
@@ -44,6 +47,7 @@ const Languages = () => {
 
     const handleCloseItem = (lang) => {
         setAnchorEl(null);
+        i18n.changeLanguage(lang);
         dispatch(changeLanguage(lang));
     };
 

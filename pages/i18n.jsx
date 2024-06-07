@@ -10,9 +10,9 @@ i18next
   .use(LanguageDetector)
   .use(ChainedBackend)
   .init({
-    //debug: true,
-    ns: ["components/PopUp"],
-    defaultNS: "components/PopUp",
+    debug: true,
+    ns: ["components/NavBar"],
+    defaultNS: "components/NavBar",
     fallbackLng: "en",
     saveMissing: true,
     interpolation: {
@@ -28,7 +28,7 @@ i18next
 
       backendOptions: [
         {
-          loadPath: `${process.env.NEXT_PUBLIC_I18N_CONTENT}/dictionaries/{{ns}}.tsv?lang={{lng}}&tag=${process.env.NEXT_PUBLIC_TRANSLATION_TAG}`,
+          loadPath: `${process.env.NEXT_PUBLIC_TRANSLATION_URL}/dictionaries/tsna/{{ns}}.tsv?lang={{lng}}&tag=${process.env.NEXT_PUBLIC_TRANSLATION_TAG}`,
           crossDomain: true,
           requestOptions: {
             // used for fetch, can also be a function (payload) => ({ method: 'GET' })
@@ -37,7 +37,7 @@ i18next
           },
         },
         {
-          loadPath: "/locales/{{lng}}/{{ns}}.json",
+          loadPath: "/localDictionary/{{ns}}.tsv?lang={{lng}}",
         },
       ],
     },

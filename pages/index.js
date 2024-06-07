@@ -22,7 +22,7 @@ const tsv ="/components/NavBar"
 
 const Index = () => {
 
-  console.log("path: ", process.env.REACT_APP_I18N_CONTENT);
+  console.log("path: ", process.env.NEXT_PUBLIC_TRANSLATION_URL);
   const keyword = i18nLoadNamespace(tsv);
   const drawerItems = [
     {
@@ -55,8 +55,8 @@ const Index = () => {
       id: 3,
       title: "navbar_factcheck",
       description: "navbar_factcheck_description",
-      icon: <FactcheckIcon width="45px" height="45px" style={{ fill: "#4c4c4c" }} title={keyword("navbar_factcheck")}/>,
-      iconColored: <FactcheckIcon width="45px" height="45px" style={{ fill: "#00926c" }} title={keyword("navbar_factcheck")}/>,
+      icon: <FactcheckIcon width="45px" height="45px" style={{ fill: "#4c4c4c" }} title={keyword("navbar_factCheck")}/>,
+      iconColored: <FactcheckIcon width="45px" height="45px" style={{ fill: "#00926c" }} title={keyword("navbar_factCheck")}/>,
       tsvPrefix: "factcheck",
       path: "factcheck",
       pathGroup: "TOOL",
