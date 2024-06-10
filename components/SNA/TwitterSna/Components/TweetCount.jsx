@@ -8,13 +8,13 @@ import IconLike from "../../../../images/SVG/TweetCount/Like.svg";
 import IconRetweet from "../../../../images/SVG/TweetCount/Retweet.svg";
 import IconTweet from "../../../../images/SVG/TweetCount/Tweet.svg";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 
 export default function TweetCount(props) {
 	const sna = useSelector(state => state.sna)
-	const keyword = useLoadLanguage(sna.tsv);
+	const keyword = i18nLoadNamespace(sna.tsv);
 	const classes = useMyStyles();
 	const [countVisible, setCountVisible] = useState(true);
 	const [tweetCount, setTweetCount] = useState({

@@ -7,11 +7,11 @@ import React, { useEffect, useState } from 'react';
 import createPlotComponent from 'react-plotly.js/factory';
 import { useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { displayPosts } from "../../lib/displayTweets";
 import { createBubbleChartOfMostActiveUsers } from "../Hooks/bubbleChart";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 const Plot = createPlotComponent(plotly);
 
@@ -21,7 +21,7 @@ export default function BubbleChart(props) {
     const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
     const sna = useSelector(state => state.sna)
-    const keyword = useLoadLanguage(sna.tsv);
+    const keyword = i18nLoadNamespace(sna.tsv);
     const classes = useMyStyles();
 
     const [state, setState] = useState(

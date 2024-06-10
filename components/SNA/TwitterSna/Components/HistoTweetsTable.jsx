@@ -5,17 +5,17 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomTable from "../../../shared/CustomTable/CustomTable";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 import { setTweetsDetail } from "../TwitterSna";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
   const sna = useSelector(state => state.sna)
-  const keyword = useLoadLanguage(sna.tsv);
+  const keyword = i18nLoadNamespace(sna.tsv);
   const request = useSelector((state) => state.twitterSna.request);
 
   function downloadClick(csvArr, name, histo, type = "Tweets_") {

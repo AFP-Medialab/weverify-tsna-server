@@ -8,7 +8,7 @@ import { twitterSnaRedirectRequestSet } from "../redux/slices/tools/twitterSnaSl
 import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
 //Redirect page for SSO connection from WeverifyPlugin
 //TODO error management in case of URL manupilation
-const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
+const sna = { tsv: "/components/NavItems/tools/TwitterSna"};
 
 const PluginRedirect = () => {
 

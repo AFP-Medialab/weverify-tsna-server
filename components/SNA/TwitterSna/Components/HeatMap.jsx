@@ -7,10 +7,10 @@ import React, { useEffect, useState } from 'react';
 import createPlotComponent from 'react-plotly.js/factory';
 import { useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { getDayAsString, onHeatMapClick } from "../Hooks/heatMap";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 
 const Plot = createPlotComponent(plotly);
@@ -18,7 +18,7 @@ const Plot = createPlotComponent(plotly);
 export default function HeatMap (props) { 
 
     const sna = useSelector(state => state.sna)
-    const keyword = useLoadLanguage(sna.tsv);
+    const keyword = i18nLoadNamespace(sna.tsv);
     const classes = useMyStyles();
 
     const [heatMapTweets, setheatMapTweets] = useState(null);

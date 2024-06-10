@@ -10,15 +10,15 @@ import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import BigButton from "../../../shared/BigButon/BigButton";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+const tsv = "/components/NavItems/tools/TwitterSna";
 
 export default function GexfExport(props) {
    
-    const keyword = useLoadLanguage(tsv);
+    const keyword = i18nLoadNamespace(tsv);
     const classes = useMyStyles();
     const gexfExport = useSelector(state => state.twitterSna.gexfExport);
     return (
