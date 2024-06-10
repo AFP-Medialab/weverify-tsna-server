@@ -20,20 +20,20 @@ import { getJsonDataForURLTable } from "../../Hooks/urlList";
 import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthenticatedRequest"
 
 import getConfig from "next/config";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {widgetTitle, widgetPieTitle} from "./tsnaUtils"
 import { authUserLoggedOut } from "../../../../redux/slices/authentificationSlice";
 import { errorSet } from "../../../../redux/slices/errorSlice";
 import { twitterSnaCloudWordsResultSet, twitterSnaCoHashtagResultSet, twitterSnaCountResultSet, twitterSnaGexfExportSet, twitterSnaHeatMapResultSet, twitterSnaHistogramResultSet, twitterSnaLoadingMessageSet, twitterSnaLoadingSet, twitterSnaPieChartsResultSet, twitterSnaResultSet, twitterSnaSocioGraphResultSet, twitterSnaTweetsResultSet, twitterSnaUrlsResultSet, twitterSnaUserProfileMostActiveSet } from "../../../../redux/slices/tools/twitterSnaSlice";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 const { publicRuntimeConfig } = getConfig();
-const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
+const sna = { tsv: "/components/NavItems/tools/TwitterSna"};
 
 const useTwitterSnaRequest = (request) => {
 
 const tsnaWorkers = useRef()
 
-	const keyword = useLoadLanguage(sna.tsv)
+	const keyword = i18nLoadNamespace(sna.tsv)
   const dispatch = useDispatch();
   const authenticatedRequest = useAuthenticatedRequest();
   const userAuthenticated = useSelector(
