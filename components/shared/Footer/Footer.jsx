@@ -3,12 +3,13 @@ import useMyStyles from "../styles/useMyStyles";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";
 
 //const tsv = "/localDictionary/components/Shared/Footer.tsv";
 
 const Footer = (props) => {
     const classes = useMyStyles();
-    const keyword = useLoadLanguage("/components/Shared/Footer.tsv");
+    const keyword = i18nLoadNamespace("/components/Shared/Footer");
 
     let provideBy, link, linkLabel, contactUs;
 
@@ -44,10 +45,10 @@ const Footer = (props) => {
             contactUs = keyword("usfd_part_2")
             break;
         case "afp-usfd-eudisinfolab":
-            provideBy = keyword("apf_part_1");
-            link = [keyword("apf_link"), keyword("usfd_link"), keyword("eudisinfolab_link")];
-            linkLabel = [keyword("apf_link_label"), ", " + keyword("usfd_link_label"), " " + keyword("and") + " " + keyword("eudisinfolab_link_label")];
-            contactUs = keyword("apf_part_2");
+            provideBy = keyword("afp_part_1");
+            link = [keyword("afp_link"), keyword("usfd_link"), keyword("eudisinfolab_link")];
+            linkLabel = [keyword("afp_link_label"), ", " + keyword("usfd_link_label"), " " + keyword("and") + " " + keyword("eudisinfolab_link_label")];
+            contactUs = keyword("afp_part_2");
             break;
         case "iti-borelli-afp":
             provideBy = keyword("iti_part_1");
@@ -62,10 +63,10 @@ const Footer = (props) => {
             contactUs = keyword("apf_part_2");
             break;
         default:
-            provideBy = keyword("apf_part_1");
-            link = keyword("apf_link");
-            linkLabel = keyword("apf_link_label");
-            contactUs = keyword("apf_part_2");
+            provideBy = keyword("afp_part_1");
+            link = keyword("afp_link");
+            linkLabel = keyword("afp_link_label");
+            contactUs = keyword("afp_part_2");
             break;
     }
 
