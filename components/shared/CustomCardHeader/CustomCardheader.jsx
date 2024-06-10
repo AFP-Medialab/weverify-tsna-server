@@ -9,14 +9,14 @@ import IconHelp from "../../../images/SVG/CardHeader/Help.svg";
 import IconPNG from "../../../images/SVG/CardHeader/PNG.svg";
 import IconSVG from "../../../images/SVG/CardHeader/SVG.svg";
 import { TW_SNA_TYPE } from "../hooks/SnaTypes";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import useMyStyles from "../styles/useMyStyles";
+import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 
 export default function CustomCardHeader(props) {
 
     const classes = useMyStyles();
-    const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo.tsv" };
-    var keyword = useLoadLanguage(sna.tsvInfo);
+    const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna", tsvInfo: "/components/Shared/OnClickInfo" };
+    var keyword = i18nLoadNamespace(sna.tsvInfo);
 
     var title = props.title;
     var id = props.id;
