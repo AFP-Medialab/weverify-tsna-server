@@ -13,7 +13,6 @@ import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
 import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
 import FeedBack from "../../shared/FeedBack/FeedBack";
 import HeaderTool from '../../shared/HeaderTool/HeaderTool';
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles, { myCardStyles } from '../../shared/styles/useMyStyles';
 import { CT_TSV } from "../lib/CrowdTangleConstant";
 import { useFacebookResult } from './Components/hooks/buildFBResult';
@@ -32,6 +31,7 @@ import { csvSnaBubbleChartResultHistoViewSet,
     csvSnaStateCleaned, 
     csvSnaUrlsResultSet } from "../../../redux/slices/tools/crowdTangleSnaSlice";
 import { snaTypeCleaned } from "../../../redux/slices/tools/snaTypeSlice";
+import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
 
 
 export function setHistoview (from, data, dispatch) {
@@ -119,7 +119,7 @@ const CrowdTangleSnaComponent = () => {
         },
     });
 
-    const keyword = useLoadLanguage(CT_TSV)
+    const keyword = i18nLoadNamespace(CT_TSV)
     const dispatch = useDispatch();
     const classes = useMyStyles();
     const cardClasses = myCardStyles();

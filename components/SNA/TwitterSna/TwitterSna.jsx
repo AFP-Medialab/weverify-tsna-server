@@ -42,7 +42,6 @@ import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
 import FeedBack from "../../shared/FeedBack/FeedBack";
 import HeaderTool from "../../shared/HeaderTool/HeaderTool";
 import { TW_SNA_TYPE } from "../../shared/hooks/SnaTypes";
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import { replaceAll, stringToList } from "../../shared/lib/StringUtil";
 import OnWarningInfo from "../../shared/OnClickInfo/OnWarningInfo";
 import useMyStyles, { myCardStyles } from "../../shared/styles/useMyStyles";
@@ -51,6 +50,7 @@ import TwitterSnaResult from "./Results/TwitterSnaResult";
 import { errorCleaned, errorSet } from '../../../redux/slices/errorSlice';
 import { tweetsDetailBubbleChartResultSet, tweetsDetailHistogramResultSet, tweetsDetailPieChartResultSet, twitterSnaCleanedState, twitterSnaLoadingSet, twitterSnaNewRequestSet } from '../../../redux/slices/tools/twitterSnaSlice';
 import { snaTypeSet } from '../../../redux/slices/tools/snaTypeSlice';
+import { i18nLoadNamespace } from '../../shared/languages/i18nLoadNamespace';
 
 export function setTweetsDetail (from, data, dispatch) {
 	
@@ -153,8 +153,8 @@ const TwitterSna = () => {
 	});
 
 	const dispatch = useDispatch();
-	const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo.tsv" };
-	const keyword = useLoadLanguage(sna.tsv)
+	const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna", tsvInfo: "/components/Shared/OnClickInfo" };
+	const keyword = i18nLoadNamespace(sna.tsv)
 	const classes = useMyStyles();
 	const cardClasses = myCardStyles();
 	const request = useSelector((state) => state.twitterSna.request);

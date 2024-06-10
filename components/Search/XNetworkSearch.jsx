@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import useMyStyles from "../shared/styles/useMyStyles";
 import Box from "@mui/material/Box";
-import useLoadLanguage from "../shared/hooks/useRemoteLoadLanguage";
 import OnClickInfo from "../shared/OnClickInfo/OnClickInfo"
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import XNetworkIcon from '../../images/SVG/Search/Xnetwork_big.svg'
 import HeaderTool from "../shared/HeaderTool/HeaderTool";
+import { i18nLoadNamespace } from "../shared/languages/i18nLoadNamespace";
 
 const XNetwork = () => {
   const classes = useMyStyles();
-  const keyword = useLoadLanguage("/components/NavItems/tools/XNetwork.tsv");
-  const keywordAllTools = useLoadLanguage("/components/NavItems/tools/AllTools.tsv");
-  const tsvinfo = "/components/Shared/OnClickInfo.tsv";
+  const keyword = i18nLoadNamespace("/components/NavItems/tools/XNetwork");
+  const keywordAllTools = i18nLoadNamespace("/components/NavItems/tools/AllTools");
+  const tsvinfo = "/components/Shared/OnClickInfo";
 
   useEffect(() => {
 

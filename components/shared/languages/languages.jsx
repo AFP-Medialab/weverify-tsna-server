@@ -4,7 +4,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from "@mui/material/Tooltip";
 import {useSelector, useDispatch} from "react-redux";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
 import {changeLanguage} from "../../../redux/slices/langugagesSlice"
 import getConfig from 'next/config';
@@ -13,6 +12,8 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import { useRouter } from 'next/router'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next';
+import { i18nLoadNamespace } from './i18nLoadNamespace';
+import useLoadLanguage from '../hooks/useRemoteLoadLanguage';
 
 //const tsv = "/localDictionary/components/languages.tsv";
 const tsv = "/components/NavItems/languages.tsv";

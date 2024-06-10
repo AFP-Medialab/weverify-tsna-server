@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import useMyStyles from "../shared/styles/useMyStyles";
 import Box from "@mui/material/Box";
-import useLoadLanguage from "../shared/hooks/useRemoteLoadLanguage";
 import OnClickInfo from "../shared/OnClickInfo/OnClickInfo"
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import FactcheckIcon from '../../images/SVG/Search/Factcheck_big.svg'
 import HeaderTool from "../shared/HeaderTool/HeaderTool";
+import { i18nLoadNamespace } from "../shared/languages/i18nLoadNamespace";
 
 
 const FactcheckSearch = () => {
   const classes = useMyStyles();
-  const keyword = useLoadLanguage("/components/NavItems/tools/FactcheckSearch.tsv");
-  const keywordAllTools = useLoadLanguage("/components/NavItems/tools/AllTools.tsv");
-  const tsvinfo = "/components/Shared/OnClickInfo.tsv";
+  const keyword = i18nLoadNamespace("/components/NavItems/tools/FactcheckSearch");
+  const keywordAllTools = i18nLoadNamespace("/components/NavItems/tools/AllTools");
+  const tsvinfo = "/components/Shared/OnClickInfo";
 
   useEffect(() => {
     const script = document.createElement('script');

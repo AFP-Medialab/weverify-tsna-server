@@ -7,12 +7,12 @@ import React, { useEffect, useState } from "react";
 import createPlotComponent from "react-plotly.js/factory";
 import { useDispatch, useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import { filterForTimeLine } from "../../Hooks/timeline";
 import HistoTweetsTable from "../Components/HistoTweetsTable";
 import { setTweetsDetail } from "../TwitterSna";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_LINE";
@@ -22,7 +22,7 @@ export default function PlotTimeLine(props) {
   //HISTOGRAM
   const histoTweets = useSelector((state) => state.twitterSna.histoview);
   const sna = useSelector(state => state.sna)
-  const keyword = useLoadLanguage(sna.tsv);
+  const keyword = i18nLoadNamespace(sna.tsv);
   const classes = useMyStyles();
 
   const [state, setState] = useState({

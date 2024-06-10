@@ -2,13 +2,13 @@ import Head from "next/head";
 import React from "react";
 import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
-import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import XNetworkSearch from "../components/Search/XNetworkSearch"
-const tsv = "/components/NavItems/tools/XNetwork.tsv";
+import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
+const tsv = "/components/NavItems/tools/XNetwork";
 
 
 const XNetwork = () => {
-  const keyword = useLoadLanguage(tsv);
+  const keyword = i18nLoadNamespace(tsv);
   return (
     <Layout title={keyword("navbar_xnetwork")}>
       <Head>

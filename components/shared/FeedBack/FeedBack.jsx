@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import SlackFeedback from "react-slack-feedback";
 import feedBackTheme from "./feedBackTheme";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
 import useMyStyles from "../styles/useMyStyles";
+import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";
 
 //const tsv = "/localDictionary/components/Shared/FeedBack.tsv";
-const tsv = "/components/FeedBack.tsv";
+const tsv = "/components/FeedBack";
 let API_URL = `${publicRuntimeConfig.baseFolder}/api/support/getFeedBack`;
 
 
 
 const FeedBack = () => {
-    const keyword = useLoadLanguage(tsv);
+    const keyword = i18nLoadNamespace(tsv);
     const classes = useMyStyles();
     const [isOpened, setIsOpened] = useState(false);
     const [rerender, setRerender] = useState(false);

@@ -3,7 +3,6 @@ import React from "react";
 import Layout from "../components/layout";
 import AllTools from "../components/Navigation/AllTools";
 import Footer from "../components/shared/Footer/Footer";
-import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import CsvSnaIcon from "../images/SVG/DataAnalysis/CSV_SNA.svg";
 import CsvSnaIconBig from "../images/SVG/DataAnalysis/CSV_SNA_big.svg";
 import TwitterSnaIcon from "../images/SVG/DataAnalysis/Twitter_sna.svg";

@@ -2,13 +2,13 @@ import Head from "next/head";
 import React from "react";
 import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
-import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import FactcheckSearch from "../components/Search/FactcheckSearch"
-const tsv = "/components/NavItems/tools/FactcheckSearch.tsv";
+import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
+const tsv = "/components/NavItems/tools/FactcheckSearch";
 
 
 const FactCheckInfo = () => {
-  const keyword = useLoadLanguage(tsv);
+  const keyword = i18nLoadNamespace(tsv);
   return (
     <Layout title={keyword("navbar_factcheck")}>
       <Head>

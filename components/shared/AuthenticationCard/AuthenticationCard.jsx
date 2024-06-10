@@ -7,7 +7,6 @@ import useMyStyles from "../styles/useMyStyles";
 
 import useAuthenticationAPI from './useAuthenticationAPI';
 import { ERR_AUTH_UNKNOWN_ERROR } from './authenticationErrors';
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
@@ -34,6 +33,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { userRegistrationSentAction, userAccessCodeRequestSentAction } from "../../../redux/actions/authentificationActions";
 import { authAccessCodeRequestSent, authUserRegistrationSent } from "../../../redux/slices/authentificationSlice";
 import { errorSet } from "../../../redux/slices/errorSlice";
+import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";
 
 
 const registrationValidationSchema = yup.object().shape({
@@ -66,7 +66,7 @@ const loginValidationSchema = yup.object().shape({
     .required("LOGINFORM_ACCESSCODE_ERR_REQUIRED")
 });
 //const tsv = "/localDictionary/components/Shared/Authentication.tsv";
-const tsv = "/components/Shared/Authentication.tsv";
+const tsv = "/components/Shared/Authentication";
 /**
  * Authentication card component.
  *
@@ -91,7 +91,7 @@ const AuthenticationCard = (props) => {
   const userLoginLoading = useSelector(state => state.userSession && state.userSession.userLoginLoading);
 
   // i18n
-  const messageI18NResolver = useLoadLanguage(tsv);
+  const messageI18NResolver = i18nLoadNamespace(tsv);
 
   // Authentication API
   const authenticationAPI = useAuthenticationAPI();

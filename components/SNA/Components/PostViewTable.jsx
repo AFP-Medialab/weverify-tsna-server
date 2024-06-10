@@ -6,12 +6,12 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from "@mui/icons-material/Twitter";
 import React from 'react';
 import CustomTable from '../../shared/CustomTable/CustomTable';
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../shared/lib/StringUtil";
 import { downloadClick } from "../lib/downloadClick";
 import{FB_SNA_TYPE, TW_SNA_TYPE, INSTA_SNA_TYPE} from "../../shared/hooks/SnaTypes"
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
 
 function getIcon(snaType){
     switch (snaType){
@@ -28,8 +28,8 @@ function getIcon(snaType){
 
 export default function PostViewTable ({snatype, setTypeValue, data, downloadEnable, request, csvArr, selected}){
     //console.log("data POSTED", downloadEnable);
-    const keyword = useLoadLanguage(snatype.tsv);
-    const keywordSNA = useLoadLanguage("/components/NavItems/tools/SNA.tsv");
+    const keyword = i18nLoadNamespace(snatype);
+    const keywordSNA = i18nLoadNamespace("/components/NavItems/tools/SNA");
     var goToAction = [
         {
           icon: getIcon(snatype.type),

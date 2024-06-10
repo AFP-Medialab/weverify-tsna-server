@@ -17,9 +17,9 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { twitterSnaCleanedState } from "../../../../redux/slices/tools/twitterSnaSlice";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+const tsv = "/components/NavItems/tools/TwitterSna";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), { ssr: false });
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), { ssr: false });
@@ -33,7 +33,7 @@ const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 export default function TwitterSnaResult(props) {
 
     const dispatch = useDispatch();
-    const keyword = useLoadLanguage(tsv);
+    const keyword = i18nLoadNamespace(tsv);
     const classes = useMyStyles();
     const request = useSelector(state => state.twitterSna.request);
     const resultStore = useSelector(state => state.twitterSna.result);

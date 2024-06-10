@@ -21,8 +21,8 @@ import * as yup from "yup";
 import _ from "lodash";
 import MenuItem from '@mui/material/MenuItem';
 
-import useLoadLanguage from '../../shared/hooks/useRemoteLoadLanguage';
 import { errorSet } from '../../../redux/slices/errorSlice';
+import { i18nLoadNamespace } from '../../shared/languages/i18nLoadNamespace';
 
 const registrationValidationSchema = yup.object().shape({
     email: yup.string()
@@ -43,10 +43,10 @@ const registrationValidationSchema = yup.object().shape({
     })
 });
 const AdvancedTools = () => {
-    const tsvAdvTools = "/components/NavItems/AdvancedTools.tsv";
-    const tsv = "/components/Shared/Authentication.tsv";
+    const tsvAdvTools = "/components/NavItems/AdvancedTools";
+    const tsv = "/components/Shared/Authentication";
 
-    const keyword = useLoadLanguage(tsvAdvTools);
+    const keyword = i18nLoadNamespace(tsvAdvTools);
 
     //const classes = useMyStyles();
     // Redux store
@@ -56,7 +56,7 @@ const AdvancedTools = () => {
     );
 
     // i18n
-    const messageI18NResolver = useLoadLanguage(tsv);
+    const messageI18NResolver = i18nLoadNamespace(tsv);
 
 
     const [dialogState, setDialogState] = React.useState(0);

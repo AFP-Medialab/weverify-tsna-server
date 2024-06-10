@@ -2,13 +2,13 @@ import Head from "next/head";
 import React from "react";
 import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
-import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import CrowdTangleSnaComponent from "../components/SNA/CrowdTangleSna/CrowdTangleSnaComponent";
-const tsv = "/components/NavItems/tools/SNA.tsv";
+import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
+const tsv = "/components/NavItems/tools/SNA";
 
 
 const CsvSnaIndex = () => {
-  const keyword = useLoadLanguage(tsv);
+  const keyword = i18nLoadNamespace(tsv);
   return (
     <Layout title={keyword("ct_sna_title")}>
       <Head>

@@ -13,7 +13,6 @@ import IconData from '../../images/SVG/DataAnalysis/Data_analysis.svg';
 import IconSearch from '../../images/SVG/Search/Search.svg'
 import IconTools from '../../images/SVG/NavBar/Tools.svg';
 import HeaderTool from '../shared/HeaderTool/HeaderTool';
-import useLoadLanguage from '../shared/hooks/useRemoteLoadLanguage';
 import useMyStyles from '../shared/styles/useMyStyles';
 import AdvancedTools from './AdvancedTools/AdvancedTools';
 import ToolCard from "./ToolCard";
