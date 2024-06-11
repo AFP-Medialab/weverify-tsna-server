@@ -109,14 +109,14 @@ export default function TwitterSnaResult(props) {
 
                                     {!collapsed &&
                                         <Grid item>
-                                            <IconButton onClick={props.functionNodes} onClick={onClickCollapseIndex}>
+                                            <IconButton onClick={onClickCollapseIndex}>
                                                 <ArrowBackIosIcon style={{marginRight: "-5px"}} />
                                             </IconButton>
                                         </Grid>
                                     }
                                     {collapsed &&
                                         <Grid item>
-                                            <IconButton onClick={props.functionNodes} onClick={onClickCollapseIndex}>
+                                            <IconButton onClick={onClickCollapseIndex}>
                                                 <ArrowForwardIosIcon/>
                                             </IconButton>
                                         </Grid>
@@ -356,7 +356,9 @@ export default function TwitterSnaResult(props) {
                         <div style={{ position: "relative" }}>
                             <span id="urls" style={{ position: "absolute", top: "-112px" }}></span>
                             <UrlList result={result} request={request} title_message={'twittersna_result_url_in_tweets'}
-                                tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true} topic={topic}/>
+                                tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true} topic={topic}
+                                type={"TW"}
+                                />
                         </div>
                     }
 

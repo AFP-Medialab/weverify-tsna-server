@@ -7,12 +7,20 @@ import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
 import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../shared/styles/useMyStyles";
 import { downloadClick } from "../lib/downloadClick";
+import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
 
 
 export default function UrlList (props) {
 
-    const sna = useSelector(state => state.sna)
-    const keyword = useLoadLanguage(sna.tsv);    
+    const sna = useSelector(state => state.sna);
+    // const keyword = i18nLoadNamespace(sna.tsv);
+    var keyword;
+    if(props.type === "TW") {
+        keyword = i18nLoadNamespace("components/NavItems/tools/TwitterSna");
+    }
+    else {
+        keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+    }
     
     const userLogined = useSelector(state => state.userSession && state.userSession.user);
     const userData = encodeURIComponent(JSON.stringify(userLogined));
