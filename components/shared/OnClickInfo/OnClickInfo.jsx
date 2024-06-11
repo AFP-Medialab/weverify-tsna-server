@@ -5,11 +5,12 @@ import WbIncandescentIcon from '@mui/icons-material/WbIncandescent';
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Linkify from 'react-linkify';
 import { useSelector } from "react-redux";
+import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";
 
 const OnClickInfo = (props) => {
     var keyword;
     if(props.tsvInfo !== undefined){
-        keyword = useLoadLanguage(props.tsvInfo);
+        keyword = i18nLoadNamespace(props.tsvInfo);
     }else{
         const sna = useSelector((state) => state.sna )
         keyword = useLoadLanguage(sna.tsvInfo);

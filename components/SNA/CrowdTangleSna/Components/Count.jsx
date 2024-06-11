@@ -7,24 +7,25 @@ import { useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 
 
 export default function Count({ result }) {
-  const snatsv = useSelector((state) => state.sna.tsv);
-  const keyword = useLoadLanguage(snatsv);
+  const sna = useSelector((state) => state.sna);
+  const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
-  const [state, setState] = useState({
-    result: result,
-  });
-  useEffect(() => {
-    setState({
-      ...state,
-      result: result,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [result.countSna]);
+  // const [state, setState] = useState({
+  //   result: result,
+  // });
+  // useEffect(() => {
+  //   setState({
+  //     ...state,
+  //     result: result,
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [result.countSna]);
 
   return (
 

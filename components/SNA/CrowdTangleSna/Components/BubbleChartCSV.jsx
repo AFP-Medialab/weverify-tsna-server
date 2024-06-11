@@ -15,6 +15,7 @@ import {createBubbleChartOfMostActiveUsers} from "./hooks/bubbleChart"
 import createPlotComponent from 'react-plotly.js/factory';
 import {isNumeric} from "./hooks/bubbleChart"
 import PostViewTable from "../../Components/PostViewTable";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 const Plot = createPlotComponent(plotly);
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
 //const tsv = "/components/NavItems/tools/TwitterSna.tsv";
@@ -28,7 +29,7 @@ export default function BubbleChart(props) {
     const sna = useSelector((state) => state.sna);
 
     //console.log("SNATYPE ", sna)
-    const keyword = useLoadLanguage(sna.tsv);
+    const keyword = i18nLoadNamespace(sna.tsv);
 
     const classes = useMyStyles();
 

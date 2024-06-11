@@ -17,6 +17,7 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { IconButton } from "@mui/material";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
@@ -28,7 +29,7 @@ export default function HashtagGraph (props) {
     const dispatch = useDispatch();
 
     const sna = useSelector((state) => state.sna);
-    const keyword = useLoadLanguage(sna.tsv);
+    const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
     const type = sna.type;
 
     const classes = useMyStyles();

@@ -14,7 +14,6 @@ import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
 import FeedBack from "../../shared/FeedBack/FeedBack";
 import HeaderTool from '../../shared/HeaderTool/HeaderTool';
 import useMyStyles, { myCardStyles } from '../../shared/styles/useMyStyles';
-import { CT_TSV } from "../lib/CrowdTangleConstant";
 import { useFacebookResult } from './Components/hooks/buildFBResult';
 import { useInstagramResult } from './Components/hooks/buildInstaResult';
 import CrowdTangleSnaResults from "./Results/CrowdTangleSnaResults";
@@ -117,9 +116,8 @@ const CrowdTangleSnaComponent = () => {
                 contrastText: '#fff',
             },
         },
-    });
-
-    const keyword = i18nLoadNamespace(CT_TSV)
+    }); 
+    const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
     const dispatch = useDispatch();
     const classes = useMyStyles();
     const cardClasses = myCardStyles();

@@ -10,14 +10,15 @@ import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 import { setHistoview } from "../CrowdTangleSnaComponent";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 export default function HistoTweetsTable(props) {
   
   const dispatch = useDispatch();
   const type = useSelector((state) => state.sna.type)
   const tsv = useSelector((state) => state.sna.tsv)
-  const keyword = useLoadLanguage(tsv);
-  const keywordSNA = useLoadLanguage("/components/NavItems/tools/SNA.tsv");
+  const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+  const keywordSNA = i18nLoadNamespace("/components/NavItems/tools/SNA");
  
   var goToAction = [
     {
@@ -54,7 +55,7 @@ export default function HistoTweetsTable(props) {
       </Grid>
       <Box m={2} />
       <CustomTable
-        title={keyword("ct_result_selected_posts")}
+        title={keyword("sna_result_selected_posts")}
         columns={columns}
         data={props.data.data}
         actions={goToAction}

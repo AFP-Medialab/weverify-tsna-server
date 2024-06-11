@@ -1,6 +1,5 @@
 import React from "react";
 import useMyStyles from "../styles/useMyStyles";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";

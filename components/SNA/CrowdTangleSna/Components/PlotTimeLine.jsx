@@ -16,6 +16,7 @@ import HistoTweetsTable from "./HistoTweetsTableCSV";
 import { getEpochMillis } from "./hooks/timelineCT";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { setHistoview } from "../CrowdTangleSnaComponent";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 // const plotly = dynamic(() => import("react-plotly.js"), { ssr: false, });
 // const plotly = dynamic(() => import("plotly.js"));
@@ -24,9 +25,9 @@ let from = "PLOT_LINE";
 
 
 export default function PlotTimeLine(props){
-  const sna = useSelector((state) => state.sna);
-
-    const keyword = useLoadLanguage(sna.tsv);
+    
+    const sna = useSelector((state) => state.sna);
+    const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
     const dispatch = useDispatch();
     //HISTOGRAM
     const [histoVisible, setHistoVisible] = useState(true);

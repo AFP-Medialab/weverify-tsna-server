@@ -19,6 +19,7 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { IconButton } from "@mui/material";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 
 
 //const tsv = "/localDictionary/tools/TwitterSna.tsv";
@@ -28,7 +29,7 @@ export default function cloudChart(props) {
     //var tsv = "/components/NavItems/tools/TwitterSna.tsv";
     //const keyword = useLoadLanguage(tsv);
     const snatype = useSelector((state) => state.sna);
-    const keyword = useLoadLanguage(snatype.tsv);
+    const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
     const classes = useMyStyles();
     const type = snatype.type;
 

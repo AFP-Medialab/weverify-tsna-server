@@ -12,6 +12,7 @@ import{FB_SNA_TYPE, TW_SNA_TYPE, INSTA_SNA_TYPE} from "../../shared/hooks/SnaTyp
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
+import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 
 function getIcon(snaType){
     switch (snaType){
@@ -28,7 +29,7 @@ function getIcon(snaType){
 
 export default function PostViewTable ({snatype, setTypeValue, data, downloadEnable, request, csvArr, selected}){
     //console.log("data POSTED", downloadEnable);
-    const keyword = i18nLoadNamespace(snatype);
+    const keyword = useLoadLanguage(snatype.tsv);
     const keywordSNA = i18nLoadNamespace("/components/NavItems/tools/SNA");
     var goToAction = [
         {
@@ -82,7 +83,7 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
                 }
             </Grid>
             <Box m={2} />
-            <CustomTable title={keywordSNA("sna_result_selected_posts ")}
+            <CustomTable title={keywordSNA("sna_result_selected_posts")}
                 columns={labeledColumns}
                 data={data.data}
                 actions={goToAction}
