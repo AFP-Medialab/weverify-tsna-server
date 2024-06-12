@@ -16,8 +16,8 @@ import useLoadLanguage from '../hooks/useRemoteLoadLanguage';
 export default function CustomCardHeader(props) {
 
     const classes = useMyStyles();
-    const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo.tsv" };
-    var keyword = useLoadLanguage(sna.tsvInfo);
+    const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo" };
+    var keyword = i18nLoadNamespace(sna.tsvInfo);
 
     var title = props.title;
     var id = props.id;
