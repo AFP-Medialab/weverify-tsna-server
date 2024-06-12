@@ -202,7 +202,7 @@ const TwitterSna = () => {
 
 	const [langPage, setLangPage] = useState(
 		request && request.pageLanguage && request.pageLanguage !== lang
-			? dispatch(changeLanguage(request.pageLanguage))
+			? dispatch(changeLanguage({lang: request.pageLanguage}))
 			: null
 	);
 	//HANDLE INPUT

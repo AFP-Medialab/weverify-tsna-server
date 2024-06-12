@@ -31,7 +31,7 @@ function Layout(props) {
     //keyword from /components/NavItems/tools/TwitterSna.ts
 
 
-    const currentLang = useSelector((state) => state.language);
+    const currentLang = useSelector((state) => state.language.selectedLanguage);
 
     const direction = currentLang !== "ar" ? "ltr" : "rtl";
 
