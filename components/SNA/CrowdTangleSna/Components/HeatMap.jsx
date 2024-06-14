@@ -19,6 +19,7 @@ const Plot = createPlotComponent(plotly);
 export default function HeatMap (props) { 
     const sna = useSelector((state) => state.sna);
     const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+    const keywordInfo = i18nLoadNamespace("/components/Shared/OnClickInfo");
     const classes = useMyStyles();
    
     const [heatMapTweets, setHeatMapTweets] = useState(null);
@@ -61,7 +62,7 @@ export default function HeatMap (props) {
                                     onClick={(e) => onHeatMapClick(e, props.result, setHeatMapTweets)}
                                 />
                                 <Box m={1}/>
-                                <OnClickInfo keyword={"twittersna_heatmap_tip"}/>
+                                <OnClickInfo keyword={"twittersna_heatmap_tip"} keywordInfo={keywordInfo}/>
                             </div>
                         }
                         {

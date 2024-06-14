@@ -16,8 +16,8 @@ import useLoadLanguage from '../hooks/useRemoteLoadLanguage';
 export default function CustomCardHeader(props) {
 
     const classes = useMyStyles();
-    const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo" };
-    var keyword = i18nLoadNamespace(sna.tsvInfo);
+    const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo.tsv" };
+    var keyword = useLoadLanguage(sna.tsvInfo);
 
     var title = props.title;
     var id = props.id;
@@ -132,17 +132,17 @@ export default function CustomCardHeader(props) {
                                             justifyContent="space-between"
                                             alignItems="stretch">
 
-                                            <Typography variant="h6" gutterBottom>
+                                            {/* <Typography variant="h6" gutterBottom>
                                             {keyword("title_tip")}
-                                            </Typography>
+                                            </Typography> */}
 
                                         <CloseIcon onClick={closeHelpPopover} />
                                         </Grid>
 
                                         <Box m={1} />
-                                        <Typography variant="body2">
+                                        {/* <Typography variant="body2">
                                             {keyword(helpText)}
-                                        </Typography>
+                                        </Typography> */}
 
                                     </Box>
 

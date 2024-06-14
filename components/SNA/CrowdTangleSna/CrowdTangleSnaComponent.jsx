@@ -118,6 +118,7 @@ const CrowdTangleSnaComponent = () => {
         },
     }); 
     const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+    const keyword2 = i18nLoadNamespace("/components/NavItems/tools/TwitterSna");
     const dispatch = useDispatch();
     const classes = useMyStyles();
     const cardClasses = myCardStyles();
@@ -229,7 +230,7 @@ const CrowdTangleSnaComponent = () => {
             </Card>
         {/* </StylesProvider> */}
         {
-            resultRedux && <CrowdTangleSnaResults result={resultRedux} workers={workers}/>
+            resultRedux && <CrowdTangleSnaResults result={resultRedux} workers={workers} keywordCSV={keyword}  keywordTW={keyword2}/>
         }
         <FeedBack/>
 

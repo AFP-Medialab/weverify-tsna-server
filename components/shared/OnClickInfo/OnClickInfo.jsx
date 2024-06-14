@@ -12,8 +12,7 @@ const OnClickInfo = (props) => {
     if(props.tsvInfo !== undefined){
         keyword = i18nLoadNamespace(props.tsvInfo);
     }else{
-        const sna = useSelector((state) => state.sna )
-        keyword = useLoadLanguage(sna.tsvInfo);
+        keyword = props.keywordInfo;
     }
     const classes = useMyStyles();
 

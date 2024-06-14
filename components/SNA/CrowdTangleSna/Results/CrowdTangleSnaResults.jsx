@@ -17,6 +17,7 @@ import Count from "../Components/Count";
 import { snaTypeCleaned } from "../../../../redux/slices/tools/snaTypeSlice";
 import { csvSnaStateCleaned } from "../../../../redux/slices/tools/crowdTangleSnaSlice";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { useTranslation } from "react-i18next";
 
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
@@ -35,14 +36,17 @@ const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 export default function CrowdTangleSnaResults(props) {
 
 
-	const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-	const tsv2 = "/components/NavItems/tools/CrowdTangle.tsv";
+	const tsv = "/components/NavItems/tools/TwitterSna";
+	//const tsv2 = "/components/NavItems/tools/CrowdTangle.tsv";
 
-	const classes = useMyStyles();
+	
+	
+	const keyword = props.keywordTW;
+	const keyword2 = props.keywordCSV;
+	//const keyword2 = useLoadLanguage(tsv2);
+
 	const dispatch = useDispatch();
-	const keyword = useLoadLanguage(tsv);
-	const keyword2 = useLoadLanguage(tsv2);
-
+	const classes = useMyStyles();
 	const [widthIndex, setWidthIndex] = useState(4);
 	const [widthCards, setWidthCards] = useState(8);
 	const [collapsed, setCollapsed] = useState(false);
@@ -145,6 +149,7 @@ export default function CrowdTangleSnaResults(props) {
 										{!collapsed &&
 											" " + keyword2("ct_counter_title")
 										}
+										{console.log("title", keyword2("ct_counter_title"))}
 
 									</Typography>
 									<Box m={1} />
