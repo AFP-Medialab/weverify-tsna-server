@@ -12,7 +12,7 @@ import { getJsonDataForURLTable } from "../../../Hooks/urlList";
 import { csvSnaCountResultSet, csvSnaMaxProcessStageSet, csvSnaUrlsResultSet } from "../../../../../redux/slices/tools/crowdTangleSnaSlice";
 import { snaTypeSet } from "../../../../../redux/slices/tools/snaTypeSlice";
 
-const INSTA_SNA = {type:INSTA_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv" , tsvInfo : "/components/insta/OnClickInfo.tsv"}
+const INSTA_SNA = {type:INSTA_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle" , tsvInfo : "/components/insta/OnClickInfo"}
 export const useInstagramResult = (workers, data, keyword, dispatch) => {
     dispatch(snaTypeSet(INSTA_SNA));
     buildFirstInstaResult(workers, data, dispatch, keyword);

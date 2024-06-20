@@ -29,7 +29,14 @@ function getIcon(snaType){
 
 export default function PostViewTable ({snatype, setTypeValue, data, downloadEnable, request, csvArr, selected}){
     //console.log("data POSTED", downloadEnable);
-    const keyword = useLoadLanguage(snatype.tsv);
+
+    var keyword = () => {};
+    try {
+        keyword = i18nLoadNamespace(snatype.tsv);
+    }
+    catch (error) {
+        console.log("PostViewTable error loading namespace: ", error)
+    }
     const keywordSNA = i18nLoadNamespace("/components/NavItems/tools/SNA");
     var goToAction = [
         {

@@ -12,7 +12,7 @@ import { getJsonDataForURLTable } from "../../../Hooks/urlList";
 import { csvSnaCountResultSet, csvSnaMaxProcessStageSet, csvSnaUrlsResultSet } from "../../../../../redux/slices/tools/crowdTangleSnaSlice";
 import { snaTypeSet } from "../../../../../redux/slices/tools/snaTypeSlice";
 
-const FB_SNA = {type:FB_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv", tsvInfo : "/components/fb/OnClickInfo.tsv" }
+const FB_SNA = {type:FB_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle", tsvInfo : "/components/fb/OnClickInfo" }
 
 export const useFacebookResult = (workers, data, keyword, dispatch) => {
     dispatch(snaTypeSet(FB_SNA));
