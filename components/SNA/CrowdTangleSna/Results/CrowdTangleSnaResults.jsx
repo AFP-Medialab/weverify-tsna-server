@@ -149,7 +149,6 @@ export default function CrowdTangleSnaResults(props) {
 										{!collapsed &&
 											" " + keyword2("ct_counter_title")
 										}
-										{console.log("title", keyword2("ct_counter_title"))}
 
 									</Typography>
 									<Box m={1} />

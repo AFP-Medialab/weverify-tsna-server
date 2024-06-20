@@ -75,7 +75,7 @@ export default function UrlList (props) {
     return (
         <Card>
             
-            <CustomCardHeader title={"13. " + keyword(props.title_message)} showHelp={true} helpText={"twittersna_urls_tip"} showCSV={true} functionCSV={() => downloadClick(props.request, createCSVFromURLTable(props.result.urls), "Urls", false, "")} />
+            <CustomCardHeader title={(props.type === "TW" ? "13. " : "") + keyword(props.title_message)} showHelp={true} helpText={"twittersna_urls_tip"} showCSV={true} functionCSV={() => downloadClick(props.request, createCSVFromURLTable(props.result.urls), "Urls", false, "")} />
             <Box p={2}>
             {
 

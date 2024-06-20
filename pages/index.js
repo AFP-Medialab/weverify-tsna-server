@@ -21,7 +21,6 @@ const tsv ="/components/NavBar"
 
 const Index = () => {
 
-  console.log("path: ", process.env.NEXT_PUBLIC_TRANSLATION_URL);
   const keyword = i18nLoadNamespace(tsv);
   const drawerItems = [
     {
@@ -79,7 +78,7 @@ const Index = () => {
     }
   ];
   return (
-    <Layout title={keyword("navbar_headline")}>
+    <Layout>
       <Head>
         <title>WeVerify Web Application</title>
         <link rel="icon" href="/favicon.ico" />

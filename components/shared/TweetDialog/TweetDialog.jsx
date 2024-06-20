@@ -17,6 +17,7 @@ import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Des
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { connectionEnabled, connectionWindowsOpened } from '../../../redux/slices/connectionSlice';
+import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 const { publicRuntimeConfig } = getConfig();
 
 
@@ -28,7 +29,14 @@ let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
 const TweetDialog = (props) => {
     
     var desinfo = "desinfo";
-    const keyword = useLoadLanguage(tsv);
+    var keyword = () => {};
+    try {
+        keyword = i18nLoadNamespace("/components/Shared/TweetDialog");
+    }
+    catch(error) {
+        console.log("TweetDialog error loading namespace: ", error);
+    }
+    
     const windowConnection = useSelector(state => state.conn.windowsOpen);
     const isConnectionEnable = useSelector(state => state.conn.connectionEnable)
     const dispatch = useDispatch();
