@@ -111,6 +111,7 @@ export default function PlotPieChart (props) {
             let positionInfo = element.getBoundingClientRect();
             let height = positionInfo.height;
             let width = positionInfo.width;
+            console.log("id: ", elementId);
             let name = keyword(elementId) + filesNames.replace("WordCloud", "") + '.png';
             plotly.downloadImage(elementId,
                 { format: 'png', width: width * 1.2, height: height * 1.2, filename: name }

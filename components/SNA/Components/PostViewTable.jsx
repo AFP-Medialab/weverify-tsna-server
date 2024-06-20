@@ -30,7 +30,7 @@ function getIcon(snaType){
 export default function PostViewTable ({snatype, setTypeValue, data, downloadEnable, request, csvArr, selected}){
     //console.log("data POSTED", downloadEnable);
 
-    var keyword = () => {};
+    var keyword = (word) => "";
     try {
         keyword = i18nLoadNamespace(snatype.tsv);
     }

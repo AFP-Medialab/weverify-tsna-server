@@ -29,7 +29,8 @@ let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
 const TweetDialog = (props) => {
     
     var desinfo = "desinfo";
-    var keyword = () => {};
+    
+    var keyword = (word) => "";
     try {
         keyword = i18nLoadNamespace("/components/Shared/TweetDialog");
     }

@@ -29,7 +29,8 @@ export default function CustomCardHeader(props) {
     var showEdges = props.showEdges;
     var helpText = props.helpText;
     var showSpecialCSV = props.showSpecialCSV;
-    var keyword = () => {};
+    
+    var keyword = (word) => "";
 
     try {
         keyword = i18nLoadNamespace("/components/Shared/OnClickInfo");

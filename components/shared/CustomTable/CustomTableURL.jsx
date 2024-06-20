@@ -22,6 +22,7 @@ import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Des
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import TweetDialog from '../TweetDialog/TweetDialog';
+import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
@@ -126,7 +127,16 @@ export default function CustomTableURL(props) {
             actions: props.actions
         }
     );
-    const keyword = useLoadLanguage(tsv);
+    //const keyword = useLoadLanguage(tsv);
+    
+    var keyword = (word) => "";
+
+    try {
+        keyword = i18nLoadNamespace("/components/Shared/CustomTable");
+    }
+    catch (error) {
+        console.log("CustomTableUrl error loading namespace: ", error);
+    }
 
     useEffect(() => {
         //console.log("use effect");
