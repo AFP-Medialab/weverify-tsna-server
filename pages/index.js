@@ -39,7 +39,7 @@ const Index = () => {
     {
       id: 2,
       title: "navbar_csv_sna",
-      description: "navbar_csv_sna_description",
+      description: "navbar_twitter_crowdtangle_description",
       icon: <CsvSnaIcon width="45px" height="45px" style={{ fill: "#4c4c4c" }} title="CSV SNA"/>,
       iconColored: <CsvSnaIcon width="45px" height="45px" style={{ fill: "#00926c" }} title="CSV SNA"/>,
       iconBig: <CsvSnaIconBig width="75px" height="75px" style={{ fill: "#00926c" }} title="Twitter SNA" />,

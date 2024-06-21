@@ -163,11 +163,11 @@ export default function CustomTable(props) {
                     previousTooltip: keyword("previous_page"),
                     nextTooltip: keyword("next_page"),
                     lastTooltip: keyword("last_page"),
-                    labelRowsSelect: keyword(""),
+                    labelRowsSelect: "",
                     labelDisplayedRows: keyword("from_to_text")
                 },
                 toolbar: {
-                    nRowsSelected: keyword('{0} row(s) selected (add tsv)'),
+                    nRowsSelected: keyword("row_selected"),
                     searchPlaceholder: keyword("search")
                 },
                 header: {

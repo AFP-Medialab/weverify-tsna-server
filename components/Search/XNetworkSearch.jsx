@@ -11,7 +11,7 @@ import { i18nLoadNamespace } from "../shared/languages/i18nLoadNamespace";
 const XNetwork = () => {
   const classes = useMyStyles();
   const keyword = i18nLoadNamespace("/components/NavItems/tools/XNetwork");
-  const keywordAllTools = i18nLoadNamespace("/components/NavItems/tools/AllTools");
+  const keywordAllTools = i18nLoadNamespace("/components/NavItems/tools/Alltools");
   const tsvinfo = "/components/Shared/OnClickInfo";
   const keywordInfo = i18nLoadNamespace(tsvinfo);
 

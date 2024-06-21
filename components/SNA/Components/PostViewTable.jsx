@@ -41,7 +41,7 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
     var goToAction = [
         {
           icon: getIcon(snatype.type),
-          tooltip: keyword("sna_result_go_to_post"),
+          tooltip: keyword("twittersna_result_go_to"),
           onClick: (event, rowData) => {
             if(snatype.type == TW_SNA_TYPE)
                 window.open(rowData.link, "_blank");

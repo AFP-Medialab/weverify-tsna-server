@@ -41,7 +41,7 @@ function TabPanel(props) {
 const AllTools = (props) => {
     const router = useRouter();
     const classes = useMyStyles();
-    const keyword = i18nLoadNamespace("/components/NavItems/tools/AllTools");
+    const keyword = i18nLoadNamespace("/components/NavItems/tools/Alltools");
     const keywordNavbar = i18nLoadNamespace("/components/NavBar");
     const keywordWarning = i18nLoadNamespace("/components/Shared/OnWarningInfo");
     const [openAlert, setOpenAlert] = React.useState(false);
