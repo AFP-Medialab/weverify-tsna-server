@@ -37,7 +37,7 @@ i18next
           },
         },
         {
-          loadPath: "/localDictionary/{{ns}}.tsv?lang={{lng}}",
+          loadPath: "/locales/{{lng}}/{{ns}}.json",
         },
       ],
     },
