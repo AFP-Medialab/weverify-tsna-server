@@ -1,0 +1,11 @@
+{
+    "first_page": "الصفحة الأولى",
+    "previous_page": "الصفحة السابقة",
+    "next_page": "الصفحة التالية",
+    "last_page": "آخر صفحة",
+    "from_to_text": "{من}-{إلى} من {count}",
+    "row_selected": "{0} الصف (S) لمحدد",
+    "search": "بحث",
+    "no_records": "لا سجلات لعرضها",
+    "filter": "فلتر"
+}
