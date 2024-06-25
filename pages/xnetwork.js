@@ -4,11 +4,11 @@ import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
 import XNetworkSearch from "../components/Search/XNetworkSearch"
 import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
-const tsv = "/components/NavItems/tools/XNetwork";
+import { XNETWORK_PATH } from "../components/shared/languages/LanguagePaths";
 
 
 const XNetwork = () => {
-  const keyword = i18nLoadNamespace(tsv);
+  const keyword = i18nLoadNamespace(XNETWORK_PATH);
   return (
     <Layout title={keyword("navbar_xnetwork")}>
       <Head>

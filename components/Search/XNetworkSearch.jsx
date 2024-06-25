@@ -7,10 +7,11 @@ import CardHeader from "@mui/material/CardHeader";
 import XNetworkIcon from '../../images/SVG/Search/Xnetwork_big.svg'
 import HeaderTool from "../shared/HeaderTool/HeaderTool";
 import { i18nLoadNamespace } from "../shared/languages/i18nLoadNamespace";
+import { XNETWORK_PATH } from "../shared/languages/LanguagePaths";
 
 const XNetwork = () => {
   const classes = useMyStyles();
-  const keyword = i18nLoadNamespace("/components/NavItems/tools/XNetwork");
+  const keyword = i18nLoadNamespace(XNETWORK_PATH);
   const keywordAllTools = i18nLoadNamespace("/components/NavItems/tools/Alltools");
   const tsvinfo = "/components/Shared/OnClickInfo";
   const keywordInfo = i18nLoadNamespace(tsvinfo);
