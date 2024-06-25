@@ -16,8 +16,6 @@ import {isNumeric} from "./hooks/bubbleChart"
 import PostViewTable from "../../Components/PostViewTable";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 const Plot = createPlotComponent(plotly);
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
-//const tsv = "/components/NavItems/tools/TwitterSna.tsv";
 
 export default function BubbleChart(props) {
     

@@ -51,6 +51,7 @@ import { errorCleaned, errorSet } from '../../../redux/slices/errorSlice';
 import { tweetsDetailBubbleChartResultSet, tweetsDetailHistogramResultSet, tweetsDetailPieChartResultSet, twitterSnaCleanedState, twitterSnaLoadingSet, twitterSnaNewRequestSet } from '../../../redux/slices/tools/twitterSnaSlice';
 import { snaTypeSet } from '../../../redux/slices/tools/snaTypeSlice';
 import { i18nLoadNamespace } from '../../shared/languages/i18nLoadNamespace';
+import { TWITTERSNA_PATH } from '../../shared/languages/LanguagePaths';
 
 export function setTweetsDetail (from, data, dispatch) {
 	
@@ -154,7 +155,7 @@ const TwitterSna = () => {
 
 	const dispatch = useDispatch();
 	const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna", tsvInfo: "/components/Shared/OnClickInfo" };
-	const keyword = i18nLoadNamespace(sna.tsv)
+	const keyword = i18nLoadNamespace(TWITTERSNA_PATH)
 	const classes = useMyStyles();
 	const cardClasses = myCardStyles();
 	const request = useSelector((state) => state.twitterSna.request);

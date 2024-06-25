@@ -6,15 +6,15 @@ import { decodeJWTToken } from "../components/shared/AuthenticationCard/userAuth
 import { authUserLoggedIn } from "../redux/slices/authentificationSlice";
 import { twitterSnaRedirectRequestSet } from "../redux/slices/tools/twitterSnaSlice";
 import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../components/shared/languages/LanguagePaths";
 //Redirect page for SSO connection from WeverifyPlugin
 //TODO error management in case of URL manupilation
-const sna = { tsv: "/components/NavItems/tools/TwitterSna"};
 
 const PluginRedirect = () => {
 
     const router = useRouter();
     const dispatch = useDispatch();
-    i18nLoadNamespace(sna.tsv)
+    i18nLoadNamespace(TWITTERSNA_PATH)
     const { query } = router;
     if(!_.isEmpty(query)){
         const {data, token, refreshToken, user} = query;

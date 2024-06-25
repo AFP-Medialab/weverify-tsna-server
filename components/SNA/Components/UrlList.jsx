@@ -7,7 +7,7 @@ import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
 import useMyStyles from "../../shared/styles/useMyStyles";
 import { downloadClick } from "../lib/downloadClick";
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
-import { CROWDTANGLE_PATH } from "../../shared/languages/LanguagePaths";
+import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../shared/languages/LanguagePaths";
 
 
 export default function UrlList (props) {
@@ -16,7 +16,7 @@ export default function UrlList (props) {
     // const keyword = i18nLoadNamespace(sna.tsv);
     var keyword;
     if(props.type === "TW") {
-        keyword = i18nLoadNamespace("components/NavItems/tools/TwitterSna");
+        keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     }
     else {
         keyword = i18nLoadNamespace(CROWDTANGLE_PATH);

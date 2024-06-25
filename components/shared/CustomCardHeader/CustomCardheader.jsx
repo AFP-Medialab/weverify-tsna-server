@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 export default function CustomCardHeader(props) {
 
     const classes = useMyStyles();
-    const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo.tsv" };
 
     var title = props.title;
     var id = props.id;

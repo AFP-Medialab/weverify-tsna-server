@@ -28,8 +28,6 @@ export const siteTitle = 'Weverify'
 function Layout(props) {
     const classes = useMyStyles();
     const router = useRouter();
-    //keyword from /components/NavItems/tools/TwitterSna.ts
-
 
     const currentLang = useSelector((state) => state.language.selectedLanguage);
 

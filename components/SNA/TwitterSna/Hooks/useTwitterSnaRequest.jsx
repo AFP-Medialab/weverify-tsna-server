@@ -25,15 +25,15 @@ import { authUserLoggedOut } from "../../../../redux/slices/authentificationSlic
 import { errorSet } from "../../../../redux/slices/errorSlice";
 import { twitterSnaCloudWordsResultSet, twitterSnaCoHashtagResultSet, twitterSnaCountResultSet, twitterSnaGexfExportSet, twitterSnaHeatMapResultSet, twitterSnaHistogramResultSet, twitterSnaLoadingMessageSet, twitterSnaLoadingSet, twitterSnaPieChartsResultSet, twitterSnaResultSet, twitterSnaSocioGraphResultSet, twitterSnaTweetsResultSet, twitterSnaUrlsResultSet, twitterSnaUserProfileMostActiveSet } from "../../../../redux/slices/tools/twitterSnaSlice";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 const { publicRuntimeConfig } = getConfig();
-const sna = { tsv: "/components/NavItems/tools/TwitterSna"};
 
 const useTwitterSnaRequest = (request) => {
 
 const tsnaWorkers = useRef()
 
-	const keyword = i18nLoadNamespace(sna.tsv)
+	const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
   const dispatch = useDispatch();
   const authenticatedRequest = useAuthenticatedRequest();
   const userAuthenticated = useSelector(
