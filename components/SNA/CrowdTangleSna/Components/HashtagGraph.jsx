@@ -20,7 +20,6 @@ import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 
 
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 let from = "PLOT_HASHTAG_GRAPH";
 

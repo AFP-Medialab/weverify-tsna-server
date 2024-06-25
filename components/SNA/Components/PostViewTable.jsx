@@ -13,7 +13,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
 import { useTranslation } from "react-i18next";
-import { SNA_PATH } from "../../shared/languages/LanguagePaths";
+import { CROWDTANGLE_PATH, SNA_PATH, TWITTERSNA_PATH } from "../../shared/languages/LanguagePaths";
 
 function getIcon(snaType){
     switch (snaType){
@@ -32,9 +32,17 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
     //console.log("data POSTED", downloadEnable);
 
     var keyword = (word) => "";
+    var path;
+
+    if(snatype.type === TW_SNA_TYPE) {
+        path = TWITTERSNA_PATH;
+    }
+    else {
+        path = CROWDTANGLE_PATH;
+    }
 
     // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
-    const {t, ready} = useTranslation(snatype.tsv, {useSuspense: false});
+    const {t, ready} = useTranslation(path, {useSuspense: false});
     if(ready) keyword = t;
 
     const keywordSNA = i18nLoadNamespace(SNA_PATH);

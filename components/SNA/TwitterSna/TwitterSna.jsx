@@ -154,7 +154,7 @@ const TwitterSna = () => {
 	});
 
 	const dispatch = useDispatch();
-	const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna", tsvInfo: "/components/Shared/OnClickInfo" };
+	const sna = { type: TW_SNA_TYPE};
 	const keyword = i18nLoadNamespace(TWITTERSNA_PATH)
 	const classes = useMyStyles();
 	const cardClasses = myCardStyles();

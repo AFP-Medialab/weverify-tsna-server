@@ -22,9 +22,6 @@ import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 
-
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
-
 export default function SocioSemGraph (props) {
     
     const sna = useSelector(state => state.sna)
