@@ -4,10 +4,10 @@ import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
 import TwitterSna from "../components/SNA/TwitterSna/TwitterSna";
 import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
-const tsv = "/components/NavItems/tools/SNA";
+import { SNA_PATH } from "../components/shared/languages/LanguagePaths";
 
 const TwitterSnaIndex = () => {
-  const keyword = i18nLoadNamespace(tsv);
+  const keyword = i18nLoadNamespace(SNA_PATH);
   return (
     <Layout title={keyword("twitter_sna_title")}>
     <Head>

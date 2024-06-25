@@ -13,6 +13,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
 import { useTranslation } from "react-i18next";
+import { SNA_PATH } from "../../shared/languages/LanguagePaths";
 
 function getIcon(snaType){
     switch (snaType){
@@ -36,7 +37,7 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
     const {t, ready} = useTranslation(snatype.tsv, {useSuspense: false});
     if(ready) keyword = t;
 
-    const keywordSNA = i18nLoadNamespace("/components/NavItems/tools/SNA");
+    const keywordSNA = i18nLoadNamespace(SNA_PATH);
     var goToAction = [
         {
           icon: getIcon(snatype.type),

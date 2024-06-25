@@ -4,11 +4,11 @@ import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
 import CrowdTangleSnaComponent from "../components/SNA/CrowdTangleSna/CrowdTangleSnaComponent";
 import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
-const tsv = "/components/NavItems/tools/SNA";
+import { SNA_PATH } from "../components/shared/languages/LanguagePaths";
 
 
 const CsvSnaIndex = () => {
-  const keyword = i18nLoadNamespace(tsv);
+  const keyword = i18nLoadNamespace(SNA_PATH);
   return (
     <Layout title={keyword("ct_sna_title")}>
       <Head>
