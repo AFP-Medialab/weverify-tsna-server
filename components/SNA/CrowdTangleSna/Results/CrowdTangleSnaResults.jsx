@@ -15,8 +15,7 @@ import UrlList from "../../Components/UrlList";
 import Count from "../Components/Count";
 import { snaTypeCleaned } from "../../../../redux/slices/tools/snaTypeSlice";
 import { csvSnaStateCleaned } from "../../../../redux/slices/tools/crowdTangleSnaSlice";
-import { i18nLoadNamespace, i18nLoadNamespaceNoSuspense } from "../../../shared/languages/i18nLoadNamespace";
-import { useTranslation } from "react-i18next";
+import { i18nLoadNamespaceNoSuspense } from "../../../shared/languages/i18nLoadNamespace";
 import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 

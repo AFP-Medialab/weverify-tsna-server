@@ -4,16 +4,15 @@ import Typography from "@mui/material/Typography";
 import WbIncandescentIcon from '@mui/icons-material/WbIncandescent';
 import Linkify from 'react-linkify';
 import { useSelector } from "react-redux";
-import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";
+import { i18nLoadNamespaceNoSuspense } from "../languages/i18nLoadNamespace";
 import { INFO_PATH } from "../languages/LanguagePaths";
-import { useTranslation } from "react-i18next";
 
 const OnClickInfo = (props) => {
 
     
     var keyword = (word) => "";
 
-    const {t, ready} = useTranslation(INFO_PATH, {useSuspense: false});
+    const {t, ready} = i18nLoadNamespaceNoSuspense(INFO_PATH);
 
     if(ready) keyword = t;
 

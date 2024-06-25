@@ -21,8 +21,7 @@ import React, { useEffect, useState } from 'react';
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
 import TweetDialog from '../TweetDialog/TweetDialog';
-import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
-import { useTranslation } from 'react-i18next';
+import { i18nLoadNamespaceNoSuspense } from '../languages/i18nLoadNamespace';
 import { CUSTOMTABLE_PATH } from '../languages/LanguagePaths';
 
 
@@ -129,8 +128,7 @@ export default function CustomTableURL(props) {
     
     var keyword = (word) => "";
 
-    // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
-    const {t, ready} = useTranslation(CUSTOMTABLE_PATH, {useSuspense: false});
+    const {t, ready} = i18nLoadNamespaceNoSuspense(CUSTOMTABLE_PATH);
 
     if (ready) keyword = t;
 

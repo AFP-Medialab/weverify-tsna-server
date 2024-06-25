@@ -16,8 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
 import { connectionEnabled, connectionWindowsOpened } from '../../../redux/slices/connectionSlice';
-import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
-import { useTranslation } from 'react-i18next';
+import { i18nLoadNamespaceNoSuspense } from '../languages/i18nLoadNamespace';
 import { TWEETDIALOGUE_PATH } from '../languages/LanguagePaths';
 const { publicRuntimeConfig } = getConfig();
 
@@ -33,7 +32,7 @@ const TweetDialog = (props) => {
     var keyword = (word) => "";
 
     // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
-    const {t, ready} = useTranslation(TWEETDIALOGUE_PATH, {useSuspense: false});
+    const {t, ready} = i18nLoadNamespaceNoSuspense(TWEETDIALOGUE_PATH);
     if(ready) keyword = t;
     
     const windowConnection = useSelector(state => state.conn.windowsOpen);

@@ -11,17 +11,16 @@ import TextField from "@mui/material/TextField";
 import Fab from "@mui/material/Fab";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
-import { i18nLoadNamespace } from "../languages/i18nLoadNamespace"; 
+import { i18nLoadNamespaceNoSuspense } from "../languages/i18nLoadNamespace"; 
 import { Fade } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { useTranslation } from "react-i18next";
 import { FEEDBACK_PATH } from "../languages/LanguagePaths";
 
 const Feedback = () => {
   
     var keyword = (word) => "";
-    const {t, ready} = useTranslation(FEEDBACK_PATH, {useSuspense: false});
+    const {t, ready} = i18nLoadNamespaceNoSuspense(FEEDBACK_PATH);
     if(ready) keyword = t;
 
     const API_URL = process.env.NEXT_PUBLIC_MY_WEB_HOOK_URL;

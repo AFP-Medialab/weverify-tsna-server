@@ -10,8 +10,7 @@ import IconPNG from "../../../images/SVG/CardHeader/PNG.svg";
 import IconSVG from "../../../images/SVG/CardHeader/SVG.svg";
 import { TW_SNA_TYPE } from "../hooks/SnaTypes";
 import useMyStyles from "../styles/useMyStyles";
-import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
-import { useTranslation } from 'react-i18next';
+import { i18nLoadNamespaceNoSuspense } from '../languages/i18nLoadNamespace';
 import { INFO_PATH } from '../languages/LanguagePaths';
 
 export default function CustomCardHeader(props) {
@@ -33,7 +32,7 @@ export default function CustomCardHeader(props) {
 
 
     // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
-    var { t, ready } = useTranslation(INFO_PATH, { useSuspense: false });
+    var { t, ready } = i18nLoadNamespaceNoSuspense(INFO_PATH);
 
     if(ready) keyword = t;
     

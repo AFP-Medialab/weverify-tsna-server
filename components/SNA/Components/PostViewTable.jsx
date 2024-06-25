@@ -11,8 +11,7 @@ import { downloadClick } from "../lib/downloadClick";
 import{FB_SNA_TYPE, TW_SNA_TYPE, INSTA_SNA_TYPE} from "../../shared/hooks/SnaTypes"
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
-import { useTranslation } from "react-i18next";
+import { i18nLoadNamespace, i18nLoadNamespaceNoSuspense } from "../../shared/languages/i18nLoadNamespace";
 import { CROWDTANGLE_PATH, SNA_PATH, TWITTERSNA_PATH } from "../../shared/languages/LanguagePaths";
 
 function getIcon(snaType){
@@ -42,7 +41,7 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
     }
 
     // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
-    const {t, ready} = useTranslation(path, {useSuspense: false});
+    const {t, ready} = i18nLoadNamespaceNoSuspense(path);
     if(ready) keyword = t;
 
     const keywordSNA = i18nLoadNamespace(SNA_PATH);
