@@ -19,8 +19,8 @@ import ViewColumn from '@mui/icons-material/ViewColumn';
 import React, { useEffect, useState } from 'react';
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 import { useTranslation } from 'react-i18next';
+import { CUSTOMTABLE_PATH } from '../languages/LanguagePaths';
 
-const tsv = "/components/Shared/CustomTable.tsv";
 
 
 
@@ -131,13 +131,12 @@ export default function CustomTable(props) {
             actions: props.actions
         }
     );
-   // const keyword = i18nLoadNamespace("/components/Shared/CustomTable");
 
     var keyword = (word) => "";
 
 
     // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
-    const { t, ready } = useTranslation("/components/Shared/CustomTable", {useSuspense: false});
+    const { t, ready } = useTranslation(CUSTOMTABLE_PATH, {useSuspense: false});
 
     if(ready) keyword = t;
 
