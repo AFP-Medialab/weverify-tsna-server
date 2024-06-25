@@ -10,18 +10,12 @@ import TwitterSnaIconBig from "../images/SVG/DataAnalysis/Twitter_sna_big.svg";
 import FactcheckIcon from "../images/SVG/Search/Factcheck.svg";
 import XnetworkIcon from "../images/SVG/Search/Xnetwork.svg"
 import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
-
-
-
-
-//const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-const tsv ="/components/NavBar"
-
+import { NAVBAR_PATH } from "../components/shared/languages/LanguagePaths";
 
 
 const Index = () => {
 
-  const keyword = i18nLoadNamespace(tsv);
+  const keyword = i18nLoadNamespace(NAVBAR_PATH);
   const drawerItems = [
     {
       id: 1,
