@@ -64,14 +64,17 @@ const twitterSnaSlice = createSlice ({
             state.loadingMessage = null;
         },
         twitterSnaCloudWordsResultSet (state, action) {
+            if(!state.result) state.result = {};
             state.result.cloudChart = action.payload;
             state.stage ++;
         },
         twitterSnaSocioGraphResultSet (state, action) {
+            if(!state.result) state.result = {};
             state.result.socioSemantic4ModeGraph = action.payload;
             state.stage ++;
         },
         twitterSnaHeatMapResultSet (state, action) {
+            if(!state.result) state.result = {};
             state.result.heatMap = action.payload;
             state.stage ++;
         },
@@ -82,19 +85,24 @@ const twitterSnaSlice = createSlice ({
             state.result.histogram = action.payload;
         },
         twitterSnaCountResultSet (state, action) {
+            if(!state.result) state.result = {};
             state.result.tweetCount = action.payload;
         },
         twitterSnaTweetsResultSet (state, action) {
+            if(!state.result) state.result = {};
             state.result.tweets = action.payload;
         },
         twitterSnaPieChartsResultSet (state, action) {
+            if(!state.result) state.result = {};
             state.result.pieCharts = action.payload;
         },
         twitterSnaCoHashtagResultSet (state, action) {
+            if(!state.result) state.result = {};
             state.result.coHashtagGraph = action.payload;
             state.stage ++;
         },
         twitterSnaUrlsResultSet (state, action) {
+            if(!state.result) state.result = {};
             state.result.urls = action.payload;
             state.stage ++;
         },

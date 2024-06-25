@@ -70,7 +70,7 @@ const tsnaWorkers = useRef()
       if (keyword(e) !== "") {
         dispatch(errorSet(keyword(e)));
       } else dispatch(errorSet(keyword("default_sna_error")));
-      dispatch(twitterSnaLoadingSet(false));
+      dispatch(twitterSnaLoadingSet({load: false}));
     };
     // Check request
     const cacheRenderCall = (request) => {
@@ -375,7 +375,7 @@ const tsnaWorkers = useRef()
           else if (response.data.status === "Done") { 
             cacheRenderCall(request);
           } else {
-            dispatch(twitterSnaLoadingSet(true, 5));
+            dispatch(twitterSnaLoadingSet({load: true, maxStage: 5}));
             dispatch(twitterSnaLoadingMessageSet(keyword("twittersna_start")));
             getResultUntilsDone(response.data.session, request, "Pending");
           }

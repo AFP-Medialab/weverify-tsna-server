@@ -24,13 +24,13 @@ const PluginRedirect = () => {
         //token
         const userData = decodeURIComponent(user);
         const userInfo = JSON.parse(userData);
-        const currentUser = useSelector((state) => state.user)
+        //const currentUser = useSelector((state) => state.user)
         try {
             //console.log(userData);
             //console.log(token);
             const tokenContent = decodeJWTToken(token);
             //console.log("token create " + JSON.stringify(tokenContent));         
-            dispatch(authUserLoggedIn(token, tokenContent.accessTokenExpiry, refreshToken, userInfo));
+            dispatch(authUserLoggedIn({accessToken: token, tokenExpiry: tokenContent.accessTokenExpiry, refreshToken, userInfo}));
         }
         catch (jwtError) {
             //console.log("error token");
