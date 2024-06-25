@@ -26,8 +26,7 @@ export default function BubbleChart(props) {
 
     //console.log("SNATYPE ", sna)
     const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
-    const keywordInfo = i18nLoadNamespace("/components/Shared/OnClickInfo");
-
+    
     const classes = useMyStyles();
 
     const [state, setState] = useState(
@@ -106,7 +105,7 @@ export default function BubbleChart(props) {
                                             
                                         />
                                         <Box m={1} />
-                                        <OnClickInfo keyword={"twittersna_bubble_chart_tip"} keywordInfo={keywordInfo}/>
+                                        <OnClickInfo keyword={"twittersna_bubble_chart_tip"}/>
                                         <Box m={2} />
                                     </div>
                                 )

@@ -12,6 +12,7 @@ import { TW_SNA_TYPE } from "../hooks/SnaTypes";
 import useMyStyles from "../styles/useMyStyles";
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 import { useTranslation } from 'react-i18next';
+import { INFO_PATH } from '../languages/LanguagePaths';
 
 export default function CustomCardHeader(props) {
 
@@ -32,7 +33,7 @@ export default function CustomCardHeader(props) {
 
 
     // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
-    var { t, ready } = useTranslation("/components/Shared/OnClickInfo", { useSuspense: false });
+    var { t, ready } = useTranslation(INFO_PATH, { useSuspense: false });
 
     if(ready) keyword = t;
     

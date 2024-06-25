@@ -5,14 +5,18 @@ import WbIncandescentIcon from '@mui/icons-material/WbIncandescent';
 import Linkify from 'react-linkify';
 import { useSelector } from "react-redux";
 import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";
+import { INFO_PATH } from "../languages/LanguagePaths";
+import { useTranslation } from "react-i18next";
 
 const OnClickInfo = (props) => {
-    var keyword;
-    if(props.tsvInfo !== undefined){
-        keyword = i18nLoadNamespace(props.tsvInfo);
-    }else{
-        keyword = props.keywordInfo;
-    }
+
+    
+    var keyword = (word) => "";
+
+    const {t, ready} = useTranslation(INFO_PATH, {useSuspense: false});
+
+    if(ready) keyword = t;
+
     const classes = useMyStyles();
 
     const [checked, setChecked] = useState(false);

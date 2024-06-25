@@ -9,9 +9,7 @@ import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
 
 export const SNAPlotTimeLine = (histogram, title, onHistogramClick, keyword) => {
     const [histoVisible, setHistoVisible] = useState(true);
-    const classes = useMyStyles();
-    const keywordInfo = i18nLoadNamespace("/components/Shared/OnClickInfo");
-    
+    const classes = useMyStyles();    
 return (
     <Accordion expanded={histoVisible} onChange={() => setHistoVisible(!histoVisible)}>
         <AccordionSummary
@@ -38,7 +36,7 @@ return (
                 />
                 }
                 <Box m={1} />
-                <OnClickInfo keyword={"twittersna_timeline_tip"} keywordInfo={keywordInfo}/>
+                <OnClickInfo keyword={"twittersna_timeline_tip"}/>
                 <Box m={2} />
                 
                 {

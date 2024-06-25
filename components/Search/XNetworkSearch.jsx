@@ -13,8 +13,6 @@ const XNetwork = () => {
   const classes = useMyStyles();
   const keyword = i18nLoadNamespace(XNETWORK_PATH);
   const keywordAllTools = i18nLoadNamespace(ALLTOOLS_PATH);
-  const tsvinfo = "/components/Shared/OnClickInfo";
-  const keywordInfo = i18nLoadNamespace(tsvinfo);
 
   useEffect(() => {
 
@@ -42,7 +40,7 @@ const XNetwork = () => {
         <div className={classes.root2}>
           <div className="gcse-search"></div>
           <Box m={1} />
-          <OnClickInfo keyword={"xnetwork_tip"} tsvInfo={tsvinfo} keywordInfo={keywordInfo}/>
+          <OnClickInfo keyword={"xnetwork_tip"}/>
         </div>
       </Card>
       

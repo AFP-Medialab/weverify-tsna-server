@@ -14,8 +14,6 @@ const FactcheckSearch = () => {
   const classes = useMyStyles();
   const keyword = i18nLoadNamespace(FACTCHECKSEARCH_PATH);
   const keywordAllTools = i18nLoadNamespace(ALLTOOLS_PATH);
-  const tsvinfo = "/components/Shared/OnClickInfo";
-  const keywordInfo = i18nLoadNamespace(tsvinfo);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -46,7 +44,7 @@ const FactcheckSearch = () => {
         <div className={classes.root2}>
           <div className="gcse-search"></div>
           <Box m={1} />
-          <OnClickInfo keyword={"factcheck_tip"} keywordInfo={keywordInfo} tsvInfo={tsvinfo}/>
+          <OnClickInfo keyword={"factcheck_tip"} />
         </div>
 
       </Card>
