@@ -23,6 +23,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { errorSet } from '../../../redux/slices/errorSlice';
 import { i18nLoadNamespace } from '../../shared/languages/i18nLoadNamespace';
+import { ADVANCEDTOOLS_PATH } from '../../shared/languages/LanguagePaths';
 
 const registrationValidationSchema = yup.object().shape({
     email: yup.string()
@@ -43,10 +44,10 @@ const registrationValidationSchema = yup.object().shape({
     })
 });
 const AdvancedTools = () => {
-    const tsvAdvTools = "/components/NavItems/AdvancedTools";
+
     const tsv = "/components/Shared/Authentication";
 
-    const keyword = i18nLoadNamespace(tsvAdvTools);
+    const keyword = i18nLoadNamespace(ADVANCEDTOOLS_PATH);
 
     //const classes = useMyStyles();
     // Redux store
