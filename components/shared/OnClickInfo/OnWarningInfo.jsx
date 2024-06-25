@@ -4,13 +4,12 @@ import Typography from "@mui/material/Typography";
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import Linkify from 'react-linkify';
 import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";
+import { WARNINGINFO_PATH } from "../languages/LanguagePaths";
 
-//const tsv = "/localDictionary/components/Shared/OnWarningInfo.tsv";
-const tsv = "/components/Shared/OnWarningInfo";
 
 const OnWarningInfo = (props) => {
     const classes = useMyStyles();
-    const keyword = i18nLoadNamespace(tsv);
+    const keyword = i18nLoadNamespace(WARNINGINFO_PATH);
 
     const [checked, setChecked] = useState(false);
 
