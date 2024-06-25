@@ -7,12 +7,13 @@ import { useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 
 export default function Count({ result }) {
   const sna = useSelector((state) => state.sna);
-  const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+  const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);
   // const [state, setState] = useState({

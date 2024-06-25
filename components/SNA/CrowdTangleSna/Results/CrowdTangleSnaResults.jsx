@@ -35,9 +35,6 @@ const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 export default function CrowdTangleSnaResults(props) {
 
 
-	const tsv = "/components/NavItems/tools/TwitterSna";
-	//const tsv2 = "/components/NavItems/tools/CrowdTangle.tsv";
-
 	
 	
 	const keyword = props.keywordTW;

@@ -12,12 +12,13 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { onHeatMapClick } from "./hooks/heatMap";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 
 const Plot = createPlotComponent(plotly);
 
 export default function HeatMap (props) { 
     const sna = useSelector((state) => state.sna);
-    const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const keywordInfo = i18nLoadNamespace("/components/Shared/OnClickInfo");
     const classes = useMyStyles();
    

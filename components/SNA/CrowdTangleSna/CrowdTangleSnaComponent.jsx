@@ -31,6 +31,7 @@ import { csvSnaBubbleChartResultHistoViewSet,
     csvSnaUrlsResultSet } from "../../../redux/slices/tools/crowdTangleSnaSlice";
 import { snaTypeCleaned } from "../../../redux/slices/tools/snaTypeSlice";
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../shared/languages/LanguagePaths";
 
 
 export function setHistoview (from, data, dispatch) {
@@ -117,7 +118,7 @@ const CrowdTangleSnaComponent = () => {
             },
         },
     }); 
-    const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const keyword2 = i18nLoadNamespace("/components/NavItems/tools/TwitterSna");
     const dispatch = useDispatch();
     const classes = useMyStyles();

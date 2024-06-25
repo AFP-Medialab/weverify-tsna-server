@@ -12,6 +12,7 @@ import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { setHistoview } from "../CrowdTangleSnaComponent";
 import { setTweetsDetail } from "../../TwitterSna/TwitterSna";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 
@@ -21,7 +22,7 @@ let from = "PLOT_PIE_CHART";
 
 export default function PlotPieChart (props) { 
     const sna = useSelector((state) => state.sna);
-    const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const dispatch = useDispatch();  
     
 

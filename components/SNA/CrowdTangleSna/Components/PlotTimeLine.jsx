@@ -16,6 +16,7 @@ import { getEpochMillis } from "./hooks/timelineCT";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { setHistoview } from "../CrowdTangleSnaComponent";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 
 // const plotly = dynamic(() => import("react-plotly.js"), { ssr: false, });
 // const plotly = dynamic(() => import("plotly.js"));
@@ -26,7 +27,7 @@ let from = "PLOT_LINE";
 export default function PlotTimeLine(props){
     
     const sna = useSelector((state) => state.sna);
-    const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const dispatch = useDispatch();
     //HISTOGRAM
     const [histoVisible, setHistoVisible] = useState(true);

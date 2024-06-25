@@ -10,14 +10,13 @@ import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 import { setHistoview } from "../CrowdTangleSnaComponent";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
-import { SNA_PATH } from "../../../shared/languages/LanguagePaths";
+import { CROWDTANGLE_PATH, SNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 export default function HistoTweetsTable(props) {
   
   const dispatch = useDispatch();
   const type = useSelector((state) => state.sna.type)
-  const tsv = useSelector((state) => state.sna.tsv)
-  const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+  const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
   const keywordSNA = i18nLoadNamespace(SNA_PATH);
  
   var goToAction = [

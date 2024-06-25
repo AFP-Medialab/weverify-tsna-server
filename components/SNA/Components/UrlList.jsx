@@ -7,6 +7,7 @@ import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
 import useMyStyles from "../../shared/styles/useMyStyles";
 import { downloadClick } from "../lib/downloadClick";
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../shared/languages/LanguagePaths";
 
 
 export default function UrlList (props) {
@@ -18,7 +19,7 @@ export default function UrlList (props) {
         keyword = i18nLoadNamespace("components/NavItems/tools/TwitterSna");
     }
     else {
-        keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
+        keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     }
     
     const userLogined = useSelector(state => state.userSession && state.userSession.user);
