@@ -3,12 +3,12 @@ import useMyStyles from "../styles/useMyStyles";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";
+import { FOOTER_PATH } from "../languages/LanguagePaths";
 
-//const tsv = "/localDictionary/components/Shared/Footer.tsv";
 
 const Footer = (props) => {
     const classes = useMyStyles();
-    const keyword = i18nLoadNamespace("/components/Shared/Footer");
+    const keyword = i18nLoadNamespace(FOOTER_PATH);
 
     let provideBy, link, linkLabel, contactUs;
 
