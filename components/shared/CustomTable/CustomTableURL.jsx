@@ -23,6 +23,7 @@ import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-c
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import TweetDialog from '../TweetDialog/TweetDialog';
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
+import { useTranslation } from 'react-i18next';
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
@@ -131,12 +132,16 @@ export default function CustomTableURL(props) {
     
     var keyword = (word) => "";
 
-    try {
-        keyword = i18nLoadNamespace("/components/Shared/CustomTable");
-    }
-    catch (error) {
-        console.log("CustomTableUrl error loading namespace: ", error);
-    }
+    // try {
+    //     keyword = i18nLoadNamespace("/components/Shared/CustomTable");
+    // }
+    // catch (error) {
+    //     console.log("CustomTableUrl error loading namespace: ", error);
+    // }
+
+    const {t, ready} = useTranslation("/components/Shared/CustomTable", {useSuspense: false});
+
+    if (ready) keyword = t;
 
     useEffect(() => {
         //console.log("use effect");

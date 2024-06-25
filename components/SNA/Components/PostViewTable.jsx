@@ -13,6 +13,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
 import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
+import { useTranslation } from "react-i18next";
 
 function getIcon(snaType){
     switch (snaType){
@@ -31,12 +32,16 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
     //console.log("data POSTED", downloadEnable);
 
     var keyword = (word) => "";
-    try {
-        keyword = i18nLoadNamespace(snatype.tsv);
-    }
-    catch (error) {
-        console.log("PostViewTable error loading namespace: ", error)
-    }
+    // try {
+    //     keyword = i18nLoadNamespace(snatype.tsv);
+    // }
+    // catch (error) {
+    //     console.log("PostViewTable error loading namespace: ", error)
+    // }
+
+    const {t, ready} = useTranslation(snatype.tsv, {useSuspense: false});
+    if(ready) keyword = t;
+
     const keywordSNA = i18nLoadNamespace("/components/NavItems/tools/SNA");
     var goToAction = [
         {

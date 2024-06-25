@@ -12,6 +12,7 @@ import { TW_SNA_TYPE } from "../hooks/SnaTypes";
 import useMyStyles from "../styles/useMyStyles";
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 import useLoadLanguage from '../hooks/useRemoteLoadLanguage';
+import { useTranslation } from 'react-i18next';
 
 export default function CustomCardHeader(props) {
 
@@ -32,11 +33,17 @@ export default function CustomCardHeader(props) {
     
     var keyword = (word) => "";
 
-    try {
-        keyword = i18nLoadNamespace("/components/Shared/OnClickInfo");
-    }
-    catch (error) {
-        console.log("CustomCardHeader error loading namespace: ", error);
+    // try {
+    //     keyword = i18nLoadNamespace("/components/Shared/OnClickInfo");
+    // }
+    // catch (error) {
+    //     console.log("CustomCardHeader error loading namespace: ", error);
+    // }
+    var { t, ready } = useTranslation("/components/Shared/OnClickInfo", { useSuspense: false });
+
+    if(ready) {
+        keyword = t;
+        console.log("CustomCardHeader: assigned keyword");
     }
     
     const [anchorHelpPopover, setAnchorHelpPopover] = React.useState(null);

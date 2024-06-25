@@ -19,6 +19,7 @@ import ViewColumn from '@mui/icons-material/ViewColumn';
 import React, { useEffect, useState } from 'react';
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
+import { useTranslation } from 'react-i18next';
 
 //const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
@@ -137,12 +138,16 @@ export default function CustomTable(props) {
 
     var keyword = (word) => "";
 
-    try {
-        keyword = i18nLoadNamespace("/components/Shared/CustomTable");
-    }
-    catch (error) {
-        console.log("CustomTable error loading namespace: ", error);
-    }
+    // try {
+    //     keyword = i18nLoadNamespace("/components/Shared/CustomTable");
+    // }
+    // catch (error) {
+    //     console.log("CustomTable error loading namespace: ", error);
+    // }
+
+    const { t, ready } = useTranslation("/components/Shared/CustomTable", {useSuspense: false});
+
+    if(ready) keyword = t;
 
     useEffect(() => {
         setState({

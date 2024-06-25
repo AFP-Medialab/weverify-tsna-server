@@ -18,6 +18,7 @@ import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-c
 import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { connectionEnabled, connectionWindowsOpened } from '../../../redux/slices/connectionSlice';
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
+import { useTranslation } from 'react-i18next';
 const { publicRuntimeConfig } = getConfig();
 
 
@@ -31,12 +32,15 @@ const TweetDialog = (props) => {
     var desinfo = "desinfo";
     
     var keyword = (word) => "";
-    try {
-        keyword = i18nLoadNamespace("/components/Shared/TweetDialog");
-    }
-    catch(error) {
-        console.log("TweetDialog error loading namespace: ", error);
-    }
+    // try {
+    //     keyword = i18nLoadNamespace("/components/Shared/TweetDialog");
+    // }
+    // catch(error) {
+    //     console.log("TweetDialog error loading namespace: ", error);
+    // }
+
+    const {t, ready} = useTranslation("/components/Shared/TweetDialog", {useSuspense: false});
+    if(ready) keyword = t;
     
     const windowConnection = useSelector(state => state.conn.windowsOpen);
     const isConnectionEnable = useSelector(state => state.conn.connectionEnable)
