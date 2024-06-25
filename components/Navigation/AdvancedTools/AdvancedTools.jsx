@@ -23,7 +23,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { errorSet } from '../../../redux/slices/errorSlice';
 import { i18nLoadNamespace } from '../../shared/languages/i18nLoadNamespace';
-import { ADVANCEDTOOLS_PATH } from '../../shared/languages/LanguagePaths';
+import { ADVANCEDTOOLS_PATH, AUTHENTICATION_PATH } from '../../shared/languages/LanguagePaths';
 
 const registrationValidationSchema = yup.object().shape({
     email: yup.string()
@@ -57,7 +57,7 @@ const AdvancedTools = () => {
     );
 
     // i18n
-    const messageI18NResolver = i18nLoadNamespace(tsv);
+    const messageI18NResolver = i18nLoadNamespace(AUTHENTICATION_PATH);
 
 
     const [dialogState, setDialogState] = React.useState(0);
