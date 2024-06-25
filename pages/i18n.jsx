@@ -10,7 +10,7 @@ i18next
   .use(LanguageDetector)
   .use(ChainedBackend)
   .init({
-    debug: true,
+    //debug: true,
     ns: ["components/NavBar"],
     defaultNS: "components/NavBar",
     fallbackLng: "en",
