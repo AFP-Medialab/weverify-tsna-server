@@ -18,10 +18,10 @@ import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-c
 import { connectionEnabled, connectionWindowsOpened } from '../../../redux/slices/connectionSlice';
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 import { useTranslation } from 'react-i18next';
+import { TWEETDIALOGUE_PATH } from '../languages/LanguagePaths';
 const { publicRuntimeConfig } = getConfig();
 
 
-const tsv = "/components/Shared/TweetDialog.tsv";
 let postWithBotTweetUrl = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweetBot`;
 let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
 
@@ -33,7 +33,7 @@ const TweetDialog = (props) => {
     var keyword = (word) => "";
 
     // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
-    const {t, ready} = useTranslation("/components/Shared/TweetDialog", {useSuspense: false});
+    const {t, ready} = useTranslation(TWEETDIALOGUE_PATH, {useSuspense: false});
     if(ready) keyword = t;
     
     const windowConnection = useSelector(state => state.conn.windowsOpen);
