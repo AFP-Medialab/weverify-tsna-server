@@ -9,16 +9,15 @@ import Typography from "@mui/material/Typography";
 import Transition from "react-transition-group/Transition";
 import HelpIcon from "@mui/icons-material/Help";
 import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";
+import { ABOUTTSNA_PATH } from "../languages/LanguagePaths";
 
-//const tsv = "/localDictionary/components/Shared/aboutTsna.tsv";
-const tsv = "/components/Shared/aboutTsna";
 
 const HelpDialog = (props) => {
   const [open, setOpen] = useState(false);
 
   // a list of keywords found in a tsv file. pass in tsv labels and tsv file location
   const paragraphs = props.paragraphs;
-  const keyword = i18nLoadNamespace(tsv);
+  const keyword = i18nLoadNamespace(ABOUTTSNA_PATH);
 
   const handleClickOpen = () => {
     setOpen(true);
