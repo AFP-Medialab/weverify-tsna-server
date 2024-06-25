@@ -15,6 +15,7 @@ import createPlotComponent from 'react-plotly.js/factory';
 import {isNumeric} from "./hooks/bubbleChart"
 import PostViewTable from "../../Components/PostViewTable";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 const Plot = createPlotComponent(plotly);
 
 export default function BubbleChart(props) {
@@ -23,10 +24,8 @@ export default function BubbleChart(props) {
     const [bubbleTweets, setBubbleTweets] = useState(null);
     //const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
-    const sna = useSelector((state) => state.sna);
-
     //console.log("SNATYPE ", sna)
-    const keyword = i18nLoadNamespace(sna.tsv);
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const keywordInfo = i18nLoadNamespace("/components/Shared/OnClickInfo");
 
     const classes = useMyStyles();

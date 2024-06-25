@@ -14,13 +14,13 @@ import { createCSVFromPieChart } from "../Hooks/pieCharts";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 import { setTweetsDetail } from "../TwitterSna";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 
 export default function PlotPieChart(props) {
   const dispatch = useDispatch();
-  const sna = useSelector(state => state.sna)
-  const keyword = i18nLoadNamespace(sna.tsv);
+  const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
   const request = useSelector((state) => state.twitterSna.request);
   const [pieCharts0, setPieCharts0] = useState(null);
   const [pieCharts1, setPieCharts1] = useState(null);

@@ -12,8 +12,6 @@ import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../shared/languages/Langua
 
 export default function UrlList (props) {
 
-    const sna = useSelector(state => state.sna);
-    // const keyword = i18nLoadNamespace(sna.tsv);
     var keyword;
     if(props.type === "TW") {
         keyword = i18nLoadNamespace(TWITTERSNA_PATH);

@@ -26,7 +26,6 @@ let from = "PLOT_LINE";
 
 export default function PlotTimeLine(props){
     
-    const sna = useSelector((state) => state.sna);
     const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const dispatch = useDispatch();
     //HISTOGRAM

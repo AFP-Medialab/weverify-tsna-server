@@ -11,11 +11,11 @@ import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 import { setTweetsDetail } from "../TwitterSna";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
-  const sna = useSelector(state => state.sna)
-  const keyword = i18nLoadNamespace(sna.tsv);
+  const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
   const request = useSelector((state) => state.twitterSna.request);
 
   function downloadClick(csvArr, name, histo, type = "Tweets_") {

@@ -10,11 +10,11 @@ import IconTweet from "../../../../images/SVG/TweetCount/Tweet.svg";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 export default function TweetCount(props) {
-	const sna = useSelector(state => state.sna)
-	const keyword = i18nLoadNamespace(sna.tsv);
+	const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
 	const classes = useMyStyles();
 	const [countVisible, setCountVisible] = useState(true);
 	const [tweetCount, setTweetCount] = useState({

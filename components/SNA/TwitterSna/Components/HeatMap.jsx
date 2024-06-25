@@ -11,6 +11,7 @@ import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { getDayAsString, onHeatMapClick } from "../Hooks/heatMap";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 const Plot = createPlotComponent(plotly);
@@ -18,7 +19,7 @@ const Plot = createPlotComponent(plotly);
 export default function HeatMap (props) { 
 
     const sna = useSelector(state => state.sna)
-    const keyword = i18nLoadNamespace(sna.tsv);
+    const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     const classes = useMyStyles();
 
     const [heatMapTweets, setheatMapTweets] = useState(null);

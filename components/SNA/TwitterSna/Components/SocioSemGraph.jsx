@@ -18,6 +18,7 @@ import { getDomain } from "../../../SNA/lib/displayTweets";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 import { IconButton } from "@mui/material";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 
@@ -27,7 +28,7 @@ import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 export default function SocioSemGraph (props) {
     
     const sna = useSelector(state => state.sna)
-    const keyword = i18nLoadNamespace(sna.tsv);
+    const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     const classes = useMyStyles();
 
     const [socioSemantic4ModeGraphTweets, setSocioSemantic4ModeGraphTweets] = useState(null);

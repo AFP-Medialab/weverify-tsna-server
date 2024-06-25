@@ -19,12 +19,13 @@ import PostViewTable from "../../Components/PostViewTable";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 import { IconButton } from "@mui/material";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 export default function HashtagGraph (props) {
 
     const sna = useSelector(state => state.sna)
-    const keyword = i18nLoadNamespace(sna.tsv);
+    const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     const classes = useMyStyles();
 
     const [coHashtagGraphTweets, setCoHashtagGraphTweets] = useState(null);

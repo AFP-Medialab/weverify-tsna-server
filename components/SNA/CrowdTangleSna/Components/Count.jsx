@@ -12,7 +12,6 @@ import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 export default function Count({ result }) {
-  const sna = useSelector((state) => state.sna);
   const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
   const classes = useMyStyles();
   const [countVisible, setCountVisible] = useState(true);

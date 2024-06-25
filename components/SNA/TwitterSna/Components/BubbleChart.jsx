@@ -12,6 +12,7 @@ import PostViewTable from "../../Components/PostViewTable";
 import { displayPosts } from "../../lib/displayTweets";
 import { createBubbleChartOfMostActiveUsers } from "../Hooks/bubbleChart";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 const Plot = createPlotComponent(plotly);
 
@@ -21,7 +22,7 @@ export default function BubbleChart(props) {
     const topUserProfile = useSelector(state => state.twitterSna.topUser);
 
     const sna = useSelector(state => state.sna)
-    const keyword = i18nLoadNamespace(sna.tsv);
+    const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     const classes = useMyStyles();
 
     const [state, setState] = useState(
