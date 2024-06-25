@@ -15,8 +15,9 @@ import UrlList from "../../Components/UrlList";
 import Count from "../Components/Count";
 import { snaTypeCleaned } from "../../../../redux/slices/tools/snaTypeSlice";
 import { csvSnaStateCleaned } from "../../../../redux/slices/tools/crowdTangleSnaSlice";
-import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { i18nLoadNamespace, i18nLoadNamespaceNoSuspense } from "../../../shared/languages/i18nLoadNamespace";
 import { useTranslation } from "react-i18next";
+import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
@@ -36,9 +37,17 @@ export default function CrowdTangleSnaResults(props) {
 
 
 	
+	var keyword = (word) => "";
+
+	const { t, ready } = i18nLoadNamespaceNoSuspense(TWITTERSNA_PATH);
+
+	if(ready) keyword = t;
 	
-	const keyword = props.keywordTW;
-	const keyword2 = props.keywordCSV;
+	var keyword2 = (word) => "";
+
+	const {t2, ready2} = i18nLoadNamespaceNoSuspense(CROWDTANGLE_PATH);
+
+	if(ready2) keyword2 = t2;
 
 	const dispatch = useDispatch();
 	const classes = useMyStyles();
