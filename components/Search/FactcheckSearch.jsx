@@ -7,13 +7,13 @@ import CardHeader from "@mui/material/CardHeader";
 import FactcheckIcon from '../../images/SVG/Search/Factcheck_big.svg'
 import HeaderTool from "../shared/HeaderTool/HeaderTool";
 import { i18nLoadNamespace } from "../shared/languages/i18nLoadNamespace";
-import { FACTCHECKSEARCH_PATH } from "../shared/languages/LanguagePaths";
+import { ALLTOOLS_PATH, FACTCHECKSEARCH_PATH } from "../shared/languages/LanguagePaths";
 
 
 const FactcheckSearch = () => {
   const classes = useMyStyles();
   const keyword = i18nLoadNamespace(FACTCHECKSEARCH_PATH);
-  const keywordAllTools = i18nLoadNamespace("/components/NavItems/tools/Alltools");
+  const keywordAllTools = i18nLoadNamespace(ALLTOOLS_PATH);
   const tsvinfo = "/components/Shared/OnClickInfo";
   const keywordInfo = i18nLoadNamespace(tsvinfo);
 

@@ -18,7 +18,7 @@ import AdvancedTools from './AdvancedTools/AdvancedTools';
 import ToolCard from "./ToolCard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { i18nLoadNamespace } from "../shared/languages/i18nLoadNamespace";
-import { NAVBAR_PATH, WARNINGINFO_PATH } from "../shared/languages/LanguagePaths";
+import { ALLTOOLS_PATH, NAVBAR_PATH, WARNINGINFO_PATH } from "../shared/languages/LanguagePaths";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -42,7 +42,7 @@ function TabPanel(props) {
 const AllTools = (props) => {
     const router = useRouter();
     const classes = useMyStyles();
-    const keyword = i18nLoadNamespace("/components/NavItems/tools/Alltools");
+    const keyword = i18nLoadNamespace(ALLTOOLS_PATH);
     const keywordNavbar = i18nLoadNamespace(NAVBAR_PATH);
     const keywordWarning = i18nLoadNamespace(WARNINGINFO_PATH);
     const [openAlert, setOpenAlert] = React.useState(false);
