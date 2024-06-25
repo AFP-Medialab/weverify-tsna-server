@@ -11,14 +11,12 @@ import IconSVG from "../../../images/SVG/CardHeader/SVG.svg";
 import { TW_SNA_TYPE } from "../hooks/SnaTypes";
 import useMyStyles from "../styles/useMyStyles";
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
-import useLoadLanguage from '../hooks/useRemoteLoadLanguage';
 import { useTranslation } from 'react-i18next';
 
 export default function CustomCardHeader(props) {
 
     const classes = useMyStyles();
     const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo.tsv" };
-    // var keyword = useLoadLanguage(sna.tsvInfo);
 
     var title = props.title;
     var id = props.id;
@@ -41,10 +39,8 @@ export default function CustomCardHeader(props) {
     // }
     var { t, ready } = useTranslation("/components/Shared/OnClickInfo", { useSuspense: false });
 
-    if(ready) {
-        keyword = t;
-        console.log("CustomCardHeader: assigned keyword");
-    }
+    if(ready) keyword = t;
+    
     
     const [anchorHelpPopover, setAnchorHelpPopover] = React.useState(null);
     const openHelpPopover = Boolean(anchorHelpPopover);

@@ -10,7 +10,6 @@ import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CloseResult from "../../../shared/CloseResult/CloseResult";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import UrlList from "../../Components/UrlList";
 import Count from "../Components/Count";
@@ -43,7 +42,6 @@ export default function CrowdTangleSnaResults(props) {
 	
 	const keyword = props.keywordTW;
 	const keyword2 = props.keywordCSV;
-	//const keyword2 = useLoadLanguage(tsv2);
 
 	const dispatch = useDispatch();
 	const classes = useMyStyles();

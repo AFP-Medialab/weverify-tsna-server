@@ -14,7 +14,6 @@ import "tippy.js/animations/scale.css";
 import "tippy.js/dist/tippy.css";
 import IconCSV from "../../../../images/SVG/CardHeader/CSV.svg";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
@@ -27,7 +26,6 @@ import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 export default function cloudChart(props) {
 
     //var tsv = "/components/NavItems/tools/TwitterSna.tsv";
-    //const keyword = useLoadLanguage(tsv);
     const snatype = useSelector((state) => state.sna);
     const keyword = i18nLoadNamespace("components/NavItems/tools/CrowdTangle");
     const classes = useMyStyles();

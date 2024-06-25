@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfo';
 import {displayPostsInsta,displayPostsFb} from "./lib/displayPosts"
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";

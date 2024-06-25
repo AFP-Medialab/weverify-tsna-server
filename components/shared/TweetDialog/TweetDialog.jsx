@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { connectionEnabled, connectionWindowsOpened } from '../../../redux/slices/connectionSlice';
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 import { useTranslation } from 'react-i18next';

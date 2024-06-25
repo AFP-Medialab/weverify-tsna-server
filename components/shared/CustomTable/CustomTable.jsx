@@ -17,11 +17,9 @@ import SaveAlt from '@mui/icons-material/SaveAlt';
 import Search from '@mui/icons-material/Search';
 import ViewColumn from '@mui/icons-material/ViewColumn';
 import React, { useEffect, useState } from 'react';
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 import { useTranslation } from 'react-i18next';
 
-//const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
 const tsv = "/components/Shared/CustomTable.tsv";
 
 
@@ -133,7 +131,6 @@ export default function CustomTable(props) {
             actions: props.actions
         }
     );
-    //const keyword = useLoadLanguage(tsv);
    // const keyword = i18nLoadNamespace("/components/Shared/CustomTable");
 
     var keyword = (word) => "";

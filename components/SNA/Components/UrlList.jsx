@@ -4,7 +4,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CustomCardHeader from "../../shared/CustomCardHeader/CustomCardheader";
 import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../shared/styles/useMyStyles";
 import { downloadClick } from "../lib/downloadClick";
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";

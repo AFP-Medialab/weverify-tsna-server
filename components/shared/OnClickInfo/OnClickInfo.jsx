@@ -2,7 +2,6 @@ import useMyStyles from "../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import WbIncandescentIcon from '@mui/icons-material/WbIncandescent';
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Linkify from 'react-linkify';
 import { useSelector } from "react-redux";
 import { i18nLoadNamespace } from "../languages/i18nLoadNamespace";

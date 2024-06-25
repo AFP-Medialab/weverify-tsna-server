@@ -13,7 +13,6 @@ import { useRouter } from 'next/router'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next';
 import { i18nLoadNamespace } from './i18nLoadNamespace';
-import useLoadLanguage from '../hooks/useRemoteLoadLanguage';
 
 import axios from "axios";
 

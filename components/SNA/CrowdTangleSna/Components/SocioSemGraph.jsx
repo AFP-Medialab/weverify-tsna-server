@@ -9,7 +9,6 @@ import { ForceAtlas2, RandomizeNodePositions, Sigma } from 'react-sigma';
 import IconEdges from "../../../../images/SVG/CardHeader/Edges.svg";
 import IconNodes from "../../../../images/SVG/CardHeader/Nodes.svg";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";

@@ -20,7 +20,6 @@ import ViewColumn from '@mui/icons-material/ViewColumn';
 import React, { useEffect, useState } from 'react';
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import TweetDialog from '../TweetDialog/TweetDialog';
 import { i18nLoadNamespace } from '../languages/i18nLoadNamespace';
 import { useTranslation } from 'react-i18next';
@@ -128,7 +127,6 @@ export default function CustomTableURL(props) {
             actions: props.actions
         }
     );
-    //const keyword = useLoadLanguage(tsv);
     
     var keyword = (word) => "";
 

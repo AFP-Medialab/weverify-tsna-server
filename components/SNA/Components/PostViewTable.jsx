@@ -12,7 +12,6 @@ import{FB_SNA_TYPE, TW_SNA_TYPE, INSTA_SNA_TYPE} from "../../shared/hooks/SnaTyp
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import { useTranslation } from "react-i18next";
 
 function getIcon(snaType){
