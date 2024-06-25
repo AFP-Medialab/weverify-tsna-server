@@ -31,13 +31,8 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
     //console.log("data POSTED", downloadEnable);
 
     var keyword = (word) => "";
-    // try {
-    //     keyword = i18nLoadNamespace(snatype.tsv);
-    // }
-    // catch (error) {
-    //     console.log("PostViewTable error loading namespace: ", error)
-    // }
 
+    // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
     const {t, ready} = useTranslation(snatype.tsv, {useSuspense: false});
     if(ready) keyword = t;
 

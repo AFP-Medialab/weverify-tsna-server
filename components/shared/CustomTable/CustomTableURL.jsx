@@ -130,13 +130,7 @@ export default function CustomTableURL(props) {
     
     var keyword = (word) => "";
 
-    // try {
-    //     keyword = i18nLoadNamespace("/components/Shared/CustomTable");
-    // }
-    // catch (error) {
-    //     console.log("CustomTableUrl error loading namespace: ", error);
-    // }
-
+    // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
     const {t, ready} = useTranslation("/components/Shared/CustomTable", {useSuspense: false});
 
     if (ready) keyword = t;

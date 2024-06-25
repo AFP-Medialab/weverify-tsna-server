@@ -31,12 +31,8 @@ export default function CustomCardHeader(props) {
     
     var keyword = (word) => "";
 
-    // try {
-    //     keyword = i18nLoadNamespace("/components/Shared/OnClickInfo");
-    // }
-    // catch (error) {
-    //     console.log("CustomCardHeader error loading namespace: ", error);
-    // }
+
+    // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
     var { t, ready } = useTranslation("/components/Shared/OnClickInfo", { useSuspense: false });
 
     if(ready) keyword = t;

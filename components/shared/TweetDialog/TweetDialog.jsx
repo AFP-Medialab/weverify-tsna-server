@@ -31,13 +31,8 @@ const TweetDialog = (props) => {
     var desinfo = "desinfo";
     
     var keyword = (word) => "";
-    // try {
-    //     keyword = i18nLoadNamespace("/components/Shared/TweetDialog");
-    // }
-    // catch(error) {
-    //     console.log("TweetDialog error loading namespace: ", error);
-    // }
 
+    // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
     const {t, ready} = useTranslation("/components/Shared/TweetDialog", {useSuspense: false});
     if(ready) keyword = t;
     
