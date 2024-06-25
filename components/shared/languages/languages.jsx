@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { i18nLoadNamespace } from './i18nLoadNamespace';
 
 import axios from "axios";
+import { LANGUAGES_PATH } from './LanguagePaths';
 
 const useLoadSupportedLanguage = () => {
   const dispatch = useDispatch();
@@ -30,8 +31,6 @@ const useLoadSupportedLanguage = () => {
   }, []);
 };
 
-//const tsv = "/localDictionary/components/languages.tsv";
-const tsv = "/components/NavItems/languages";
 
 
 
@@ -47,7 +46,7 @@ const Languages = () => {
     const dispatch = useDispatch();
     //const lang = router.query.lang
     // const language_list = (dictionary && dictionary[tsv])? Object.keys(dictionary[tsv]) : [];
-    const [ keyword, i18n ] = useTranslation("components/NavItems/languages");
+    const [ keyword, i18n ] = useTranslation(LANGUAGES_PATH);
 
     // useEffect(() => {
     //     if(!_.isUndefined(lang)){
