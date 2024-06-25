@@ -9,6 +9,7 @@ export const CROWDTANGLE_PATH = "components/NavItems/tools/CrowdTangle";
 export const TWITTERSNA_PATH = "components/NavItems/tools/TwitterSna";
 export const FACTCHECKSEARCH_PATH = "components/NavItems/tools/FactcheckSearch";
 export const XNETWORK_PATH = "components/NavItems/tools/XNetwork";
+export const ALLTOOLS_PATH = "components/NavItems/tools/Alltools";
 
 export const INFO_PATH = "components/Shared/OnClickInfo";
 export const WARNINGINFO_PATH = "components/Shared/OnWarningInfo";

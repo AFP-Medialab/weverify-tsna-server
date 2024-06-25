@@ -4,11 +4,11 @@ import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
 import FactcheckSearch from "../components/Search/FactcheckSearch"
 import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
-const tsv = "/components/NavItems/tools/FactcheckSearch";
+import { FACTCHECKSEARCH_PATH } from "../components/shared/languages/LanguagePaths";
 
 
 const FactCheckInfo = () => {
-  const keyword = i18nLoadNamespace(tsv);
+  const keyword = i18nLoadNamespace(FACTCHECKSEARCH_PATH);
   return (
     <Layout title={keyword("navbar_factcheck")}>
       <Head>
