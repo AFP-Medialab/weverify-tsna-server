@@ -18,17 +18,21 @@ import axios from "axios";
 import { LANGUAGES_PATH } from './LanguagePaths';
 
 const useLoadSupportedLanguage = () => {
-  const dispatch = useDispatch();
-  const lngurl =
-    process.env.NEXT_PUBLIC_TRANSLATION_URL +
-    "/languages?tag=" +
-    process.env.NEXT_PUBLIC_TRANSLATION_TAG;
+    const dispatch = useDispatch();
+    const lngurl =
+        process.env.NEXT_PUBLIC_TRANSLATION_URL +
+        "/languages?tag=" +
+        process.env.NEXT_PUBLIC_TRANSLATION_TAG;
 
-  useEffect(() => {
-    axios.get(lngurl).then((result) => {
-      dispatch(loadLanguages({languagesList: result.data}));
-    });
-  }, []);
+    useEffect(() => {
+
+        axios.get(lngurl).then((result) => {
+            dispatch(loadLanguages({languagesList: result.data}));
+        }).catch((error) => {
+            if(error) console.error(error)
+        });
+
+    }, []);
 };
 
 
