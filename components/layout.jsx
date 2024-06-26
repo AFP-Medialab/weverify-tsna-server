@@ -1,7 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import { Stack  } from '@mui/material';
-//import HelpDialog from "../components/shared/HelpDialog/HelpDialog";
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import getConfig from 'next/config';
@@ -134,15 +133,3 @@ function Layout(props) {
   }
   
   export default Layout
-
-
-  /*
-
-{<HelpDialog paragraphs={["aboutsna_intro", "aboutsna_count", "aboutsna_timeline", "aboutsna_most_RT", "aboutsna_most_liked",
-                 "aboutsna_most_active", "aboutsna_most_mentions", "aboutsna_bubblegraph", "aboutsna_heatmap", "aboutsna_most_associated_hashtag", "aboutsna_ssgraph",
-                 "aboutsna_wordcloud", "aboutsna_gexf_export", "aboutsna_urls"]}
-                             />
-                }
-
-
-  */
