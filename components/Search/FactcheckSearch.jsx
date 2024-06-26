@@ -44,7 +44,7 @@ const FactcheckSearch = () => {
         <div className={classes.root2}>
           <div className="gcse-search"></div>
           <Box m={1} />
-          <OnClickInfo keyword={"factcheck_tip"} />
+          {/* <OnClickInfo keyword={"factcheck_tip"} /> */}
         </div>
 
       </Card>
