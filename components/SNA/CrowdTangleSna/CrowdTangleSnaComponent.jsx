@@ -200,7 +200,6 @@ const CrowdTangleSnaComponent = () => {
                 </Grid>
             </Grid>
 
-        {/* <StylesProvider injectFirst> */}
             <Card className={cardClasses.root}>
                 <CardHeader
                 title={keyword("cardheader_ct_parameters")}
@@ -228,7 +227,6 @@ const CrowdTangleSnaComponent = () => {
                     }
                 </div>
             </Card>
-        {/* </StylesProvider> */}
         {
             resultRedux && <CrowdTangleSnaResults result={resultRedux} workers={workers}/>
         }
