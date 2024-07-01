@@ -286,8 +286,7 @@ const tsnaWorkers = useRef()
     const buildPieCharts = async (request, responseAggs) => {
       const pieCharts = createPieCharts(
         request,
-        getJsonDataForPieCharts(responseAggs, widgetPieTitle(request)),
-        keyword
+        getJsonDataForPieCharts(responseAggs, widgetPieTitle(request))
       );
       dispatch(twitterSnaPieChartsResultSet(pieCharts));
     };

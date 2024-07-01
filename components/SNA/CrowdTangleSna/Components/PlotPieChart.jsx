@@ -347,7 +347,7 @@ return (
                         {
                             obj.json !== null && !(obj.json[0].values.length === 1 && obj.json[0].values[0] === "") ?
                                 <CustomCardHeader
-                                    title={obj.title}
+                                    title={keyword(obj.title)}
                                     showHelp={true}
                                     helpText={obj.tip}
 
@@ -362,7 +362,7 @@ return (
                                 />
                             :
                                 <CustomCardHeader
-                                    title={obj.title}
+                                    title={keyword(obj.title)}
                                     showHelp={true}
                                     helpText={obj.tip}
                                 />
@@ -380,7 +380,7 @@ return (
                                 <div>
                                     <Plot
                                         data={obj.json}
-                                        layout={obj.layout}
+                                        layout={{...obj.layout, title: {...obj.layout.title, text:keyword(obj.title)}}}
                                         config={obj.config}
                                         onClick={e => {
                                             onDonutsClick(e, index)

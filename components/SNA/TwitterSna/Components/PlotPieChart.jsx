@@ -243,7 +243,7 @@ export default function PlotPieChart(props) {
                   <div>
                     <Plot
                       data={obj.json}
-                      layout={obj.layout}
+                      layout={{...obj.layout, title: {...obj.layout.title, text:keyword(obj.title)}}}
                       config={obj.config}
                       onClick={(e) => {
                         onDonutsClick(e, index, state.result.tweets);

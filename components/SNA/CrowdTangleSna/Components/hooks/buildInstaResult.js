@@ -35,10 +35,10 @@ const buildFirstInstaResult = (workers, data, dispatch, keyword) => {
 
 const buildPieChartsInsta = async (pieChartsWorker, data, dispatch, keyword) => {
   const keywordTitles = [
-    keyword("shared_cloud_chart_title"),
-    keyword("likes_cloud_chart_title"),
-    keyword("top_users_pie_chart_title"),
-    keyword("mention_cloud_chart_title")
+    "shared_cloud_chart_title",
+    "likes_cloud_chart_title",
+    "top_users_pie_chart_title",
+    "mention_cloud_chart_title"
   ];
   buildPieCharts(pieChartsWorker, data, keywordTitles, dispatch, INSTA_SNA_TYPE);
 };

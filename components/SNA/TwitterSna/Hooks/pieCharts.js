@@ -1,6 +1,6 @@
 import {widgetPieTitle, widgetFilename} from "./tsnaUtils"
 
-export const createPieCharts = (request, jsonPieCharts, keyword) => {
+export const createPieCharts = (request, jsonPieCharts) => {
   let layout = {
     title: {
       font: {
@@ -53,9 +53,7 @@ export const createPieCharts = (request, jsonPieCharts, keyword) => {
 
   for (let cpt = 0; cpt < keywordTitles.length; cpt++) {
     let specificLayout = JSON.parse(JSON.stringify(layout));
-    let specificTitle = keyword(keywordTitles[cpt]);
     +"<br>" + widgetPieTitle(request);
-    specificLayout.title.text = specificTitle;
     pieCharts.push({
       title: keywordTitles[cpt],
       json: jsonPieCharts[cpt],
