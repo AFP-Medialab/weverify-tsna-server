@@ -47,7 +47,6 @@ export default function CrowdTangleSnaResults(props) {
 
 	const {t2, ready2} = i18nLoadNamespaceNoSuspense(CROWDTANGLE_PATH);
 
-	if(ready2) keyword2 = t2;
 
 	const dispatch = useDispatch();
 	const classes = useMyStyles();
@@ -151,7 +150,7 @@ export default function CrowdTangleSnaResults(props) {
 									<Typography variant={"h6"} >
 										{"1."}
 										{!collapsed &&
-											" " + keyword2("ct_counter_title")
+											" " + keyword("ct_counter_title")
 										}
 
 									</Typography>
