@@ -58,7 +58,8 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
         },
       ];
     
-    var labeledColumns = getLabelsColumns(keyword, data.columns);
+    //var labeledColumns = getLabelsColumns(keyword, data.columns);
+    var labeledColumns = data.columns;
     //console.log("labeledColumns  ", labeledColumns);
     return (
         <div
@@ -97,10 +98,11 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
                 }
             </Grid>
             <Box m={2} />
-            <CustomTable title={keywordSNA("sna_result_selected_posts")}
+            <CustomTable title={(snatype.type === TW_SNA_TYPE) ? "twittersna_result_slected_tweets" : "sna_result_selected_posts"}
                 columns={labeledColumns}
                 data={data.data}
                 actions={goToAction}
+                type ={snatype.type}
             />
         </div>
     )

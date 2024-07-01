@@ -54,9 +54,9 @@ const buildUrls = async (data, keyword, dispatch) => {
   const urls = await getJsonDataForURLTable(
     sortedData,
     {
-      "url" : keyword("ct_url"),
-      "count": keyword("ct_sna_shares"), 
-      "credibility" : keyword("sna_credibility")
+      "url" : "ct_url",
+      "count": "ct_sna_shares", 
+      "credibility" : "sna_credibility"
     },
     {
       "url": "url", 

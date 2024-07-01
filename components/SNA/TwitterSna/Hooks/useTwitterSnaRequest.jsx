@@ -325,9 +325,9 @@ const tsnaWorkers = useRef()
       const urls = await getJsonDataForURLTable(
         responseAggs["top_url_keyword"]["buckets"],
         {
-          "url" : keyword("elastic_url"),
-          "count": keyword("elastic_count"), 
-          "credibility" : keyword("sna_credibility")
+          "url" : "elastic_url",
+          "count": "elastic_count", 
+          "credibility" : "sna_credibility"
         },
         {"url": "key", "count" :"doc_count"}, enableExtraFeatures()
       );

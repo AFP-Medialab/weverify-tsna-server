@@ -12,6 +12,7 @@ import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 import { setTweetsDetail } from "../TwitterSna";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
+import { TW_SNA_TYPE } from "../../../shared/hooks/SnaTypes";
 
 export default function HistoTweetsTable(props) {
   const dispatch = useDispatch();
@@ -87,10 +88,12 @@ export default function HistoTweetsTable(props) {
       </Grid>
       <Box m={2} />
       <CustomTable
-        title={keyword("twittersna_result_slected_tweets")}
-        columns={getLabelsColumns(keyword, props.data.columns)}
+        title={"twittersna_result_slected_tweets"}
+        //columns={getLabelsColumns(keyword, props.data.columns)}
+        columns = {props.data.columns}
         data={props.data.data}
         actions={goToTweetAction}
+        type = {TW_SNA_TYPE}
       />
     </div>
   );

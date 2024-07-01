@@ -8,12 +8,13 @@ import useMyStyles from "../../shared/styles/useMyStyles";
 import { downloadClick } from "../lib/downloadClick";
 import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
 import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../shared/languages/LanguagePaths";
+import { TW_SNA_TYPE } from "../../shared/hooks/SnaTypes";
 
 
 export default function UrlList (props) {
 
     var keyword;
-    if(props.type === "TW") {
+    if(props.type === TW_SNA_TYPE) {
         keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     }
     else {
@@ -73,7 +74,7 @@ export default function UrlList (props) {
     return (
         <Card>
             
-            <CustomCardHeader title={(props.type === "TW" ? "13. " : "") + keyword(props.title_message)} showHelp={true} helpText={"twittersna_urls_tip"} showCSV={true} functionCSV={() => downloadClick(props.request, createCSVFromURLTable(props.result.urls), "Urls", false, "")} />
+            <CustomCardHeader title={(props.type === TW_SNA_TYPE ? "13. " : "") + keyword(props.title_message)} showHelp={true} helpText={"twittersna_urls_tip"} showCSV={true} functionCSV={() => downloadClick(props.request, createCSVFromURLTable(props.result.urls), "Urls", false, "")} />
             <Box p={2}>
             {
 
@@ -88,6 +89,7 @@ export default function UrlList (props) {
                 data={props.result.urls.data}
                 actions={actions}
                 topic={props.topic}
+                type = {props.type}
             />
             <Box m={1}/>
             </Box>

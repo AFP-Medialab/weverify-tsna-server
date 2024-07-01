@@ -21,8 +21,9 @@ import React, { useEffect, useState } from 'react';
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
 import TweetDialog from '../TweetDialog/TweetDialog';
-import { i18nLoadNamespaceNoSuspense } from '../languages/i18nLoadNamespace';
-import { CUSTOMTABLE_PATH } from '../languages/LanguagePaths';
+import { i18nLoadNamespace, i18nLoadNamespaceNoSuspense } from '../languages/i18nLoadNamespace';
+import { CROWDTANGLE_PATH, CUSTOMTABLE_PATH, TWITTERSNA_PATH } from '../languages/LanguagePaths';
+import { TW_SNA_TYPE } from '../hooks/SnaTypes';
 
 
 
@@ -132,6 +133,15 @@ export default function CustomTableURL(props) {
 
     if (ready) keyword = t;
 
+    var keywordSna = (word) => "";
+
+    if(props.type === TW_SNA_TYPE) {
+        keywordSna = i18nLoadNamespace(TWITTERSNA_PATH);
+    }
+    else {
+        keywordSna = i18nLoadNamespace(CROWDTANGLE_PATH);
+    }
+
     useEffect(() => {
         //console.log("use effect");
         setState({
@@ -190,7 +200,7 @@ export default function CustomTableURL(props) {
                         //console.log("COLUMN", obj);
                         if (obj.field === "credibility") {
                             return {
-                                title: obj.title,
+                                title: keywordSna(obj.title),
                                 field: obj.field,
                                 width: "15%",
                                 cellStyle: {
@@ -202,14 +212,14 @@ export default function CustomTableURL(props) {
                             }
                         } else if (obj.field === "url" || obj.field === "URL") {
                             return {
-                                title: obj.title,
+                                title: keywordSna(obj.title),
                                 field: obj.field,
                                 width: "100%",
                                 render: rowData => <a href={rowData.url} target="_blank" style={{ color: "#51A5B2"}}>{rowData.url}</a>
                             }
                         } else if (obj.field === "count") {
                             return {
-                                title: obj.title,
+                                title: keywordSna(obj.title),
                                 field: obj.field,
                                 width: "10%",
                                 cellStyle: {
@@ -218,7 +228,7 @@ export default function CustomTableURL(props) {
                             }
                         } else {
                             return {
-                                title: obj.title,
+                                title: keywordSna(obj.title),
                                 field: obj.field,
                                 width: "5%"
                             }

@@ -29,7 +29,8 @@ export default function HistoTweetsTable(props) {
     },
   ];
 
-  var columns = getLabelsColumns(keyword, props.data.columns);
+  // var columns = getLabelsColumns(keyword, props.data.columns);
+  var columns = props.data.columns;
 
   return (
     <div>
@@ -54,10 +55,11 @@ export default function HistoTweetsTable(props) {
       </Grid>
       <Box m={2} />
       <CustomTable
-        title={keyword("sna_result_selected_posts")}
+        title={"sna_result_selected_posts"}
         columns={columns}
         data={props.data.data}
         actions={goToAction}
+        type={type}
       />
     </div>
   );

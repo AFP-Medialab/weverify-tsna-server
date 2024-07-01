@@ -20,6 +20,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { twitterSnaCleanedState } from "../../../../redux/slices/tools/twitterSnaSlice";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
+import { TW_SNA_TYPE } from "../../../shared/hooks/SnaTypes";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), { ssr: false });
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), { ssr: false });
@@ -357,7 +358,7 @@ export default function TwitterSnaResult(props) {
                             <span id="urls" style={{ position: "absolute", top: "-112px" }}></span>
                             <UrlList result={result} request={request} title_message={'twittersna_result_url_in_tweets'}
                                 tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true} topic={topic}
-                                type={"TW"}
+                                type={TW_SNA_TYPE}
                                 />
                         </div>
                     }

@@ -17,6 +17,7 @@ import { snaTypeCleaned } from "../../../../redux/slices/tools/snaTypeSlice";
 import { csvSnaStateCleaned } from "../../../../redux/slices/tools/crowdTangleSnaSlice";
 import { i18nLoadNamespaceNoSuspense } from "../../../shared/languages/i18nLoadNamespace";
 import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
+import { CSV_SNA_TYPE } from "../../../shared/hooks/SnaTypes";
 
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
@@ -349,8 +350,8 @@ export default function CrowdTangleSnaResults(props) {
 							{
 								props.result.urls &&
 								<UrlList result={props.result} title_message={'ct_sna_result_url_in_posts'}
-									tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={false} topic={"this topic"} keyword={keyword2}
-									type = {"CSVSna"}/>
+									tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={false} topic={"this topic"}
+									type = {CSV_SNA_TYPE}/>
 							}
 						</div>
 					}
