@@ -65,78 +65,6 @@ export default function cloudChart(props) {
         return csvData;
     };
 
-    // const getCallbacks = () => {
-
-    //     return {
-
-    //         getWordColor: word => word.color,
-    //         getWordTooltip: word =>
-    //             tooltip(word),
-    //         onWordClick: getCallback("onWordClick"),
-    //         onWordMouseOut: getCallback("onWordMouseOut"),
-    //         onWordMouseOver: getCallback("onWordMouseOver")
-    //     }
-    // };
-
-    const tooltip = word => {
-        if (word.entity !== null) {
-            // console.log("word.entity111 ",word.entity)
-            //console.log("word.text111 ",word.text)
-            // console.log("word.value111 ",word.value)
-
-            return "The word " + word.text + " appears " + word.value + " times and is a " + word.entity + ".";
-
-        }
-        else {
-
-
-            //console.log("word.entity ",word.entity)
-            //console.log("word.text ",word.text)
-            //console.log("word.value ",word.value)
-            return "The word " + word.text + " appears " + word.value + " times.";
-        }
-    }
-
-    // const getCallback = useCallback((callback) => {
-
-    //     return function (word, event) {
-
-    //         const isActive = callback !== "onWordMouseOut";
-    //         const element = event.target;
-    //         const text = select(element);
-    //         text
-    //             .on("click", () => {
-    //                 if (isActive) {
-    //                     let selectedWord = word.text;
-    //                     //console.log("selectedWord ",selectedWord)
-    //                     let filteredTweets = filterTweetsGivenWord(selectedWord);
-
-    //                     //  console.log("ASDADSA ", typer)
-    //                     if (type === "FB") {
-
-    //                         let dataToDisplay = displayPostsFb(filteredTweets, keyword);
-    //                         //console.log("displayFB ", dataToDisplay)
-
-    //                         dataToDisplay["selected"] = selectedWord;
-    //                         setcloudPosts(dataToDisplay);
-    //                     }
-    //                     else {
-
-    //                         let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
-    //                         //console.log("displayInsta ", dataToDisplay)
-
-    //                         dataToDisplay["selected"] = selectedWord;
-    //                         setcloudPosts(dataToDisplay);
-    //                     }
-    //                 }
-    //             })
-    //             .transition()
-    //             .attr("background", "white")
-    //             .attr("text-decoration", isActive ? "underline" : "none");
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [props.result]);
-
     function filterTweetsGivenWord(word) {
         var length1 = props.result.data
 
@@ -210,7 +138,6 @@ export default function cloudChart(props) {
     //createGraphWhenClickANode;
 
     function click(tag) {
-        console.log(tag);
         let selectedWord = tag.value;
         let filteredTweets = filterTweetsGivenWord(selectedWord);
         if (type === "FB") {
@@ -339,7 +266,6 @@ export default function cloudChart(props) {
                     {
                         props.result.cloudChart && props.result.cloudChart.json && (props.result.cloudChart.json.length !== 0) &&
                         <div id="top_words_cloud_chart" height={"100%"} width={"100%"}>
-                            {/* <ReactWordcloud key={JSON.stringify(props.result)} options={props.result.cloudChart.options} callbacks={call} words={props.result.cloudChart.json} /> */}
                             <TagCloud minSize={12} maxSize={70} tags={props.result.cloudChart.json} onClick={click} style={{textAlign:"center"}}/>
                             <Box m={1} />
                         </div>
