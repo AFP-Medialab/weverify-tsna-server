@@ -8,7 +8,7 @@ import Plotly from 'plotly.js-dist';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CSVLink } from "react-csv";
 import { useSelector } from "react-redux";
-import ReactWordcloud from "react-wordcloud";
+//import ReactWordcloud from "react-wordcloud";
 import { SaveSvgAsPng } from 'save-svg-as-png';
 import "tippy.js/animations/scale.css";
 import "tippy.js/dist/tippy.css";
