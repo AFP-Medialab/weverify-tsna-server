@@ -30,7 +30,7 @@ const HeatMap = dynamic(import("../Components/HeatMap"), { ssr: false });
 const BubbleChart = dynamic(import("../Components/BubbleChartCSV"), { ssr: false });
 const HashtagGraph = dynamic(import("../Components/HashtagGraph"), { ssr: false });
 const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), { ssr: false });
-// const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
+const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 
 
 export default function CrowdTangleSnaResults(props) {
@@ -336,8 +336,8 @@ export default function CrowdTangleSnaResults(props) {
 							<span id="words" style={{ position: "absolute", top: "-112px" }}></span>
 							<Box m={3} />
 							{
-								//props.result.cloudChart &&
-								// <CloudChart result={props.result} />
+								props.result.cloudChart &&
+								<CloudChart result={props.result} />
 							}
 						</div>
 					}

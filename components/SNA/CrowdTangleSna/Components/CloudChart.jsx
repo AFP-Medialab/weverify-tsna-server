@@ -3,12 +3,10 @@ import Card from "@mui/material/Card";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { select } from 'd3-selection';
 import Plotly from 'plotly.js-dist';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CSVLink } from "react-csv";
 import { useSelector } from "react-redux";
-//import ReactWordcloud from "react-wordcloud";
 import { SaveSvgAsPng } from 'save-svg-as-png';
 import "tippy.js/animations/scale.css";
 import "tippy.js/dist/tippy.css";
@@ -20,6 +18,7 @@ import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { IconButton } from "@mui/material";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
+import {TagCloud} from 'react-tagcloud';
 
 
 
@@ -66,18 +65,18 @@ export default function cloudChart(props) {
         return csvData;
     };
 
-    const getCallbacks = () => {
+    // const getCallbacks = () => {
 
-        return {
+    //     return {
 
-            getWordColor: word => word.color,
-            getWordTooltip: word =>
-                tooltip(word),
-            onWordClick: getCallback("onWordClick"),
-            onWordMouseOut: getCallback("onWordMouseOut"),
-            onWordMouseOver: getCallback("onWordMouseOver")
-        }
-    };
+    //         getWordColor: word => word.color,
+    //         getWordTooltip: word =>
+    //             tooltip(word),
+    //         onWordClick: getCallback("onWordClick"),
+    //         onWordMouseOut: getCallback("onWordMouseOut"),
+    //         onWordMouseOver: getCallback("onWordMouseOver")
+    //     }
+    // };
 
     const tooltip = word => {
         if (word.entity !== null) {
@@ -98,45 +97,45 @@ export default function cloudChart(props) {
         }
     }
 
-    const getCallback = useCallback((callback) => {
+    // const getCallback = useCallback((callback) => {
 
-        return function (word, event) {
+    //     return function (word, event) {
 
-            const isActive = callback !== "onWordMouseOut";
-            const element = event.target;
-            const text = select(element);
-            text
-                .on("click", () => {
-                    if (isActive) {
-                        let selectedWord = word.text;
-                        //console.log("selectedWord ",selectedWord)
-                        let filteredTweets = filterTweetsGivenWord(selectedWord);
+    //         const isActive = callback !== "onWordMouseOut";
+    //         const element = event.target;
+    //         const text = select(element);
+    //         text
+    //             .on("click", () => {
+    //                 if (isActive) {
+    //                     let selectedWord = word.text;
+    //                     //console.log("selectedWord ",selectedWord)
+    //                     let filteredTweets = filterTweetsGivenWord(selectedWord);
 
-                        //  console.log("ASDADSA ", typer)
-                        if (type === "FB") {
+    //                     //  console.log("ASDADSA ", typer)
+    //                     if (type === "FB") {
 
-                            let dataToDisplay = displayPostsFb(filteredTweets, keyword);
-                            //console.log("displayFB ", dataToDisplay)
+    //                         let dataToDisplay = displayPostsFb(filteredTweets, keyword);
+    //                         //console.log("displayFB ", dataToDisplay)
 
-                            dataToDisplay["selected"] = selectedWord;
-                            setcloudPosts(dataToDisplay);
-                        }
-                        else {
+    //                         dataToDisplay["selected"] = selectedWord;
+    //                         setcloudPosts(dataToDisplay);
+    //                     }
+    //                     else {
 
-                            let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
-                            //console.log("displayInsta ", dataToDisplay)
+    //                         let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
+    //                         //console.log("displayInsta ", dataToDisplay)
 
-                            dataToDisplay["selected"] = selectedWord;
-                            setcloudPosts(dataToDisplay);
-                        }
-                    }
-                })
-                .transition()
-                .attr("background", "white")
-                .attr("text-decoration", isActive ? "underline" : "none");
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    //                         dataToDisplay["selected"] = selectedWord;
+    //                         setcloudPosts(dataToDisplay);
+    //                     }
+    //                 }
+    //             })
+    //             .transition()
+    //             .attr("background", "white")
+    //             .attr("text-decoration", isActive ? "underline" : "none");
+    //     };
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [props.result]);
 
     function filterTweetsGivenWord(word) {
         var length1 = props.result.data
@@ -210,6 +209,28 @@ export default function cloudChart(props) {
     }
     //createGraphWhenClickANode;
 
+    function click(tag) {
+        console.log(tag);
+        let selectedWord = tag.value;
+        let filteredTweets = filterTweetsGivenWord(selectedWord);
+        if (type === "FB") {
+
+            let dataToDisplay = displayPostsFb(filteredTweets, keyword);
+            //console.log("displayFB ", dataToDisplay)
+
+            dataToDisplay["selected"] = selectedWord;
+            setcloudPosts(dataToDisplay);
+        }
+        else {
+
+            let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
+            //console.log("displayInsta ", dataToDisplay)
+
+            dataToDisplay["selected"] = selectedWord;
+            setcloudPosts(dataToDisplay);
+        }
+    }
+
     function downloadAsSVG(elementId, keyword, filesNames) {
 
         if (elementId === "top_words_cloud_chart") {
@@ -253,7 +274,7 @@ export default function cloudChart(props) {
         }
     }
 
-    let call = getCallbacks();
+    //let call = getCallbacks();
     return (
         <Card>
             {(props.result && props.result.cloudChart && props.result.cloudChart.json && props.result.cloudChart.json.length !== 0) &&
@@ -318,7 +339,8 @@ export default function cloudChart(props) {
                     {
                         props.result.cloudChart && props.result.cloudChart.json && (props.result.cloudChart.json.length !== 0) &&
                         <div id="top_words_cloud_chart" height={"100%"} width={"100%"}>
-                            <ReactWordcloud key={JSON.stringify(props.result)} options={props.result.cloudChart.options} callbacks={call} words={props.result.cloudChart.json} />
+                            {/* <ReactWordcloud key={JSON.stringify(props.result)} options={props.result.cloudChart.options} callbacks={call} words={props.result.cloudChart.json} /> */}
+                            <TagCloud minSize={12} maxSize={70} tags={props.result.cloudChart.json} onClick={click} style={{textAlign:"center"}}/>
                             <Box m={1} />
                         </div>
 
