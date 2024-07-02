@@ -4,7 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import { IconButton } from "@mui/material";
-import { select } from 'd3-selection';
+//import { select } from 'd3-selection';
 import Plotly from 'plotly.js-dist';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CSVLink } from "react-csv";
@@ -21,6 +21,7 @@ import PostViewTable from "../../Components/PostViewTable";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
+import {TagCloud} from 'react-tagcloud';
 
 export default function cloudChart (props) {
 
@@ -82,36 +83,45 @@ export default function cloudChart (props) {
             return "The word " + word.text + " appears " + word.value + " times.";
     }
 
-    const getCallback = useCallback((callback) => {
+    // const getCallback = useCallback((callback) => {
 
-        return function (word, event) {
+    //     return function (word, event) {
 
-            const isActive = callback !== "onWordMouseOut";
-            const element = event.target;
-            const text = select(element);
-            text
-                .on("click", () => {
-                    if (isActive) {
-                        let selectedWord = word.text;
-                        let filteredTweets = filterTweetsGivenWord(selectedWord);
-                        let dataToDisplay = displayPosts(filteredTweets, keyword);
-                        dataToDisplay["selected"] = selectedWord;
-                        setCloudTweets(dataToDisplay);
+    //         const isActive = callback !== "onWordMouseOut";
+    //         const element = event.target;
+    //         const text = select(element);
+    //         text
+    //             .on("click", () => {
+    //                 if (isActive) {
+    //                     let selectedWord = word.text;
+    //                     let filteredTweets = filterTweetsGivenWord(selectedWord);
+    //                     let dataToDisplay = displayPosts(filteredTweets, keyword);
+    //                     dataToDisplay["selected"] = selectedWord;
+    //                     setCloudTweets(dataToDisplay);
 
-                    }
-                })
-                .transition()
-                .attr("background", "white")
-                .attr("text-decoration", isActive ? "underline" : "none");
-        };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
+    //                 }
+    //             })
+    //             .transition()
+    //             .attr("background", "white")
+    //             .attr("text-decoration", isActive ? "underline" : "none");
+    //     };
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [props.result]);
 
     function filterTweetsGivenWord(word) {
         let filteredTweets = props.result.tweets.filter(function (tweetObj) {
             return tweetObj._source.full_text.toLowerCase().match(new RegExp('(^|((.)*[.()0-9!?\'’‘":,/\\%><«» ^#]))' + word + '(([.()!?\'’‘":,/><«» ](.)*)|$)', "i"));
         });
         return filteredTweets;
+    }
+
+    function click(tag) {
+        console.log(tag);
+        let selectedWord = tag.value;
+        let filteredTweets = filterTweetsGivenWord(selectedWord);
+        let dataToDisplay = displayPosts(filteredTweets, keyword);
+        dataToDisplay["selected"] = selectedWord;
+        setCloudTweets(dataToDisplay);
     }
     //createGraphWhenClickANode;
 
@@ -158,7 +168,7 @@ export default function cloudChart (props) {
         }
     }
 
-    let call = getCallbacks();
+    //let call = getCallbacks();
     return (
         <Card>
             {(props.result && props.result.cloudChart && props.result.cloudChart.json && props.result.cloudChart.json.length !== 0) &&
@@ -205,7 +215,9 @@ export default function cloudChart (props) {
                                 {
                                     props.result.cloudChart && props.result.cloudChart.json && (props.result.cloudChart.json.length !== 0) &&
                                     <div id="top_words_cloud_chart" height={"100%"} width={"100%"}>
-                                        <ReactWordcloud key={JSON.stringify(props.result)} options={props.result.cloudChart.options} callbacks={call} words={props.result.cloudChart.json} />
+                                        {/* <ReactWordcloud key={JSON.stringify(props.result)} options={props.result.cloudChart.options} callbacks={call} words={props.result.cloudChart.json} /> */}
+                                        {console.log(props.result.cloudChart.json)}
+                                        <TagCloud minSize={12} maxSize={70} tags={props.result.cloudChart.json} onClick={click} style={{textAlign:"center"}}/>
                                         <Box m={1}/>
                                     </div>
 

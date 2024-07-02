@@ -71,8 +71,8 @@ export const createWordCloud = (plotlyJson, request) => {
   mostUsedWords = mostUsedWords.map((word) => {
     let w = word.word.includes("@") ? word.word : word.word.replace(/_/g, " ");
     return {
-      text: w,
-      value: word.nbOccurences,
+      value: w,
+      count: word.nbOccurences,
       entity: word.entity,
       color: getColor(word.entity),
     };
