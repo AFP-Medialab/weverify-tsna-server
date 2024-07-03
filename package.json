@@ -60,7 +60,6 @@
     "react-redux": "^9.1.0",
     "react-sigma": "^1.2.35",
     "react-slack-feedback": "^2.1.1",
-    "react-tagcloud": "^2.3.3",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
