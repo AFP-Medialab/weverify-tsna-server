@@ -21,7 +21,9 @@ import PostViewTable from "../../Components/PostViewTable";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
-import {TagCloud} from 'react-tagcloud';
+import { scaleLog } from "@visx/scale";
+import { Wordcloud } from "@visx/wordcloud";
+import { Text } from "@visx/text";
 
 export default function cloudChart (props) {
 
@@ -72,8 +74,8 @@ export default function cloudChart (props) {
         return filteredTweets;
     }
 
-    function click(tag) {
-        let selectedWord = tag.value;
+    function click(word) {
+        let selectedWord = word;
         let filteredTweets = filterTweetsGivenWord(selectedWord);
         let dataToDisplay = displayPosts(filteredTweets, keyword);
         dataToDisplay["selected"] = selectedWord;
@@ -124,7 +126,25 @@ export default function cloudChart (props) {
         }
     }
 
-    //let call = getCallbacks();
+    const getWords = () => {
+        if (props.result.cloudChart && props.result.cloudChart.json) {
+            return JSON.parse(JSON.stringify(props.result.cloudChart.json));
+        }
+        else {
+            return [];
+        }
+    };
+
+    const words = getWords();
+    const colors = ['#143059', '#2F6B9A', '#82a6c2'];
+    const fontScale = scaleLog({
+        domain: [Math.min(...words.map((w) => w.value)), Math.max(...words.map((w) => w.value))],
+        range: [15, 70],
+    });
+    const fontSizeSetter = (datum) => fontScale(datum.value);
+
+    const [hovering, setHovering] = useState();
+
     return (
         <Card>
             {(props.result && props.result.cloudChart && props.result.cloudChart.json && props.result.cloudChart.json.length !== 0) &&
@@ -170,10 +190,44 @@ export default function cloudChart (props) {
                                 <Box m={2} />
                                 {
                                     props.result.cloudChart && props.result.cloudChart.json && (props.result.cloudChart.json.length !== 0) &&
-                                    <div id="top_words_cloud_chart" height={"100%"} width={"100%"}>
-                                        <TagCloud minSize={12} maxSize={70} tags={props.result.cloudChart.json} onClick={click} style={{textAlign:"center"}}/>
-                                        <Box m={1}/>
-                                    </div>
+                                    <Grid container justifyContent="center">
+                                    <Grid item id="top_words_cloud_chart">
+                                        
+                                        <Wordcloud 
+                                            words={words}
+                                            height={500} 
+                                            width={800}
+                                            rotate={0}
+                                            fontSize={fontSizeSetter}
+                                            random={()=>0.5}
+                                        >
+                                                {(cloudWords) =>
+                                                    cloudWords.map((w, i) => (
+                                                        <Text
+                                                            key={w.text}
+                                                            fill={colors[i % colors.length]}
+                                                            textAnchor={'middle'}
+                                                            transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
+                                                            fontSize={w.size}
+                                                            fontFamily={w.font}
+                                                            onClick={() => {click(w.text)}}
+                                                            style ={{
+                                                                cursor: "pointer", 
+                                                                textDecorationLine: ((hovering === w.text)?'underline':undefined)
+                                                            }}
+                                                            onMouseEnter={()=>{setHovering(w.text)}}
+                                                            onMouseLeave={()=>{setHovering(false)}}
+
+                                                        >
+                                                            {w.text}
+                                                        </Text>
+                                                    ))
+                                                }
+                                        </Wordcloud>
+                                        <Box m={1} />
+                                    
+                                    </Grid>
+                                    </Grid>
 
                                 }
                                 {

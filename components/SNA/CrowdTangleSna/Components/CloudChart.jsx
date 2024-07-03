@@ -18,7 +18,6 @@ import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { IconButton } from "@mui/material";
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
-import {TagCloud} from 'react-tagcloud';
 import { Wordcloud } from "@visx/wordcloud";
 import { Text } from "@visx/text";
 import { scaleLog } from "@visx/scale";
@@ -209,14 +208,11 @@ export default function cloudChart(props) {
     const colors = ['#143059', '#2F6B9A', '#82a6c2'];
     const fontScale = scaleLog({
         domain: [Math.min(...words.map((w) => w.value)), Math.max(...words.map((w) => w.value))],
-        range: [10, 60],
+        range: [15, 70],
     });
-    //console.log(fontScale);
     const fontSizeSetter = (datum) => fontScale(datum.value);
-    //console.log(props.width);
 
     const [hovering, setHovering] = useState();
-    //let call = getCallbacks();
 
     return (
         <Card>
