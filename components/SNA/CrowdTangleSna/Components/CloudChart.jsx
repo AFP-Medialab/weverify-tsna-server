@@ -139,6 +139,13 @@ export default function cloudChart(props) {
     }
     //createGraphWhenClickANode;
 
+
+    /**
+    * Display posts containing a word
+    *
+    * @param {String} word the text value of the word
+    * @returns {null} 
+    */
     function click(text) {
         let selectedWord = text;
         let filteredTweets = filterTweetsGivenWord(selectedWord);

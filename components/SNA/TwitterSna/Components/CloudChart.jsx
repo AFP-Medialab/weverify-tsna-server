@@ -74,6 +74,13 @@ export default function cloudChart (props) {
         return filteredTweets;
     }
 
+
+    /**
+   * Display posts containing a word
+   *
+   * @param {String} word the text value of the word
+   * @returns {null} 
+   */
     function click(word) {
         let selectedWord = word;
         let filteredTweets = filterTweetsGivenWord(selectedWord);
@@ -126,6 +133,11 @@ export default function cloudChart (props) {
         }
     }
 
+    /**
+   * if the cloudchart results have loaded, returns a copy of the array
+   *
+   * @returns {Array}
+   */
     const getWords = () => {
         if (props.result.cloudChart && props.result.cloudChart.json) {
             return JSON.parse(JSON.stringify(props.result.cloudChart.json));
