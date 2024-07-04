@@ -18,6 +18,7 @@ import { csvSnaStateCleaned } from "../../../../redux/slices/tools/crowdTangleSn
 import { i18nLoadNamespaceNoSuspense } from "../../../shared/languages/i18nLoadNamespace";
 import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 import { CSV_SNA_TYPE } from "../../../shared/hooks/SnaTypes";
+import { matomoCall } from "../../../../lib/ga";
 
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
@@ -83,6 +84,11 @@ export default function CrowdTangleSnaResults(props) {
 
 		}
 	}
+
+	useEffect(()=>{
+		matomoCall("/csvSna", "csvSna submission");
+	}, []);
+	
 
 	return (
 

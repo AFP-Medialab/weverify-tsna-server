@@ -21,6 +21,7 @@ import { twitterSnaCleanedState } from "../../../../redux/slices/tools/twitterSn
 import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
 import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 import { TW_SNA_TYPE } from "../../../shared/hooks/SnaTypes";
+import { matomoCall } from "../../../../lib/ga";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), { ssr: false });
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), { ssr: false });
@@ -69,6 +70,11 @@ export default function TwitterSnaResult(props) {
         setHistogram(resultStore.histogram);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resultStore.histogram]);
+
+    useEffect (() => {
+        matomoCall("/twitterSna", "twitterSna submission");
+    }, [])
+    
 
     if (result === null)
         return <div />;
