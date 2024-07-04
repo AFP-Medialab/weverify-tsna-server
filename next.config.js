@@ -19,7 +19,8 @@ module.exports = {
   basePath: getBasePath(),
   publicRuntimeConfig: {
     baseFolder: getBasePath(),
-    gakey: process.env.REACT_APP_GOOGLE_ANALYTICS_KEY,
+    matomoUrl: process.env.REACT_APP_MATOMO_URL,
+    matomoSite: process.env.MATOMO_SITE,
     gexfBase: process.env.REACT_APP_GEXF_GENERATOR_URL,
   },
   webpack: (config) => {
