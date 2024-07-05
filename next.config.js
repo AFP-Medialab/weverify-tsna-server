@@ -22,6 +22,9 @@ module.exports = {
     matomoUrl: process.env.REACT_APP_MATOMO_URL,
     matomoSite: process.env.MATOMO_SITE,
     gexfBase: process.env.REACT_APP_GEXF_GENERATOR_URL,
+    translateUrl: process.env.REACT_APP_TRANSLATION_URL,
+    translateTag:  process.env.REACT_APP_TRANSLATION_TAG,
+    feedbackUrl: process.env.REACT_APP_FEED_BACK_URL
   },
   webpack: (config) => {
     config.output.globalObject = `(typeof self !== 'undefined' ? self : this)`;

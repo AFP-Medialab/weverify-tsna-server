@@ -20,9 +20,9 @@ import { LANGUAGES_PATH } from './LanguagePaths';
 const useLoadSupportedLanguage = () => {
     const dispatch = useDispatch();
     const lngurl =
-        process.env.NEXT_PUBLIC_TRANSLATION_URL +
+    publicRuntimeConfig.translateUrl +
         "/languages?tag=" +
-        process.env.NEXT_PUBLIC_TRANSLATION_TAG;
+        publicRuntimeConfig.translateTag;
 
     useEffect(() => {
 

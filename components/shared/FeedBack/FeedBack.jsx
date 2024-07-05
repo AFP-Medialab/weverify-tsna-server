@@ -16,6 +16,8 @@ import { Fade } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { FEEDBACK_PATH } from "../languages/LanguagePaths";
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 const Feedback = () => {
   
@@ -23,7 +25,7 @@ const Feedback = () => {
     const {t, ready} = i18nLoadNamespaceNoSuspense(FEEDBACK_PATH);
     if(ready) keyword = t;
 
-    const API_URL = process.env.NEXT_PUBLIC_MY_WEB_HOOK_URL;
+    const API_URL = publicRuntimeConfig.feedbackUrl;
     
     const [isButtonHovered, setIsButtonHovered] = useState(false);
     const [displayCard, setDisplayCard] = useState(false);
