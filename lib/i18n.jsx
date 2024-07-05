@@ -6,7 +6,6 @@ import ChainedBackend from "i18next-chained-backend";
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 //import resourcesToBackend from "i18next-resources-to-backend";
-console.log("echo ", publicRuntimeConfig.translateUrl)
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
