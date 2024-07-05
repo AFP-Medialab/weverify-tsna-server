@@ -7,17 +7,18 @@ import React, { useEffect, useState } from 'react';
 import createPlotComponent from 'react-plotly.js/factory';
 import { useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import OnClickInfo from '../../../shared/OnClickInfo/OnClickInfo';
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { onHeatMapClick } from "./hooks/heatMap";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 
 const Plot = createPlotComponent(plotly);
 
 export default function HeatMap (props) { 
     const sna = useSelector((state) => state.sna);
-    const keyword = useLoadLanguage(sna.tsv);
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const classes = useMyStyles();
    
     const [heatMapTweets, setHeatMapTweets] = useState(null);

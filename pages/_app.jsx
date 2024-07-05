@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import * as ga from '../lib/ga';
 
+import "./i18n"
+
 const theme = createTheme({
     palette: {
       primary: {

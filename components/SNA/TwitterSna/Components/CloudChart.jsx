@@ -9,22 +9,23 @@ import Plotly from 'plotly.js-dist';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CSVLink } from "react-csv";
 import { useSelector } from "react-redux";
-import ReactWordcloud from "react-wordcloud";
+//import ReactWordcloud from "react-wordcloud";
 import { saveSvgAsPng } from 'save-svg-as-png';
 import "tippy.js/animations/scale.css";
 import "tippy.js/dist/tippy.css";
 import IconCSV from "../../../../images/SVG/CardHeader/CSV.svg";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import PostViewTable from "../../Components/PostViewTable";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 export default function cloudChart (props) {
 
     const sna = useSelector(state => state.sna)
-    const keyword = useLoadLanguage(sna.tsv);
+    const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     const classes = useMyStyles();
 
     const [filesNames, setfilesNames] = useState(null);

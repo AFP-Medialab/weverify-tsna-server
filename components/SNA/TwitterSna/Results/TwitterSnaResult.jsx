@@ -17,9 +17,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { twitterSnaCleanedState } from "../../../../redux/slices/tools/twitterSnaSlice";
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
+import { TW_SNA_TYPE } from "../../../shared/hooks/SnaTypes";
 
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), { ssr: false });
 const PlotPieChart = dynamic(import("../Components/PlotPieChart"), { ssr: false });
@@ -27,13 +28,13 @@ const BubbleChart = dynamic(import("../Components/BubbleChart"), { ssr: false })
 const HeatMap = dynamic(import("../Components/HeatMap"), { ssr: false });
 const HashtagGraph = dynamic(import("../Components/HashtagGraph"), { ssr: false });
 const SocioSemGraph = dynamic(import("../Components/SocioSemGraph"), { ssr: false });
-const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
+// const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 
 
 export default function TwitterSnaResult(props) {
 
     const dispatch = useDispatch();
-    const keyword = useLoadLanguage(tsv);
+    const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     const classes = useMyStyles();
     const request = useSelector(state => state.twitterSna.request);
     const resultStore = useSelector(state => state.twitterSna.result);
@@ -109,14 +110,14 @@ export default function TwitterSnaResult(props) {
 
                                     {!collapsed &&
                                         <Grid item>
-                                            <IconButton onClick={props.functionNodes} onClick={onClickCollapseIndex}>
+                                            <IconButton onClick={onClickCollapseIndex}>
                                                 <ArrowBackIosIcon style={{marginRight: "-5px"}} />
                                             </IconButton>
                                         </Grid>
                                     }
                                     {collapsed &&
                                         <Grid item>
-                                            <IconButton onClick={props.functionNodes} onClick={onClickCollapseIndex}>
+                                            <IconButton onClick={onClickCollapseIndex}>
                                                 <ArrowForwardIosIcon/>
                                             </IconButton>
                                         </Grid>
@@ -338,7 +339,7 @@ export default function TwitterSnaResult(props) {
                         <div style={{ position: "relative" }}>
                             <span id="words" style={{ position: "absolute", top: "-112px" }}></span>
                             <Box m={3} />
-                            <CloudChart result={result} request={request} />
+                            {/* <CloudChart result={result} request={request} /> */}
                         </div>
                     }
                     {
@@ -356,7 +357,9 @@ export default function TwitterSnaResult(props) {
                         <div style={{ position: "relative" }}>
                             <span id="urls" style={{ position: "absolute", top: "-112px" }}></span>
                             <UrlList result={result} request={request} title_message={'twittersna_result_url_in_tweets'}
-                                tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true} topic={topic}/>
+                                tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={true} action={true} topic={topic}
+                                type={TW_SNA_TYPE}
+                                />
                         </div>
                     }
 

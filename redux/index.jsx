@@ -6,13 +6,13 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 
-const bindMiddleware = (middleware) => {
-  if (process.env.NODE_ENV !== "production") {
-    const { composeWithDevTools } = require("redux-devtools-extension");
-    return composeWithDevTools(applyMiddleware(...middleware));
-  }
-  return applyMiddleware(...middleware);
-};
+// const bindMiddleware = (middleware) => {
+//   if (process.env.NODE_ENV !== "production") {
+//     const { composeWithDevTools } = require("redux-devtools-extension");
+//     return composeWithDevTools(applyMiddleware(...middleware));
+//   }
+//   return applyMiddleware(...middleware);
+// };
 const loggerMiddleware = (storeAPI) => (next) => (action) => {
   let result = next(action);
   if (process.env.NODE_ENV !== "production") {
