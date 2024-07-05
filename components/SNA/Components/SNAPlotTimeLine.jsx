@@ -5,11 +5,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import OnClickInfo from "../../shared/OnClickInfo/OnClickInfo";
 import Typography from "@mui/material/Typography";
 import useMyStyles from "../../shared/styles/useMyStyles";
+import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
 
 export const SNAPlotTimeLine = (histogram, title, onHistogramClick, keyword) => {
     const [histoVisible, setHistoVisible] = useState(true);
-    const classes = useMyStyles();
-    
+    const classes = useMyStyles();    
 return (
     <Accordion expanded={histoVisible} onChange={() => setHistoVisible(!histoVisible)}>
         <AccordionSummary

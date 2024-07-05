@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import useMyStyles from "../shared/styles/useMyStyles";
 import Box from "@mui/material/Box";
-import useLoadLanguage from "../shared/hooks/useRemoteLoadLanguage";
 import OnClickInfo from "../shared/OnClickInfo/OnClickInfo"
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import FactcheckIcon from '../../images/SVG/Search/Factcheck_big.svg'
 import HeaderTool from "../shared/HeaderTool/HeaderTool";
+import { i18nLoadNamespace } from "../shared/languages/i18nLoadNamespace";
+import { ALLTOOLS_PATH, FACTCHECKSEARCH_PATH } from "../shared/languages/LanguagePaths";
 
 
 const FactcheckSearch = () => {
   const classes = useMyStyles();
-  const keyword = useLoadLanguage("/components/NavItems/tools/FactcheckSearch.tsv");
-  const keywordAllTools = useLoadLanguage("/components/NavItems/tools/AllTools.tsv");
-  const tsvinfo = "/components/Shared/OnClickInfo.tsv";
+  const keyword = i18nLoadNamespace(FACTCHECKSEARCH_PATH);
+  const keywordAllTools = i18nLoadNamespace(ALLTOOLS_PATH);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -44,7 +44,7 @@ const FactcheckSearch = () => {
         <div className={classes.root2}>
           <div className="gcse-search"></div>
           <Box m={1} />
-          <OnClickInfo keyword={"factcheck_tip"} tsvInfo={tsvinfo}/>
+          {/* <OnClickInfo keyword={"factcheck_tip"} /> */}
         </div>
 
       </Card>

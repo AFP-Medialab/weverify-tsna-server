@@ -10,15 +10,17 @@ import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CloseResult from "../../../shared/CloseResult/CloseResult";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import UrlList from "../../Components/UrlList";
 import Count from "../Components/Count";
 import { snaTypeCleaned } from "../../../../redux/slices/tools/snaTypeSlice";
 import { csvSnaStateCleaned } from "../../../../redux/slices/tools/crowdTangleSnaSlice";
+import { i18nLoadNamespaceNoSuspense } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
+import { CSV_SNA_TYPE } from "../../../shared/hooks/SnaTypes";
+import { matomoCall } from "../../../../lib/ga";
 
-const tsv = "/components/NavItems/tools/TwitterSna.tsv";
-const tsv2 = "/components/NavItems/tools/CrowdTangle.tsv";
+
 const PlotTimeLine = dynamic(import("../Components/PlotTimeLine"), {
 	ssr: false,
 });
@@ -33,11 +35,22 @@ const CloudChart = dynamic(import("../Components/CloudChart"), { ssr: false });
 
 
 export default function CrowdTangleSnaResults(props) {
-	const classes = useMyStyles();
-	const dispatch = useDispatch();
-	const keyword = useLoadLanguage(tsv);
-	const keyword2 = useLoadLanguage(tsv2);
 
+
+	
+	var keyword = (word) => "";
+
+	const { t, ready } = i18nLoadNamespaceNoSuspense(TWITTERSNA_PATH);
+
+	if(ready) keyword = t;
+	
+	var keyword2 = (word) => "";
+
+	const {t2, ready2} = i18nLoadNamespaceNoSuspense(CROWDTANGLE_PATH);
+
+
+	const dispatch = useDispatch();
+	const classes = useMyStyles();
 	const [widthIndex, setWidthIndex] = useState(4);
 	const [widthCards, setWidthCards] = useState(8);
 	const [collapsed, setCollapsed] = useState(false);
@@ -45,10 +58,14 @@ export default function CrowdTangleSnaResults(props) {
 	useEffect(() => {
 
 		return () => {
-			props.workers.current.cloudWorker.terminate()
-			props.workers.current.hashtagWorker.terminate()
-			props.workers.current.pieChartsWorker.terminate()
-			props.workers.current.timelineWorker.terminate()
+
+			if(props.workers.current) {
+				props.workers.current.cloudWorker.terminate()
+				props.workers.current.hashtagWorker.terminate()
+				props.workers.current.pieChartsWorker.terminate()
+				props.workers.current.timelineWorker.terminate()
+			}
+			
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -67,6 +84,11 @@ export default function CrowdTangleSnaResults(props) {
 
 		}
 	}
+
+	useEffect(()=>{
+		matomoCall("/csvSna", "csvSna submission");
+	}, []);
+	
 
 	return (
 
@@ -105,14 +127,14 @@ export default function CrowdTangleSnaResults(props) {
 
 									{!collapsed &&
 										<Grid item>
-											<IconButton onClick={props.functionNodes} onClick={onClickCollapseIndex}>
+											<IconButton onClick={onClickCollapseIndex}>
 												<ArrowBackIosIcon style={{ marginRight: "-5px", color: "white"}} />
 											</IconButton>
 										</Grid>
 									}
 									{collapsed &&
 										<Grid item>
-											<IconButton onClick={props.functionNodes} onClick={onClickCollapseIndex}>
+											<IconButton onClick={onClickCollapseIndex}>
 												<ArrowForwardIosIcon style={{color: "white"}} />
 											</IconButton>
 										</Grid>
@@ -134,7 +156,7 @@ export default function CrowdTangleSnaResults(props) {
 									<Typography variant={"h6"} >
 										{"1."}
 										{!collapsed &&
-											" " + keyword2("ct_counter_title")
+											" " + keyword("ct_counter_title")
 										}
 
 									</Typography>
@@ -333,7 +355,8 @@ export default function CrowdTangleSnaResults(props) {
 							{
 								props.result.urls &&
 								<UrlList result={props.result} title_message={'ct_sna_result_url_in_posts'}
-									tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={false} topic={"this topic"}/>
+									tooltip_message={'twittersna_result_submit_twitter_sna'} downloadable={false} topic={"this topic"}
+									type = {CSV_SNA_TYPE}/>
 							}
 						</div>
 					}

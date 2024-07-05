@@ -3,18 +3,18 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { decodeJWTToken } from "../components/shared/AuthenticationCard/userAuthenticationUtils";
-import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage"
 import { authUserLoggedIn } from "../redux/slices/authentificationSlice";
 import { twitterSnaRedirectRequestSet } from "../redux/slices/tools/twitterSnaSlice";
+import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../components/shared/languages/LanguagePaths";
 //Redirect page for SSO connection from WeverifyPlugin
 //TODO error management in case of URL manupilation
-const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
 
 const PluginRedirect = () => {
 
     const router = useRouter();
     const dispatch = useDispatch();
-    useLoadLanguage(sna.tsv)
+    i18nLoadNamespace(TWITTERSNA_PATH)
     const { query } = router;
     if(!_.isEmpty(query)){
         const {data, token, refreshToken, user} = query;

@@ -4,27 +4,31 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import { IconButton } from "@mui/material";
-import { select } from 'd3-selection';
+//import { select } from 'd3-selection';
 import Plotly from 'plotly.js-dist';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CSVLink } from "react-csv";
 import { useSelector } from "react-redux";
-import ReactWordcloud from "react-wordcloud";
+//import ReactWordcloud from "react-wordcloud";
 import { saveSvgAsPng } from 'save-svg-as-png';
 import "tippy.js/animations/scale.css";
 import "tippy.js/dist/tippy.css";
 import IconCSV from "../../../../images/SVG/CardHeader/CSV.svg";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import PostViewTable from "../../Components/PostViewTable";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
+import { scaleLog } from "@visx/scale";
+import { Wordcloud } from "@visx/wordcloud";
+import { Text } from "@visx/text";
 
 export default function cloudChart (props) {
 
     const sna = useSelector(state => state.sna)
-    const keyword = useLoadLanguage(sna.tsv);
+    const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     const classes = useMyStyles();
 
     const [filesNames, setfilesNames] = useState(null);
@@ -63,54 +67,26 @@ export default function cloudChart (props) {
         return csvData;
     };
 
-    const getCallbacks = () => {
-        return {
-            getWordColor: word => word.color,
-            getWordTooltip: word =>
-                tooltip(word),
-            onWordClick: getCallback("onWordClick"),
-            onWordMouseOut: getCallback("onWordMouseOut"),
-            onWordMouseOver: getCallback("onWordMouseOver")
-        }
-    };
-
-    const tooltip = word => {
-        if (word.entity !== null)
-            return "The word " + word.text + " appears " + word.value + " times and is a " + word.entity + ".";
-        else
-            return "The word " + word.text + " appears " + word.value + " times.";
-    }
-
-    const getCallback = useCallback((callback) => {
-
-        return function (word, event) {
-
-            const isActive = callback !== "onWordMouseOut";
-            const element = event.target;
-            const text = select(element);
-            text
-                .on("click", () => {
-                    if (isActive) {
-                        let selectedWord = word.text;
-                        let filteredTweets = filterTweetsGivenWord(selectedWord);
-                        let dataToDisplay = displayPosts(filteredTweets, keyword);
-                        dataToDisplay["selected"] = selectedWord;
-                        setCloudTweets(dataToDisplay);
-
-                    }
-                })
-                .transition()
-                .attr("background", "white")
-                .attr("text-decoration", isActive ? "underline" : "none");
-        };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
-
     function filterTweetsGivenWord(word) {
         let filteredTweets = props.result.tweets.filter(function (tweetObj) {
             return tweetObj._source.full_text.toLowerCase().match(new RegExp('(^|((.)*[.()0-9!?\'’‘":,/\\%><«» ^#]))' + word + '(([.()!?\'’‘":,/><«» ](.)*)|$)', "i"));
         });
         return filteredTweets;
+    }
+
+
+    /**
+   * Display posts containing a word
+   *
+   * @param {String} word the text value of the word
+   * @returns {null} 
+   */
+    function click(word) {
+        let selectedWord = word;
+        let filteredTweets = filterTweetsGivenWord(selectedWord);
+        let dataToDisplay = displayPosts(filteredTweets, keyword);
+        dataToDisplay["selected"] = selectedWord;
+        setCloudTweets(dataToDisplay);
     }
     //createGraphWhenClickANode;
 
@@ -157,7 +133,30 @@ export default function cloudChart (props) {
         }
     }
 
-    let call = getCallbacks();
+    /**
+   * if the cloudchart results have loaded, returns a copy of the array
+   *
+   * @returns {Array}
+   */
+    const getWords = () => {
+        if (props.result.cloudChart && props.result.cloudChart.json) {
+            return JSON.parse(JSON.stringify(props.result.cloudChart.json));
+        }
+        else {
+            return [];
+        }
+    };
+
+    const words = getWords();
+    const colors = ['#143059', '#2F6B9A', '#82a6c2'];
+    const fontScale = scaleLog({
+        domain: [Math.min(...words.map((w) => w.value)), Math.max(...words.map((w) => w.value))],
+        range: [15, 70],
+    });
+    const fontSizeSetter = (datum) => fontScale(datum.value);
+
+    const [hovering, setHovering] = useState();
+
     return (
         <Card>
             {(props.result && props.result.cloudChart && props.result.cloudChart.json && props.result.cloudChart.json.length !== 0) &&
@@ -203,10 +202,44 @@ export default function cloudChart (props) {
                                 <Box m={2} />
                                 {
                                     props.result.cloudChart && props.result.cloudChart.json && (props.result.cloudChart.json.length !== 0) &&
-                                    <div id="top_words_cloud_chart" height={"100%"} width={"100%"}>
-                                        <ReactWordcloud key={JSON.stringify(props.result)} options={props.result.cloudChart.options} callbacks={call} words={props.result.cloudChart.json} />
-                                        <Box m={1}/>
-                                    </div>
+                                    <Grid container justifyContent="center">
+                                    <Grid item id="top_words_cloud_chart">
+                                        
+                                        <Wordcloud 
+                                            words={words}
+                                            height={500} 
+                                            width={800}
+                                            rotate={0}
+                                            fontSize={fontSizeSetter}
+                                            random={()=>0.5}
+                                        >
+                                                {(cloudWords) =>
+                                                    cloudWords.map((w, i) => (
+                                                        <Text
+                                                            key={w.text}
+                                                            fill={colors[i % colors.length]}
+                                                            textAnchor={'middle'}
+                                                            transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
+                                                            fontSize={w.size}
+                                                            fontFamily={w.font}
+                                                            onClick={() => {click(w.text)}}
+                                                            style ={{
+                                                                cursor: "pointer", 
+                                                                textDecorationLine: ((hovering === w.text)?'underline':undefined)
+                                                            }}
+                                                            onMouseEnter={()=>{setHovering(w.text)}}
+                                                            onMouseLeave={()=>{setHovering(false)}}
+
+                                                        >
+                                                            {w.text}
+                                                        </Text>
+                                                    ))
+                                                }
+                                        </Wordcloud>
+                                        <Box m={1} />
+                                    
+                                    </Grid>
+                                    </Grid>
 
                                 }
                                 {

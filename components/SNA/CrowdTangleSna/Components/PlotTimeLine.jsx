@@ -9,13 +9,14 @@ import React, { useEffect, useState } from 'react';
 import createPlotComponent from 'react-plotly.js/factory';
 import { useDispatch, useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { filterForTimeLine } from '../../Hooks/timeline';
 import HistoTweetsTable from "./HistoTweetsTableCSV";
 import { getEpochMillis } from "./hooks/timelineCT";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { setHistoview } from "../CrowdTangleSnaComponent";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 
 // const plotly = dynamic(() => import("react-plotly.js"), { ssr: false, });
 // const plotly = dynamic(() => import("plotly.js"));
@@ -24,9 +25,8 @@ let from = "PLOT_LINE";
 
 
 export default function PlotTimeLine(props){
-  const sna = useSelector((state) => state.sna);
-
-    const keyword = useLoadLanguage(sna.tsv);
+    
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const dispatch = useDispatch();
     //HISTOGRAM
     const [histoVisible, setHistoVisible] = useState(true);

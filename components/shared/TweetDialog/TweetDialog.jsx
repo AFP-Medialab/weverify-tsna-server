@@ -15,12 +15,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import { connectionEnabled, connectionWindowsOpened } from '../../../redux/slices/connectionSlice';
+import { i18nLoadNamespaceNoSuspense } from '../languages/i18nLoadNamespace';
+import { TWEETDIALOGUE_PATH } from '../languages/LanguagePaths';
 const { publicRuntimeConfig } = getConfig();
 
 
-const tsv = "/components/Shared/TweetDialog.tsv";
 let postWithBotTweetUrl = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweetBot`;
 let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
 
@@ -28,7 +28,13 @@ let postTweet = `${publicRuntimeConfig.baseFolder}/api/twitter/postTweet`;
 const TweetDialog = (props) => {
     
     var desinfo = "desinfo";
-    const keyword = useLoadLanguage(tsv);
+    
+    var keyword = (word) => "";
+
+    // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
+    const {t, ready} = i18nLoadNamespaceNoSuspense(TWEETDIALOGUE_PATH);
+    if(ready) keyword = t;
+    
     const windowConnection = useSelector(state => state.conn.windowsOpen);
     const isConnectionEnable = useSelector(state => state.conn.connectionEnable)
     const dispatch = useDispatch();

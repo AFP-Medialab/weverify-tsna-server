@@ -3,32 +3,31 @@ import Card from "@mui/material/Card";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { select } from 'd3-selection';
 import Plotly from 'plotly.js-dist';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CSVLink } from "react-csv";
 import { useSelector } from "react-redux";
-import ReactWordcloud from "react-wordcloud";
 import { SaveSvgAsPng } from 'save-svg-as-png';
 import "tippy.js/animations/scale.css";
 import "tippy.js/dist/tippy.css";
 import IconCSV from "../../../../images/SVG/CardHeader/CSV.svg";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import PostViewTable from "../../Components/PostViewTable";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { IconButton } from "@mui/material";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
+import { Wordcloud } from "@visx/wordcloud";
+import { Text } from "@visx/text";
+import { scaleLog } from "@visx/scale";
 
 
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function cloudChart(props) {
 
-    //var tsv = "/components/NavItems/tools/TwitterSna.tsv";
-    //const keyword = useLoadLanguage(tsv);
     const snatype = useSelector((state) => state.sna);
-    const keyword = useLoadLanguage(snatype.tsv);
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const classes = useMyStyles();
     const type = snatype.type;
 
@@ -67,78 +66,6 @@ export default function cloudChart(props) {
 
         return csvData;
     };
-
-    const getCallbacks = () => {
-
-        return {
-
-            getWordColor: word => word.color,
-            getWordTooltip: word =>
-                tooltip(word),
-            onWordClick: getCallback("onWordClick"),
-            onWordMouseOut: getCallback("onWordMouseOut"),
-            onWordMouseOver: getCallback("onWordMouseOver")
-        }
-    };
-
-    const tooltip = word => {
-        if (word.entity !== null) {
-            // console.log("word.entity111 ",word.entity)
-            //console.log("word.text111 ",word.text)
-            // console.log("word.value111 ",word.value)
-
-            return "The word " + word.text + " appears " + word.value + " times and is a " + word.entity + ".";
-
-        }
-        else {
-
-
-            //console.log("word.entity ",word.entity)
-            //console.log("word.text ",word.text)
-            //console.log("word.value ",word.value)
-            return "The word " + word.text + " appears " + word.value + " times.";
-        }
-    }
-
-    const getCallback = useCallback((callback) => {
-
-        return function (word, event) {
-
-            const isActive = callback !== "onWordMouseOut";
-            const element = event.target;
-            const text = select(element);
-            text
-                .on("click", () => {
-                    if (isActive) {
-                        let selectedWord = word.text;
-                        //console.log("selectedWord ",selectedWord)
-                        let filteredTweets = filterTweetsGivenWord(selectedWord);
-
-                        //  console.log("ASDADSA ", typer)
-                        if (type === "FB") {
-
-                            let dataToDisplay = displayPostsFb(filteredTweets, keyword);
-                            //console.log("displayFB ", dataToDisplay)
-
-                            dataToDisplay["selected"] = selectedWord;
-                            setcloudPosts(dataToDisplay);
-                        }
-                        else {
-
-                            let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
-                            //console.log("displayInsta ", dataToDisplay)
-
-                            dataToDisplay["selected"] = selectedWord;
-                            setcloudPosts(dataToDisplay);
-                        }
-                    }
-                })
-                .transition()
-                .attr("background", "white")
-                .attr("text-decoration", isActive ? "underline" : "none");
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.result]);
 
     function filterTweetsGivenWord(word) {
         var length1 = props.result.data
@@ -212,6 +139,34 @@ export default function cloudChart(props) {
     }
     //createGraphWhenClickANode;
 
+
+    /**
+    * Display posts containing a word
+    *
+    * @param {String} word the text value of the word
+    * @returns {null} 
+    */
+    function click(text) {
+        let selectedWord = text;
+        let filteredTweets = filterTweetsGivenWord(selectedWord);
+        if (type === "FB") {
+
+            let dataToDisplay = displayPostsFb(filteredTweets, keyword);
+            //console.log("displayFB ", dataToDisplay)
+
+            dataToDisplay["selected"] = selectedWord;
+            setcloudPosts(dataToDisplay);
+        }
+        else {
+
+            let dataToDisplay = displayPostsInsta(filteredTweets, keyword);
+            //console.log("displayInsta ", dataToDisplay)
+
+            dataToDisplay["selected"] = selectedWord;
+            setcloudPosts(dataToDisplay);
+        }
+    }
+
     function downloadAsSVG(elementId, keyword, filesNames) {
 
         if (elementId === "top_words_cloud_chart") {
@@ -255,7 +210,17 @@ export default function cloudChart(props) {
         }
     }
 
-    let call = getCallbacks();
+
+    const words = JSON.parse(JSON.stringify(props.result.cloudChart.json));
+    const colors = ['#143059', '#2F6B9A', '#82a6c2'];
+    const fontScale = scaleLog({
+        domain: [Math.min(...words.map((w) => w.value)), Math.max(...words.map((w) => w.value))],
+        range: [15, 70],
+    });
+    const fontSizeSetter = (datum) => fontScale(datum.value);
+
+    const [hovering, setHovering] = useState();
+
     return (
         <Card>
             {(props.result && props.result.cloudChart && props.result.cloudChart.json && props.result.cloudChart.json.length !== 0) &&
@@ -289,7 +254,7 @@ export default function cloudChart(props) {
 
             {
                 props.result && props.result.cloudChart && props.result.cloudChart.json &&
-                <Box alignItems="center" justifyContent="center" width={"100%"}>
+                <Box id = "cloud_box" alignItems="center" justifyContent="center" width={"100%"}>
                     <div height={"500"} width={"100%"} >
                         {
                             (props.result.cloudChart.json && props.result.cloudChart.json.length === 0) &&
@@ -319,10 +284,47 @@ export default function cloudChart(props) {
                     <Box m={2} />
                     {
                         props.result.cloudChart && props.result.cloudChart.json && (props.result.cloudChart.json.length !== 0) &&
-                        <div id="top_words_cloud_chart" height={"100%"} width={"100%"}>
-                            <ReactWordcloud key={JSON.stringify(props.result)} options={props.result.cloudChart.options} callbacks={call} words={props.result.cloudChart.json} />
+                        <Box>
+                        <Grid container justifyContent="center">
+                            <Grid item id="top_words_cloud_chart">
+                            
+                            <Wordcloud 
+                                words={words}
+                                height={500} 
+                                width={800}
+                                rotate={0}
+                                fontSize={fontSizeSetter}
+                                random={()=>0.5}
+                            >
+                                    {(cloudWords) =>
+                                        cloudWords.map((w, i) => (
+                                            <Text
+                                                key={w.text}
+                                                fill={colors[i % colors.length]}
+                                                textAnchor={'middle'}
+                                                transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
+                                                fontSize={w.size}
+                                                fontFamily={w.font}
+                                                onClick={() => {click(w.text)}}
+                                                style ={{
+                                                    cursor: "pointer", 
+                                                    textDecorationLine: ((hovering === w.text)?'underline':undefined)
+                                                }}
+                                                onMouseEnter={()=>{setHovering(w.text)}}
+                                                onMouseLeave={()=>{setHovering(false)}}
+
+                                            >
+                                                {w.text}
+                                            </Text>
+                                        ))
+                                    }
+                            </Wordcloud>
                             <Box m={1} />
-                        </div>
+                        
+                        </Grid>
+                        </Grid>
+                        </Box>
+                        
 
                     }
                     {

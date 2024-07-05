@@ -19,7 +19,8 @@ module.exports = {
   basePath: getBasePath(),
   publicRuntimeConfig: {
     baseFolder: getBasePath(),
-    gakey: process.env.REACT_APP_GOOGLE_ANALYTICS_KEY,
+    matomoUrl: process.env.REACT_APP_MATOMO_URL,
+    matomoSite: process.env.MATOMO_SITE,
     gexfBase: process.env.REACT_APP_GEXF_GENERATOR_URL,
   },
   webpack: (config) => {
@@ -30,17 +31,6 @@ module.exports = {
       use: ['@svgr/webpack'],
     });
     return config;
-  },
-  async headers(){
-    return [{
-      source: '/api/i18n/:i18n*',
-      headers: [
-        {
-          key: 'Content-Type',
-          value: 'text/tsv',
-        },
-      ]
-    }]
   },
   output: "standalone",
 };

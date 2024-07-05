@@ -20,20 +20,20 @@ import { getJsonDataForURLTable } from "../../Hooks/urlList";
 import useAuthenticatedRequest from "../../../shared/AuthenticationCard/useAuthenticatedRequest"
 
 import getConfig from "next/config";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import {widgetTitle, widgetPieTitle} from "./tsnaUtils"
 import { authUserLoggedOut } from "../../../../redux/slices/authentificationSlice";
 import { errorSet } from "../../../../redux/slices/errorSlice";
 import { twitterSnaCloudWordsResultSet, twitterSnaCoHashtagResultSet, twitterSnaCountResultSet, twitterSnaGexfExportSet, twitterSnaHeatMapResultSet, twitterSnaHistogramResultSet, twitterSnaLoadingMessageSet, twitterSnaLoadingSet, twitterSnaPieChartsResultSet, twitterSnaResultSet, twitterSnaSocioGraphResultSet, twitterSnaTweetsResultSet, twitterSnaUrlsResultSet, twitterSnaUserProfileMostActiveSet } from "../../../../redux/slices/tools/twitterSnaSlice";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 const { publicRuntimeConfig } = getConfig();
-const sna = { tsv: "/components/NavItems/tools/TwitterSna.tsv"};
 
 const useTwitterSnaRequest = (request) => {
 
 const tsnaWorkers = useRef()
 
-	const keyword = useLoadLanguage(sna.tsv)
+	const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
   const dispatch = useDispatch();
   const authenticatedRequest = useAuthenticatedRequest();
   const userAuthenticated = useSelector(
@@ -70,7 +70,7 @@ const tsnaWorkers = useRef()
       if (keyword(e) !== "") {
         dispatch(errorSet(keyword(e)));
       } else dispatch(errorSet(keyword("default_sna_error")));
-      dispatch(twitterSnaLoadingSet(false));
+      dispatch(twitterSnaLoadingSet({load: false}));
     };
     // Check request
     const cacheRenderCall = (request) => {
@@ -286,8 +286,7 @@ const tsnaWorkers = useRef()
     const buildPieCharts = async (request, responseAggs) => {
       const pieCharts = createPieCharts(
         request,
-        getJsonDataForPieCharts(responseAggs, widgetPieTitle(request)),
-        keyword
+        getJsonDataForPieCharts(responseAggs, widgetPieTitle(request))
       );
       dispatch(twitterSnaPieChartsResultSet(pieCharts));
     };
@@ -326,9 +325,9 @@ const tsnaWorkers = useRef()
       const urls = await getJsonDataForURLTable(
         responseAggs["top_url_keyword"]["buckets"],
         {
-          "url" : keyword("elastic_url"),
-          "count": keyword("elastic_count"), 
-          "credibility" : keyword("sna_credibility")
+          "url" : "elastic_url",
+          "count": "elastic_count", 
+          "credibility" : "sna_credibility"
         },
         {"url": "key", "count" :"doc_count"}, enableExtraFeatures()
       );
@@ -375,7 +374,7 @@ const tsnaWorkers = useRef()
           else if (response.data.status === "Done") { 
             cacheRenderCall(request);
           } else {
-            dispatch(twitterSnaLoadingSet(true, 5));
+            dispatch(twitterSnaLoadingSet({load: true, maxStage: 5}));
             dispatch(twitterSnaLoadingMessageSet(keyword("twittersna_start")));
             getResultUntilsDone(response.data.session, request, "Pending");
           }

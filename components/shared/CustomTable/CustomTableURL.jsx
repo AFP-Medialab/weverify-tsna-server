@@ -20,11 +20,11 @@ import ViewColumn from '@mui/icons-material/ViewColumn';
 import React, { useEffect, useState } from 'react';
 import DesinformationIcon from "../../../images/SVG/DataAnalysis/Credibility/Desinformation.svg";
 import FactCheckerIcon from "../../../images/SVG/DataAnalysis/Credibility/Fact-checker.svg";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import TweetDialog from '../TweetDialog/TweetDialog';
+import { i18nLoadNamespace, i18nLoadNamespaceNoSuspense } from '../languages/i18nLoadNamespace';
+import { CROWDTANGLE_PATH, CUSTOMTABLE_PATH, TWITTERSNA_PATH } from '../languages/LanguagePaths';
+import { TW_SNA_TYPE } from '../hooks/SnaTypes';
 
-//const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
-const tsv = "/components/Shared/CustomTable.tsv";
 
 
 
@@ -126,7 +126,21 @@ export default function CustomTableURL(props) {
             actions: props.actions
         }
     );
-    const keyword = useLoadLanguage(tsv);
+    
+    var keyword = (word) => "";
+
+    const {t, ready} = i18nLoadNamespaceNoSuspense(CUSTOMTABLE_PATH);
+
+    if (ready) keyword = t;
+
+    var keywordSna = (word) => "";
+
+    if(props.type === TW_SNA_TYPE) {
+        keywordSna = i18nLoadNamespace(TWITTERSNA_PATH);
+    }
+    else {
+        keywordSna = i18nLoadNamespace(CROWDTANGLE_PATH);
+    }
 
     useEffect(() => {
         //console.log("use effect");
@@ -161,11 +175,11 @@ export default function CustomTableURL(props) {
                         previousTooltip: keyword("previous_page"),
                         nextTooltip: keyword("next_page"),
                         lastTooltip: keyword("last_page"),
-                        labelRowsSelect: keyword(""),
+                        labelRowsSelect: "",
                         labelDisplayedRows: keyword("from_to_text")
                     },
                     toolbar: {
-                        nRowsSelected: keyword('{0} row(s) selected (add tsv)'),
+                        nRowsSelected: keyword("row_selected"),
                         searchPlaceholder: keyword("search")
                     },
                     header: {
@@ -186,7 +200,7 @@ export default function CustomTableURL(props) {
                         //console.log("COLUMN", obj);
                         if (obj.field === "credibility") {
                             return {
-                                title: obj.title,
+                                title: keywordSna(obj.title),
                                 field: obj.field,
                                 width: "15%",
                                 cellStyle: {
@@ -198,14 +212,14 @@ export default function CustomTableURL(props) {
                             }
                         } else if (obj.field === "url" || obj.field === "URL") {
                             return {
-                                title: obj.title,
+                                title: keywordSna(obj.title),
                                 field: obj.field,
                                 width: "100%",
                                 render: rowData => <a href={rowData.url} target="_blank" style={{ color: "#51A5B2"}}>{rowData.url}</a>
                             }
                         } else if (obj.field === "count") {
                             return {
-                                title: obj.title,
+                                title: keywordSna(obj.title),
                                 field: obj.field,
                                 width: "10%",
                                 cellStyle: {
@@ -214,7 +228,7 @@ export default function CustomTableURL(props) {
                             }
                         } else {
                             return {
-                                title: obj.title,
+                                title: keywordSna(obj.title),
                                 field: obj.field,
                                 width: "5%"
                             }

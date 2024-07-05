@@ -125,32 +125,15 @@ const createWordCloud = (plotlyJson/*, request*/) => {
     //let w = word.includes("@") ? word : word.replace(/_/g, " ");
     return {
       text: word.word,
-      value: word.nbOccurences,
-      entity: word.entity,
-      color: getColor(word.entity),
+      value: word.nbOccurences
+      //entity: word.entity,
+      //color: getColor(word.entity),
     };
   });
   //console.log("mostUsedWords ", mostUsedWords)
 
   
-  const options = {
-    //  colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b'],
-    enableTooltip: true,
-    deterministic: true,
-    fontFamily: "impact",
-    fontSizes: [15, 80],
-    fontStyle: "normal",
-    fontWeight: "normal",
-    padding: 1,
-    rotations: 3,
-    rotationAngles: [15, -15],
-    scale: "sqrt",
-    spiral: "rectangular",
-    transitionDuration: 1000,
-  };
-
   return {
-    json: mostUsedWords,
-    options: options,
+    json: mostUsedWords
   };
 };

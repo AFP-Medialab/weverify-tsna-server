@@ -12,7 +12,7 @@ import { getJsonDataForURLTable } from "../../../Hooks/urlList";
 import { csvSnaCountResultSet, csvSnaMaxProcessStageSet, csvSnaUrlsResultSet } from "../../../../../redux/slices/tools/crowdTangleSnaSlice";
 import { snaTypeSet } from "../../../../../redux/slices/tools/snaTypeSlice";
 
-const FB_SNA = {type:FB_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv", tsvInfo : "/components/fb/OnClickInfo.tsv" }
+const FB_SNA = {type:FB_SNA_TYPE}
 
 export const useFacebookResult = (workers, data, keyword, dispatch) => {
     dispatch(snaTypeSet(FB_SNA));
@@ -40,10 +40,10 @@ const buildFirstFbResult = (workers, data, dispatch, keyword) => {
 
 const buildPieChartsFB = async (pieChartsWorker, data, dispatch, keyword) => {
     const keywordTitles = [
-      keyword("shared_cloud_chart_title"),
-      keyword("likes_cloud_chart_title"),
-      keyword("top_users_pie_chart_title"),
-      keyword("mention_cloud_chart_title")
+      "shared_cloud_chart_title",
+      "likes_cloud_chart_title",
+      "top_users_pie_chart_title",
+      "mention_cloud_chart_title"
     ];
     buildPieCharts(pieChartsWorker, data, keywordTitles, dispatch, FB_SNA_TYPE);
 };
@@ -54,9 +54,9 @@ const buildUrls = async (data, keyword, dispatch) => {
   const urls = await getJsonDataForURLTable(
     sortedData,
     {
-      "url" : keyword("ct_url"),
-      "count": keyword("ct_sna_shares"), 
-      "credibility" : keyword("sna_credibility")
+      "url" : "ct_url",
+      "count": "ct_sna_shares", 
+      "credibility" : "sna_credibility"
     },
     {
       "url": "url", 
