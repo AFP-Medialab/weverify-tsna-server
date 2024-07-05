@@ -51,16 +51,14 @@ export async function userPostAction(res, url, body, headers, type="json") {
   }
 }
 
-export async function userAnalyticsAction (res, url, body, headers) {
-
+export async function userAnalyticsAction (res, url, body, matomo_site) {
+  
   
   let newBody = JSON.parse(body);
-  console.log(newBody);
-
 
   const url_params = new URLSearchParams();
 
-  url_params.append("idsite", newBody.matomoSite);
+  url_params.append("idsite", matomo_site);
   url_params.append("url", newBody.url);
   url_params.append("rec", 1);
   url_params.append("apiv", 1);
@@ -69,19 +67,20 @@ export async function userAnalyticsAction (res, url, body, headers) {
 
   url_params.append("action_name", newBody.actionName);
 
-  console.log(url_params);
 
   const response = await fetch(url, {
     method: "POST",
-    headers: headers,
+    headers: {
+         "Content-Type": "application/x-www-form-urlencoded",
+       },
     body: url_params,
   });
 
   const status = response.status;
   if(response.ok) {
     if(status === 200) {
-      const data = await response.json();
-      res.json(data);
+      const data = await response.text();
+      res.send(data);
     }else{
       res.status(status).json(defaultBody);
     }
