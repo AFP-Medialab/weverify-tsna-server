@@ -29,7 +29,7 @@ pipeline {
             }
             steps {
                 sh 'echo $REGISTRY_CREDENTIALS_PSW | docker login ${registry} -u $REGISTRY_CREDENTIALS_USR --password-stdin'
-                sh "docker buildx create --use --name multi_platform_tsna --driver-opt network=host --buildkitd-flags '--allow-insecure-entitlement network.host'"
+                sh "docker buildx create --use --name multi_platform_tsna --driver-opt network=host --buildkitd-flags --node '--allow-insecure-entitlement network.host'"
                 sh """ 
                     docker buildx build -t ${dockerImage}:${version} -t ${dockerImage}:latest --push --network=host --platform=linux/amd64,linux/arm64 .
                 """ 
