@@ -1,0 +1,14 @@
+{
+    "tweet_bot": "Tweet with WeVerify bot",
+    "tweet_account": "Tweet with your account",
+    "title_infotmationLink": "Link information",
+    "title_selectedLink": "Selected link",
+    "title_author": "Author",
+    "title_name": "Name",
+    "title_credibility": "Credibility",
+    "desinformation": "Disinformation",
+    "factchecker": "Fact Checker",
+    "title_description": "Description",
+    "textTweet_1": "There's a lot of misinformation on ",
+    "textTweet_2": ", checkout alternative reading :"
+}

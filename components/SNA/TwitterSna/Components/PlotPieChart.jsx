@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import createPlotComponent from "react-plotly.js/factory";
 import { useDispatch, useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
 import { downloadClick } from "../../lib/downloadClick";
@@ -14,13 +13,14 @@ import HistoTweetsTable from "../Components/HistoTweetsTable";
 import { createCSVFromPieChart } from "../Hooks/pieCharts";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 import { setTweetsDetail } from "../TwitterSna";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 const Plot = createPlotComponent(plotly);
 let from = "PLOT_PIE_CHART";
 
 export default function PlotPieChart(props) {
   const dispatch = useDispatch();
-  const sna = useSelector(state => state.sna)
-  const keyword = useLoadLanguage(sna.tsv);
+  const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
   const request = useSelector((state) => state.twitterSna.request);
   const [pieCharts0, setPieCharts0] = useState(null);
   const [pieCharts1, setPieCharts1] = useState(null);
@@ -243,7 +243,7 @@ export default function PlotPieChart(props) {
                   <div>
                     <Plot
                       data={obj.json}
-                      layout={obj.layout}
+                      layout={{...obj.layout, title: {...obj.layout.title, text:keyword(obj.title)}}}
                       config={obj.config}
                       onClick={(e) => {
                         onDonutsClick(e, index, state.result.tweets);

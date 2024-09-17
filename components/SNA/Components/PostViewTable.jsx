@@ -6,12 +6,13 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from "@mui/icons-material/Twitter";
 import React from 'react';
 import CustomTable from '../../shared/CustomTable/CustomTable';
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../shared/lib/StringUtil";
 import { downloadClick } from "../lib/downloadClick";
 import{FB_SNA_TYPE, TW_SNA_TYPE, INSTA_SNA_TYPE} from "../../shared/hooks/SnaTypes"
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import { i18nLoadNamespace, i18nLoadNamespaceNoSuspense } from "../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH, SNA_PATH, TWITTERSNA_PATH } from "../../shared/languages/LanguagePaths";
 
 function getIcon(snaType){
     switch (snaType){
@@ -28,12 +29,26 @@ function getIcon(snaType){
 
 export default function PostViewTable ({snatype, setTypeValue, data, downloadEnable, request, csvArr, selected}){
     //console.log("data POSTED", downloadEnable);
-    const keyword = useLoadLanguage(snatype.tsv);
-    const keywordSNA = useLoadLanguage("/components/NavItems/tools/SNA.tsv");
+
+    var keyword = (word) => "";
+    var path;
+
+    if(snatype.type === TW_SNA_TYPE) {
+        path = TWITTERSNA_PATH;
+    }
+    else {
+        path = CROWDTANGLE_PATH;
+    }
+
+    // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
+    const {t, ready} = i18nLoadNamespaceNoSuspense(path);
+    if(ready) keyword = t;
+
+    const keywordSNA = i18nLoadNamespace(SNA_PATH);
     var goToAction = [
         {
           icon: getIcon(snatype.type),
-          tooltip: keyword("sna_result_go_to_post"),
+          tooltip: keyword("twittersna_result_go_to"),
           onClick: (event, rowData) => {
             if(snatype.type == TW_SNA_TYPE)
                 window.open(rowData.link, "_blank");
@@ -43,7 +58,8 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
         },
       ];
     
-    var labeledColumns = getLabelsColumns(keyword, data.columns);
+    //var labeledColumns = getLabelsColumns(keyword, data.columns);
+    var labeledColumns = data.columns;
     //console.log("labeledColumns  ", labeledColumns);
     return (
         <div
@@ -82,10 +98,11 @@ export default function PostViewTable ({snatype, setTypeValue, data, downloadEna
                 }
             </Grid>
             <Box m={2} />
-            <CustomTable title={keywordSNA("sna_result_selected_posts ")}
+            <CustomTable title={(snatype.type === TW_SNA_TYPE) ? "twittersna_result_slected_tweets" : "sna_result_selected_posts"}
                 columns={labeledColumns}
                 data={data.data}
                 actions={goToAction}
+                type ={snatype.type}
             />
         </div>
     )

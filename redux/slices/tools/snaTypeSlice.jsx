@@ -12,8 +12,8 @@ const snaTypeSlice = createSlice({
     reducers: {
         snaTypeSet (state, action) {
             state.type = action.payload.type;
-            state.tsv = action.payload.tsv;
-            state.tsvInfo = action.payload.tsvInfo;
+            //state.tsv = action.payload.tsv;
+            //state.tsvInfo = action.payload.tsvInfo;
         },
         snaTypeCleaned (state, action) {
             state = defaultState;

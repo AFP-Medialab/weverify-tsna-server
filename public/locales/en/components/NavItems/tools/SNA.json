@@ -1,0 +1,13 @@
+{
+    "sna_time_chart_title": "Propagation timeline",
+    "sna_local_time": "Local time",
+    "shared_cloud_chart_title": "Most shared users",
+    "likes_cloud_chart_title": "Most liked users",
+    "top_users_pie_chart_title": "Most active users",
+    "mention_cloud_chart_title": "Most mentioned accounts",
+    "sna_result_hide": "Hide",
+    "sna_result_download": "Download",
+    "ct_sna_title": "Facebook & Instagram CSV analysis",
+    "twitter_sna_title": "Twitter Social network analysis (beta)",
+    "sna_result_selected_posts": "Selected Tweets"
+}

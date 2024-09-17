@@ -13,9 +13,7 @@ import AdvancedTools from "../../Navigation/AdvancedTools/AdvancedTools";
 import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
 import FeedBack from "../../shared/FeedBack/FeedBack";
 import HeaderTool from '../../shared/HeaderTool/HeaderTool';
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles, { myCardStyles } from '../../shared/styles/useMyStyles';
-import { CT_TSV } from "../lib/CrowdTangleConstant";
 import { useFacebookResult } from './Components/hooks/buildFBResult';
 import { useInstagramResult } from './Components/hooks/buildInstaResult';
 import CrowdTangleSnaResults from "./Results/CrowdTangleSnaResults";
@@ -32,6 +30,8 @@ import { csvSnaBubbleChartResultHistoViewSet,
     csvSnaStateCleaned, 
     csvSnaUrlsResultSet } from "../../../redux/slices/tools/crowdTangleSnaSlice";
 import { snaTypeCleaned } from "../../../redux/slices/tools/snaTypeSlice";
+import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../shared/languages/LanguagePaths";
 
 
 export function setHistoview (from, data, dispatch) {
@@ -117,9 +117,8 @@ const CrowdTangleSnaComponent = () => {
                 contrastText: '#fff',
             },
         },
-    });
-
-    const keyword = useLoadLanguage(CT_TSV)
+    }); 
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const dispatch = useDispatch();
     const classes = useMyStyles();
     const cardClasses = myCardStyles();
@@ -201,7 +200,6 @@ const CrowdTangleSnaComponent = () => {
                 </Grid>
             </Grid>
 
-        {/* <StylesProvider injectFirst> */}
             <Card className={cardClasses.root}>
                 <CardHeader
                 title={keyword("cardheader_ct_parameters")}
@@ -229,7 +227,6 @@ const CrowdTangleSnaComponent = () => {
                     }
                 </div>
             </Card>
-        {/* </StylesProvider> */}
         {
             resultRedux && <CrowdTangleSnaResults result={resultRedux} workers={workers}/>
         }

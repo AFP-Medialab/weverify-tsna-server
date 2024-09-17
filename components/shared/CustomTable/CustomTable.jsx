@@ -17,10 +17,10 @@ import SaveAlt from '@mui/icons-material/SaveAlt';
 import Search from '@mui/icons-material/Search';
 import ViewColumn from '@mui/icons-material/ViewColumn';
 import React, { useEffect, useState } from 'react';
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
+import { i18nLoadNamespace, i18nLoadNamespaceNoSuspense } from '../languages/i18nLoadNamespace';
+import { CROWDTANGLE_PATH, CUSTOMTABLE_PATH, TWITTERSNA_PATH } from '../languages/LanguagePaths';
+import { TW_SNA_TYPE } from '../hooks/SnaTypes';
 
-//const tsv = "/localDictionary/components/Shared/CustomTable.tsv";
-const tsv = "/components/Shared/CustomTable.tsv";
 
 
 
@@ -131,7 +131,22 @@ export default function CustomTable(props) {
             actions: props.actions
         }
     );
-    const keyword = useLoadLanguage(tsv);
+
+    var keyword = (word) => "";
+
+
+    const { t, ready } = i18nLoadNamespaceNoSuspense(CUSTOMTABLE_PATH);
+
+    if(ready) keyword = t;
+
+    var keywordSna = (word) => "";
+
+    if(props.type === TW_SNA_TYPE) {
+        keywordSna = i18nLoadNamespace(TWITTERSNA_PATH);
+    }
+    else {
+        keywordSna = i18nLoadNamespace(CROWDTANGLE_PATH);
+    }
 
     useEffect(() => {
         setState({
@@ -152,11 +167,11 @@ export default function CustomTable(props) {
                     previousTooltip: keyword("previous_page"),
                     nextTooltip: keyword("next_page"),
                     lastTooltip: keyword("last_page"),
-                    labelRowsSelect: keyword(""),
+                    labelRowsSelect: "",
                     labelDisplayedRows: keyword("from_to_text")
                 },
                 toolbar: {
-                    nRowsSelected: keyword('{0} row(s) selected (add tsv)'),
+                    nRowsSelected: keyword("row_selected"),
                     searchPlaceholder: keyword("search")
                 },
                 header: {
@@ -170,31 +185,31 @@ export default function CustomTable(props) {
                 }
             }}
             icons={tableIcons}
-            title={state.title}
+            title={keywordSna(state.title)}
             columns={
                     
                 state.columns.map((obj) => {
                     if (obj.title === "Tweet") {
                         return {
-                            title: obj.title,
+                            title: keywordSna(obj.title),
                             field: obj.field,
                             width: "75%"
                         }
                     }else if (obj.title === "Date") {
                         return {
-                            title: obj.title,
+                            title: keywordSna(obj.title),
                             field: obj.field,
                             width: "20%",
                         }
                     } else if (obj.title === "Post description") {
                         return {
-                            title: obj.title,
+                            title: keywordSna(obj.title),
                             field: obj.field,
                             width: "50%",
                         }
                     } else {
                         return {
-                            title: obj.title,
+                            title: keywordSna(obj.title),
                             field: obj.field,
                             width: "5%"
                         }

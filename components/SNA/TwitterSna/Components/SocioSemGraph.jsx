@@ -10,7 +10,6 @@ import { ForceAtlas2, RandomizeNodePositions, Sigma } from 'react-sigma';
 import IconEdges from "../../../../images/SVG/CardHeader/Edges.svg";
 import IconNodes from "../../../../images/SVG/CardHeader/Nodes.svg";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { createGraphWhenClickANode } from "../../../shared/lib/sigmaGraph";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import { displayPosts } from "../../../SNA/lib/displayTweets";
@@ -18,16 +17,15 @@ import PostViewTable from "../../Components/PostViewTable";
 import { getDomain } from "../../../SNA/lib/displayTweets";
 import {widgetSimpleFilename} from "../Hooks/tsnaUtils"
 import { IconButton } from "@mui/material";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { TWITTERSNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 
-
-
-//const tsv = "/localDictionary/tools/TwitterSna.tsv";
 
 export default function SocioSemGraph (props) {
     
     const sna = useSelector(state => state.sna)
-    const keyword = useLoadLanguage(sna.tsv);
+    const keyword = i18nLoadNamespace(TWITTERSNA_PATH);
     const classes = useMyStyles();
 
     const [socioSemantic4ModeGraphTweets, setSocioSemantic4ModeGraphTweets] = useState(null);

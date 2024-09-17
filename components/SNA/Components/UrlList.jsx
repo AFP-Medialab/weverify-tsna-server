@@ -4,15 +4,22 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CustomCardHeader from "../../shared/CustomCardHeader/CustomCardheader";
 import CustomTableURL from "../../shared/CustomTable/CustomTableURL";
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../shared/styles/useMyStyles";
 import { downloadClick } from "../lib/downloadClick";
+import { i18nLoadNamespace } from "../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH, TWITTERSNA_PATH } from "../../shared/languages/LanguagePaths";
+import { TW_SNA_TYPE } from "../../shared/hooks/SnaTypes";
 
 
 export default function UrlList (props) {
 
-    const sna = useSelector(state => state.sna)
-    const keyword = useLoadLanguage(sna.tsv);    
+    var keyword;
+    if(props.type === TW_SNA_TYPE) {
+        keyword = i18nLoadNamespace(TWITTERSNA_PATH);
+    }
+    else {
+        keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
+    }
     
     const userLogined = useSelector(state => state.userSession && state.userSession.user);
     const userData = encodeURIComponent(JSON.stringify(userLogined));
@@ -67,7 +74,7 @@ export default function UrlList (props) {
     return (
         <Card>
             
-            <CustomCardHeader title={"13. " + keyword(props.title_message)} showHelp={true} helpText={"twittersna_urls_tip"} showCSV={true} functionCSV={() => downloadClick(props.request, createCSVFromURLTable(props.result.urls), "Urls", false, "")} />
+            <CustomCardHeader title={(props.type === TW_SNA_TYPE ? "13. " : "") + keyword(props.title_message)} showHelp={true} helpText={"twittersna_urls_tip"} showCSV={true} functionCSV={() => downloadClick(props.request, createCSVFromURLTable(props.result.urls), "Urls", false, "")} />
             <Box p={2}>
             {
 
@@ -82,6 +89,7 @@ export default function UrlList (props) {
                 data={props.result.urls.data}
                 actions={actions}
                 topic={props.topic}
+                type = {props.type}
             />
             <Box m={1}/>
             </Box>

@@ -1,9 +1,9 @@
-import {makeStyles} from "@mui/styles";
 import {green} from "@mui/material/colors";
+import useClasses from "./useClasses";
 
 const drawerWidth = 200;
 
-const useMyStyles = makeStyles(theme => ({
+const styles = (theme) => ({
     all: {
         width: "90%",
     },
@@ -534,11 +534,20 @@ const useMyStyles = makeStyles(theme => ({
 
     
 
-}));
-export const myCardStyles = makeStyles({
-    root: {
-        overflow: "hidden",
-    }
 });
+
+const cardStyles = () => ({
+    root: {
+      overflow: "hidden",
+    },
+  });
+
+export const myCardStyles = () => {
+    return useClasses(cardStyles);
+  };
+
+const useMyStyles = () => {
+    return useClasses(styles);
+  };
 export default useMyStyles;
 

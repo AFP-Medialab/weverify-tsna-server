@@ -2,12 +2,12 @@ import Head from "next/head";
 import React from "react";
 import Layout from "../components/layout";
 import Footer from "../components/shared/Footer/Footer";
-import useLoadLanguage from "../components/shared/hooks/useRemoteLoadLanguage";
 import TwitterSna from "../components/SNA/TwitterSna/TwitterSna";
-const tsv = "/components/NavItems/tools/SNA.tsv";
+import { i18nLoadNamespace } from "../components/shared/languages/i18nLoadNamespace";
+import { SNA_PATH } from "../components/shared/languages/LanguagePaths";
 
 const TwitterSnaIndex = () => {
-  const keyword = useLoadLanguage(tsv);
+  const keyword = i18nLoadNamespace(SNA_PATH);
   return (
     <Layout title={keyword("twitter_sna_title")}>
     <Head>
