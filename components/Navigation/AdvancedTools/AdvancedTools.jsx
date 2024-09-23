@@ -460,8 +460,9 @@ const AdvancedTools = () => {
                                     <Grid item xs={12}>
                                         <Controller
                                             name="email"
-                                            as={
-                                                <TextField
+                                            render={ ({fieldState, formState, ...field}) =>
+                                                (<TextField
+                                                    {...field}
                                                     id="registration-email"
                                                     label={messageI18NResolver("REGISTRATIONFORM_EMAIL_LABEL") || "Email address"}
                                                     placeholder={messageI18NResolver("REGISTRATIONFORM_EMAIL_PLACEHOLDER") || "Enter your email address"}
@@ -470,9 +471,9 @@ const AdvancedTools = () => {
                                                     required
                                                     variant="outlined"
                                                     error={_.hasIn(registrationForm.errors, "email")}
-                                                    helperText={registrationForm.errors.email
+                                                    helperText={registrationForm.errors && registrationForm.errors.email
                                                         && (messageI18NResolver(registrationForm.errors.email.message) || "A valid email address is required")}
-                                                />
+                                                />)
                                             }
                                             control={registrationForm.control}
                                             defaultValue=""
@@ -481,8 +482,9 @@ const AdvancedTools = () => {
                                     <Grid item xs={12}>
                                         <Controller
                                             name="firstName"
-                                            as={
-                                                <TextField
+                                            render={ ({fieldState, formState, ...field}) =>
+                                                (<TextField
+                                                    {...field}
                                                     id="registration-firstName"
                                                     label={messageI18NResolver("REGISTRATIONFORM_FIRSTNAME_LABEL") || "First name"}
                                                     placeholder={messageI18NResolver("REGISTRATIONFORM_FIRSTNAME_PLACEHOLDER") || "Enter your first name"}
@@ -491,9 +493,9 @@ const AdvancedTools = () => {
                                                     required
                                                     variant="outlined"
                                                     error={_.hasIn(registrationForm.errors, "firstName")}
-                                                    helperText={registrationForm.errors.firstName
+                                                    helperText={registrationForm.errors && registrationForm.errors.firstName
                                                         && (messageI18NResolver(registrationForm.errors.firstName.message) || "First name is required")}
-                                                />
+                                                />)
                                             }
                                             control={registrationForm.control}
                                             defaultValue=""
@@ -502,8 +504,9 @@ const AdvancedTools = () => {
                                     <Grid item xs={12}>
                                         <Controller
                                             name="lastName"
-                                            as={
-                                                <TextField
+                                            render={ ({fieldState, formState, ...field}) =>
+                                                (<TextField
+                                                    {...field}
                                                     id="registration-lastName"
                                                     label={messageI18NResolver("REGISTRATIONFORM_LASTNAME_LABEL") || "Last name"}
                                                     placeholder={messageI18NResolver("REGISTRATIONFORM_LASTNAME_PLACEHOLDER") || "Enter your last name"}
@@ -512,9 +515,9 @@ const AdvancedTools = () => {
                                                     required
                                                     variant="outlined"
                                                     error={_.hasIn(registrationForm.errors, "lastName")}
-                                                    helperText={registrationForm.errors.lastName
+                                                    helperText={registrationForm.errors && registrationForm.errors.lastName
                                                         && (messageI18NResolver(registrationForm.errors.lastName.message) || "Last name is required")}
-                                                />
+                                                />)
                                             }
                                             control={registrationForm.control}
                                             defaultValue=""
@@ -523,8 +526,9 @@ const AdvancedTools = () => {
                                     <Grid item xs={12}>
                                         <Controller
                                             name="organization"
-                                            as={
-                                                <TextField
+                                            render={ ({fieldState, formState, ...field}) =>
+                                                (<TextField
+                                                    {...field}
                                                     id="registration-organization"
                                                     label={messageI18NResolver("REGISTRATIONFORM_ORGANIZATION_LABEL") || "Organization"}
                                                     placeholder={messageI18NResolver("REGISTRATIONFORM_ORGANIZATION_PLACEHOLDER") || "Enter your organization name"}
@@ -533,9 +537,9 @@ const AdvancedTools = () => {
                                                     required
                                                     variant="outlined"
                                                     error={_.hasIn(registrationForm.errors, "organization")}
-                                                    helperText={registrationForm.errors.organization
+                                                    helperText={registrationForm.errors && registrationForm.errors.organization
                                                         && (messageI18NResolver(registrationForm.errors.organization.message) || "Organization name is required")}
-                                                />
+                                                />)
                                             }
                                             control={registrationForm.control}
                                             defaultValue=""
@@ -544,8 +548,9 @@ const AdvancedTools = () => {
                                     <Grid item xs={12}>
                                         <Controller
                                             name="organizationRole"
-                                            as={
-                                                <TextField
+                                            render={({fieldState, formState, ...field}) =>
+                                                (<TextField
+                                                    {...field}
                                                     id="registration-organizationRole"
                                                     label={messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_LABEL") || "Role"}
                                                     placeholder={messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_PLACEHOLDER") || "Select your role within organization"}
@@ -555,23 +560,24 @@ const AdvancedTools = () => {
                                                     required
                                                     variant="outlined"
                                                     error={_.hasIn(registrationForm.errors, "organizationRole")}
-                                                    helperText={registrationForm.errors.organizationRole
+                                                    helperText={registrationForm.errors && registrationForm.errors.organizationRole
                                                         && (messageI18NResolver(registrationForm.errors.organizationRole.message) || "Role within organization is required")}
                                                 >
                                                     <MenuItem key="REPORTER" value="REPORTER">{messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_REPORTER_LABEL") || "Reporter"}</MenuItem>
                                                     <MenuItem key="FAKE_NEWS_CHECKER" value="FAKE_NEWS_CHECKER">{messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_FAKENEWSCHECKER_LABEL") || "Fake news checker"}</MenuItem>
                                                     <MenuItem key="OTHER" value="OTHER">{messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLE_OTHER_LABEL") || "Other"}</MenuItem>
-                                                </TextField>
+                                                </TextField>)
                                             }
                                             control={registrationForm.control}
-                                            defaultValue=""
+                                            defaultValue=''
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Controller
                                             name="organizationRoleOther"
-                                            as={
-                                                <TextField
+                                            render={ ({fieldState, formState, ...field}) =>
+                                                (<TextField
+                                                    {...field}
                                                     id="registration-organizationRoleOther"
                                                     label={messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLEOTHER_LABEL") || "Role (other)"}
                                                     placeholder={messageI18NResolver("REGISTRATIONFORM_ORGANIZATIONROLEOTHER_PLACEHOLDER") || "Enter your role within organization"}
@@ -580,9 +586,9 @@ const AdvancedTools = () => {
                                                     autoComplete="organization-title"
                                                     // required
                                                     error={_.hasIn(registrationForm.errors, "organizationRoleOther")}
-                                                    helperText={registrationForm.errors.organizationRoleOther
+                                                    helperText={registrationForm.errors && registrationForm.errors.organizationRoleOther
                                                         && (messageI18NResolver(registrationForm.errors.organizationRoleOther.message) || "Please fill in your role within organization")}
-                                                />
+                                                />)
                                             }
                                             control={registrationForm.control}
                                             defaultValue=""
@@ -603,6 +609,7 @@ const AdvancedTools = () => {
 
                         </DialogActions>
                     </Box>
+                    
 
                 }
 
