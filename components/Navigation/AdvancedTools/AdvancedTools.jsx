@@ -170,13 +170,23 @@ const AdvancedTools = () => {
         });
     };
 
+    const defaultValues = {
+        email: "",
+        firstName: "",
+        lastName: "",
+        organization: "",
+        organizationRole: "",
+        organizationRoleOther: "",
+      };
 
     // User Registration form
     const registrationForm = useForm({
         mode: "onBlur",
-        validationSchema: registrationValidationSchema
+        validationSchema: registrationValidationSchema,
+        defaultValues
     });
     const registrationOnSubmit = (data) => {
+        console.log(data);
         authenticationAPI.registerUser({
             email: data.email,
             firstName: data.firstName,
@@ -184,7 +194,7 @@ const AdvancedTools = () => {
             organization: data.organization,
             organizationRole: data.organizationRole,
             organizationRoleOther: data.organizationRoleOther
-        }).then(result => {
+        }).then(() => {
             registrationForm.reset();
             setDialogState(4);
         }).catch(error => {
@@ -460,7 +470,7 @@ const AdvancedTools = () => {
                                     <Grid item xs={12}>
                                         <Controller
                                             name="email"
-                                            render={ ({fieldState, formState, ...field}) =>
+                                            render={ ({field}) =>
                                                 (<TextField
                                                     {...field}
                                                     id="registration-email"
@@ -476,13 +486,12 @@ const AdvancedTools = () => {
                                                 />)
                                             }
                                             control={registrationForm.control}
-                                            defaultValue=""
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Controller
                                             name="firstName"
-                                            render={ ({fieldState, formState, ...field}) =>
+                                            render={ ({field}) =>
                                                 (<TextField
                                                     {...field}
                                                     id="registration-firstName"
@@ -498,13 +507,12 @@ const AdvancedTools = () => {
                                                 />)
                                             }
                                             control={registrationForm.control}
-                                            defaultValue=""
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Controller
                                             name="lastName"
-                                            render={ ({fieldState, formState, ...field}) =>
+                                            render={ ({field}) =>
                                                 (<TextField
                                                     {...field}
                                                     id="registration-lastName"
@@ -520,13 +528,12 @@ const AdvancedTools = () => {
                                                 />)
                                             }
                                             control={registrationForm.control}
-                                            defaultValue=""
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Controller
                                             name="organization"
-                                            render={ ({fieldState, formState, ...field}) =>
+                                            render={ ({field}) =>
                                                 (<TextField
                                                     {...field}
                                                     id="registration-organization"
@@ -542,13 +549,12 @@ const AdvancedTools = () => {
                                                 />)
                                             }
                                             control={registrationForm.control}
-                                            defaultValue=""
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Controller
                                             name="organizationRole"
-                                            render={({fieldState, formState, ...field}) =>
+                                            render={({field}) =>
                                                 (<TextField
                                                     {...field}
                                                     id="registration-organizationRole"
@@ -569,13 +575,12 @@ const AdvancedTools = () => {
                                                 </TextField>)
                                             }
                                             control={registrationForm.control}
-                                            defaultValue=''
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Controller
                                             name="organizationRoleOther"
-                                            render={ ({fieldState, formState, ...field}) =>
+                                            render={ ({field}) =>
                                                 (<TextField
                                                     {...field}
                                                     id="registration-organizationRoleOther"
@@ -591,7 +596,6 @@ const AdvancedTools = () => {
                                                 />)
                                             }
                                             control={registrationForm.control}
-                                            defaultValue=""
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -627,7 +631,7 @@ const AdvancedTools = () => {
 
                         </DialogContent>
                         <DialogActions>
-                            <Button v color="primary" onClick={handleCloseRegistration} fullWidth >
+                            <Button color="primary" onClick={handleCloseRegistration} fullWidth >
                                 {messageI18NResolver("AUTHENTICATION_FORM_CLOSE")}
                             </Button>
                         </DialogActions>
