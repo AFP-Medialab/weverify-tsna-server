@@ -49,7 +49,6 @@ export default function useAuthenticationAPI() {
 
   // Services URL
   const AUTH_SRV_REGISTER_USER_URL = `${publicRuntimeConfig.baseFolder}/api/wrapper/auth/registration`;
-  console.log(AUTH_SRV_REGISTER_USER_URL)
   const AUTH_SRV_REQUEST_ACCESS_CODE_URL = `${publicRuntimeConfig.baseFolder}/api/wrapper/auth/accesscode`;
   const AUTH_SRV_LOGIN_URL = `${publicRuntimeConfig.baseFolder}/api/wrapper/auth/login`;
   //const AUTH_SRV_LOGOUT_URL = "/logout";
@@ -58,7 +57,7 @@ export default function useAuthenticationAPI() {
   const dispatch = useDispatch();
 
   // Default language
-  const lang = useSelector(state => state.language);
+  const lang = useSelector(state => state.language.selectedLanguage);
 
   /**
    * Register a new user to services.
@@ -84,25 +83,22 @@ export default function useAuthenticationAPI() {
       organization: request.organization,
       organizationRole: request.organizationRole,
       organizationRoleOther: request.organizationRoleOther,
-      //preferredLanguages: request.preferredLanguages || [lang],
+      preferredLanguages: request.preferredLanguages || [lang],
       timezone: request.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
     };
 
     // Make service call
     dispatch(authUserRegistrationLoading(true));
-    console.log(srvRequest);
     return axios.post(AUTH_SRV_REGISTER_USER_URL, srvRequest, {
       timeout: defaultTimeout
     }).then(response => {
       dispatch(authUserRegistrationSent(true));
-      console.log(response.status);
       return Promise.resolve({
         status: response.status
       });
     }, error => {
       dispatch(authUserRegistrationLoading(false));
       if (error.response) {
-        console.log(error.response);
         if (error.response.status === 400) {
           return Promise.reject({
             error: {

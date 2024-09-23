@@ -186,7 +186,6 @@ const AdvancedTools = () => {
         defaultValues
     });
     const registrationOnSubmit = (data) => {
-        console.log(data);
         authenticationAPI.registerUser({
             email: data.email,
             firstName: data.firstName,
