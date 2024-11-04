@@ -13,11 +13,12 @@ import IconData from '../../images/SVG/DataAnalysis/Data_analysis.svg';
 import IconSearch from '../../images/SVG/Search/Search.svg'
 import IconTools from '../../images/SVG/NavBar/Tools.svg';
 import HeaderTool from '../shared/HeaderTool/HeaderTool';
-import useLoadLanguage from '../shared/hooks/useRemoteLoadLanguage';
 import useMyStyles from '../shared/styles/useMyStyles';
 import AdvancedTools from './AdvancedTools/AdvancedTools';
 import ToolCard from "./ToolCard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { i18nLoadNamespace } from "../shared/languages/i18nLoadNamespace";
+import { ALLTOOLS_PATH, NAVBAR_PATH, WARNINGINFO_PATH } from "../shared/languages/LanguagePaths";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -41,9 +42,9 @@ function TabPanel(props) {
 const AllTools = (props) => {
     const router = useRouter();
     const classes = useMyStyles();
-    const keyword = useLoadLanguage("/components/NavItems/tools/AllTools.tsv");
-    const keywordNavbar = useLoadLanguage("/components/NavBar.tsv");
-    const keywordWarning = useLoadLanguage("/components/Shared/OnWarningInfo.tsv");
+    const keyword = i18nLoadNamespace(ALLTOOLS_PATH);
+    const keywordNavbar = i18nLoadNamespace(NAVBAR_PATH);
+    const keywordWarning = i18nLoadNamespace(WARNINGINFO_PATH);
     const [openAlert, setOpenAlert] = React.useState(false);
     const userAuthenticated = useSelector(
         (state) => state.userSession && state.userSession.userAuthenticated

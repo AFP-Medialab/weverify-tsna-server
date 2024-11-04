@@ -31,16 +31,5 @@ module.exports = {
     });
     return config;
   },
-  async headers(){
-    return [{
-      source: '/api/i18n/:i18n*',
-      headers: [
-        {
-          key: 'Content-Type',
-          value: 'text/tsv',
-        },
-      ]
-    }]
-  },
   output: "standalone",
 };

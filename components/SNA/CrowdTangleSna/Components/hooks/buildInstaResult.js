@@ -12,7 +12,7 @@ import { getJsonDataForURLTable } from "../../../Hooks/urlList";
 import { csvSnaCountResultSet, csvSnaMaxProcessStageSet, csvSnaUrlsResultSet } from "../../../../../redux/slices/tools/crowdTangleSnaSlice";
 import { snaTypeSet } from "../../../../../redux/slices/tools/snaTypeSlice";
 
-const INSTA_SNA = {type:INSTA_SNA_TYPE, tsv:"/components/NavItems/tools/CrowdTangle.tsv" , tsvInfo : "/components/insta/OnClickInfo.tsv"}
+const INSTA_SNA = {type:INSTA_SNA_TYPE}
 export const useInstagramResult = (workers, data, keyword, dispatch) => {
     dispatch(snaTypeSet(INSTA_SNA));
     buildFirstInstaResult(workers, data, dispatch, keyword);
@@ -35,10 +35,10 @@ const buildFirstInstaResult = (workers, data, dispatch, keyword) => {
 
 const buildPieChartsInsta = async (pieChartsWorker, data, dispatch, keyword) => {
   const keywordTitles = [
-    keyword("shared_cloud_chart_title"),
-    keyword("likes_cloud_chart_title"),
-    keyword("top_users_pie_chart_title"),
-    keyword("mention_cloud_chart_title")
+    "shared_cloud_chart_title",
+    "likes_cloud_chart_title",
+    "top_users_pie_chart_title",
+    "mention_cloud_chart_title"
   ];
   buildPieCharts(pieChartsWorker, data, keywordTitles, dispatch, INSTA_SNA_TYPE);
 };
@@ -57,9 +57,9 @@ const buildUrls = async (data, keyword, dispatch) => {
   const urls = await getJsonDataForURLTable(
     sortedData,
     {
-      "url" : keyword("ct_url"),
-      "count": keyword("ct_sna_total_interactions"), 
-      "credibility" : keyword("sna_credibility")
+      "url" : "ct_url",
+      "count": "ct_sna_total_interactions", 
+      "credibility" : "sna_credibility"
     },
     {
       "url": "url", 

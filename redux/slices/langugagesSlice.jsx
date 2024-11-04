@@ -1,12 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
+const initialState = {
+    languagesList: {},
+    selectedLanguage: "en",
+};
+
 const languageSlice = createSlice ({
     name: "language",
-    initialState: "en",
+    initialState,
     reducers: {
         changeLanguage: (state, action) => {
-            return action.payload;
+            state.selectedLanguage =  action.payload.lang;
+        },
+        loadLanguages(state, action) {
+            state.languagesList = action.payload.languagesList;
         },
     },
     extraReducers: builder => {
@@ -19,6 +27,6 @@ const languageSlice = createSlice ({
     },
 })
 
-export const { changeLanguage } = languageSlice.actions;
+export const { changeLanguage, loadLanguages } = languageSlice.actions;
 
 export default languageSlice.reducer;

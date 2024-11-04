@@ -2,18 +2,20 @@ import useMyStyles from "../styles/useMyStyles";
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import WbIncandescentIcon from '@mui/icons-material/WbIncandescent';
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import Linkify from 'react-linkify';
 import { useSelector } from "react-redux";
+import { i18nLoadNamespaceNoSuspense } from "../languages/i18nLoadNamespace";
+import { INFO_PATH } from "../languages/LanguagePaths";
 
 const OnClickInfo = (props) => {
-    var keyword;
-    if(props.tsvInfo !== undefined){
-        keyword = useLoadLanguage(props.tsvInfo);
-    }else{
-        const sna = useSelector((state) => state.sna )
-        keyword = useLoadLanguage(sna.tsvInfo);
-    }
+
+    
+    var keyword = (word) => "";
+
+    const {t, ready} = i18nLoadNamespaceNoSuspense(INFO_PATH);
+
+    if(ready) keyword = t;
+
     const classes = useMyStyles();
 
     const [checked, setChecked] = useState(false);

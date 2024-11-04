@@ -57,7 +57,7 @@ export default function useAuthenticationAPI() {
   const dispatch = useDispatch();
 
   // Default language
-  const lang = useSelector(state => state.language);
+  const lang = useSelector(state => state.language.selectedLanguage);
 
   /**
    * Register a new user to services.

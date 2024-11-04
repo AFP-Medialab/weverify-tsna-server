@@ -6,12 +6,13 @@ import React, { useEffect, useState } from 'react';
 import createPlotComponent from 'react-plotly.js/factory';
 import { useDispatch, useSelector } from "react-redux";
 import CustomCardHeader from "../../../shared/CustomCardHeader/CustomCardheader";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import useMyStyles from "../../../shared/styles/useMyStyles";
 import HistoTweetsTable from "./HistoTweetsTableCSV";
 import { displayPostsFb, displayPostsInsta } from "./lib/displayPosts";
 import { setHistoview } from "../CrowdTangleSnaComponent";
 import { setTweetsDetail } from "../../TwitterSna/TwitterSna";
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH } from "../../../shared/languages/LanguagePaths";
 
 
 
@@ -21,11 +22,10 @@ let from = "PLOT_PIE_CHART";
 
 export default function PlotPieChart (props) { 
     const sna = useSelector((state) => state.sna);
-    const keyword = useLoadLanguage(sna.tsv);
+    const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
     const dispatch = useDispatch();  
     
 
-   // const keyword = useLoadLanguage("/localDictionary/tools/TwitterSna.tsv");
     const [pieCharts0, setPieCharts0] = useState(null);
     const [pieCharts1, setPieCharts1] = useState(null);
     const [pieCharts2, setPieCharts2] = useState(null);
@@ -110,6 +110,7 @@ export default function PlotPieChart (props) {
             let positionInfo = element.getBoundingClientRect();
             let height = positionInfo.height;
             let width = positionInfo.width;
+            console.log("id: ", elementId);
             let name = keyword(elementId) + filesNames.replace("WordCloud", "") + '.png';
             plotly.downloadImage(elementId,
                 { format: 'png', width: width * 1.2, height: height * 1.2, filename: name }
@@ -346,7 +347,7 @@ return (
                         {
                             obj.json !== null && !(obj.json[0].values.length === 1 && obj.json[0].values[0] === "") ?
                                 <CustomCardHeader
-                                    title={obj.title}
+                                    title={keyword(obj.title)}
                                     showHelp={true}
                                     helpText={obj.tip}
 
@@ -361,7 +362,7 @@ return (
                                 />
                             :
                                 <CustomCardHeader
-                                    title={obj.title}
+                                    title={keyword(obj.title)}
                                     showHelp={true}
                                     helpText={obj.tip}
                                 />
@@ -379,7 +380,7 @@ return (
                                 <div>
                                     <Plot
                                         data={obj.json}
-                                        layout={obj.layout}
+                                        layout={{...obj.layout, title: {...obj.layout.title, text:keyword(obj.title)}}}
                                         config={obj.config}
                                         onClick={e => {
                                             onDonutsClick(e, index)

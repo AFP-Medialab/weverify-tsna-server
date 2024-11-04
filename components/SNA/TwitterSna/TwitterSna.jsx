@@ -15,7 +15,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { StylesProvider } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -42,7 +41,6 @@ import MyErrorbar from "../../shared/ErrorBar/ErrorBar";
 import FeedBack from "../../shared/FeedBack/FeedBack";
 import HeaderTool from "../../shared/HeaderTool/HeaderTool";
 import { TW_SNA_TYPE } from "../../shared/hooks/SnaTypes";
-import useLoadLanguage from "../../shared/hooks/useRemoteLoadLanguage";
 import { replaceAll, stringToList } from "../../shared/lib/StringUtil";
 import OnWarningInfo from "../../shared/OnClickInfo/OnWarningInfo";
 import useMyStyles, { myCardStyles } from "../../shared/styles/useMyStyles";
@@ -51,6 +49,8 @@ import TwitterSnaResult from "./Results/TwitterSnaResult";
 import { errorCleaned, errorSet } from '../../../redux/slices/errorSlice';
 import { tweetsDetailBubbleChartResultSet, tweetsDetailHistogramResultSet, tweetsDetailPieChartResultSet, twitterSnaCleanedState, twitterSnaLoadingSet, twitterSnaNewRequestSet } from '../../../redux/slices/tools/twitterSnaSlice';
 import { snaTypeSet } from '../../../redux/slices/tools/snaTypeSlice';
+import { i18nLoadNamespace } from '../../shared/languages/i18nLoadNamespace';
+import { TWITTERSNA_PATH } from '../../shared/languages/LanguagePaths';
 
 export function setTweetsDetail (from, data, dispatch) {
 	
@@ -153,8 +153,8 @@ const TwitterSna = () => {
 	});
 
 	const dispatch = useDispatch();
-	const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo.tsv" };
-	const keyword = useLoadLanguage(sna.tsv)
+	const sna = { type: TW_SNA_TYPE};
+	const keyword = i18nLoadNamespace(TWITTERSNA_PATH)
 	const classes = useMyStyles();
 	const cardClasses = myCardStyles();
 	const request = useSelector((state) => state.twitterSna.request);
@@ -202,7 +202,7 @@ const TwitterSna = () => {
 
 	const [langPage, setLangPage] = useState(
 		request && request.pageLanguage && request.pageLanguage !== lang
-			? dispatch(changeLanguage(request.pageLanguage))
+			? dispatch(changeLanguage({lang: request.pageLanguage}))
 			: null
 	);
 	//HANDLE INPUT
@@ -428,7 +428,7 @@ const TwitterSna = () => {
 		}
 		if (maxStage != 0 && stage === maxStage) {
 			setLoading(false);
-			dispatch(twitterSnaLoadingSet(false))
+			dispatch(twitterSnaLoadingSet({load: false}))
 		}
 	}, [isLoading, stage]);
 
@@ -469,7 +469,6 @@ const TwitterSna = () => {
 				</Grid>
 
 
-				<StylesProvider injectFirst>
 
 					<Card className={cardClasses.root}>
 
@@ -1035,13 +1034,12 @@ const TwitterSna = () => {
 								/>
 							)}
 							<Box m={1} />
-							<Typography>{loadingMessage}</Typography>
+							{loading? <Typography>{loadingMessage}</Typography>: null}
 							{loading ? <LinearProgress /> : null}
 							{!userAuthenticated && <OnWarningInfo keyword={"warning_sna"} />}
 							</Grid>
 						</Box>		
 					</Card>
-				</StylesProvider>
 				{reduxResult && (
 					<TwitterSnaResult result={reduxResult} request={request} />
 				)}

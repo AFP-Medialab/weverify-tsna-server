@@ -1,0 +1,13 @@
+{
+    "sna_time_chart_title": "الجدول الزمني للانتشار",
+    "sna_local_time": "التوقيت المحلي",
+    "shared_cloud_chart_title": "أكثر المستخدمين مشاركة",
+    "likes_cloud_chart_title": "أكثر المستخدمين إعجاباً",
+    "top_users_pie_chart_title": "أكثر المستخدمين تفاعلاً",
+    "mention_cloud_chart_title": "أكثر المستخدمين ذكراً",
+    "sna_result_hide": "إخفاء",
+    "sna_result_download": "تنزيل",
+    "ct_sna_title": "تحليل CSV لفيسبوك وإنستغرام",
+    "twitter_sna_title": "تحليل شبكة تويتر الاجتماعية (تجريبي)",
+    "sna_result_selected_posts": "تغريدات مختارة"
+}

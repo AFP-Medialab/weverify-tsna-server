@@ -6,18 +6,18 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomTable from "../../../shared/CustomTable/CustomTable";
-import useLoadLanguage from "../../../shared/hooks/useRemoteLoadLanguage";
 import { getLabelsColumns } from "../../../shared/lib/StringUtil";
 import { setHistoview } from "../CrowdTangleSnaComponent";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { i18nLoadNamespace } from "../../../shared/languages/i18nLoadNamespace";
+import { CROWDTANGLE_PATH, SNA_PATH } from "../../../shared/languages/LanguagePaths";
 
 export default function HistoTweetsTable(props) {
   
   const dispatch = useDispatch();
   const type = useSelector((state) => state.sna.type)
-  const tsv = useSelector((state) => state.sna.tsv)
-  const keyword = useLoadLanguage(tsv);
-  const keywordSNA = useLoadLanguage("/components/NavItems/tools/SNA.tsv");
+  const keyword = i18nLoadNamespace(CROWDTANGLE_PATH);
+  const keywordSNA = i18nLoadNamespace(SNA_PATH);
  
   var goToAction = [
     {
@@ -29,7 +29,8 @@ export default function HistoTweetsTable(props) {
     },
   ];
 
-  var columns = getLabelsColumns(keyword, props.data.columns);
+  // var columns = getLabelsColumns(keyword, props.data.columns);
+  var columns = props.data.columns;
 
   return (
     <div>
@@ -54,10 +55,11 @@ export default function HistoTweetsTable(props) {
       </Grid>
       <Box m={2} />
       <CustomTable
-        title={keyword("ct_result_selected_posts")}
+        title={"sna_result_selected_posts"}
         columns={columns}
         data={props.data.data}
         actions={goToAction}
+        type={type}
       />
     </div>
   );

@@ -54,8 +54,7 @@ const createPieCharts = (jsonPieCharts,keywordTitles) => {
 
     for (let cpt = 0; cpt < keywordTitles.length; cpt++) {
       let specificLayout = JSON.parse(JSON.stringify(layout));
-      let specificTitle =keywordTitles[cpt]; + "<br>" + " - " + "request[]" + " - ";
-      specificLayout.title.text = specificTitle;
+      + "<br>" + " - " + "request[]" + " - ";
       pieCharts.push(
         {
           title: keywordTitles[cpt],

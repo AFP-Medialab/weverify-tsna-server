@@ -9,14 +9,13 @@ import IconHelp from "../../../images/SVG/CardHeader/Help.svg";
 import IconPNG from "../../../images/SVG/CardHeader/PNG.svg";
 import IconSVG from "../../../images/SVG/CardHeader/SVG.svg";
 import { TW_SNA_TYPE } from "../hooks/SnaTypes";
-import useLoadLanguage from "../hooks/useRemoteLoadLanguage";
 import useMyStyles from "../styles/useMyStyles";
+import { i18nLoadNamespaceNoSuspense } from '../languages/i18nLoadNamespace';
+import { INFO_PATH } from '../languages/LanguagePaths';
 
 export default function CustomCardHeader(props) {
 
     const classes = useMyStyles();
-    const sna = { type: TW_SNA_TYPE, tsv: "/components/NavItems/tools/TwitterSna.tsv", tsvInfo: "/components/Shared/OnClickInfo.tsv" };
-    var keyword = useLoadLanguage(sna.tsvInfo);
 
     var title = props.title;
     var id = props.id;
@@ -28,7 +27,15 @@ export default function CustomCardHeader(props) {
     var showEdges = props.showEdges;
     var helpText = props.helpText;
     var showSpecialCSV = props.showSpecialCSV;
+    
+    var keyword = (word) => "";
 
+
+    // here useSuspense is set to false and ready boolean is used to set the value of keyword, otherwise keywords don't load properly
+    var { t, ready } = i18nLoadNamespaceNoSuspense(INFO_PATH);
+
+    if(ready) keyword = t;
+    
     
     const [anchorHelpPopover, setAnchorHelpPopover] = React.useState(null);
     const openHelpPopover = Boolean(anchorHelpPopover);
@@ -133,7 +140,7 @@ export default function CustomCardHeader(props) {
                                             alignItems="stretch">
 
                                             <Typography variant="h6" gutterBottom>
-                                            {keyword("whatisthis")}
+                                            {keyword("title_tip")}
                                             </Typography>
 
                                         <CloseIcon onClick={closeHelpPopover} />

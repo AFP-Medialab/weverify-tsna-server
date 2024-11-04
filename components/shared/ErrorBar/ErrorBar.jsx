@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import WarningIcon from '@mui/icons-material/Warning';
-import {makeStyles} from '@mui/styles';
+import useClasses from '../styles/useClasses';
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -19,7 +19,7 @@ const variantIcon = {
     info: InfoIcon,
 };
 
-const useStyles1 = makeStyles(theme => ({
+const styles = (theme) => ({
     success: {
         backgroundColor: green[600],
     },
@@ -44,9 +44,12 @@ const useStyles1 = makeStyles(theme => ({
         alignItems: 'center',
     },
 
-}));
+});
+
+
 
 function MySnackbarContentWrapper(props) {
+    const useStyles1 = useClasses(styles);
     const classes = useStyles1();
     const {className, message, onClose, variant, ...other} = props;
     const Icon = variantIcon[variant];
